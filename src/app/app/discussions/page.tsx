@@ -16,13 +16,15 @@ export const metadata = {
 const DiscussionsPage = async ({
   searchParams,
 }: {
-  searchParams: { page: string | null };
+  searchParams: Promise<{ page: string | null }>;
 }) => {
   const queryClient = new QueryClient();
 
+  const resolvedSearchParams = await searchParams;
+
   await queryClient.prefetchQuery(
     getDiscussionsQueryOptions({
-      page: searchParams.page ? Number(searchParams.page) : 1,
+      page: resolvedSearchParams.page ? Number(resolvedSearchParams.page) : 1,
     }),
   );
 
