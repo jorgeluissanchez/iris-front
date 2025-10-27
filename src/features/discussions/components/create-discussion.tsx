@@ -64,7 +64,7 @@ export const CreateDiscussion = () => {
               }}
             >
               <DrawerHeader>Create Discussion</DrawerHeader>
-              <DrawerBody>
+              <DrawerBody className="w-full">
                 <Input
                   label="Title"
                   name="title"

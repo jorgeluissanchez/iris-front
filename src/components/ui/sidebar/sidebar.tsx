@@ -193,7 +193,7 @@ function Sidebar({
             {(onClose) => (
               <>
                 <DrawerHeader>Sidebar</DrawerHeader>
-                <DrawerBody>{children}</DrawerBody>
+                <DrawerBody className="w-full">{children}</DrawerBody>
                 <DrawerFooter>
                   <Button onPress={() => onClose()}>Cerrar</Button>
                 </DrawerFooter>

@@ -53,7 +53,7 @@ export const UpdateProfile = () => {
               }}
             >
               <DrawerHeader className="flex flex-col gap-1">Update Profile</DrawerHeader>
-              <DrawerBody>
+              <DrawerBody className="w-full">
                 <Input
                   name="firstName"
                   label="First Name"

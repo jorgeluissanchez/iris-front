@@ -48,7 +48,7 @@ export const CreateComment = ({ discussionId }: CreateCommentProps) => {
               }}
             >
               <DrawerHeader>Create Comment</DrawerHeader>
-              <DrawerBody>
+              <DrawerBody className="w-full">
                 <Textarea
                   label="Body"
                 />

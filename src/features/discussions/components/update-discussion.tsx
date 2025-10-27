@@ -75,7 +75,7 @@ export const UpdateDiscussion = ({ discussionId }: UpdateDiscussionProps) => {
               }}
             >
               <DrawerHeader>Update Discussion</DrawerHeader>
-              <DrawerBody>
+              <DrawerBody className="w-full">
                 <Input
                   label="Title"
                   name="title"
