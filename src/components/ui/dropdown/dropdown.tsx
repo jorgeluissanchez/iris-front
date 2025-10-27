@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import {
   Dropdown,
@@ -9,9 +9,9 @@ import {
   type DropdownProps,
   type DropdownItemProps,
   type DropdownSectionProps,
-} from '@heroui/dropdown';
+} from "@heroui/dropdown";
 
-export { 
+export {
   Dropdown,
   DropdownTrigger,
   DropdownMenu,
