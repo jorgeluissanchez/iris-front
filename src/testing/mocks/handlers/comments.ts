@@ -117,17 +117,23 @@ export const commentsHandlers = [
           return HttpResponse.json({ message: error }, { status: 401 });
         }
         const commentId = params.commentId as string;
-        const result = db.comment.delete({
-          where: {
-            id: {
-              equals: commentId,
-            },
-            ...(user?.role === 'USER' && {
-              authorId: {
-                equals: user.id,
-              },
-            }),
+        
+        // Construir el objeto where dinámicamente según el rol
+        const whereClause: any = {
+          id: {
+            equals: commentId,
           },
+        };
+        
+        // Si no es ADMIN, solo puede eliminar sus propios comentarios
+        if (user?.role !== 'ADMIN') {
+          whereClause.authorId = {
+            equals: user?.id,
+          };
+        }
+        
+        const result = db.comment.delete({
+          where: whereClause,
         });
         await persistDb('comment');
         return HttpResponse.json(result);
