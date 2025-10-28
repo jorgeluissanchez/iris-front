@@ -1,4 +1,4 @@
-import { EventsContent } from './_components/events-content';
+import { Events } from './_components/events';
 
 export const metadata = {
   title: 'Events',
@@ -6,7 +6,7 @@ export const metadata = {
 };
 
 const EventsPage = async () => {
-  return <EventsContent />;
+  return <Events />;
 };
 
 export default EventsPage;

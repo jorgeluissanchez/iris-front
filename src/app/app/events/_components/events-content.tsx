@@ -1,38 +1,37 @@
-'use client';
+"use client";
 
-import { useUser } from '@/lib/auth';
-import { Calendar, Users, Check, ExternalLink, Eye, Edit } from 'lucide-react';
-import { Card, CardBody } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { useQuery } from '@tanstack/react-query';
-import { getEventsQueryOptions, type Event } from '@/features/events/api/get-events';
+import { Calendar, Users, Check, Eye } from "lucide-react";
+import { Card, CardBody } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { useQuery } from "@tanstack/react-query";
+import { getEventsQueryOptions } from "@/features/events/api/get-events";
+import CreateEventModal from "./create-event-modal";
+import { Spinner } from "@heroui/spinner";
+import EditEventModal from "./edit-event-modal";
+import { Event } from "@/types/api";
+import { Snippet } from "@heroui/react";
 
 export const EventsContent = () => {
-  const user = useUser();
+  const eventsQuery = useQuery(getEventsQueryOptions());
 
-  // Fetch de eventos desde el API
-  const { data: eventsData, isLoading } = useQuery(getEventsQueryOptions(1));
+  if (eventsQuery.isLoading) {
+    return (
+      <div className="flex h-48 w-full items-center justify-center">
+        <Spinner size="lg" />
+      </div>
+    );
+  }
 
-  const events: Event[] = eventsData?.data || [];
+  const events = eventsQuery.data?.data;
 
-  const handleCreateEvent = () => {
-    // TODO: Implementar creación de evento
-    console.log('Create event clicked');
-  };
-
-  const handleEditEvent = (eventId: string) => {
-    // TODO: Implementar edición de evento
-    console.log('Edit event:', eventId);
-  };
+  if (!events) return null;
 
   const handleViewDetails = (eventId: string) => {
-    // TODO: Implementar vista de detalles
-    console.log('View details:', eventId);
+    console.log("View details:", eventId);
   };
 
   return (
     <div className="space-y-6">
-      {/* Header Section */}
       <div className="flex items-center justify-between">
         <div className="space-y-2">
           <h1 className="text-3xl font-bold">Event Management</h1>
@@ -40,38 +39,19 @@ export const EventsContent = () => {
             Create and manage evaluation events
           </p>
         </div>
-        <Button
-          color="primary"
-          onPress={handleCreateEvent}
-          startContent={<span className="text-xl">+</span>}
-        >
-          Create event
-        </Button>
+        <CreateEventModal />
       </div>
 
-      {/* Loading State */}
-      {isLoading && (
-        <div className="text-center py-12 text-muted-foreground">
-          Loading events...
-        </div>
-      )}
-
-      {/* Events Grid */}
-      {!isLoading && (
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {events.map((event) => (
-          <Card key={event.id} className="shadow-sm">
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 ">
+        {events.map((event: Event) => (
+          <Card shadow="sm" key={event.id}>
             <CardBody className="p-6 space-y-4">
-              {/* Event Title and Description */}
               <div className="space-y-2">
                 <h3 className="text-xl font-semibold">{event.title}</h3>
-                <p className="text-sm text-default-500">
-                  {event.description}
-                </p>
+                <p className="text-sm text-default-500">{event.description}</p>
               </div>
 
-              {/* Dates */}
-              <div className="flex items-center gap-4 text-sm">
+              <div className="flex items-center gap-4 text-sm p-1">
                 <div className="flex items-center gap-2">
                   <Calendar className="h-4 w-4 text-default-400" />
                   <span className="text-default-400">Start:</span>
@@ -83,13 +63,14 @@ export const EventsContent = () => {
                   <span>{event.endDate}</span>
                 </div>
               </div>
-
-              {/* Access Code and Visibility */}
-              <div className="flex items-center justify-between">
+              <Card className="flex flex-row items-center justify-between p-1 ">
                 <div className="flex items-center gap-2">
                   <Users className="h-4 w-4 text-default-400" />
                   <span className="text-sm">
-                    Access code: <span className="font-mono font-semibold">{event.accessCode}</span>
+                    Access code:{" "}
+                    <Snippet symbol="" size="sm">
+                      {event.accessCode}
+                    </Snippet>
                   </span>
                 </div>
                 {event.isPublic && (
@@ -98,39 +79,21 @@ export const EventsContent = () => {
                     <span className="text-sm font-medium">Public</span>
                   </div>
                 )}
-              </div>
-
-              {/* Evaluations Status */}
-              <div className="flex items-center justify-between">
+              </Card>
+              <div className="flex items-center justify-between p-1">
                 <span className="text-sm text-default-400">Evaluations:</span>
                 <span
                   className={`text-sm font-medium ${
-                    event.evaluationsStatus === 'open'
-                      ? 'text-green-600'
-                      : 'text-gray-400'
+                    event.evaluationsStatus === "open"
+                      ? "text-green-600"
+                      : "text-gray-400"
                   }`}
                 >
-                  {event.evaluationsStatus === 'open' ? (
-                    <a href="#" className="flex items-center gap-1 hover:underline">
-                      Open
-                      <ExternalLink className="h-3 w-3" />
-                    </a>
-                  ) : (
-                    'Closed'
-                  )}
+                  {event.evaluationsStatus === "open" ? "Open" : "Closed"}
                 </span>
               </div>
 
-              {/* Action Buttons */}
               <div className="flex gap-2 pt-2">
-                <Button
-                  variant="bordered"
-                  size="sm"
-                  onPress={() => handleEditEvent(event.id)}
-                  startContent={<Edit className="h-4 w-4" />}
-                >
-                  Edit event
-                </Button>
                 <Button
                   variant="flat"
                   size="sm"
@@ -142,17 +105,8 @@ export const EventsContent = () => {
               </div>
             </CardBody>
           </Card>
-          ))}
-        </div>
-      )}
-
-      {/* Empty State */}
-      {!isLoading && events.length === 0 && (
-        <div className="text-center py-12">
-          <p className="text-muted-foreground">No events found</p>
-        </div>
-      )}
+        ))}
+      </div>
     </div>
   );
 };
-

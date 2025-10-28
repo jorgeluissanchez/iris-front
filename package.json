@@ -59,6 +59,7 @@
     "@heroui/tooltip": "2.2.24",
     "@heroui/user": "2.2.22",
     "@hookform/resolvers": "^5.2.2",
+    "@internationalized/date": "^3.10.0",
     "@ngneat/falso": "^8.0.2",
     "@radix-ui/react-collapsible": "^1.1.12",
     "@radix-ui/react-dialog": "^1.1.15",

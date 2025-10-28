@@ -41,6 +41,7 @@ const models = {
     description: String,
     startDate: Date.now,
     endDate: Date.now,
+    inscriptionDeadline: Date.now,
     accessCode: String,
     isPublic: Boolean,
     evaluationsStatus: String,
