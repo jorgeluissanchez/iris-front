@@ -43,8 +43,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       case 'STUDENT':
         return [
           { title: "Dashboard", url: paths.app.root.getHref(), icon: Home },
-          { title: "Events", url: paths.app.events.getHref(), icon: Calendar },
-          { title: "Discussions", url: paths.app.discussions.getHref(), icon: MessageSquare },
         ];
       case 'JURY':
         return [

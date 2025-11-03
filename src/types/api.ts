@@ -62,3 +62,23 @@ export type Event = Entity<{
   evaluationsStatus: "open" | "closed";
   createdAt: number;
 }>;
+
+export type EvaluationDetail = Entity<{
+  evaluationId: string;
+  criterion: string;
+  score: number;
+}>;
+
+export type EvaluationScoreInput = {
+  criterion: string;
+  score: number;
+};
+
+export type Evaluation = Entity<{
+  memberUserId: string;
+  evaluatorId: string;
+  grade: number;
+  comments: string;
+  scores: EvaluationScoreInput[];
+}>;
+
