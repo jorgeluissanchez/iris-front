@@ -2,6 +2,7 @@
 
 import { parseDate } from "@internationalized/date";
 import { useEffect } from "react";
+import { SquarePen } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
@@ -61,7 +62,13 @@ export const UpdateEvent = ({ eventId }: UpdateEventProps) => {
 
   return (
     <>
-      <Button size="sm" onPress={() => onOpen()}>
+      <Button
+        variant="shadow"
+        className="w-full"
+        size="sm"
+        onPress={() => onOpen()}
+      >
+        <SquarePen size={16} />
         Update Event
       </Button>
       <Modal isOpen={isOpen} onOpenChange={onOpenChange} size="2xl">
