@@ -35,9 +35,12 @@ export const paths = {
     profile: {
       getHref: () => '/app/profile',
     },
-    events :{
-      getHref:() => '/app/events'
-    }
+    events: {
+      getHref: () => '/app/events',
+    },
+    event: {
+      getHref: (id: string) => `/app/events/${id}`,
+    },
   },
   public: {
     discussion: {

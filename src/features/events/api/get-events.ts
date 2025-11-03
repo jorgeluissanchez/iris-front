@@ -10,9 +10,9 @@ export const getEvents = (
   return api.get(`/events`, { params: { page } });
 };
 
-export const getEventsQueryOptions = ({ page }: { page?: number } = {}) => {
+export const getEventsQueryOptions = ({ page = 1 }: { page?: number } = {}) => {
   return queryOptions({
-    queryKey: ["events", page],
+    queryKey: ["events", { page }],
     queryFn: () => getEvents({ page }),
   });
 };
@@ -23,7 +23,7 @@ type UseEventsOptions = {
 };
 
 export const useEvents = ({ queryConfig, page }: UseEventsOptions) => {
-  return queryOptions({
+  return useQuery({
     ...getEventsQueryOptions({ page }),
     ...queryConfig,
   });

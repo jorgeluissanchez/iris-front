@@ -1,9 +1,13 @@
-import { HttpResponse, http } from "msw";
+import { HttpResponse, http } from 'msw';
 
-import { env } from "@/config/env";
+import { env } from '@/config/env';
 
-import { db, persistDb } from "../db";
-import { requireAuth, sanitizeUser, networkDelay } from "../utils";
+import { db, persistDb } from '../db';
+import {
+  requireAuth,
+  // requireAdmin,
+  networkDelay,
+} from '../utils';
 
 type EventBody = {
   title: string;
@@ -11,7 +15,7 @@ type EventBody = {
   startDate: string;
   endDate: string;
   inscriptionDeadline?: string;
-  evaluationsStatus?: "open" | "closed";
+  evaluationsStatus?: 'open' | 'closed';
   isPublic?: boolean;
 };
 
@@ -20,13 +24,13 @@ export const eventsHandlers = [
     await networkDelay();
 
     try {
-      const { user, error } = requireAuth(cookies);
+      const { /*user,*/ error } = requireAuth(cookies);
       if (error) {
         return HttpResponse.json({ message: error }, { status: 401 });
       }
 
       const url = new URL(request.url);
-      const page = Number(url.searchParams.get("page") || 1);
+      const page = Number(url.searchParams.get('page') || 1);
 
       const total = db.event.count();
       const totalPages = Math.ceil(total / 10);
@@ -41,11 +45,9 @@ export const eventsHandlers = [
             id: event.id,
             title: event.title,
             description: event.description,
-            startDate: new Date(event.startDate).toISOString().split("T")[0],
-            endDate: new Date(event.endDate).toISOString().split("T")[0],
-            inscriptionDeadline: new Date(event.inscriptionDeadline)
-              .toISOString()
-              .split("T")[0],
+            startDate: event.startDate,
+            endDate: event.endDate,
+            inscriptionDeadline: event.inscriptionDeadline,
             accessCode: event.accessCode,
             isPublic: event.isPublic,
             evaluationsStatus: event.evaluationsStatus,
@@ -63,22 +65,22 @@ export const eventsHandlers = [
       });
     } catch (error: any) {
       return HttpResponse.json(
-        { message: error?.message || "Server Error" },
-        { status: 500 }
+        { message: error?.message || 'Server Error' },
+        { status: 500 },
       );
     }
   }),
 
-  http.get(`${env.API_URL}/events/:id`, async ({ params, cookies }) => {
+  http.get(`${env.API_URL}/events/:eventId`, async ({ params, cookies }) => {
     await networkDelay();
 
     try {
-      const { user, error } = requireAuth(cookies);
+      const { /*user,*/ error } = requireAuth(cookies);
       if (error) {
         return HttpResponse.json({ message: error }, { status: 401 });
       }
 
-      const eventId = params.id as string;
+      const eventId = params.eventId as string;
       const event = db.event.findFirst({
         where: {
           id: {
@@ -89,8 +91,8 @@ export const eventsHandlers = [
 
       if (!event) {
         return HttpResponse.json(
-          { message: "Event not found" },
-          { status: 404 }
+          { message: 'Event not found' },
+          { status: 404 },
         );
       }
 
@@ -99,8 +101,8 @@ export const eventsHandlers = [
       });
     } catch (error: any) {
       return HttpResponse.json(
-        { message: error?.message || "Server Error" },
-        { status: 500 }
+        { message: error?.message || 'Server Error' },
+        { status: 500 },
       );
     }
   }),
@@ -113,50 +115,44 @@ export const eventsHandlers = [
       if (error) {
         return HttpResponse.json({ message: error }, { status: 401 });
       }
-
       const data = (await request.json()) as EventBody;
-
-      // Generar access code único
-      const accessCode = `EVT${Date.now().toString().slice(-6)}`;
-
+      // requireAdmin(user);
+      
       const event = db.event.create({
         title: data.title,
         description: data.description,
-        startDate: new Date(data.startDate).getTime(),
-        endDate: new Date(data.endDate).getTime(),
-        inscriptionDeadline: data.inscriptionDeadline
-          ? new Date(data.inscriptionDeadline).getTime()
-          : new Date(data.startDate).getTime(),
+        startDate: data.startDate,
+        endDate: data.endDate,
+        inscriptionDeadline: data.inscriptionDeadline ?? data.startDate,
         accessCode: `EVT${Date.now().toString().slice(-6)}`,
         isPublic: data.isPublic ?? true,
-        evaluationsStatus: data.evaluationsStatus ? "open" : "closed",
+        evaluationsStatus: data.evaluationsStatus ?? 'closed',
       });
 
-      await persistDb("event");
+      await persistDb('event');
 
       return HttpResponse.json({ data: event });
     } catch (error: any) {
       return HttpResponse.json(
-        { message: error?.message || "Server Error" },
-        { status: 500 }
+        { message: error?.message || 'Server Error' },
+        { status: 500 },
       );
     }
   }),
 
-  http.put(
-    `${env.API_URL}/events/:id`,
+  http.patch(
+    `${env.API_URL}/events/:eventId`,
     async ({ params, request, cookies }) => {
       await networkDelay();
 
       try {
-        const { user, error } = requireAuth(cookies);
+        const { /*user,*/ error } = requireAuth(cookies);
         if (error) {
           return HttpResponse.json({ message: error }, { status: 401 });
         }
-
-        const eventId = params.id as string;
+        const eventId = params.eventId as string;
         const data = (await request.json()) as Partial<EventBody>;
-
+        // requireAdmin(user);
         const event = db.event.update({
           where: {
             id: {
@@ -166,44 +162,47 @@ export const eventsHandlers = [
           data: {
             ...(data.title && { title: data.title }),
             ...(data.description && { description: data.description }),
-            ...(data.startDate && {
-              startDate: new Date(data.startDate).getTime(),
+            ...(data.startDate && { startDate: data.startDate }),
+            ...(data.endDate && { endDate: data.endDate }),
+            ...(data.inscriptionDeadline && {
+              inscriptionDeadline: data.inscriptionDeadline,
             }),
-            ...(data.endDate && { endDate: new Date(data.endDate).getTime() }),
             ...(data.isPublic !== undefined && { isPublic: data.isPublic }),
+            ...(data.evaluationsStatus && {
+              evaluationsStatus: data.evaluationsStatus,
+            }),
           },
         });
 
         if (!event) {
           return HttpResponse.json(
-            { message: "Event not found" },
-            { status: 404 }
+            { message: 'Event not found' },
+            { status: 404 },
           );
         }
 
-        await persistDb("event");
+        await persistDb('event');
 
         return HttpResponse.json({ data: event });
       } catch (error: any) {
         return HttpResponse.json(
-          { message: error?.message || "Server Error" },
-          { status: 500 }
+          { message: error?.message || 'Server Error' },
+          { status: 500 },
         );
       }
-    }
+    },
   ),
 
-  http.delete(`${env.API_URL}/events/:id`, async ({ params, cookies }) => {
+  http.delete(`${env.API_URL}/events/:eventId`, async ({ params, cookies }) => {
     await networkDelay();
 
     try {
-      const { user, error } = requireAuth(cookies);
+      const { /*user,*/ error } = requireAuth(cookies);
       if (error) {
         return HttpResponse.json({ message: error }, { status: 401 });
       }
-
-      const eventId = params.id as string;
-
+      const eventId = params.eventId as string;
+      // requireAdmin(user);
       const event = db.event.delete({
         where: {
           id: {
@@ -214,18 +213,18 @@ export const eventsHandlers = [
 
       if (!event) {
         return HttpResponse.json(
-          { message: "Event not found" },
-          { status: 404 }
+          { message: 'Event not found' },
+          { status: 404 },
         );
       }
 
-      await persistDb("event");
+      await persistDb('event');
 
       return HttpResponse.json({ data: event });
     } catch (error: any) {
       return HttpResponse.json(
-        { message: error?.message || "Server Error" },
-        { status: 500 }
+        { message: error?.message || 'Server Error' },
+        { status: 500 },
       );
     }
   }),

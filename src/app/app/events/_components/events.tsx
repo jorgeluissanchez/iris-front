@@ -1,22 +1,30 @@
-import {
-  dehydrate,
-  HydrationBoundary,
-  QueryClient,
-} from "@tanstack/react-query";
+'use client';
 
-import { getEventsQueryOptions } from "@/features/events/api/get-events";
-import { EventsContent } from "./events-content";
+import { useQueryClient } from '@tanstack/react-query';
 
-export const Events = async () => {
-  const queryClient = new QueryClient();
+import { ContentLayout } from '@/components/layouts/content-layout';
+import { getEventQueryOptions } from '@/features/events/api/get-event';
+import { CreateEvent } from '@/features/events/components/create-event';
+import { EventsList } from '@/features/events/components/events-list';
 
-  await queryClient.prefetchQuery(getEventsQueryOptions());
-
-  const dehydratedState = dehydrate(queryClient);
+export const Events = () => {
+  const queryClient = useQueryClient();
 
   return (
-    <HydrationBoundary state={dehydratedState}>
-      <EventsContent />
-    </HydrationBoundary>
+    <ContentLayout title="Events">
+      <div className="flex justify-end">
+        <CreateEvent />
+      </div>
+      <div className="mt-4">
+        <EventsList
+          onEventPrefetch={(id) => {
+            // Prefetch the event data when the user hovers over the link in the list
+            queryClient.prefetchQuery(
+              getEventQueryOptions(id),
+            );
+          }}
+        />
+      </div>
+    </ContentLayout>
   );
 };
