@@ -35,6 +35,18 @@ const models = {
     discussionId: String,
     createdAt: Date.now,
   },
+  event: {
+    id: primaryKey(nanoid),
+    title: String,
+    description: String,
+    startDate: String,
+    endDate: String,
+    inscriptionDeadline: String,
+    accessCode: String,
+    isPublic: Boolean,
+    evaluationsStatus: String,
+    createdAt: Date.now,
+  },
 };
 
 export const db = factory(models);

@@ -14,6 +14,18 @@ export const canViewUsers = (user: User | null | undefined) => {
   return user?.role === 'ADMIN';
 };
 
+export const canCreateEvent = (user: User | null | undefined) => {
+  return user?.role === 'ADMIN';
+};
+
+export const canDeleteEvent = (user: User | null | undefined) => {
+  return user?.role === 'ADMIN';
+};
+
+export const canUpdateEvent = (user: User | null | undefined) => {
+  return user?.role === 'ADMIN';
+};
+
 export const canDeleteComment = (
   user: User | null | undefined,
   comment: Comment,
@@ -22,7 +34,8 @@ export const canDeleteComment = (
     return true;
   }
 
-  if (user?.role === 'USER' && comment.author?.id === user.id) {
+  // STUDENT y JURY pueden eliminar sus propios comentarios
+  if ((user?.role === 'STUDENT' || user?.role === 'JURY') && comment.author?.id === user.id) {
     return true;
   }
 

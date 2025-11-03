@@ -75,3 +75,23 @@ export const createComment = <
 ) => {
   return { ...generateComment(), ...overrides };
 };
+
+const generateEvent = () => ({
+  id: randUuid(),
+  title: randCatchPhrase(),
+  description: randParagraph(),
+  startDate: Date.now() - Math.random() * 30 * 24 * 60 * 60 * 1000, // Last 30 days
+  endDate: Date.now() + Math.random() * 30 * 24 * 60 * 60 * 1000, // Next 30 days
+  accessCode: `EVT${Math.random().toString(36).substring(2, 8).toUpperCase()}`,
+  isPublic: Math.random() > 0.5,
+  evaluationsStatus: Math.random() > 0.5 ? 'open' : 'closed',
+  createdAt: Date.now(),
+});
+
+export const createEvent = <
+  T extends Partial<ReturnType<typeof generateEvent>>,
+>(
+  overrides?: T,
+) => {
+  return { ...generateEvent(), ...overrides };
+};

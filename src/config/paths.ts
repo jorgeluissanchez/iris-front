@@ -1,3 +1,5 @@
+import { getHash } from "next/dist/server/image-optimizer";
+
 export const paths = {
   home: {
     getHref: () => '/',
@@ -32,6 +34,12 @@ export const paths = {
     },
     profile: {
       getHref: () => '/app/profile',
+    },
+    events: {
+      getHref: () => '/app/events',
+    },
+    event: {
+      getHref: (id: string) => `/app/events/${id}`,
     },
   },
   public: {

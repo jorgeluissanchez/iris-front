@@ -12,6 +12,7 @@ import { ThemeProvider as NextThemesProvider } from "next-themes";
 import { MainErrorFallback } from '@/components/errors/main';
 import { Notifications } from '@/components/ui/notifications';
 import { queryConfig } from '@/lib/react-query';
+import { enableMocking } from '@/testing/mocks';
 
 export interface ProvidersProps {
   children: React.ReactNode;
@@ -27,6 +28,7 @@ declare module "@react-types/shared" {
 }
 
 export function Providers({ children, themeProps }: ProvidersProps) {
+  const [mswReady, setMswReady] = React.useState(false);
   const [queryClient] = React.useState(
     () =>
       new QueryClient({
@@ -35,6 +37,16 @@ export function Providers({ children, themeProps }: ProvidersProps) {
   );
   
   const router = useRouter();
+
+  React.useEffect(() => {
+    enableMocking().then(() => {
+      setMswReady(true);
+    });
+  }, []);
+
+  if (!mswReady) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <ErrorBoundary FallbackComponent={MainErrorFallback}>

@@ -21,7 +21,7 @@ export type User = Entity<{
   firstName: string;
   lastName: string;
   email: string;
-  role: 'ADMIN' | 'USER';
+  role: "ADMIN" | "STUDENT" | "JURY";
   teamId: string;
   bio: string;
 }>;
@@ -48,4 +48,17 @@ export type Comment = Entity<{
   body: string;
   discussionId: string;
   author: User;
+}>;
+
+export type Event = Entity<{
+  id: string;
+  title: string;
+  description: string;
+  startDate: string;
+  endDate: string;
+  inscriptionDeadline: string;
+  accessCode: string;
+  isPublic: boolean;
+  evaluationsStatus: "open" | "closed";
+  createdAt: number;
 }>;

@@ -2,21 +2,21 @@
 
 import * as React from "react"
 import {
-  Frame,
   GalleryVerticalEnd,
-  Map,
-  PieChart,
-  Shield,
-  Users,
+  Home,
+  MessageSquare,
+  Calendar,
+  Users as UsersIcon,
+  type LucideIcon,
 } from "lucide-react"
 
-import { NavMain } from "./nav-main"
-import { NavProjects } from "./nav-projects"
 import { NavUser } from "./nav-user"
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
+  SidebarGroup,
+  SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
@@ -30,6 +30,37 @@ import { Link } from "@/components/ui/link"
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const user = useUser();
+  
+  const getMenuItems = (): { title: string; url: string; icon: LucideIcon }[] => {
+    switch (user.data?.role) {
+      case 'ADMIN':
+        return [
+          { title: "Dashboard", url: paths.app.root.getHref(), icon: Home },
+          { title: "Events", url: paths.app.events.getHref(), icon: Calendar },
+          { title: "Discussions", url: paths.app.discussions.getHref(), icon: MessageSquare },
+          { title: "Users", url: paths.app.users.getHref(), icon: UsersIcon },
+        ];
+      case 'STUDENT':
+        return [
+          { title: "Dashboard", url: paths.app.root.getHref(), icon: Home },
+          { title: "Events", url: paths.app.events.getHref(), icon: Calendar },
+          { title: "Discussions", url: paths.app.discussions.getHref(), icon: MessageSquare },
+        ];
+      case 'JURY':
+        return [
+          { title: "Dashboard", url: paths.app.root.getHref(), icon: Home },
+          { title: "Events", url: paths.app.events.getHref(), icon: Calendar },
+          { title: "Discussions", url: paths.app.discussions.getHref(), icon: MessageSquare },
+        ];
+      default:
+        return [
+          { title: "Dashboard", url: paths.app.root.getHref(), icon: Home },
+        ];
+    }
+  };
+  
+  const menuItems = getMenuItems();
+  
   const data = {
     user: {
       name: user.data?.firstName + " " + user.data?.lastName,
@@ -40,57 +71,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       logo: GalleryVerticalEnd,
       url: "#",
     },
-    navMain: user.data?.role === 'ADMIN' ? [{
-      title: "Admin",
-      url: "#",
-      icon: Shield,
-      items: [
-        {
-          title: "Dashboard",
-          url: paths.app.root.getHref(),
-        },
-        {
-          title: "Discussions",
-          url: paths.app.discussions.getHref(),
-        },
-        {
-          title: "Users",
-          url: paths.app.users.getHref(),
-        },
-      ],
-    }] : [{
-      title: "User",
-      url: "#",
-      icon: Users,
-      items: [
-        {
-          title: "Dashboard",
-          url: paths.app.root.getHref(),
-        },
-        {
-          title: "Discussions",
-          url: paths.app.discussions.getHref(),
-        },
-      ],
-    }],
-    projects: [
-      {
-        name: "Design Engineering",
-        url: "#",
-        icon: Frame,
-      },
-      {
-        name: "Sales & Marketing",
-        url: "#",
-        icon: PieChart,
-      },
-      {
-        name: "Travel",
-        url: "#",
-        icon: Map,
-      },
-    ],
   }
+  
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
@@ -109,8 +91,21 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={data.navMain} />
-        <NavProjects projects={data.projects} />
+        <SidebarGroup>
+          <SidebarGroupLabel>Navigation</SidebarGroupLabel>
+          <SidebarMenu>
+            {menuItems.map((item) => (
+              <SidebarMenuItem key={item.title}>
+                <SidebarMenuButton asChild>
+                  <Link href={item.url}>
+                    <item.icon />
+                    <span>{item.title}</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            ))}
+          </SidebarMenu>
+        </SidebarGroup>
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={data.user} />
