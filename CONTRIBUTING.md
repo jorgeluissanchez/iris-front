@@ -106,42 +106,12 @@ El título del Pull Request debe seguir el mismo formato que los commits: `<tipo
 
 #### Template de Pull Request
 
-**Al crear un Pull Request, utiliza el siguiente template:**
+Al crear un Pull Request en GitHub, **automáticamente se cargará un template** (ubicado en `.github/pull_request_template.md`) que incluye:
 
-```markdown
-## 📝 Descripción
+- **Descripción**: Resumen de los cambios
+- **Tipo de cambio**: Checkboxes para identificar el tipo (bug fix, feature, etc.)
+- **Capturas y videos**: Espacio para evidencia visual
+- **Checklist**: Verificaciones obligatorias antes de enviar el PR
+- **Issues relacionados**: Referencias a issues que resuelve o relaciona
 
-Breve resumen de los cambios realizados.
-
-## 🎯 Tipo de cambio
-
-- [ ] 🐛 Bug fix (cambio que corrige un error)
-- [ ] ✨ Nueva feature (cambio que agrega funcionalidad)
-- [ ] 💥 Breaking change (cambio que rompe compatibilidad)
-- [ ] 📝 Documentación
-- [ ] 🎨 Estilos
-- [ ] ♻️ Refactor
-- [ ] ⚡ Mejora de rendimiento
-- [ ] ✅ Tests
-
-## 📸 Capturas y videos (si aplican)
-
-Agrega imágenes o GIFs mostrando los cambios.
-
-## 📋 Checklist
-
-- [ ] Mi código sigue los estándares del proyecto
-- [ ] He realizado auto-revisión de mi código
-- [ ] He comentado código complejo cuando es necesario
-- [ ] He actualizado la documentación
-- [ ] Mis cambios no generan nuevas advertencias
-- [ ] He agregado tests que prueban mi feature/fix
-- [ ] Todos los tests nuevos y existentes pasan
-- [ ] Los commits siguen la convención establecida
-- [ ] La rama está actualizada con `main`
-
-## 🔗 Issues relacionados
-
-Fixes #123
-Refs #456
-```
+**Completa todas las secciones del template** antes de solicitar revisión.
