@@ -1,25 +1,30 @@
-'use client';
+"use client";
 
-import { parseDate } from '@internationalized/date';
+import { parseDate } from "@internationalized/date";
+import { useEffect } from "react";
+import { SquarePen } from "lucide-react";
 
-import { Button } from '@/components/ui/button';
-import { Form } from '@/components/ui/form';
-import { Textarea } from '@/components/ui/textarea';
-import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter } from '@/components/ui/modal';
-import { useDisclosure } from '@heroui/use-disclosure';
-import { useNotifications } from '@/components/ui/notifications';
-import { useUser } from '@/lib/auth';
-import { canUpdateEvent } from '@/lib/authorization';
-
-import { useEvent } from '../api/get-event';
+import { Button } from "@/components/ui/button";
+import { Form } from "@/components/ui/form";
+import { Textarea } from "@/components/ui/textarea";
 import {
-  updateEventInputSchema,
-  useUpdateEvent,
-} from '../api/update-event';
-import { Input } from '@/components/ui/input';
-import { Switch } from '@/components/ui/switch';
-import { DatePicker } from '@/components/ui/date-picker';
-import { cn } from '@/utils/cn';
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+} from "@/components/ui/modal";
+import { useDisclosure } from "@heroui/use-disclosure";
+import { useNotifications } from "@/components/ui/notifications";
+import { useUser } from "@/lib/auth";
+import { canUpdateEvent } from "@/lib/authorization";
+
+import { useEvent } from "../api/get-event";
+import { updateEventInputSchema, useUpdateEvent } from "../api/update-event";
+import { Input } from "@/components/ui/input";
+import { Switch } from "@/components/ui/switch";
+import { DatePicker } from "@/components/ui/date-picker";
+import { cn } from "@/utils/cn";
 
 type UpdateEventProps = {
   eventId: string;
@@ -33,13 +38,19 @@ export const UpdateEvent = ({ eventId }: UpdateEventProps) => {
     mutationConfig: {
       onSuccess: () => {
         addNotification({
-          type: 'success',
-          title: 'Event Updated',
+          type: "success",
+          title: "Event Updated",
         });
         onClose();
       },
     },
   });
+
+  useEffect(() => {
+    if (isOpen) {
+      eventQuery.refetch();
+    }
+  }, [isOpen, eventQuery]);
 
   const user = useUser();
 
@@ -51,7 +62,15 @@ export const UpdateEvent = ({ eventId }: UpdateEventProps) => {
 
   return (
     <>
-      <Button size="sm" onPress={() => onOpen()}>Update Event</Button>
+      <Button
+        variant="shadow"
+        className="w-full"
+        size="sm"
+        onPress={() => onOpen()}
+      >
+        <SquarePen size={16} />
+        Update Event
+      </Button>
       <Modal isOpen={isOpen} onOpenChange={onOpenChange} size="2xl">
         <ModalContent>
           {(onClose) => (
@@ -66,9 +85,10 @@ export const UpdateEvent = ({ eventId }: UpdateEventProps) => {
                 const rawData = Object.fromEntries(formData);
                 const data = {
                   ...rawData,
-                  evaluationsStatus: rawData.evaluationsStatus === "" ? "open" : "closed",
+                  evaluationsStatus:
+                    rawData.evaluationsStatus === "" ? "open" : "closed",
                 };
-                
+
                 const values = await updateEventInputSchema.parseAsync(data);
                 await updateEventMutation.mutateAsync({
                   data: values,
@@ -76,45 +96,55 @@ export const UpdateEvent = ({ eventId }: UpdateEventProps) => {
                 });
               }}
             >
-              <ModalHeader className="flex flex-col gap-1">Update Event</ModalHeader>
+              <ModalHeader className="flex flex-col gap-1">
+                Update Event
+              </ModalHeader>
               <ModalBody className="space-y-4 w-full">
                 <Input
                   label="Title"
                   name="title"
-                  defaultValue={event?.title ?? ''}
+                  defaultValue={event?.title ?? ""}
                 />
                 <Textarea
                   label="Description"
                   name="description"
-                  defaultValue={event?.description ?? ''}
+                  defaultValue={event?.description ?? ""}
                 />
                 <DatePicker
                   label="Start Date"
                   name="startDate"
-                  defaultValue={event?.startDate ? parseDate(event.startDate) : undefined}
+                  defaultValue={
+                    event?.startDate ? parseDate(event.startDate) : undefined
+                  }
                   isRequired
                 />
                 <DatePicker
                   label="End Date"
                   name="endDate"
-                  defaultValue={event?.endDate ? parseDate(event.endDate) : undefined}
+                  defaultValue={
+                    event?.endDate ? parseDate(event.endDate) : undefined
+                  }
                   isRequired
                 />
                 <DatePicker
                   label="Inscription Deadline"
                   name="inscriptionDeadline"
-                  defaultValue={event?.inscriptionDeadline ? parseDate(event.inscriptionDeadline) : undefined}
+                  defaultValue={
+                    event?.inscriptionDeadline
+                      ? parseDate(event.inscriptionDeadline)
+                      : undefined
+                  }
                   isRequired
                 />
 
                 <Switch
                   name="evaluationsStatus"
-                  defaultSelected={event?.evaluationsStatus === 'open'}
+                  defaultSelected={event?.evaluationsStatus === "open"}
                   classNames={{
                     base: cn(
                       "inline-flex flex-row-reverse w-full max-w-md bg-gray-200 hover:bg-gray-300 items-center",
                       "justify-between cursor-pointer rounded-lg gap-2 p-4 border-2 border-transparent",
-                      "data-[selected=true]:border-gray-400",
+                      "data-[selected=true]:border-gray-400"
                     ),
                     wrapper: "p-0 h-4 overflow-visible",
                     thumb: cn(
@@ -124,7 +154,7 @@ export const UpdateEvent = ({ eventId }: UpdateEventProps) => {
                       "group-data-[selected=true]:ms-6",
                       // pressed
                       "group-data-[pressed=true]:w-7",
-                      "group-data-pressed:group-data-selected:ms-4",
+                      "group-data-pressed:group-data-selected:ms-4"
                     ),
                   }}
                 >
@@ -137,7 +167,11 @@ export const UpdateEvent = ({ eventId }: UpdateEventProps) => {
                 </Switch>
               </ModalBody>
               <ModalFooter>
-                <Button type="submit" isLoading={updateEventMutation.isPending} disabled={updateEventMutation.isPending}>
+                <Button
+                  type="submit"
+                  isLoading={updateEventMutation.isPending}
+                  disabled={updateEventMutation.isPending}
+                >
                   Save Changes
                 </Button>
               </ModalFooter>
@@ -148,4 +182,3 @@ export const UpdateEvent = ({ eventId }: UpdateEventProps) => {
     </>
   );
 };
-

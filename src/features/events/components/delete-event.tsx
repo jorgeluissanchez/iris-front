@@ -1,14 +1,20 @@
-'use client';
+"use client";
 
-import { Trash } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter } from '@/components/ui/modal';
-import { useNotifications } from '@/components/ui/notifications';
-import { useUser } from '@/lib/auth';
-import { canDeleteEvent } from '@/lib/authorization';
+import { Trash } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import {
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+} from "@/components/ui/modal";
+import { useNotifications } from "@/components/ui/notifications";
+import { useUser } from "@/lib/auth";
+import { canDeleteEvent } from "@/lib/authorization";
 
-import { useDeleteEvent } from '../api/delete-event';
-import { useDisclosure } from '@heroui/use-disclosure';
+import { useDeleteEvent } from "../api/delete-event";
+import { useDisclosure } from "@heroui/use-disclosure";
 
 type DeleteEventProps = {
   id: string;
@@ -22,8 +28,8 @@ export const DeleteEvent = ({ id }: DeleteEventProps) => {
     mutationConfig: {
       onSuccess: () => {
         addNotification({
-          type: 'success',
-          title: 'Event Deleted',
+          type: "success",
+          title: "Event Deleted",
         });
         onClose();
       },
@@ -36,7 +42,16 @@ export const DeleteEvent = ({ id }: DeleteEventProps) => {
 
   return (
     <>
-    <Button size="sm" onPress={() => onOpen()}> Delete Event</Button>
+      <Button
+        variant="shadow"
+        className="w-full"
+        size="sm"
+        color="danger"
+        onPress={() => onOpen()}
+      >
+        <Trash size={16} />
+        Delete Event
+      </Button>
       <Modal isOpen={isOpen} onOpenChange={onOpenChange} size="2xl">
         <ModalContent>
           {(onClose) => (
@@ -53,9 +68,12 @@ export const DeleteEvent = ({ id }: DeleteEventProps) => {
                 <Button color="danger" variant="light" onPress={onClose}>
                   Cancel
                 </Button>
-                <Button color="primary" isLoading={deleteEventMutation.isPending} onPress={() => deleteEventMutation.mutate({ eventId: id })}
+                <Button
+                  color="primary"
+                  isLoading={deleteEventMutation.isPending}
+                  onPress={() => deleteEventMutation.mutate({ eventId: id })}
                   startContent={<Trash className="size-4" />}
-                  >
+                >
                   Delete Event
                 </Button>
               </ModalFooter>

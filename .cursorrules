@@ -1,0 +1,53 @@
+# Reglas para Cursor AI
+
+## Generación de Commits
+
+Al generar mensajes de commit, SIEMPRE sigue el formato Conventional Commits establecido en CONTRIBUTING.md:
+
+### Formato
+```
+<tipo>(<alcance>): <descripción breve>
+```
+
+### Tipos de Commit Permitidos
+
+- `feat` - Nueva funcionalidad
+- `fix` - Corrección de bug
+- `docs` - Cambios en documentación
+- `style` - Formato, punto y coma (sin cambios de código)
+- `refactor` - Refactorización de código
+- `perf` - Mejora de rendimiento
+- `test` - Agregar o modificar tests
+- `chore` - Cambios en build, herramientas, etc.
+
+### Reglas para el Mensaje de Commit
+
+1. **Tipo**: Debe ser uno de los tipos listados arriba
+2. **Alcance** (opcional): El módulo o feature afectado (events, auth, teams, ui, api, etc.)
+3. **Descripción breve**:
+   - Máximo 72 caracteres
+   - Usa imperativo ("agregar", no "agregado" ni "agrega")
+   - Sin punto final
+   - Empieza con minúscula después del tipo
+   - En español
+
+### Ejemplos de Buenos Commits
+
+```
+feat(events): agregar filtro por fecha
+fix(auth): corregir redirección de login
+docs(readme): actualizar instrucciones
+style(components): formatear con prettier
+refactor(api): simplificar manejo de error
+perf(list): optimizar renderizado
+test(teams): agregar tests unitarios
+chore(deps): actualizar dependencias
+```
+
+### NO Hacer
+
+❌ `update files` - No usar verbos genéricos en inglés
+❌ `Fix bug` - No capitalizar después del tipo
+❌ `feat: new feature for events page.` - No usar punto final
+❌ `Added new filter` - No usar pasado
+❌ `feat(events): Se agregó un nuevo filtro para eventos que permite...` - Demasiado largo, ni multi lineas
