@@ -1,5 +1,5 @@
 "use client";
-
+import { Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
@@ -45,6 +45,7 @@ export const CreateEvent = () => {
   return (
     <>
       <Button size="sm" onPress={() => onOpen()}>
+        <Plus size={16} />
         Create Event
       </Button>
       <Modal isOpen={isOpen} onOpenChange={onOpenChange} size="2xl">
