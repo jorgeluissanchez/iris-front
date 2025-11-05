@@ -62,3 +62,44 @@ export type Event = Entity<{
   evaluationsStatus: "open" | "closed";
   createdAt: number;
 }>;
+
+export type Project = Entity<{
+  id: number;
+  eventId: number;
+  courseId: number;
+  name: string;
+  description?: string;
+  eventNumber?: string;
+  state: "UNDER_REVIEW" | "APPROVED" | "REJECTED";
+  createdAt: number;
+  updatedAt: number;
+
+  documents: ProjectDocument[];
+  participants: ProjectParticipant[];
+  juryAssignments: ProjectAssignment[]
+}>;
+
+export type ProjectDocument = Entity<{
+  id: number;
+  projectId: number;
+  url: string;
+  createdAt: number;
+  project: Project;
+}>;
+
+export type ProjectParticipant = Entity<{
+  userId: number;
+  projectId: number;
+  studentCode?: number;
+  project: Project;
+}>;
+
+export type ProjectAssignment = Entity<{
+  projectId: number;
+  memberUserId: number;
+  memberEventId: number;
+  memberRoleId: number;
+  assigneAt: Date;
+  updatedAt: Date;
+  project: Project;
+}>;
