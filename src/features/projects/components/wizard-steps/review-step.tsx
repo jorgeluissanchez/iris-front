@@ -76,7 +76,7 @@ export function ReviewStep({ data }: ReviewStepProps) {
             </div>
             <div>
               <p className="text-sm font-medium text-default-500">Curso</p>
-              <p className="mt-1">{data.project.course || "No especificado"}</p>
+              <p className="mt-1">{data.project.courseId || "No especificado"}</p>
             </div>
           </div>
         </CardBody>

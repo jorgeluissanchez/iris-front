@@ -1,19 +1,38 @@
 import { api } from "@/lib/api-client";
 import { Project } from "@/types/api";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { MutationConfig } from "@/lib/react-query";
+import { getProjectsQueryOptions } from "./get-projects";
 import { z } from "zod";
 
-const projectSchema = z.object({
-  id: z.string().uuid(),
+export const createProjectInputSchema = z.object({
   name: z.string().min(2).max(100),
   description: z.string().max(500).optional(),
-  eventId: z.string().uuid(),
-  courseId: z.number().min(1).optional(),
-  state: z.enum(["DRAFT", "UNDER_REVIEW", "PUBLISHED"]),
+  eventId: z.string(),
+  logo: z.string(),
+  courseId: z.string(),
 });
-export type CreateProjectInput = z.infer<typeof projectSchema>;
+export type CreateProjectInput = z.infer<typeof createProjectInputSchema>;
 
 export const createProject = ({ data }: { data: CreateProjectInput }): Promise<Project> => {
     return api.post(`/projects`, data);
+};
+
+type UseCreateProjectOptions = {
+  mutationConfig?: MutationConfig<typeof createProject>;
+};
+export const useCreateProject = ({ mutationConfig }: UseCreateProjectOptions = {}) => {
+  const queryClient = useQueryClient();
+    const { onSuccess, ...restConfig } = mutationConfig || {};
+    return useMutation({
+      onSuccess: (...args) => {
+        queryClient.invalidateQueries({
+            queryKey: getProjectsQueryOptions().queryKey,
+        });
+        onSuccess?.(...args);
+      },
+      ...restConfig,
+      mutationFn: createProject,
+    });
 };
 

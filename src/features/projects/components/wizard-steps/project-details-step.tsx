@@ -5,26 +5,17 @@ import { Textarea } from "@heroui/input"
 import { Select, SelectItem } from "@heroui/select"
 import { ProjectData } from "../project-wizard"
 import { LogoUpload } from "../image-crop/logo-upload"
+import { useEventCourses } from "@/features/course/api/get-course"
 
 type ProjectDetailsStepProps = {
+  eventId: string
   project: ProjectData
   onUpdate: (project: ProjectData) => void
 }
 
-const courses = [
-  { key: "industrial", label: "Ingeniería Industrial" },
-  { key: "mecanica", label: "Ingeniería Mecánica" },
-  { key: "civil", label: "Ingeniería Civil" },
-  { key: "electrica", label: "Ingeniería Eléctrica" },
-  { key: "sistemas", label: "Ingeniería de Sistemas" },
-  { key: "quimica", label: "Ingeniería Química" },
-  { key: "arquitectura", label: "Arquitectura" },
-  { key: "administracion", label: "Administración de Empresas" },
-  { key: "economia", label: "Economía" },
-  { key: "otro", label: "Otro" },
-]
+export function ProjectDetailsStep({eventId, project, onUpdate }: ProjectDetailsStepProps) {
+  const { data: courses, isLoading, isError } = useEventCourses({ eventId })
 
-export function ProjectDetailsStep({ project, onUpdate }: ProjectDetailsStepProps) {
   return (
     <div className="space-y-6">
       <Input
@@ -44,19 +35,20 @@ export function ProjectDetailsStep({ project, onUpdate }: ProjectDetailsStepProp
         description="Incluya el problema que resuelve, la metodología y los resultados esperados."
       />
 
-      <Select
+     <Select
         label="Curso al que Pertenece"
-        placeholder="Seleccione un curso"
-        selectedKeys={project.course ? [project.course] : []}
+        placeholder={isLoading ? "Cargando cursos..." : "Seleccione un curso"}
+        selectedKeys={project.courseId ? [project.courseId] : []}
         onSelectionChange={(keys) => {
           const selected = Array.from(keys)[0] as string
-          onUpdate({ ...project, course: selected })
+          onUpdate({ ...project, courseId: selected })
         }}
+        isDisabled={isLoading || isError}
         isRequired
       >
-        {courses.map((course) => (
-          <SelectItem key={course.key}>
-            {course.label}
+        {(courses ?? []).map((course: any) => (
+          <SelectItem key={String(course.id)}>
+            {course.code}
           </SelectItem>
         ))}
       </Select>

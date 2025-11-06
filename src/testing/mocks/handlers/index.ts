@@ -11,6 +11,7 @@ import { eventsHandlers } from './events';
 import { teamsHandlers } from './teams';
 import { usersHandlers } from './users';
 import { projectsHandlers } from './projects';
+import { coursesHandlers } from './courses';
 
 export const handlers = [
   ...authHandlers,
@@ -20,6 +21,7 @@ export const handlers = [
   ...teamsHandlers,
   ...usersHandlers,
   ...projectsHandlers,
+  ...coursesHandlers,
   http.get(`${env.API_URL}/healthcheck`, async () => {
     await networkDelay();
     return HttpResponse.json({ ok: true });

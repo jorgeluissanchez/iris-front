@@ -64,42 +64,49 @@ export type Event = Entity<{
 }>;
 
 export type Project = Entity<{
-  id: number;
-  eventId: number;
-  courseId: number;
+  id: string;
+  eventId: string;
+  courseId: string;
   name: string;
   description?: string;
   eventNumber?: string;
+  logo: string;
   state: "UNDER_REVIEW" | "APPROVED" | "REJECTED";
   createdAt: number;
   updatedAt: number;
 
-  documents: ProjectDocument[];
-  participants: ProjectParticipant[];
-  juryAssignments: ProjectAssignment[]
 }>;
 
 export type ProjectDocument = Entity<{
-  id: number;
-  projectId: number;
+  id: string;
+  projectId: string;
   url: string;
   createdAt: number;
   project: Project;
 }>;
 
 export type ProjectParticipant = Entity<{
-  userId: number;
-  projectId: number;
-  studentCode?: number;
+  userId: string;
+  projectId: string;
+  studentCode?: string;
   project: Project;
 }>;
 
 export type ProjectAssignment = Entity<{
-  projectId: number;
-  memberUserId: number;
-  memberEventId: number;
-  memberRoleId: number;
+  projectId: string;
+  memberUserId: string;
+  memberEventId: string;
+  memberRoleId: string;
   assigneAt: Date;
   updatedAt: Date;
   project: Project;
+}>;
+
+export type Course = Entity<{
+  id: string;
+  eventId: string;
+  code: string;
+  description?: string;
+  active: boolean;
+  createdAt: number;
 }>;
