@@ -1,28 +1,25 @@
-"use client";
+'use client';
 
-import { ContentLayout } from "@/components/layouts/content-layout";
-import SelectEventsComponent from "@/features/projects/components/events-list";
+import { useSearchParams } from 'next/navigation';
 
-import { useQuery } from "@tanstack/react-query";
-import { getSelectEvents } from "@/features/events/api/get-events";
-import { SelectEventsComponentProps } from "@/features/projects/components/events-list";
+import { ContentLayout } from '@/components/layouts/content-layout';
+import { ProjectsListByEvent } from '@/features/projects/components/projects-list-by-event';
+import { ProjectsList } from '@/features/projects/components/projects-list';
+import { EventsDropdown } from '@/features/projects/components/events-dropdown';
+import { CreateProject } from '@/features/projects/components/create-project';
 
 export const Projects = () => {
-  const { data, isLoading, isError } = useQuery({
-    queryKey: ["selectEvents"],
-    queryFn: getSelectEvents,
-  });
-
-  const events: SelectEventsComponentProps["data"] = data?.data || [];
+  const searchParams = useSearchParams();
+  const eventId = searchParams?.get("event");
 
   return (
     <ContentLayout title="Projects">
-      <div>
-        <SelectEventsComponent
-          data={events}
-          isLoading={isLoading}
-          isError={isError}
-        />
+      <div className="flex justify-end gap-2">
+        <EventsDropdown />
+        <CreateProject />
+      </div>
+      <div className="mt-4">
+        {eventId ? <ProjectsListByEvent /> : <ProjectsList />}
       </div>
     </ContentLayout>
   );

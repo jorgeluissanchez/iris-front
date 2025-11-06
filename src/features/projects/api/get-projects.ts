@@ -10,9 +10,7 @@ export const getProjects = (
   return api.get(`/projects`, { params: { page } });
 };
 
-export const getProjectsQueryOptions = ({
-  page = 1,
-}: { page?: number } = {}) => {
+export const getProjectsQueryOptions = ({ page = 1 }: { page?: number } = {}) => {
   return queryOptions({
     queryKey: ["projects", { page }],
     queryFn: () => getProjects({ page }),
