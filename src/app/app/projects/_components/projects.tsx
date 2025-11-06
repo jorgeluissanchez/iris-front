@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams } from "next/navigation";
 
-import { ContentLayout } from '@/components/layouts/content-layout';
-import { ProjectList } from '@/features/projects/components/project-list';
-import { EventsDropdown } from '@/features/projects/components/events-dropdown';
-import { CreateProject } from '@/features/projects/components/create-project';
+import { ContentLayout } from "@/components/layouts/content-layout";
+import { ProjectList } from "@/features/projects/components/project-list";
+import { EventsDropdown } from "@/features/projects/components/events-dropdown";
+import { CreateProject } from "@/features/projects/components/create-project";
 
 export const Projects = () => {
   const searchParams = useSearchParams();
@@ -13,7 +13,7 @@ export const Projects = () => {
 
   return (
     <ContentLayout title="Projects">
-      <div className="flex justify-end gap-2">
+      <div className="flex justify-between items-center">
         <EventsDropdown />
         <CreateProject />
       </div>

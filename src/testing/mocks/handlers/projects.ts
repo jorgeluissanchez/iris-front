@@ -33,26 +33,33 @@ export const projectsHandlers = [
       const url = new URL(request.url);
       const page = Number(url.searchParams.get("page") || 1);
 
-      const total = db.project.count();
-      const totalPages = Math.ceil(total / 10);
+      // support filtering by multiple events via CSV in `event` query param
+      const eventParam = url.searchParams.get("event");
+      let allProjects = db.project.getAll().map((project) => ({
+        id: project.id,
+        title: project.title,
+        description: project.description,
+        eventId: project.eventId,
+        teamMembers: project.teamMembers,
+        teamId: project.teamId,
+        isPublic: project.isPublic,
+        createdAt: project.createdAt,
+        submittedAt: project.submittedAt,
+        approvedAt: project.approvedAt,
+      }));
 
-      const projects = db.project
-        .findMany({
-          take: 10,
-          skip: 10 * (page - 1),
-        })
-        .map((project) => ({
-          id: project.id,
-          title: project.title,
-          description: project.description,
-          eventId: project.eventId,
-          teamMembers: project.teamMembers,
-          teamId: project.teamId,
-          isPublic: project.isPublic,
-          createdAt: project.createdAt,
-          submittedAt: project.submittedAt,
-          approvedAt: project.approvedAt,
-        }));
+      if (eventParam) {
+        const eventIds = eventParam
+          .split(",")
+          .map((s) => s.trim())
+          .filter(Boolean);
+        allProjects = allProjects.filter((p) => eventIds.includes(p.eventId));
+      }
+
+      const total = allProjects.length;
+      const totalPages = Math.ceil(total / 10) || 1;
+
+      const projects = allProjects.slice(10 * (page - 1), 10 * page);
 
       return HttpResponse.json({
         data: projects,
