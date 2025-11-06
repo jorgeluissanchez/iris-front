@@ -9,7 +9,8 @@ import { DocumentsStep } from "./wizard-steps/documents-step"
 import { ReviewStep } from "./wizard-steps/review-step"
 import { CheckCircle2, FileText, Users, Upload } from "lucide-react"
 import { cn } from "@/utils/cn"
-import { url } from "inspector"
+import { z } from "zod"
+import { participantSchema, projectSchema, documentsSchema } from "../schemas/wizard-schema"
 
 export type Participant = {
   id: string
@@ -49,6 +50,7 @@ type ProjectWizardProps = {
 
 export function ProjectWizard({ eventId }: ProjectWizardProps) {
   const [currentStep, setCurrentStep] = useState(1)
+  const [stepErrors, setStepErrors] = useState<string[]>([])
   const [wizardData, setWizardData] = useState<WizardData>({
     participants: [],
     project: {
@@ -74,14 +76,48 @@ export function ProjectWizard({ eventId }: ProjectWizardProps) {
     setWizardData((prev) => ({ ...prev, documents }))
   }
 
+  const validateStep = (step: number): boolean => {
+    setStepErrors([])
+    
+    try {
+      switch (step) {
+        case 1: // Participantes
+          z.array(participantSchema)
+            .min(1, 'Debe agregar al menos un participante')
+            .parse(wizardData.participants)
+          return true
+        
+        case 2: // Proyecto
+          projectSchema.parse(wizardData.project)
+          return true
+        
+        case 3: // Documentos
+          documentsSchema.parse(wizardData.documents)
+          return true
+        
+        default:
+          return true
+      }
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        const messages = error.issues.map((e) => e.message)
+        setStepErrors(messages)
+      }
+      return false
+    }
+  }
+
   const handleNext = () => {
-    if (currentStep < steps.length) {
-      setCurrentStep(currentStep + 1)
+    if (validateStep(currentStep)) {
+      if (currentStep < steps.length) {
+        setCurrentStep(currentStep + 1)
+      }
     }
   }
 
   const handleBack = () => {
     if (currentStep > 1) {
+      setStepErrors([])
       setCurrentStep(currentStep - 1)
     }
   }
@@ -201,6 +237,18 @@ export function ProjectWizard({ eventId }: ProjectWizardProps) {
           {currentStep === 2 && <ProjectDetailsStep project={wizardData.project} onUpdate={updateProject} />}
           {currentStep === 3 && <DocumentsStep documents={wizardData.documents} onUpdate={updateDocuments} />}
           {currentStep === 4 && <ReviewStep data={wizardData} />}
+          
+          {/* Mostrar errores de validación */}
+          {stepErrors.length > 0 && (
+            <div className="mt-4 p-4 bg-red-50 border border-red-200 rounded-lg">
+              <p className="text-red-800 font-semibold mb-2">Errores de validación:</p>
+              <ul className="list-disc list-inside space-y-1">
+                {stepErrors.map((error, idx) => (
+                  <li key={idx} className="text-red-700 text-sm">{error}</li>
+                ))}
+              </ul>
+            </div>
+          )}
         </CardBody>
       </Card>
 

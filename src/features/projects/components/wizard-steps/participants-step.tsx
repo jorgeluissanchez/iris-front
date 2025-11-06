@@ -6,6 +6,7 @@ import { Input } from "@heroui/input"
 import { Card, CardBody } from "@heroui/card"
 import { Plus, Trash2 } from "lucide-react"
 import { Participant } from "../project-wizard"
+import { z } from "zod"
 
 type ParticipantsStepProps = {
   participants: Participant[]
@@ -19,9 +20,35 @@ export function ParticipantsStep({ participants, onUpdate }: ParticipantsStepPro
     email: "",
     studentCode: "",
   })
+  const [errors, setErrors] = useState<Record<string, string>>({})
+
+  const validateParticipant = () => {
+    const newErrors: Record<string, string> = {}
+    
+    if (!currentParticipant.firstName.trim()) {
+      newErrors.firstName = "El nombre es requerido"
+    }
+    
+    if (!currentParticipant.lastName.trim()) {
+      newErrors.lastName = "El apellido es requerido"
+    }
+    
+    if (!currentParticipant.email.trim()) {
+      newErrors.email = "El email es requerido"
+    } else {
+      try {
+        z.string().email().parse(currentParticipant.email)
+      } catch {
+        newErrors.email = "El email no es válido"
+      }
+    }
+    
+    setErrors(newErrors)
+    return Object.keys(newErrors).length === 0
+  }
 
   const addParticipant = () => {
-    if (currentParticipant.firstName && currentParticipant.lastName && currentParticipant.email) {
+    if (validateParticipant()) {
       const newParticipant: Participant = {
         ...currentParticipant,
         id: Date.now().toString(),
@@ -33,6 +60,7 @@ export function ParticipantsStep({ participants, onUpdate }: ParticipantsStepPro
         email: "",
         studentCode: "",
       })
+      setErrors({})
     }
   }
 
@@ -50,23 +78,38 @@ export function ParticipantsStep({ participants, onUpdate }: ParticipantsStepPro
             label="Primer Nombre"
             placeholder="Juan"
             value={currentParticipant.firstName}
-            onValueChange={(value) => setCurrentParticipant({ ...currentParticipant, firstName: value })}
+            onValueChange={(value) => {
+              setCurrentParticipant({ ...currentParticipant, firstName: value })
+              if (errors.firstName) setErrors({ ...errors, firstName: "" })
+            }}
             isRequired
+            isInvalid={!!errors.firstName}
+            errorMessage={errors.firstName}
           />
           <Input
             label="Apellido"
             placeholder="Pérez"
             value={currentParticipant.lastName}
-            onValueChange={(value) => setCurrentParticipant({ ...currentParticipant, lastName: value })}
+            onValueChange={(value) => {
+              setCurrentParticipant({ ...currentParticipant, lastName: value })
+              if (errors.lastName) setErrors({ ...errors, lastName: "" })
+            }}
             isRequired
+            isInvalid={!!errors.lastName}
+            errorMessage={errors.lastName}
           />
           <Input
             label="Correo Electrónico"
             type="email"
             placeholder="juan.perez@universidad.edu"
             value={currentParticipant.email}
-            onValueChange={(value) => setCurrentParticipant({ ...currentParticipant, email: value })}
+            onValueChange={(value) => {
+              setCurrentParticipant({ ...currentParticipant, email: value })
+              if (errors.email) setErrors({ ...errors, email: "" })
+            }}
             isRequired
+            isInvalid={!!errors.email}
+            errorMessage={errors.email}
           />
           <Input
             label="Código Estudiantil (Opcional)"
