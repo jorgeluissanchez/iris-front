@@ -72,6 +72,8 @@ export type Project = Entity<{
   title: string;
   description: string;
   eventId: string;
+  teamId: string;
+  isPublic: boolean;
   teamMembers: TeamMember[];
   documentsAttached: number;
   submittedAt: number | null;
