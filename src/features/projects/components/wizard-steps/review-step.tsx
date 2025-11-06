@@ -4,6 +4,7 @@ import { Card, CardBody, CardHeader } from "@heroui/react"
 import { Chip } from "@heroui/react"
 import { Users, FileText, Upload, CheckCircle2 } from "lucide-react"
 import { WizardData } from "../project-wizard"
+import Image from "next/image"
 
 type ReviewStepProps = {
   data: WizardData
@@ -48,8 +49,23 @@ export function ReviewStep({ data }: ReviewStepProps) {
             <h3 className="text-lg font-semibold">Detalles del Proyecto</h3>
           </div>
         </CardHeader>
-        <CardBody>
+       <CardBody>
           <div className="space-y-4">
+            {data.project.logo && (
+              <div>
+                <p className="text-sm font-medium text-default-500">Logo</p>
+                <div className="mt-2">
+                  <Image
+                    alt="Logo del proyecto"
+                    height={100}
+                    src={data.project.logo || "/placeholder.svg"}
+                    unoptimized
+                    width={100}
+                    className="rounded-lg border-2 border-default-200"
+                  />
+                </div>
+              </div>
+            )}
             <div>
               <p className="text-sm font-medium text-default-500">Nombre</p>
               <p className="mt-1">{data.project.name || "No especificado"}</p>

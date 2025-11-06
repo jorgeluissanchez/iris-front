@@ -24,10 +24,10 @@ export const eventsHandlers = [
     await networkDelay();
 
     try {
-      const { /*user,*/ error } = requireAuth(cookies);
-      if (error) {
-        return HttpResponse.json({ message: error }, { status: 401 });
-      }
+      // const { /*user,*/ error } = requireAuth(cookies);
+      // if (error) {
+      //   return HttpResponse.json({ message: error }, { status: 401 });
+      // }
 
       const url = new URL(request.url);
       const page = Number(url.searchParams.get('page') || 1);

@@ -4,6 +4,7 @@ import { Input } from "@heroui/react"
 import { Textarea } from "@heroui/input"
 import { Select, SelectItem } from "@heroui/select"
 import { ProjectData } from "../project-wizard"
+import { LogoUpload } from "../image-crop/logo-upload"
 
 type ProjectDetailsStepProps = {
   project: ProjectData
@@ -59,6 +60,9 @@ export function ProjectDetailsStep({ project, onUpdate }: ProjectDetailsStepProp
           </SelectItem>
         ))}
       </Select>
+
+      <LogoUpload value={project.logo} onChange={(logo) => onUpdate({ ...project, logo: logo || "" })} />
+      
     </div>
   )
 }

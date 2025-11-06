@@ -13,8 +13,8 @@ type ProjectBody = {
     eventId: number;
     courseId: number;
     name: string;
-    description?: string;
-    eventNumber?: string;
+    description?: string | undefined;
+    eventNumber?: string | undefined;
     state: string;
 };
 
@@ -28,9 +28,9 @@ export const projectsHandlers = [
                 eventId: data.eventId,
                 courseId: data.courseId,
                 name: data.name,
-                description: data.description || '',
-                eventNumber: data.eventNumber || '',
-                state: data.state,
+                description: data.description || undefined,
+                eventNumber: undefined,
+                state: "UNDER_REVIEW",
                 createdAt: Date.now(),
             });
             await persistDb('project');

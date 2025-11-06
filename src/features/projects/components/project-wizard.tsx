@@ -24,6 +24,7 @@ export type ProjectData = {
   name: string
   description: string
   course: string
+  logo: string
 }
 
 export type DocumentsData = {
@@ -45,7 +46,7 @@ const steps = [
 ]
 
 type ProjectWizardProps = {
-  eventId?: string
+  eventId: string
 }
 
 export function ProjectWizard({ eventId }: ProjectWizardProps) {
@@ -57,6 +58,7 @@ export function ProjectWizard({ eventId }: ProjectWizardProps) {
       name: "",
       description: "",
       course: "",
+      logo: "",
     },
     documents: {
       poster: null,
@@ -78,7 +80,7 @@ export function ProjectWizard({ eventId }: ProjectWizardProps) {
 
   const validateStep = (step: number): boolean => {
     setStepErrors([])
-    
+
     try {
       switch (step) {
         case 1: // Participantes
@@ -86,15 +88,15 @@ export function ProjectWizard({ eventId }: ProjectWizardProps) {
             .min(1, 'Debe agregar al menos un participante')
             .parse(wizardData.participants)
           return true
-        
+
         case 2: // Proyecto
           projectSchema.parse(wizardData.project)
           return true
-        
+
         case 3: // Documentos
           documentsSchema.parse(wizardData.documents)
           return true
-        
+
         default:
           return true
       }
@@ -198,7 +200,6 @@ export function ProjectWizard({ eventId }: ProjectWizardProps) {
                   />
                 )}
                 <button
-                  onClick={() => setCurrentStep(step.id)}
                   className={cn(
                     "relative z-10 flex h-10 w-10 items-center justify-center rounded-full border-2 transition-colors",
                     isCompleted && "border-primary bg-primary text-white",
@@ -237,7 +238,7 @@ export function ProjectWizard({ eventId }: ProjectWizardProps) {
           {currentStep === 2 && <ProjectDetailsStep project={wizardData.project} onUpdate={updateProject} />}
           {currentStep === 3 && <DocumentsStep documents={wizardData.documents} onUpdate={updateDocuments} />}
           {currentStep === 4 && <ReviewStep data={wizardData} />}
-          
+
           {/* Mostrar errores de validación */}
           {stepErrors.length > 0 && (
             <div className="mt-4 p-4 bg-red-50 border border-red-200 rounded-lg">

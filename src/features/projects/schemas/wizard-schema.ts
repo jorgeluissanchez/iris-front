@@ -12,6 +12,7 @@ export const projectSchema = z.object({
   name: z.string().min(3, 'El nombre debe tener al menos 3 caracteres'),
   description: z.string().optional(),
   course: z.string().min(1, 'Debe seleccionar un curso'),
+  logo: z.string().min(1, 'El logo es obligatorio'),
 })
 
 export const documentsSchema = z.object({
