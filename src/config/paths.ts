@@ -46,5 +46,11 @@ export const paths = {
     discussion: {
       getHref: (id: string) => `/public/discussions/${id}`,
     },
+    project: {
+      getHref: (id: string) => `/public/projects/${id}`,
+    },
+    event: {
+      getHref: () => '/public/events',
+    }
   },
 } as const;
