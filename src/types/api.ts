@@ -65,7 +65,7 @@ export type Event = Entity<{
 
 export type TeamMember = {
   name: string;
-  photoUrl: string;
+  photoUrl?: string;
 };
 
 export type Project = Entity<{

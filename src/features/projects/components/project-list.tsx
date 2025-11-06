@@ -7,6 +7,8 @@ import { Pagination } from "@/components/ui/pagination";
 import { useProjects } from "../api/get-projects";
 import { DeleteProject } from "./delete-project";
 import { UpdateProject } from "./update-project";
+import { AvatarGroup } from "./avatar-icon";
+import { Users, Files } from "lucide-react";
 
 export const ProjectList = () => {
   const searchParams = useSearchParams();
@@ -37,42 +39,66 @@ export const ProjectList = () => {
     router.push(`?${params.toString()}`);
   };
 
+  console.log(Date.now());
+
   return (
-    <div className="space-y-4">
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+    <div className="space-y-8 px-4">
+      <div className="grid gap-8 grid-cols-1 md:grid-cols-2">
         {projects.map((project) => (
-          <Card shadow="sm" key={project.id}>
-            <CardBody className="p-6 space-y-4">
-              <div className="space-y-2">
-                <h3 className="text-xl font-semibold">{project.title}</h3>
-                <p className="text-sm text-default-500">{project.description}</p>
+          <Card
+            shadow="md"
+            key={project.id}
+            className="w-full rounded-xl border border-default-200 hover:border-primary transition-colors duration-150"
+          >
+            <CardBody className="p-8 space-y-6">
+              <div className="space-y-3">
+                <h3 className="text-xl font-semibold tracking-tight">
+                  {project.title}
+                </h3>
+                <p className="text-sm text-default-500 leading-relaxed">
+                  {project.description}
+                </p>
               </div>
 
-              <div className="flex items-center justify-between text-sm">
-                <div>
-                  <div className="text-default-400">Miembros:</div>
-                  <div className="font-medium">
-                    {project.teamMembers?.length ?? 0}
+              <div className="flex flex-col items-start gap-4 text-sm">
+                <div className="flex items-center gap-4 w-full">
+                  <div className="flex items-center text-default-400 gap-2 min-w-[100px]">
+                    <Users size={18} />
+                    <span>Miembros:</span>
+                  </div>
+                  <div className="flex-1">
+                    <AvatarGroup members={project.teamMembers} size={28} />
                   </div>
                 </div>
-                <div>
-                  <div className="text-default-400">Archivos:</div>
-                  <div className="font-medium">
-                    {project.documentsAttached ?? 0}
+                <div className="flex items-center gap-4 w-full">
+                  <div className="flex items-center text-default-400 gap-2 min-w-[100px]">
+                    <Files size={18} />
+                    <span>Archivos:</span>
                   </div>
-                </div>
-              </div>
-
-              <div className="flex items-center justify-between text-sm">
-                <div>
-                  <div className="text-default-400">Estado entrega:</div>
-                  <div className="font-medium">
-                    {project.submittedAt ? "Enviado" : "No enviado"}
+                  <div className="flex-1 font-medium">
+                    {project.documentsAttached ?? 0} adjunto(s)
                   </div>
                 </div>
               </div>
 
-              <div className="flex gap-2 pt-2">
+              <div className="flex items-center justify-between py-2 border-t border-default-100">
+                <div className="flex items-center gap-2 text-sm text-default-500">
+                  <span>Subido el:</span>
+                  <span className="font-medium">
+                    {new Date(project.createdAt).toLocaleDateString()}
+                  </span>
+                </div>
+                {project.approvedAt && (
+                  <div className="flex items-center gap-2 text-sm text-success-500">
+                    <span>Aprobado el:</span>
+                    <span className="font-medium">
+                      {new Date(project.approvedAt).toLocaleDateString()}
+                    </span>
+                  </div>
+                )}
+              </div>
+
+              <div className="flex justify-end gap-3 pt-2">
                 <UpdateProject projectId={project.id} />
                 <DeleteProject id={project.id} />
               </div>
