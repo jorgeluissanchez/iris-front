@@ -26,6 +26,18 @@ export const canUpdateEvent = (user: User | null | undefined) => {
   return user?.role === 'ADMIN';
 };
 
+export const canCreateProject = (user: User | null | undefined) => {
+  return user?.role === 'ADMIN';
+};
+
+export const canDeleteProject = (user: User | null | undefined) => {
+  return user?.role === 'ADMIN';
+};
+
+export const canUpdateProject = (user: User | null | undefined) => {
+  return user?.role === 'ADMIN';
+};
+
 export const canDeleteComment = (
   user: User | null | undefined,
   comment: Comment,
