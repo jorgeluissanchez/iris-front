@@ -71,7 +71,7 @@ export const eventsHandlers = [
     }
   }),
 
-  http.get(`${env.API_URL}/events/select`, async ({ cookies }) => {
+  http.get(`${env.API_URL}/events-dropdown`, async ({ cookies }) => {
     await networkDelay();
 
     try {
@@ -165,9 +165,7 @@ export const eventsHandlers = [
     }
   }),
 
-  http.patch(
-    `${env.API_URL}/events/:eventId`,
-    async ({ params, request, cookies }) => {
+  http.patch(`${env.API_URL}/events/:eventId`, async ({ params, request, cookies }) => {
       await networkDelay();
 
       try {

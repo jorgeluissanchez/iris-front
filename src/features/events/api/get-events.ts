@@ -10,10 +10,6 @@ export const getEvents = (
   return api.get(`/events`, { params: { page } });
 };
 
-export const getSelectEvents = (): Promise<{ data: Event[] }> => {
-  return api.get(`/events/select`);
-};
-
 export const getEventsQueryOptions = ({ page = 1 }: { page?: number } = {}) => {
   return queryOptions({
     queryKey: ["events", { page }],
