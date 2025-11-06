@@ -47,6 +47,15 @@ const models = {
     evaluationsStatus: String,
     createdAt: Date.now,
   },
+  project: {
+    id: primaryKey(nanoid),
+    title: String,
+    description: String,
+    eventId: String,
+    teamId: String,
+    isPublic: Boolean,
+    createdAt: Date.now,
+  },
 };
 
 export const db = factory(models);
