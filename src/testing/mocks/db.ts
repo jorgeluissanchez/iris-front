@@ -56,6 +56,19 @@ const models = {
     isPublic: Boolean,
     createdAt: Date.now,
   },
+  course: {
+    id: primaryKey(nanoid),
+    code: String,
+    description: String,
+    status: String,
+    createdAt: Date.now,
+  },
+  courseEvent: {
+    id: primaryKey(nanoid),
+    courseId: String,
+    eventId: String,
+    createdAt: Date.now,
+  },
 };
 
 export const db = factory(models);

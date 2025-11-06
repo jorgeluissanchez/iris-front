@@ -48,6 +48,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           },
 
           {
+            title: "Courses",
+            url: paths.app.courses.getHref(),
+            icon: Presentation,
+          },
+          {
             title: "Projects",
             url: paths.app.projects.getHref(),
             icon: Presentation,
@@ -63,6 +68,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             url: paths.app.discussions.getHref(),
             icon: MessageSquare,
           },
+          // Students can view courses
+          {
+            title: "Courses",
+            url: paths.app.courses.getHref(),
+            icon: Presentation,
+          },
         ];
       case "JURY":
         return [
@@ -72,6 +83,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             title: "Discussions",
             url: paths.app.discussions.getHref(),
             icon: MessageSquare,
+          },
+          {
+            title: "Courses",
+            url: paths.app.courses.getHref(),
+            icon: Presentation,
           },
         ];
       default:

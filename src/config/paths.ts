@@ -44,6 +44,9 @@ export const paths = {
     projects: {
       getHref: () => "/app/projects",
     },
+    courses: {
+      getHref: () => "/app/courses",
+    },
   },
   public: {
     discussion: {

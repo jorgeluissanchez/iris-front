@@ -5,8 +5,6 @@ import { api } from "@/lib/api-client";
 import { MutationConfig } from "@/lib/react-query";
 import { Project } from "@/types/api";
 
-import { getProjectQueryOptions } from "./get-project";
-import { getProjectsByEventQueryOptions } from "./get-projects-by-event";
 import { getProjectsQueryOptions } from "./get-projects";
 
 export const updateProjectInputSchema = z.object({
@@ -43,20 +41,8 @@ export const useUpdateProject = ({
   return useMutation({
     onSuccess: (data, variables, ...args) => {
       queryClient.invalidateQueries({
-        queryKey: getProjectsQueryOptions().queryKey,
+        queryKey: ["projects"],
       });
-      const eventId = data?.data?.eventId || variables?.data?.eventId;
-      if (eventId) {
-        queryClient.invalidateQueries({
-          queryKey: getProjectsByEventQueryOptions({ eventId, page: 1 }).queryKey,
-        });
-      } else {
-
-        queryClient.refetchQueries({
-          queryKey: getProjectQueryOptions(data.data.id).queryKey,
-        });
-      }
-
       onSuccess?.(data, variables, ...args);
     },
     ...restConfig,

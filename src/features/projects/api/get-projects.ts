@@ -5,26 +5,31 @@ import { QueryConfig } from "@/lib/react-query";
 import { Meta, Project } from "@/types/api";
 
 export const getProjects = (
-  { page }: { page?: number } = { page: 1 }
+  { page, eventId }: { page?: number; eventId?: string } = { page: 1 }
 ): Promise<{ data: Project[]; meta: Meta }> => {
+  if (eventId) {
+    // Keep backend compatibility by using the existing by-event endpoint
+    return api.get(`/projects/by-event/${eventId}`, { params: { page } });
+  }
   return api.get(`/projects`, { params: { page } });
 };
 
-export const getProjectsQueryOptions = ({ page = 1 }: { page?: number } = {}) => {
+export const getProjectsQueryOptions = ({ page = 1, eventId }: { page?: number; eventId?: string } = {}) => {
   return queryOptions({
-    queryKey: ["projects", { page }],
-    queryFn: () => getProjects({ page }),
+    queryKey: ["projects", { page, eventId: eventId ?? null }],
+    queryFn: () => getProjects({ page, eventId }),
   });
 };
 
 type UseProjectsOptions = {
   page?: number;
+  eventId?: string;
   queryConfig?: QueryConfig<typeof getProjectsQueryOptions>;
 };
 
-export const useProjects = ({ queryConfig, page }: UseProjectsOptions) => {
+export const useProjects = ({ queryConfig, page, eventId }: UseProjectsOptions) => {
   return useQuery({
-    ...getProjectsQueryOptions({ page }),
+    ...getProjectsQueryOptions({ page, eventId }),
     ...queryConfig,
   });
 };

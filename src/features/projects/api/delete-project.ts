@@ -5,7 +5,6 @@ import { Project } from "@/types/api";
 import { MutationConfig } from "@/lib/react-query";
 
 import { getProjectsQueryOptions } from "./get-projects";
-import { getProjectsByEventQueryOptions } from "./get-projects-by-event";
 
 export const deleteProject = ({ projectId }: { projectId: string }): Promise<{ data: Project }> => {
   return api.delete(`/projects/${projectId}`);
@@ -25,16 +24,8 @@ export const useDeleteProject = ({
   return useMutation({
     onSuccess: (data, variables, ...args) => {
       queryClient.invalidateQueries({
-        queryKey: getProjectsQueryOptions().queryKey,
+        queryKey: ["projects"],
       });
-      const eventId = data?.data?.eventId;
-      if (eventId) {
-        queryClient.invalidateQueries({
-          queryKey: getProjectsByEventQueryOptions({ eventId, page: 1 }).queryKey,
-        });
-      } else {
-        queryClient.invalidateQueries({ queryKey: ["projects", "by-event"] });
-      }
       onSuccess?.(data, variables, ...args);
     },
     ...restConfig,

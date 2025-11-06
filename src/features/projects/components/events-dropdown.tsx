@@ -9,7 +9,6 @@ import {
 	DropdownItem,
 } from "@/components/ui/dropdown/dropdown";
 import { Button } from "@/components/ui/button";
-import { Spinner } from "@/components/ui/spinner";
 import { useEventsDropdown } from "@/features/events/api/get-events-dropdown";
 
 export const EventsDropdown = () => {
@@ -22,7 +21,7 @@ export const EventsDropdown = () => {
 	return (
 		<Dropdown>
 			<DropdownTrigger>
-				<Button variant="bordered" disabled={eventsQuery.isLoading} startContent={eventsQuery.isLoading && <Spinner className="w-2 h-2" />}>
+				<Button variant="bordered" disabled={eventsQuery.isLoading}>
 					Seleccionar Evento
 				</Button>
 			</DropdownTrigger>

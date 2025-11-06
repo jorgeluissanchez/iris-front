@@ -3,8 +3,7 @@
 import { useSearchParams } from 'next/navigation';
 
 import { ContentLayout } from '@/components/layouts/content-layout';
-import { ProjectsListByEvent } from '@/features/projects/components/projects-list-by-event';
-import { ProjectsList } from '@/features/projects/components/projects-list';
+import { ProjectList } from '@/features/projects/components/project-list';
 import { EventsDropdown } from '@/features/projects/components/events-dropdown';
 import { CreateProject } from '@/features/projects/components/create-project';
 
@@ -19,7 +18,7 @@ export const Projects = () => {
         <CreateProject />
       </div>
       <div className="mt-4">
-        {eventId ? <ProjectsListByEvent /> : <ProjectsList />}
+        <ProjectList />
       </div>
     </ContentLayout>
   );
