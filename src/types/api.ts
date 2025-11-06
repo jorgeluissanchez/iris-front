@@ -79,3 +79,10 @@ export type Project = Entity<{
   submittedAt: number | null;
   approvedAt: number | null;
 }>;
+
+export type Course = Entity<{
+  code: string;
+  description: string;
+  events: { id: string; title: string }[];
+  status: "active" | "inactive";
+}>;
