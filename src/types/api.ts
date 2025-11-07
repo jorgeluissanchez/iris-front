@@ -86,3 +86,23 @@ export type Course = Entity<{
   events: { id: string; title: string }[];
   status: "active" | "inactive";
 }>;
+
+export type EvaluationDetail = Entity<{
+  evaluationId: string;
+  criterion: string;
+  score: number;
+}>;
+
+export type EvaluationScoreInput = {
+  criterion: string;
+  score: number;
+};
+
+export type Evaluation = Entity<{
+  memberUserId: string;
+  evaluatorId: string;
+  grade: number;
+  comments: string;
+  scores: EvaluationScoreInput[];
+}>;
+

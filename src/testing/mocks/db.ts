@@ -47,7 +47,21 @@ const models = {
     evaluationsStatus: String,
     createdAt: Date.now,
   },
-
+  evaluation: {
+    id: primaryKey(nanoid),
+    projectId: String,
+    memberUserId: String,
+    grade: Number,
+    comments: String,
+    scores: Array,
+    createdAt: Date.now,
+  },
+  evaluationDetail: {
+    id: primaryKey(nanoid),
+    evaluationId: String,
+    criterion: String,
+    score: Number,
+  }
   project: {
     id: primaryKey(nanoid),
     title: String,
