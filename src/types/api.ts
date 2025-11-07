@@ -63,6 +63,30 @@ export type Event = Entity<{
   createdAt: number;
 }>;
 
+export type TeamMember = {
+  name: string;
+  photoUrl?: string;
+};
+
+export type Project = Entity<{
+  title: string;
+  description: string;
+  eventId: string;
+  teamId: string;
+  isPublic: boolean;
+  teamMembers: TeamMember[];
+  documentsAttached: number;
+  submittedAt: number | null;
+  approvedAt: number | null;
+}>;
+
+export type Course = Entity<{
+  code: string;
+  description: string;
+  events: { id: string; title: string }[];
+  status: "active" | "inactive";
+}>;
+
 export type EvaluationDetail = Entity<{
   evaluationId: string;
   criterion: string;
