@@ -66,7 +66,6 @@ export function ProjectWizard({ eventId }: ProjectWizardProps) {
       additionalDocuments: [],
     },
   })
-  const [createErrors, setCreateErrors] = useState<string[]>([])
   const createProjectMutation = useCreateProject()
 
   const updateParticipants = (participants: Participant[]) => {
@@ -135,17 +134,6 @@ export function ProjectWizard({ eventId }: ProjectWizardProps) {
     }
   }
 
-    const getErrorMessage = (err: unknown) => {
-    // Extrae mensaje útil de Axios/fetch/backends comunes
-    const anyErr = err as any
-    return (
-      anyErr?.response?.data?.message ||
-      anyErr?.response?.data?.error ||
-      anyErr?.message ||
-      "Error desconocido al crear el proyecto"
-    )
-  }  
-
   const handleSubmit = () => {
     setStepErrors([])
     const payload: any = {
@@ -183,9 +171,7 @@ export function ProjectWizard({ eventId }: ProjectWizardProps) {
       console.log("Creating project:", validated)
     } catch (e) {
       if (e instanceof z.ZodError) {
-        setCreateErrors(e.issues.map(i => i.message))
-      } else {
-        setCreateErrors([getErrorMessage(e)])
+        setStepErrors(e.issues.map(i => i.message))
       }
     }
 
@@ -269,37 +255,6 @@ export function ProjectWizard({ eventId }: ProjectWizardProps) {
           )}
         </CardBody>
       </Card>
-                {stepErrors.length > 0 && (
-            <div className="mt-4 p-4 bg-red-50 border border-red-200 rounded-lg">
-              <p className="text-red-800 font-semibold mb-2">Errores de validación:</p>
-              <ul className="list-disc list-inside space-y-1">
-                {stepErrors.map((error, idx) => (
-                  <li key={idx} className="text-red-700 text-sm">{error}</li>
-                ))}
-              </ul>
-            </div>
-          )}
-          {createErrors.length > 0 && (
-            <div className="mt-4 p-4 bg-red-50 border border-red-200 rounded-lg">
-              <p className="text-red-800 font-semibold mb-2">Errores al crear:</p>
-              <ul className="list-disc list-inside space-y-1">
-                {createErrors.map((error, idx) => (
-                  <li key={idx} className="text-red-700 text-sm">{error}</li>
-                ))}
-              </ul>
-            </div>
-          )}
-          {createProjectMutation.isSuccess && (
-            <div className="mt-4 p-2 rounded bg-green-100 text-green-700 text-sm">
-              Proyecto creado correctamente
-            </div>
-          )}
-          {createProjectMutation.isError && (
-            <div className="mt-4 p-2 rounded bg-red-100 text-red-700 text-sm">
-              Error al crear el proyecto
-            </div>
-          )}
-
       {/* Navigation Buttons */}
       <div className="flex justify-between">
         <Button variant="bordered" onPress={handleBack} isDisabled={currentStep === 1}>
