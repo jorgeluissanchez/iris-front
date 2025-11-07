@@ -2,12 +2,12 @@ import { queryOptions, useQuery } from "@tanstack/react-query";
 
 import { api } from "@/lib/api-client";
 import { QueryConfig } from "@/lib/react-query";
-import { Meta, Project } from "@/types/api";
+import { Meta, ProjectPublic } from "@/types/api";
 
 export const getProjects = (
   { page }: { page?: number } = { page: 1 }
-): Promise<{ data: Project[]; meta: Meta }> => {
-  return api.get(`/projects`, { params: { page } });
+): Promise<{ data: ProjectPublic[]; meta: Meta }> => {
+  return api.get(`/projects-public`, { params: { page } });
 };
 
 export const getProjectsQueryOptions = ({ page = 1 }: { page?: number } = {}) => {

@@ -4,7 +4,7 @@ import {
   QueryClient,
 } from '@tanstack/react-query';
 import Project from "./_components/projects";
-import { getEventCoursesQueryOptions } from '@/features/course/api/get-course';
+import { getEventCoursesQueryOptions } from '@/features/course-public/api/get-course';
 
 const PublicProjectPage = async ({ params }: { params: Promise<{ eventId: string }> }) => {
     const { eventId } = await params;

@@ -17,8 +17,8 @@ type CourseBody = {
   active: boolean;
 };
 
-export const coursesHandlers = [
-    http.get(`${env.API_URL}/courses`, async ({ cookies, request }) => {
+export const coursesPublicHandlers = [
+    http.get(`${env.API_URL}/courses-public`, async ({ cookies, request }) => {
         await networkDelay();
 
         try {
@@ -31,7 +31,7 @@ export const coursesHandlers = [
                     { status: 400 },
                 );
             }
-            const courses = db.course
+            const courses = db.course_public
                 .findMany({
                     where: {
                         eventId: { equals: eventId },

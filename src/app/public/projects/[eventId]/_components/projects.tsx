@@ -1,4 +1,4 @@
-import { ProjectWizard } from "@/features/projects/components/project-wizard";
+import { ProjectWizard } from "@/features/projects-public/components/project-wizard";
 
 const Project = ({ eventId }: { eventId: string }) => {
 

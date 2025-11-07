@@ -5,7 +5,7 @@ import { Textarea } from "@heroui/input"
 import { Select, SelectItem } from "@heroui/select"
 import { ProjectData } from "../project-wizard"
 import { LogoUpload } from "../image-crop/logo-upload"
-import { useEventCourses } from "@/features/course/api/get-course"
+import { useEventCourses } from "@/features/course-public/api/get-course"
 
 type ProjectDetailsStepProps = {
   eventId: string
@@ -15,6 +15,8 @@ type ProjectDetailsStepProps = {
 
 export function ProjectDetailsStep({eventId, project, onUpdate }: ProjectDetailsStepProps) {
   const { data: courses, isLoading, isError } = useEventCourses({ eventId })
+
+  console.log(eventId, courses)
 
   return (
     <div className="space-y-6">

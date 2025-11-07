@@ -2,10 +2,10 @@ import { queryOptions, useQuery } from '@tanstack/react-query';
 
 import { api } from '@/lib/api-client';
 import { QueryConfig } from '@/lib/react-query';
-import { Course } from '@/types/api';
+import { CoursePublic } from '@/types/api';
 
-export const getEventCourses = ({ eventId }: { eventId: string }): Promise<Course[]> => {
-  return api.get(`/courses`, {
+export const getEventCourses = ({ eventId }: { eventId: string }): Promise<CoursePublic[]> => {
+  return api.get(`/courses-public`, {
     params: { eventId },
   });
 };

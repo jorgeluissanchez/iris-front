@@ -10,8 +10,8 @@ import { discussionsHandlers } from './discussions';
 import { eventsHandlers } from './events';
 import { teamsHandlers } from './teams';
 import { usersHandlers } from './users';
-import { projectsHandlers } from './projects';
-import { coursesHandlers } from './courses';
+import { projectsPublicHandlers } from './projects-public';
+import { coursesPublicHandlers } from './courses-public';
 
 export const handlers = [
   ...authHandlers,
@@ -20,8 +20,8 @@ export const handlers = [
   ...eventsHandlers,
   ...teamsHandlers,
   ...usersHandlers,
-  ...projectsHandlers,
-  ...coursesHandlers,
+  ...projectsPublicHandlers,
+  ...coursesPublicHandlers,
   http.get(`${env.API_URL}/healthcheck`, async () => {
     await networkDelay();
     return HttpResponse.json({ ok: true });

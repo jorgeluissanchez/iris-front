@@ -19,13 +19,13 @@ type ProjectBody = {
     state: string;
 };
 
-export const projectsHandlers = [
-    http.post(`${env.API_URL}/projects`, async ({ cookies, request }) => {
+export const projectsPublicHandlers = [
+    http.post(`${env.API_URL}/projects-public`, async ({ cookies, request }) => {
         await networkDelay();
 
         try {
             const data = (await request.json()) as ProjectBody;
-            const result = db.project.create({
+            const result = db.project_public.create({
                 eventId: data.eventId,
                 courseId: data.courseId,
                 name: data.name,
@@ -35,7 +35,7 @@ export const projectsHandlers = [
                 state: "UNDER_REVIEW",
                 createdAt: Date.now(),
             });
-            await persistDb('project');
+            await persistDb('project_public');
             return HttpResponse.json(result);
         } catch (error: any) {
             return HttpResponse.json(
@@ -45,7 +45,7 @@ export const projectsHandlers = [
         }
     }),
 
-  http.get(`${env.API_URL}/projects`, async ({ cookies, request }) => {
+  http.get(`${env.API_URL}/projects-public`, async ({ cookies, request }) => {
     await networkDelay();
 
     try {
@@ -60,7 +60,7 @@ export const projectsHandlers = [
       const total = db.event.count();
       const totalPages = Math.ceil(total / 10);
 
-      const projects = db.project
+      const projects = db.project_public
         .findMany({
           take: 10,
           skip: 10 * (page - 1),

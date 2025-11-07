@@ -48,7 +48,7 @@ const models = {
     evaluationsStatus: String,
     createdAt: Date.now,
   },
-  project: {
+  project_public: {
     id: primaryKey(nanoid),
     eventId: String,
     courseId: String,
@@ -79,7 +79,7 @@ const models = {
     memberRoleId: String,
     assignedAt: Date.now,
   },
-  course: {
+  course_public: {
     id: primaryKey(nanoid),
     eventId: String,
     code: String,

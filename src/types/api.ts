@@ -63,7 +63,7 @@ export type Event = Entity<{
   createdAt: number;
 }>;
 
-export type Project = Entity<{
+export type ProjectPublic = Entity<{
   id: string;
   eventId: string;
   courseId: string;
@@ -82,14 +82,14 @@ export type ProjectDocument = Entity<{
   projectId: string;
   url: string;
   createdAt: number;
-  project: Project;
+  project: ProjectPublic;
 }>;
 
 export type ProjectParticipant = Entity<{
   userId: string;
   projectId: string;
   studentCode?: string;
-  project: Project;
+  project: ProjectPublic;
 }>;
 
 export type ProjectAssignment = Entity<{
@@ -99,10 +99,10 @@ export type ProjectAssignment = Entity<{
   memberRoleId: string;
   assigneAt: Date;
   updatedAt: Date;
-  project: Project;
+  project: ProjectPublic;
 }>;
 
-export type Course = Entity<{
+export type CoursePublic = Entity<{
   id: string;
   eventId: string;
   code: string;

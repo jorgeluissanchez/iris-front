@@ -1,5 +1,5 @@
 import { api } from "@/lib/api-client";
-import { Project } from "@/types/api";
+import { ProjectPublic } from "@/types/api";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { MutationConfig } from "@/lib/react-query";
 import { getProjectsQueryOptions } from "./get-projects";
@@ -14,8 +14,8 @@ export const createProjectInputSchema = z.object({
 });
 export type CreateProjectInput = z.infer<typeof createProjectInputSchema>;
 
-export const createProject = ({ data }: { data: CreateProjectInput }): Promise<Project> => {
-    return api.post(`/projects`, data);
+export const createProject = ({ data }: { data: CreateProjectInput }): Promise<ProjectPublic> => {
+    return api.post(`/projects-public`, data);
 };
 
 type UseCreateProjectOptions = {
