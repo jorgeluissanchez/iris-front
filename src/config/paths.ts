@@ -47,6 +47,12 @@ export const paths = {
     courses: {
       getHref: () => "/app/courses",
     },
+    project_jury: {
+      getHref: (id: string) => `/app/project_jury/${id}`,
+    },
+    evaluations: {
+      getHref: (id: string) => `/app/evaluations/${id}`,
+    },
   },
   public: {
     discussion: {
