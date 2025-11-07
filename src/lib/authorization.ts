@@ -26,6 +26,36 @@ export const canUpdateEvent = (user: User | null | undefined) => {
   return user?.role === 'ADMIN';
 };
 
+export const canCreateProject = (user: User | null | undefined) => {
+  return user?.role === 'ADMIN';
+};
+
+export const canDeleteProject = (user: User | null | undefined) => {
+  return user?.role === 'ADMIN';
+};
+
+export const canUpdateProject = (user: User | null | undefined) => {
+  return user?.role === 'ADMIN';
+};
+
+// Courses
+export const canCreateCourse = (user: User | null | undefined) => {
+  return user?.role === 'ADMIN';
+};
+
+export const canDeleteCourse = (user: User | null | undefined) => {
+  return user?.role === 'ADMIN';
+};
+
+export const canUpdateCourse = (user: User | null | undefined) => {
+  return user?.role === 'ADMIN';
+};
+
+export const canViewCourses = (user: User | null | undefined) => {
+  // Todos los roles autenticados pueden ver cursos por ahora
+  return Boolean(user);
+};
+
 export const canDeleteComment = (
   user: User | null | undefined,
   comment: Comment,
