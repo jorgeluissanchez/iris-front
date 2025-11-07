@@ -1,19 +1,24 @@
-import { ProjectWizard } from "@/features/projects/components/project-wizard";
+import {
+  dehydrate,
+  HydrationBoundary,
+  QueryClient,
+} from '@tanstack/react-query';
+import Project from "./_components/projects";
+import { getEventCoursesQueryOptions } from '@/features/course/api/get-course';
 
 const PublicProjectPage = async ({ params }: { params: Promise<{ eventId: string }> }) => {
     const { eventId } = await params;
+    
+    const queryClient = new QueryClient();
+
+    await queryClient.prefetchQuery(getEventCoursesQueryOptions({ eventId }));
+
+    const dehydratedState = dehydrate(queryClient);
 
     return (
-        <div className="container mx-auto max-w-4xl py-12">
-            <div className="mb-8 text-center">
-                <h1 className="text-4xl font-bold text-foreground mb-3 text-balance">Registro de Proyectos</h1>
-                <p className="text-muted-foreground text-lg text-pretty">
-                    Complete el formulario para registrar su proyecto académico
-                </p>
-            </div>
-            {/* pass eventId from route to the client wizard */}
-            <ProjectWizard eventId={eventId} />
-        </div>
+        <HydrationBoundary state={dehydratedState}>
+            <Project eventId={eventId} />
+        </HydrationBoundary>
     );
 };
 
