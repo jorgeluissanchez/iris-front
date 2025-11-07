@@ -16,8 +16,6 @@ type ProjectDetailsStepProps = {
 export function ProjectDetailsStep({eventId, project, onUpdate }: ProjectDetailsStepProps) {
   const { data: courses, isLoading, isError } = useEventCourses({ eventId })
 
-  console.log(eventId, courses)
-
   return (
     <div className="space-y-6">
       <Input
