@@ -15,6 +15,7 @@ import { projectsPublicHandlers } from './projects-public';
 import { coursesPublicHandlers } from './courses-public';
 import { projectsHandlers } from './projects';
 import { evaluationsHandlers } from './evaluations';
+import { criterionPublicHandlers } from './criterion-public';
 
 export const handlers = [
   ...authHandlers,
@@ -28,6 +29,7 @@ export const handlers = [
   ...projectsPublicHandlers,
   ...coursesPublicHandlers,
   ...evaluationsHandlers,
+  ...criterionPublicHandlers,
   http.get(`${env.API_URL}/healthcheck`, async () => {
     await networkDelay();
     return HttpResponse.json({ ok: true });

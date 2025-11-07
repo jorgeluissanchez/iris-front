@@ -1,44 +1,115 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Card, CardBody, CardHeader } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { FileText, Users, Download, Send } from "lucide-react"
+import { useProjectPublic } from "@/features/projects-public/api/get-project"
+import { AvatarGroup } from "@/features/projects/components/avatar-icon"
+import { useCourseCriteria } from "@/features/criterion-public/api/get-criterion"
+import { useCreateEvaluation } from "@/features/evaluations/api/create-evaluation"
+import { useNotifications } from "@/components/ui/notifications"
 
 type ProjectEvaluationViewProps = {
   projectId: string;
 };
 
 export function ProjectEvaluationView({ projectId }: ProjectEvaluationViewProps) {
-  const [scores, setScores] = useState({
-    innovation: 0,
-    technical: 0,
-    impact: 0,
-    presentation: 0,
+  const router = useRouter()
+  // Inicializar scores dinámicamente basado en criteriaData
+  const [scores, setScores] = useState<Record<string, number>>({})
+  const [comments, setComments] = useState("")
+  const { addNotification } = useNotifications()
+
+  const { data: project, isLoading: isLoadingProject } = useProjectPublic({ projectId })
+  const projects = project?.data
+
+  const { data: criteria, isLoading: isLoadingCriteria } = useCourseCriteria({
+    courseId: projects?.courseId ?? ""
   })
 
-  const [comments, setComments] = useState("")
+  const createEvaluationMutation = useCreateEvaluation({
+    mutationConfig: {
+      onSuccess: () => {
+        addNotification({
+          type: "success",
+          title: "Evaluation submitted",
+          message: "Your evaluation has been submitted successfully",
+        })
+        // Reset form
+        setComments("")
+        if (Array.isArray(criteriaData) && criteriaData.length > 0) {
+          const resetScores: Record<string, number> = {}
+          criteriaData.forEach((criterion: any) => {
+            resetScores[criterion.id] = 0
+          })
+          setScores(resetScores)
+        }
+        // Redirect after success
+        router.push("/app")
+      },
+      onError: (error: any) => {
+        addNotification({
+          type: "error",
+          title: "Error submitting evaluation",
+          message: error?.message || "An error occurred while submitting the evaluation",
+        })
+      },
+    },
+  })
 
-  const maxScores = {
-    innovation: 1.5,
-    technical: 1.5,
-    impact: 1.0,
-    presentation: 1.0,
-  }
+  const criteriaData = (criteria as any)?.data || []
+
+  useEffect(() => {
+    if (Array.isArray(criteriaData) && criteriaData.length > 0) {
+      const initialScores: Record<string, number> = {}
+      criteriaData.forEach((criterion: any) => {
+        initialScores[criterion.id] = 0
+      })
+      setScores(initialScores)
+    }
+  }, [criteriaData.length])
 
   const totalScore = Object.values(scores).reduce((sum, score) => sum + score, 0)
-  const maxTotalScore = Object.values(maxScores).reduce((sum, max) => sum + max, 0)
+  const maxTotalScore = Array.isArray(criteriaData) 
+    ? criteriaData.reduce((sum: number, criterion: any) => sum + (criterion.weight || 0), 0)
+    : 0
 
-  const handleScoreChange = (criterion: keyof typeof scores, value: string) => {
+  const handleScoreChange = (criterionId: string, value: string, maxScore: number) => {
     const numValue = Number.parseFloat(value) || 0
-    const maxValue = maxScores[criterion]
     setScores((prev) => ({
       ...prev,
-      [criterion]: Math.min(Math.max(0, numValue), maxValue),
+      [criterionId]: Math.min(Math.max(0, numValue), maxScore),
     }))
+  }
+
+  const handleSubmit = () => {
+    if (createEvaluationMutation.isPending) return
+
+    const hasScores = Object.values(scores).some(score => score > 0)
+    if (!hasScores) {
+      addNotification({
+        type: "error",
+        title: "Invalid evaluation",
+        message: "Please provide at least one score before submitting",
+      })
+      return
+    }
+
+    createEvaluationMutation.mutate({
+      data: {
+        projectId,
+        comments,
+        scores: Object.entries(scores).map(([criterionId, score]) => ({
+          criterion: criterionId,
+          score,
+        })),
+      }
+    })
   }
 
   return (
@@ -48,9 +119,9 @@ export function ProjectEvaluationView({ projectId }: ProjectEvaluationViewProps)
         <CardBody className="p-6">
           <div className="space-y-6">
             <div>
-              <h2 className="text-xl font-semibold text-balance">Smart Campus Navigation System</h2>
+              <h2 className="text-xl font-semibold text-balance">{projects?.name}</h2>
               <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-                An AI-powered mobile app for indoor navigation across campus buildings
+                {projects?.description}
               </p>
             </div>
 
@@ -59,21 +130,13 @@ export function ProjectEvaluationView({ projectId }: ProjectEvaluationViewProps)
                 <Users className="h-4 w-4 text-muted-foreground" />
                 <span className="font-medium">Team members</span>
               </div>
-              <div className="flex items-center gap-3">
-                <div className="flex items-center -space-x-2">
-                  {[1, 2, 3, 4].map((i) => (
-                    <div
-                      key={i}
-                      className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-card bg-muted text-xs font-medium text-muted-foreground"
-                    >
-                      U{i}
-                    </div>
-                  ))}
-                  <div className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-card bg-muted text-sm font-medium text-muted-foreground">
-                    +4
-                  </div>
-                </div>
-              </div>
+              <AvatarGroup
+                members={projects?.participants?.map(p => ({
+                  ...p,
+                  name: `${p.firstName} ${p.lastName}`
+                })) || []}
+                size={28}
+              />
             </div>
 
             <div className="space-y-4">
@@ -121,85 +184,30 @@ export function ProjectEvaluationView({ projectId }: ProjectEvaluationViewProps)
           <p className="text-sm text-muted-foreground">Rate the project based on the criteria below</p>
         </CardHeader>
         <CardBody className="space-y-6">
-          {/* Innovation */}
-          <div className="space-y-2">
-            <div className="flex items-center justify-between">
-              <Label htmlFor="innovation" className="text-sm font-medium">
-                Innovation
-              </Label>
-              <span className="text-sm text-muted-foreground">/{maxScores.innovation}</span>
+          {/* Criterios dinámicos */}
+          {Array.isArray(criteriaData) && criteriaData.map((criterion: any) => (
+            <div key={criterion.id} className="space-y-2">
+              <div className="flex items-center justify-between">
+                <Label htmlFor={criterion.id} className="text-sm font-medium">
+                  {criterion.name}
+                </Label>
+                <span className="text-sm text-muted-foreground">/{criterion.weight}</span>
+              </div>
+              <Input
+                id={criterion.id}
+                type="number"
+                step="0.1"
+                min="0"
+                max={criterion.weight}
+                value={scores[criterion.id]?.toString() || "0"}
+                onChange={(e) => handleScoreChange(criterion.id, e.target.value, criterion.weight)}
+                disabled={createEvaluationMutation.isPending}
+              />
+              {criterion.description && (
+                <p className="text-xs text-muted-foreground">{criterion.description}</p>
+              )}
             </div>
-            <Input
-              id="innovation"
-              type="number"
-              step="0.1"
-              min="0"
-              max={maxScores.innovation}
-              value={scores.innovation.toString()}
-              onChange={(e) => handleScoreChange("innovation", e.target.value)}
-            />
-            <p className="text-xs text-muted-foreground">Originality and creativity of the solution.</p>
-          </div>
-
-          {/* Technical Implementation */}
-          <div className="space-y-2">
-            <div className="flex items-center justify-between">
-              <Label htmlFor="technical" className="text-sm font-medium">
-                Technical Implementation
-              </Label>
-              <span className="text-sm text-muted-foreground">/{maxScores.technical}</span>
-            </div>
-            <Input
-              id="technical"
-              type="number"
-              step="0.1"
-              min="0"
-              max={maxScores.technical}
-              value={scores.technical.toString()}
-              onChange={(e) => handleScoreChange("technical", e.target.value)}
-            />
-            <p className="text-xs text-muted-foreground">Quality of code, architecture, and technical execution.</p>
-          </div>
-
-          {/* Impact & Feasibility */}
-          <div className="space-y-2">
-            <div className="flex items-center justify-between">
-              <Label htmlFor="impact" className="text-sm font-medium">
-                Impact & feasibility
-              </Label>
-              <span className="text-sm text-muted-foreground">/{maxScores.impact}</span>
-            </div>
-            <Input
-              id="impact"
-              type="number"
-              step="0.1"
-              min="0"
-              max={maxScores.impact}
-              value={scores.impact.toString()}
-              onChange={(e) => handleScoreChange("impact", e.target.value)}
-            />
-            <p className="text-xs text-muted-foreground">Real-world applicability and potential impact.</p>
-          </div>
-
-          {/* Presentation */}
-          <div className="space-y-2">
-            <div className="flex items-center justify-between">
-              <Label htmlFor="presentation" className="text-sm font-medium">
-                Presentation
-              </Label>
-              <span className="text-sm text-muted-foreground">/{maxScores.presentation}</span>
-            </div>
-            <Input
-              id="presentation"
-              type="number"
-              step="0.1"
-              min="0"
-              max={maxScores.presentation}
-              value={scores.presentation.toString()}
-              onChange={(e) => handleScoreChange("presentation", e.target.value)}
-            />
-            <p className="text-xs text-muted-foreground">Quality of documentation and presentation.</p>
-          </div>
+          ))}
 
           {/* Total Score */}
           <div className="flex items-center justify-between rounded-lg p-4">
@@ -220,13 +228,27 @@ export function ProjectEvaluationView({ projectId }: ProjectEvaluationViewProps)
               value={comments}
               onChange={(e) => setComments(e.target.value)}
               className="min-h-[100px] resize-none"
+              disabled={createEvaluationMutation.isPending}
             />
           </div>
 
           {/* Submit Button */}
-          <Button className="w-full" size="lg">
-            <Send className="mr-2 h-4 w-4" />
-            Submit evaluation
+          <Button 
+            className="w-full" 
+            size="lg"
+            onClick={handleSubmit}
+            disabled={createEvaluationMutation.isPending}
+          >
+            {createEvaluationMutation.isPending ? (
+              <>
+                <span className="mr-2">Submitting...</span>
+              </>
+            ) : (
+              <>
+                <Send className="mr-2 h-4 w-4" />
+                Submit evaluation
+              </>
+            )}
           </Button>
         </CardBody>
       </Card>

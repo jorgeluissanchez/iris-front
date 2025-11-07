@@ -1,4 +1,5 @@
 import { factory, primaryKey } from "@mswjs/data";
+import { Weight } from "lucide-react";
 import { nanoid } from "nanoid";
 
 const models = {
@@ -129,6 +130,19 @@ const models = {
     eventId: String,
     createdAt: Date.now,
   },
+  criterion_public: {
+    id: primaryKey(nanoid),
+    eventId: String,
+    name: String,
+    description: String,
+    weight: Number,
+    criterionCourse: Array,
+  },
+  criterionCourse: {
+    id: primaryKey(nanoid),
+    criterionId: String,
+    courseId: String,
+  }
 };
 
 export const db = factory(models);

@@ -157,3 +157,16 @@ export type Evaluation = Entity<{
   scores: EvaluationScoreInput[];
 }>;
 
+export type CriterionPublic = Entity<{
+  eventId: string;
+  name: string;
+  description: string;
+  weight: number;
+  criterionCourses: CriterionCourse[];
+  createdAt: number;
+}>;
+
+export type CriterionCourse = Entity<{
+  courseId: string;
+  criterionId: string;
+}>;

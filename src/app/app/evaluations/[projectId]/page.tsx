@@ -1,22 +1,27 @@
-import { ProjectEvaluationView } from '@/features/jury/components/project-evaluation-view';
+import {
+  dehydrate,
+  HydrationBoundary,
+  QueryClient,
+} from '@tanstack/react-query';
+import Evaluation from './_components/evaluation';
+import { getProjectPublicQueryOptions } from '@/features/projects-public/api/get-project';
 
-export default async function EvaluatePage({
-  params,
-}: {
-  params: Promise<{ id: string }>
-}) {
-  const { id } = await params
 
-  return (
-    <main className="min-h-screen p-6 md:p-8">
-      <div className="mx-auto max-w-7xl">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-balance">Project Evaluation</h1>
-          <p className="mt-2 text-muted-foreground">Review and evaluate projects</p>
-        </div>
+const EvaluationJuryPage = async ({ params }: { params: Promise<{ projectId: string }> }) => {
 
-        <ProjectEvaluationView projectId={id} />
-      </div>
-    </main>
-  )
-}
+    const { projectId } = await params;
+
+    const queryClient = new QueryClient();
+
+    await queryClient.prefetchQuery(getProjectPublicQueryOptions( projectId ));
+
+    const dehydratedState = dehydrate(queryClient);
+
+    return (
+        <HydrationBoundary state={dehydratedState}>
+            <Evaluation projectId={projectId} />
+        </HydrationBoundary>
+    );
+};
+
+export default EvaluationJuryPage;

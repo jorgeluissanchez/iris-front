@@ -274,5 +274,188 @@
             ],
             "createdAt": 1762532590077
         }
+    ],
+    "criterion_public": [
+        {
+            "id": "crit_001",
+            "eventId": "MAfnjuqHZqbsGhxLmoP_N",
+            "name": "Innovación y Creatividad",
+            "description": "Evaluación de la originalidad y propuesta innovadora del proyecto",
+            "weight": 1.5,
+            "criterionCourse": [
+                {
+                    "courseId": "qZ8PjJm_Va0Jg7JH7g1m"
+                },
+                {
+                    "courseId": "Xf3lVw9Q_Pk2sTt8Nn4y"
+                },
+                {
+                    "courseId": "Np6QwEr2_Yu8Io9As3Df"
+                }
+            ],
+            "createdAt": 1762190000010
+        },
+        {
+            "id": "crit_002",
+            "eventId": "MAfnjuqHZqbsGhxLmoP_N",
+            "name": "Calidad Técnica",
+            "description": "Evaluación de la implementación técnica y arquitectura del proyecto",
+            "weight": 2,
+            "criterionCourse": [
+                {
+                    "courseId": "qZ8PjJm_Va0Jg7JH7g1m"
+                },
+                {
+                    "courseId": "Xf3lVw9Q_Pk2sTt8Nn4y"
+                },
+                {
+                    "courseId": "Bv7HcD1L_Rt5yUu3Mm2k"
+                }
+            ],
+            "createdAt": 1762190000011
+        },
+        {
+            "id": "crit_003",
+            "eventId": "MAfnjuqHZqbsGhxLmoP_N",
+            "name": "Presentación y Documentación",
+            "description": "Calidad de la presentación oral y documentación técnica",
+            "weight": 1,
+            "criterionCourse": [
+                {
+                    "courseId": "qZ8PjJm_Va0Jg7JH7g1m"
+                },
+                {
+                    "courseId": "Xf3lVw9Q_Pk2sTt8Nn4y"
+                },
+                {
+                    "courseId": "Bv7HcD1L_Rt5yUu3Mm2k"
+                },
+                {
+                    "courseId": "Np6QwEr2_Yu8Io9As3Df"
+                }
+            ],
+            "createdAt": 1762190000012
+        },
+        {
+            "id": "crit_004",
+            "eventId": "MAfnjuqHZqbsGhxLmoP_N",
+            "name": "Trabajo en Equipo",
+            "description": "Coordinación y distribución de tareas entre los miembros",
+            "weight": 0.5,
+            "criterionCourse": [
+                {
+                    "courseId": "qZ8PjJm_Va0Jg7JH7g1m"
+                },
+                {
+                    "courseId": "Xf3lVw9Q_Pk2sTt8Nn4y"
+                },
+                {
+                    "courseId": "Bv7HcD1L_Rt5yUu3Mm2k"
+                },
+                {
+                    "courseId": "Np6QwEr2_Yu8Io9As3Df"
+                }
+            ],
+            "createdAt": 1762190000013
+        },
+        {
+            "id": "crit_005",
+            "eventId": "MAfnjuqHZqbsGhxLmoP_N",
+            "name": "Modelado de Datos",
+            "description": "Calidad del diseño del modelo de datos y normalización",
+            "weight": 1.5,
+            "criterionCourse": [
+                {
+                    "courseId": "Bv7HcD1L_Rt5yUu3Mm2k"
+                }
+            ],
+            "createdAt": 1762190000014
+        },
+        {
+            "id": "crit_006",
+            "eventId": "MAfnjuqHZqbsGhxLmoP_N",
+            "name": "Precisión del Modelo",
+            "description": "Exactitud y rendimiento de los algoritmos",
+            "weight": 1.5,
+            "criterionCourse": [
+                {
+                    "courseId": "qZ8PjJm_Va0Jg7JH7g1m"
+                },
+                {
+                    "courseId": "Np6QwEr2_Yu8Io9As3Df"
+                }
+            ],
+            "createdAt": 1762190000015
+        },
+        {
+            "id": "crit_008",
+            "eventId": "MAfnjuqHZqbsGhxLmoP_N",
+            "name": "Optimización",
+            "description": "Eficiencia en el uso de recursos computacionales",
+            "weight": 0.5,
+            "criterionCourse": [
+                {
+                    "courseId": "Bv7HcD1L_Rt5yUu3Mm2k"
+                },
+                {
+                    "courseId": "Np6QwEr2_Yu8Io9As3Df"
+                }
+            ],
+            "createdAt": 1762190000017
+        }
+    ],
+    "evaluation": [
+        {
+            "id": "JwJwL6VMrcQPP1SNrB8-s",
+            "projectId": "Lbri6LqDSxUybAACLv_dT",
+            "memberUserId": "AEuqQbI8mh8aToNDV-2ZW",
+            "grade": 4.5,
+            "comments": "Excelente",
+            "scores": [
+                {
+                    "criterion": "crit_001",
+                    "score": 1
+                },
+                {
+                    "criterion": "crit_002",
+                    "score": 2
+                },
+                {
+                    "criterion": "crit_003",
+                    "score": 1
+                },
+                {
+                    "criterion": "crit_004",
+                    "score": 0.5
+                }
+            ],
+            "createdAt": 1762557620020
+        }
+    ],
+    "evaluationDetail": [
+        {
+            "id": "CUAMs3tO0GdswiYCrH_uo",
+            "evaluationId": "JwJwL6VMrcQPP1SNrB8-s",
+            "criterion": "crit_001",
+            "score": 1
+        },
+        {
+            "id": "epnov0ozB_MGbos31WDdI",
+            "evaluationId": "JwJwL6VMrcQPP1SNrB8-s",
+            "criterion": "crit_002",
+            "score": 2
+        },
+        {
+            "id": "26mtqn0frtOZOqy-tcHMH",
+            "evaluationId": "JwJwL6VMrcQPP1SNrB8-s",
+            "criterion": "crit_003",
+            "score": 1
+        },
+        {
+            "id": "2rU9PO2hChxf9oiuOqG_B",
+            "evaluationId": "JwJwL6VMrcQPP1SNrB8-s",
+            "criterion": "crit_004",
+            "score": 0.5
+        }
     ]
 }

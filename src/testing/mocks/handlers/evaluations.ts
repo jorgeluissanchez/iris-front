@@ -38,14 +38,14 @@ export const evaluationsHandlers = [
 
       const memberUserId = body.memberUserId ?? user?.id ?? '';
 
-      const grade = body.scores.reduce((s, d) => s + (d.score ?? 0), 0) / body.scores.length;
+      const grade = body.scores.reduce((s, d) => s + (d.score ?? 0), 0);
 
       const evaluation = db.evaluation.create({
         memberUserId,
         projectId: body.projectId ?? '',
         grade,
         comments: body.comments ?? '',
-        scores: body.scores.map((d) => d.score),
+        scores: body.scores,
       });
 
       // create details

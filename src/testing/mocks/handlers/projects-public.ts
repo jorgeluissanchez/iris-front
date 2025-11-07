@@ -58,6 +58,37 @@ export const projectsPublicHandlers = [
     }
   }),
 
+  http.get(`${env.API_URL}/projects-public/:id`, async ({ cookies, request }) => {
+    await networkDelay();
+    try {
+      const { error } = requireAuth(cookies);
+      if (error) {
+        return HttpResponse.json({ message: error }, { status: 401 });
+      }
+      const url = new URL(request.url);
+      const projectId = url.pathname.split('/')[3];
+      if (!projectId) {
+        return HttpResponse.json(
+          { message: 'projectId is required' },
+          { status: 400 },
+        );
+      }
+      const project = db.project_public.findFirst({ where: { id: { equals: projectId } } });
+      if (!project) {
+        return HttpResponse.json(
+          { message: 'Project not found' },
+          { status: 404 },
+        );
+      }
+      return HttpResponse.json({ data: project });
+    } catch (error: any) {
+      return HttpResponse.json(
+        { message: error?.message || 'Server Error' },
+        { status: 500 },
+      );
+    }
+  }),
+
   http.get(`${env.API_URL}/projects-public`, async ({ cookies, request }) => {
     await networkDelay();
 
