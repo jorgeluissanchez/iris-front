@@ -8,11 +8,11 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { FileText, Users, Download, Send } from "lucide-react"
 
-interface ProjectEvaluationViewProps {
-  projectId: string
-}
+type ProjectEvaluationViewProps = {
+  projectId: string;
+};
 
-export function ProjectEvaluationView() {
+export function ProjectEvaluationView({ projectId }: ProjectEvaluationViewProps) {
   const [scores, setScores] = useState({
     innovation: 0,
     technical: 0,

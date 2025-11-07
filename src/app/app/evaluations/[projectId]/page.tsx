@@ -15,7 +15,7 @@ export default async function EvaluatePage({
           <p className="mt-2 text-muted-foreground">Review and evaluate projects</p>
         </div>
 
-        <ProjectEvaluationView />
+        <ProjectEvaluationView projectId={id} />
       </div>
     </main>
   )

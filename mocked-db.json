@@ -242,26 +242,37 @@
     ],
     "project_public": [
         {
-            "id": "zLlAg_BghDBJIcFJrgmFv",
+            "id": "Lbri6LqDSxUybAACLv_dT",
             "eventId": "MAfnjuqHZqbsGhxLmoP_N",
-            "courseId": "qZ8PjJm_Va0Jg7JH7g1m",
+            "courseId": "Xf3lVw9Q_Pk2sTt8Nn4y",
             "name": "Arkad",
             "description": "",
             "eventNumber": "",
             "state": "UNDER_REVIEW",
-            "logo": "https://storage.example.com/projects/logos/1762488360020.png",
-            "createdAt": 1762488361074
-        },
-        {
-            "id": "TRz7zQAwIWDih4jFepyiv",
-            "eventId": "MAfnjuqHZqbsGhxLmoP_N",
-            "courseId": "Xf3lVw9Q_Pk2sTt8Nn4y",
-            "name": "Iris",
-            "description": "",
-            "eventNumber": "",
-            "state": "UNDER_REVIEW",
-            "logo": "https://storage.example.com/projects/logos/1762489013325.png",
-            "createdAt": 1762489013779
+            "logo": "https://storage.example.com/projects/logos/1762532588622.png",
+            "participants": [
+                {
+                    "firstName": "Juan",
+                    "lastName": "Povea",
+                    "email": "a@a.com"
+                }
+            ],
+            "jurorAssignments": [
+                {
+                    "memberUserId": "AEuqQbI8mh8aToNDV-2ZW"
+                }
+            ],
+            "documents": [
+                {
+                    "type": "POSTER",
+                    "url": "blob:http://localhost:3000/b2926fe4-8bc7-4f0e-ab34-96ef71859099"
+                },
+                {
+                    "type": "SUPPORTING_DOCUMENT",
+                    "url": "blob:http://localhost:3000/13956a45-19ed-46db-ba72-3e40a0208ece"
+                }
+            ],
+            "createdAt": 1762532590077
         }
     ]
 }

@@ -48,7 +48,7 @@ export const paths = {
       getHref: () => "/app/courses",
     },
     project_jury: {
-      getHref: (id: string) => `/app/project_jury/${id}`,
+      getHref: (id: string) => `/app/events/${id}`,
     },
     evaluations: {
       getHref: (id: string) => `/app/evaluations/${id}`,

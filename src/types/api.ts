@@ -72,6 +72,9 @@ export type ProjectPublic = Entity<{
   eventNumber?: string;
   logo: string;
   state: "UNDER_REVIEW" | "APPROVED" | "REJECTED";
+  participants: ProjectParticipant[];
+  documents: ProjectDocument[];
+  jurorAssignments: ProjectAssignment[];
   createdAt: number;
   updatedAt: number;
 
@@ -80,13 +83,16 @@ export type ProjectPublic = Entity<{
 export type ProjectDocument = Entity<{
   id: string;
   projectId: string;
+  type: string;
   url: string;
   createdAt: number;
   project: ProjectPublic;
 }>;
 
 export type ProjectParticipant = Entity<{
-  userId: string;
+  firstName: string;
+  lastName: string;
+  email: string;
   projectId: string;
   studentCode?: string;
   project: ProjectPublic;
@@ -94,9 +100,7 @@ export type ProjectParticipant = Entity<{
 
 export type ProjectAssignment = Entity<{
   projectId: string;
-  memberUserId: string;
   memberEventId: string;
-  memberRoleId: string;
   assigneAt: Date;
   updatedAt: Date;
   project: ProjectPublic;
