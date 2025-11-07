@@ -46,12 +46,6 @@ export const UpdateEvent = ({ eventId }: UpdateEventProps) => {
     },
   });
 
-  useEffect(() => {
-    if (isOpen) {
-      eventQuery.refetch();
-    }
-  }, [isOpen, eventQuery]);
-
   const user = useUser();
 
   if (!canUpdateEvent(user?.data)) {
@@ -66,7 +60,8 @@ export const UpdateEvent = ({ eventId }: UpdateEventProps) => {
         variant="shadow"
         className="w-full"
         size="sm"
-        onPress={() => onOpen()}
+        onMouseEnter={()=>eventQuery.refetch()}
+        onPress={()=>onOpen()}
       >
         <SquarePen size={16} />
         Update Event
