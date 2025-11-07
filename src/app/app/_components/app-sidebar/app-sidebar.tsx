@@ -57,6 +57,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             url: paths.app.projects.getHref(),
             icon: Presentation,
           },
+          { title: "Juries", url: paths.app.juries.getHref(), icon: UsersIcon },
           { title: "Users", url: paths.app.users.getHref(), icon: UsersIcon },
         ];
       case "STUDENT":

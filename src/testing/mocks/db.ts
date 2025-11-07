@@ -61,7 +61,7 @@ const models = {
     evaluationId: String,
     criterion: String,
     score: Number,
-  }
+  },
   project: {
     id: primaryKey(nanoid),
     title: String,
@@ -84,6 +84,13 @@ const models = {
   courseEvent: {
     id: primaryKey(nanoid),
     courseId: String,
+    eventId: String,
+    createdAt: Date.now,
+  },
+  jury: {
+    id: primaryKey(nanoid),
+    email: String,
+    invitationStatus: String,
     eventId: String,
     createdAt: Date.now,
   },

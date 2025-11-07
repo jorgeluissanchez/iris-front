@@ -2,6 +2,9 @@
 // ideally, we want to keep these api related types in sync
 // with the backend instead of manually writing them out
 
+import { user } from "@heroui/theme";
+import { User } from "lucide-react";
+
 export type BaseEntity = {
   id: string;
   createdAt: number;
@@ -106,3 +109,8 @@ export type Evaluation = Entity<{
   scores: EvaluationScoreInput[];
 }>;
 
+export type Jury = Entity<{
+  email: string;
+  eventId: string;
+  invitationStatus: "pending" | "accepted" | "declined";
+}>;

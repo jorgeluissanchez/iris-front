@@ -1,20 +1,22 @@
-import { HttpResponse, http } from 'msw';
+import { HttpResponse, http } from "msw";
 
-import { env } from '@/config/env';
+import { env } from "@/config/env";
 
-import { networkDelay } from '../utils';
+import { networkDelay } from "../utils";
 
-import { authHandlers } from './auth';
-import { commentsHandlers } from './comments';
-import { coursesHandlers } from './courses';
-import { discussionsHandlers } from './discussions';
-import { eventsHandlers } from './events';
-import { teamsHandlers } from './teams';
-import { usersHandlers } from './users';
-import { projectsHandlers } from './projects';
-import { evaluationsHandlers } from './evaluations';
+import { juriesHandlers } from "./juries";
+import { authHandlers } from "./auth";
+import { commentsHandlers } from "./comments";
+import { coursesHandlers } from "./courses";
+import { discussionsHandlers } from "./discussions";
+import { eventsHandlers } from "./events";
+import { teamsHandlers } from "./teams";
+import { usersHandlers } from "./users";
+import { projectsHandlers } from "./projects";
+import { evaluationsHandlers } from "./evaluations";
 
 export const handlers = [
+  ...juriesHandlers,
   ...authHandlers,
   ...commentsHandlers,
   ...coursesHandlers,
