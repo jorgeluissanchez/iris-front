@@ -80,6 +80,16 @@ export function EventsSection({ eventsSectionRef }: EventsSectionProps) {
 
   const events = eventsQuery.data?.data || [];
 
+  // Debug: Log para ver qué datos llegan
+  console.log('Events Query:', {
+    isLoading: eventsQuery.isLoading,
+    isError: eventsQuery.isError,
+    error: eventsQuery.error,
+    data: eventsQuery.data,
+    events: events,
+    eventsLength: events.length
+  });
+
   return (
     <section
       id="eventos"
@@ -100,7 +110,14 @@ export function EventsSection({ eventsSectionRef }: EventsSectionProps) {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        {events.length === 0 ? (
+          <div className="text-center py-12">
+            <p className="text-lg text-muted-foreground">
+              No hay eventos disponibles en este momento.
+            </p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {events.map((event, index) => {
             const eventTheme = getEventColor(event.id, index);
             const dateRange = formatDateRange(event.startDate, event.endDate);
@@ -219,7 +236,8 @@ export function EventsSection({ eventsSectionRef }: EventsSectionProps) {
               </div>
             </GlassCard>
           )})}
-        </div>
+          </div>
+        )}
       </div>
     </section>
   );

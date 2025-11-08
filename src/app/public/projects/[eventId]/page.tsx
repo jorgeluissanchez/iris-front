@@ -3,7 +3,7 @@ import {
   HydrationBoundary,
   QueryClient,
 } from '@tanstack/react-query';
-import { ProjectWizard } from "@/features/projects/components/project-wizard";
+import { ProjectWizard } from "@/features/projects-public/components/project-wizard";
 import { PublicLayout } from "@/components/layouts/public-layout";
 // import { getEventCoursesQueryOptions } from '@/features/course-public/api/get-course';
 import '@/features/landing/index.css';

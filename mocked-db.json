@@ -1,1 +1,34 @@
-{"team":[{"id":"i0Kqk2y7zPEJ_F-2pzeuw","name":"FreeFire","description":"","createdAt":1762117797260},{"id":"LHoBxzliKumLEVuR-XReN","name":"aaaa","description":"","createdAt":1762184235770}],"user":[{"id":"BZdtrfcHMGT44j7jV_ekP","firstName":"jorge luis","lastName":"sanchez barreneche","email":"jorgeluissanchezbarreneche@gmail.com","password":"3670747394","teamId":"i0Kqk2y7zPEJ_F-2pzeuw","role":"ADMIN","bio":"","createdAt":1762117797318},{"id":"PrBNl8_vdQUGrcwRI30hJ","firstName":"admin","lastName":"admin","email":"admin@admin.com","password":"2951957434","teamId":"LHoBxzliKumLEVuR-XReN","role":"ADMIN","bio":"","createdAt":1762184235777},{"id":"jfmg_n3f0Yk2FspEhoSQx","firstName":"Carlos","lastName":"López","email":"carlos@student.com","password":"2170491013","teamId":"LHoBxzliKumLEVuR-XReN","role":"STUDENT","bio":"","createdAt":1762636128064}],"event":[{"id":"MAfnjuqHZqbsGhxLmoP_N","title":"holajojo","description":"mundo","startDate":"2025-11-14","endDate":"2025-11-28","inscriptionDeadline":"2025-11-01","accessCode":"EVT417885","isPublic":true,"evaluationsStatus":"closed","createdAt":1762131417888},{"id":"B3xKm9QwRjNpVhYtLs2Dc","title":"Feria de Proyectos Finales 2025","description":"Evento anual de presentación de proyectos finales de las 6 ingenierías de la Universidad del Norte","startDate":"2025-05-15","endDate":"2025-05-17","inscriptionDeadline":"2025-05-01","accessCode":"EVT892341","isPublic":true,"evaluationsStatus":"open","createdAt":1762050000000},{"id":"F7pWn2KdTxLmQs5RvGy8H","title":"Hackathon Innovación Tech","description":"Competencia intensiva de 48 horas para desarrollar soluciones tecnológicas innovadoras","startDate":"2025-06-10","endDate":"2025-06-12","inscriptionDeadline":"2025-05-31","accessCode":"EVT456789","isPublic":true,"evaluationsStatus":"pending","createdAt":1762100000000}],"discussion":[{"id":"lPnftEG_6XTG9IbqPM_XC","title":"hola lkñlkñlkjñk","body":"mundo","authorId":"BZdtrfcHMGT44j7jV_ekP","teamId":"i0Kqk2y7zPEJ_F-2pzeuw","createdAt":1762119032382,"public":false}]}
+{
+  "team": [
+    {"id": "i0Kqk2y7zPEJ_F-2pzeuw", "name": "FreeFire", "description": "", "createdAt": 1762117797260},
+    {"id": "LHoBxzliKumLEVuR-XReN", "name": "aaaa", "description": "", "createdAt": 1762184235770}
+  ],
+  "user": [
+    {"id": "BZdtrfcHMGT44j7jV_ekP", "firstName": "jorge luis", "lastName": "sanchez barreneche", "email": "jorgeluissanchezbarreneche@gmail.com", "password": "3670747394", "teamId": "i0Kqk2y7zPEJ_F-2pzeuw", "role": "ADMIN", "bio": "", "createdAt": 1762117797318},
+    {"id": "PrBNl8_vdQUGrcwRI30hJ", "firstName": "admin", "lastName": "admin", "email": "admin@admin.com", "password": "2951957434", "teamId": "LHoBxzliKumLEVuR-XReN", "role": "ADMIN", "bio": "", "createdAt": 1762184235777},
+    {"id": "jfmg_n3f0Yk2FspEhoSQx", "firstName": "Carlos", "lastName": "López", "email": "carlos@student.com", "password": "2170491013", "teamId": "LHoBxzliKumLEVuR-XReN", "role": "STUDENT", "bio": "", "createdAt": 1762636128064}
+  ],
+  "event": [
+    {"id": "MAfnjuqHZqbsGhxLmoP_N", "title": "holajojo", "description": "mundo", "startDate": "2025-11-14", "endDate": "2025-11-28", "inscriptionDeadline": "2025-11-01", "accessCode": "EVT417885", "isPublic": true, "evaluationsStatus": "closed", "createdAt": 1762131417888},
+    {"id": "B3xKm9QwRjNpVhYtLs2Dc", "title": "Feria de Proyectos Finales 2025", "description": "Evento anual de presentación de proyectos finales de las 6 ingenierías de la Universidad del Norte", "startDate": "2025-05-15", "endDate": "2025-05-17", "inscriptionDeadline": "2025-05-01", "accessCode": "EVT892341", "isPublic": true, "evaluationsStatus": "open", "createdAt": 1762050000000},
+    {"id": "F7pWn2KdTxLmQs5RvGy8H", "title": "Hackathon Innovación Tech", "description": "Competencia intensiva de 48 horas para desarrollar soluciones tecnológicas innovadoras", "startDate": "2025-06-10", "endDate": "2025-06-12", "inscriptionDeadline": "2025-05-31", "accessCode": "EVT456789", "isPublic": true, "evaluationsStatus": "pending", "createdAt": 1762100000000}
+  ],
+  "course_public": [
+    {"id": "1", "code": "ING-101", "name": "Proyecto de Grado I", "eventId": "B3xKm9QwRjNpVhYtLs2Dc", "createdAt": 1762000000000},
+    {"id": "2", "code": "ING-102", "name": "Proyecto de Grado II", "eventId": "B3xKm9QwRjNpVhYtLs2Dc", "createdAt": 1762000000000},
+    {"id": "3", "code": "SIS-301", "name": "Ingeniería de Software", "eventId": "B3xKm9QwRjNpVhYtLs2Dc", "createdAt": 1762000000000},
+    {"id": "4", "code": "IND-401", "name": "Gestión de Proyectos", "eventId": "B3xKm9QwRjNpVhYtLs2Dc", "createdAt": 1762000000000},
+    {"id": "5", "code": "ELE-201", "name": "Sistemas Embebidos", "eventId": "B3xKm9QwRjNpVhYtLs2Dc", "createdAt": 1762000000000},
+    {"id": "6", "code": "MEC-305", "name": "Diseño Mecatrónico", "eventId": "B3xKm9QwRjNpVhYtLs2Dc", "createdAt": 1762000000000},
+    {"id": "7", "code": "CIV-402", "name": "Diseño de Estructuras", "eventId": "B3xKm9QwRjNpVhYtLs2Dc", "createdAt": 1762000000000},
+    {"id": "8", "code": "ING-101", "name": "Proyecto de Grado I", "eventId": "MAfnjuqHZqbsGhxLmoP_N", "createdAt": 1762000000000},
+    {"id": "9", "code": "ING-102", "name": "Proyecto de Grado II", "eventId": "MAfnjuqHZqbsGhxLmoP_N", "createdAt": 1762000000000},
+    {"id": "10", "code": "SIS-301", "name": "Ingeniería de Software", "eventId": "MAfnjuqHZqbsGhxLmoP_N", "createdAt": 1762000000000},
+    {"id": "11", "code": "IND-401", "name": "Gestión de Proyectos", "eventId": "MAfnjuqHZqbsGhxLmoP_N", "createdAt": 1762000000000},
+    {"id": "12", "code": "HACK-101", "name": "Desarrollo de Prototipos", "eventId": "F7pWn2KdTxLmQs5RvGy8H", "createdAt": 1762000000000},
+    {"id": "13", "code": "HACK-102", "name": "Innovación Tecnológica", "eventId": "F7pWn2KdTxLmQs5RvGy8H", "createdAt": 1762000000000}
+  ],
+  "discussion": [
+    {"id": "lPnftEG_6XTG9IbqPM_XC", "title": "hola lkñlkñlkjñk", "body": "mundo", "authorId": "BZdtrfcHMGT44j7jV_ekP", "teamId": "i0Kqk2y7zPEJ_F-2pzeuw", "createdAt": 1762119032382, "public": false}
+  ]
+}

@@ -14,7 +14,17 @@ type ProjectDetailsStepProps = {
 }
 
 export function ProjectDetailsStep({eventId, project, onUpdate }: ProjectDetailsStepProps) {
-  const { data: courses, isLoading, isError } = useEventCourses({ eventId })
+  const { data: courses, isLoading, isError, error } = useEventCourses({ eventId })
+
+  // Debug: Ver qué datos llegan
+  console.log('Courses Query:', {
+    eventId,
+    isLoading,
+    isError,
+    error,
+    courses,
+    coursesLength: courses?.length
+  });
 
   return (
     <div className="space-y-6">
