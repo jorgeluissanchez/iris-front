@@ -94,6 +94,12 @@ const models = {
     eventId: String,
     createdAt: Date.now,
   },
+  administrator: {
+    id: primaryKey(nanoid),
+    email: String,
+    invitationStatus: String,
+    createdAt: Date.now,
+  },
 };
 
 export const db = factory(models);

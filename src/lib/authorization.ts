@@ -34,6 +34,10 @@ export const canInviteJury = (user: User | null | undefined) => {
   return user?.role === "ADMIN";
 };
 
+export const canInviteAdministrator = (user: User | null | undefined) => {
+  return user?.role === "ADMIN";
+};
+
 export const canDeleteProject = (user: User | null | undefined) => {
   return user?.role === "ADMIN";
 };

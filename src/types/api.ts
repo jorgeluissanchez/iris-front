@@ -114,3 +114,8 @@ export type Jury = Entity<{
   eventId: string;
   invitationStatus: "pending" | "accepted" | "declined";
 }>;
+
+export type Administrator = Entity<{
+  email: string;
+  invitationStatus: "pending" | "accepted" | "declined";
+}>;

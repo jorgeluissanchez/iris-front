@@ -47,6 +47,9 @@ export const paths = {
     juries: {
       getHref: () => "/app/juries",
     },
+    administrators: {
+      getHref: () => "/app/administrators",
+    },
     courses: {
       getHref: () => "/app/courses",
     },

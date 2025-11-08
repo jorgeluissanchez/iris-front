@@ -5,6 +5,7 @@ import { env } from "@/config/env";
 import { networkDelay } from "../utils";
 
 import { juriesHandlers } from "./juries";
+import { administratorsHandlers } from "./administrators";
 import { authHandlers } from "./auth";
 import { commentsHandlers } from "./comments";
 import { coursesHandlers } from "./courses";
@@ -17,6 +18,7 @@ import { evaluationsHandlers } from "./evaluations";
 
 export const handlers = [
   ...juriesHandlers,
+  ...administratorsHandlers,
   ...authHandlers,
   ...commentsHandlers,
   ...coursesHandlers,

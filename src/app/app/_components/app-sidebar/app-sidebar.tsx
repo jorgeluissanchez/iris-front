@@ -9,6 +9,7 @@ import {
   Users as UsersIcon,
   type LucideIcon,
   Presentation,
+  ShieldCheck,
 } from "lucide-react";
 
 import { NavUser } from "./nav-user";
@@ -58,6 +59,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             icon: Presentation,
           },
           { title: "Juries", url: paths.app.juries.getHref(), icon: UsersIcon },
+          { title: "Administrators", url: paths.app.administrators.getHref(), icon: ShieldCheck },
           { title: "Users", url: paths.app.users.getHref(), icon: UsersIcon },
         ];
       case "STUDENT":
