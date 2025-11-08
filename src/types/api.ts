@@ -63,43 +63,93 @@ export type Event = Entity<{
   createdAt: number;
 }>;
 
-export type Project = Entity<{
-  id: number;
-  eventId: number;
-  courseId: number;
+export type ProjectPublic = Entity<{
+  id: string;
+  eventId: string;
+  courseId: string;
   name: string;
   description?: string;
   eventNumber?: string;
+  logo: string;
   state: "UNDER_REVIEW" | "APPROVED" | "REJECTED";
   createdAt: number;
   updatedAt: number;
 
-  documents: ProjectDocument[];
-  participants: ProjectParticipant[];
-  juryAssignments: ProjectAssignment[]
 }>;
 
 export type ProjectDocument = Entity<{
-  id: number;
-  projectId: number;
+  id: string;
+  projectId: string;
   url: string;
   createdAt: number;
-  project: Project;
+  project: ProjectPublic;
 }>;
 
 export type ProjectParticipant = Entity<{
-  userId: number;
-  projectId: number;
-  studentCode?: number;
-  project: Project;
+  userId: string;
+  projectId: string;
+  studentCode?: string;
+  project: ProjectPublic;
 }>;
 
 export type ProjectAssignment = Entity<{
-  projectId: number;
-  memberUserId: number;
-  memberEventId: number;
-  memberRoleId: number;
+  projectId: string;
+  memberUserId: string;
+  memberEventId: string;
+  memberRoleId: string;
   assigneAt: Date;
   updatedAt: Date;
-  project: Project;
+  project: ProjectPublic;
 }>;
+
+export type CoursePublic = Entity<{
+  id: string;
+  eventId: string;
+  code: string;
+  description?: string;
+  active: boolean;
+  createdAt: number;
+}>;
+export type TeamMember = {
+  name: string;
+  photoUrl?: string;
+};
+
+export type Project = Entity<{
+  title: string;
+  description: string;
+  eventId: string;
+  teamId: string;
+  isPublic: boolean;
+  teamMembers: TeamMember[];
+  documentsAttached: number;
+  submittedAt: number | null;
+  approvedAt: number | null;
+}>;
+
+export type Course = Entity<{
+  code: string;
+  description: string;
+  events: { id: string; title: string }[];
+  status: "active" | "inactive";
+}>;
+
+export type EvaluationDetail = Entity<{
+  evaluationId: string;
+  criterion: string;
+  score: number;
+}>;
+
+export type EvaluationScoreInput = {
+  criterion: string;
+  score: number;
+};
+
+export type Evaluation = Entity<{
+  memberUserId: string;
+  evaluatorId: string;
+  grade: number;
+  comments: string;
+  scores: EvaluationScoreInput[];
+}>;
+

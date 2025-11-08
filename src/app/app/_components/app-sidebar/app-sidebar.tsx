@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import * as React from "react"
+import * as React from "react";
 import {
   GalleryVerticalEnd,
   Home,
@@ -8,9 +8,10 @@ import {
   Calendar,
   Users as UsersIcon,
   type LucideIcon,
-} from "lucide-react"
+  Presentation,
+} from "lucide-react";
 
-import { NavUser } from "./nav-user"
+import { NavUser } from "./nav-user";
 import {
   Sidebar,
   SidebarContent,
@@ -22,35 +23,72 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarRail,
-} from "@/components/ui/sidebar"
+} from "@/components/ui/sidebar";
 import { useUser } from "@/lib/auth";
-import { paths } from "@/config/paths"
-import { Link } from "@/components/ui/link"
-
+import { paths } from "@/config/paths";
+import { Link } from "@/components/ui/link";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const user = useUser();
-  
-  const getMenuItems = (): { title: string; url: string; icon: LucideIcon }[] => {
+
+  const getMenuItems = (): {
+    title: string;
+    url: string;
+    icon: LucideIcon;
+  }[] => {
     switch (user.data?.role) {
-      case 'ADMIN':
+      case "ADMIN":
         return [
           { title: "Dashboard", url: paths.app.root.getHref(), icon: Home },
           { title: "Events", url: paths.app.events.getHref(), icon: Calendar },
-          { title: "Discussions", url: paths.app.discussions.getHref(), icon: MessageSquare },
+          {
+            title: "Discussions",
+            url: paths.app.discussions.getHref(),
+            icon: MessageSquare,
+          },
+
+          {
+            title: "Courses",
+            url: paths.app.courses.getHref(),
+            icon: Presentation,
+          },
+          {
+            title: "Projects",
+            url: paths.app.projects.getHref(),
+            icon: Presentation,
+          },
           { title: "Users", url: paths.app.users.getHref(), icon: UsersIcon },
         ];
-      case 'STUDENT':
+      case "STUDENT":
         return [
           { title: "Dashboard", url: paths.app.root.getHref(), icon: Home },
           { title: "Events", url: paths.app.events.getHref(), icon: Calendar },
-          { title: "Discussions", url: paths.app.discussions.getHref(), icon: MessageSquare },
+          {
+            title: "Discussions",
+            url: paths.app.discussions.getHref(),
+            icon: MessageSquare,
+          },
+          // Students can view courses
+          {
+            title: "Courses",
+            url: paths.app.courses.getHref(),
+            icon: Presentation,
+          },
         ];
-      case 'JURY':
+      case "JURY":
         return [
           { title: "Dashboard", url: paths.app.root.getHref(), icon: Home },
           { title: "Events", url: paths.app.events.getHref(), icon: Calendar },
-          { title: "Discussions", url: paths.app.discussions.getHref(), icon: MessageSquare },
+          {
+            title: "Discussions",
+            url: paths.app.discussions.getHref(),
+            icon: MessageSquare,
+          },
+          {
+            title: "Courses",
+            url: paths.app.courses.getHref(),
+            icon: Presentation,
+          },
         ];
       default:
         return [
@@ -58,21 +96,21 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         ];
     }
   };
-  
+
   const menuItems = getMenuItems();
-  
+
   const data = {
     user: {
       name: user.data?.firstName + " " + user.data?.lastName,
-      email: user.data?.email ?? ""
+      email: user.data?.email ?? "",
     },
     enterprise: {
       name: "Iris",
       logo: GalleryVerticalEnd,
       url: "#",
     },
-  }
-  
+  };
+
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
@@ -84,7 +122,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             >
               <Link href={data.enterprise.url}>
                 <data.enterprise.logo className="!size-5" />
-                <span className="text-base font-semibold">{data.enterprise.name}</span>
+                <span className="text-base font-semibold">
+                  {data.enterprise.name}
+                </span>
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
@@ -112,5 +152,5 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
-  )
+  );
 }

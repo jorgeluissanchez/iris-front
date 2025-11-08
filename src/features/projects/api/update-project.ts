@@ -7,31 +7,33 @@ import { Project } from "@/types/api";
 
 import { getProjectsQueryOptions } from "./get-projects";
 
-export const createProjectInputSchema = z.object({
+export const updateProjectInputSchema = z.object({
   title: z.string().min(1, "Required"),
   description: z.string().min(1, "Required"),
-  eventId: z.string().min(1, "Required"),
+  eventId: z.string().optional(),
   teamId: z.string().optional(),
   isPublic: z.boolean().optional(),
 });
 
-export type CreateProjectInput = z.infer<typeof createProjectInputSchema>;
+export type UpdateProjectInput = z.infer<typeof updateProjectInputSchema>;
 
-export const createProject = ({
+export const updateProject = ({
   data,
+  projectId,
 }: {
-  data: CreateProjectInput;
+  data: UpdateProjectInput;
+  projectId: string;
 }): Promise<{ data: Project }> => {
-  return api.post("/projects", data);
+  return api.patch(`/projects/${projectId}`, data);
 };
 
-type UseCreateProjectOptions = {
-  mutationConfig?: MutationConfig<typeof createProject>;
+type UseUpdateProjectOptions = {
+  mutationConfig?: MutationConfig<typeof updateProject>;
 };
 
-export const useCreateProject = ({
+export const useUpdateProject = ({
   mutationConfig,
-}: UseCreateProjectOptions = {}) => {
+}: UseUpdateProjectOptions = {}) => {
   const queryClient = useQueryClient();
 
   const { onSuccess, ...restConfig } = mutationConfig || {};
@@ -44,6 +46,7 @@ export const useCreateProject = ({
       onSuccess?.(data, variables, ...args);
     },
     ...restConfig,
-    mutationFn: createProject,
+    mutationFn: updateProject,
   });
 };
+

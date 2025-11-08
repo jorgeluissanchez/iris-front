@@ -8,8 +8,9 @@ import { DocumentsStep } from "./wizard-steps/documents-step"
 import { ReviewStep } from "./wizard-steps/review-step"
 import { CheckCircle2, FileText, Users, Upload } from "lucide-react"
 import { cn } from "@/utils/cn"
-import { z } from "zod"
+import { set, z } from "zod"
 import { participantSchema, projectSchema, documentsSchema } from "../schemas/wizard-schema"
+import { createProjectInputSchema , useCreateProject } from "../api/create-project"
 
 export type Participant = {
   id: string
@@ -22,7 +23,7 @@ export type Participant = {
 export type ProjectData = {
   name: string
   description: string
-  course: string
+  courseId: string
   logo: string
 }
 
@@ -56,7 +57,7 @@ export function ProjectWizard({ eventId }: ProjectWizardProps) {
     project: {
       name: "",
       description: "",
-      course: "",
+      courseId: "",
       logo: "",
     },
     documents: {
@@ -64,6 +65,7 @@ export function ProjectWizard({ eventId }: ProjectWizardProps) {
       additionalDocuments: [],
     },
   })
+  const createProjectMutation = useCreateProject()
 
   const updateParticipants = (participants: Participant[]) => {
     setWizardData((prev) => ({ ...prev, participants }))
@@ -123,19 +125,6 @@ export function ProjectWizard({ eventId }: ProjectWizardProps) {
     }
   }
 
-  const courseKeyToId: Record<string, number> = {
-    industrial: 1,
-    mecanica: 2,
-    civil: 3,
-    electrica: 4,
-    sistemas: 5,
-    quimica: 6,
-    arquitectura: 7,
-    administracion: 8,
-    economia: 9,
-    otro: 99,
-  }
-
   const mapFileToDocument = (file: File | null, kind: 'POSTER' | 'SUPPORTING_DOCUMENT') => {
     if (!file) return null
     return {
@@ -145,10 +134,12 @@ export function ProjectWizard({ eventId }: ProjectWizardProps) {
   }
 
   const handleSubmit = () => {
+    setStepErrors([])
     const payload: any = {
-      eventId: eventId ?? null,
-      courseId: courseKeyToId[wizardData.project.course] ?? null,
+      eventId: eventId,
+      courseId: wizardData.project.courseId,
       name: wizardData.project.name,
+      logo: `https://storage.example.com/projects/logos/${Date.now()}.png`,
       documents: [
         ...(mapFileToDocument(wizardData.documents.poster, 'POSTER') ? [mapFileToDocument(wizardData.documents.poster, 'POSTER')] : []),
         ...wizardData.documents.additionalDocuments.map((f) => ({
@@ -172,6 +163,18 @@ export function ProjectWizard({ eventId }: ProjectWizardProps) {
     if (wizardData.project.description) {
       payload.description = wizardData.project.description
     }
+
+    try {
+      const validated = createProjectInputSchema.parse(payload)
+      createProjectMutation.mutate({ data: validated })
+      console.log("Creating project:", validated)
+    } catch (e) {
+      if (e instanceof z.ZodError) {
+        setStepErrors(e.issues.map(i => i.message))
+      }
+    }
+
+    console.log("Submitting project with payload:", payload)
   }
 
   return (
@@ -240,7 +243,7 @@ export function ProjectWizard({ eventId }: ProjectWizardProps) {
           {currentStep === 1 && (
             <ParticipantsStep participants={wizardData.participants} onUpdate={updateParticipants} />
           )}
-          {currentStep === 2 && <ProjectDetailsStep project={wizardData.project} onUpdate={updateProject} />}
+          {currentStep === 2 && <ProjectDetailsStep eventId={eventId} project={wizardData.project} onUpdate={updateProject} />}
           {currentStep === 3 && <DocumentsStep documents={wizardData.documents} onUpdate={updateDocuments} />}
           {currentStep === 4 && <ReviewStep data={wizardData} />}
 
@@ -280,9 +283,11 @@ export function ProjectWizard({ eventId }: ProjectWizardProps) {
           <Button 
             color="success" 
             onPress={handleSubmit}
+            isLoading={createProjectMutation.isPending}
+            isDisabled={createProjectMutation.isPending}
             className="shadow-lg shadow-success/30 hover:shadow-xl hover:shadow-success/40 transition-all w-full sm:w-auto order-1 sm:order-2"
-          >
-            Enviar Proyecto
+            >
+              {createProjectMutation.isPending ? "Creando..." : "Enviar Proyecto"}
           </Button>
         )}
       </div>

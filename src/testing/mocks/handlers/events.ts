@@ -1,13 +1,13 @@
-import { HttpResponse, http } from 'msw';
+import { HttpResponse, http } from "msw";
 
-import { env } from '@/config/env';
+import { env } from "@/config/env";
 
-import { db, persistDb } from '../db';
+import { db, persistDb } from "../db";
 import {
   requireAuth,
   // requireAdmin,
   networkDelay,
-} from '../utils';
+} from "../utils";
 
 type EventBody = {
   title: string;
@@ -15,7 +15,7 @@ type EventBody = {
   startDate: string;
   endDate: string;
   inscriptionDeadline?: string;
-  evaluationsStatus?: 'open' | 'closed';
+  evaluationsStatus?: "open" | "closed";
   isPublic?: boolean;
 };
 
@@ -30,7 +30,7 @@ export const eventsHandlers = [
       // }
 
       const url = new URL(request.url);
-      const page = Number(url.searchParams.get('page') || 1);
+      const page = Number(url.searchParams.get("page") || 1);
 
       const total = db.event.count();
       const totalPages = Math.ceil(total / 10);
@@ -65,8 +65,33 @@ export const eventsHandlers = [
       });
     } catch (error: any) {
       return HttpResponse.json(
-        { message: error?.message || 'Server Error' },
-        { status: 500 },
+        { message: error?.message || "Server Error" },
+        { status: 500 }
+      );
+    }
+  }),
+
+  http.get(`${env.API_URL}/events-dropdown`, async ({ cookies }) => {
+    await networkDelay();
+
+    try {
+      const { error } = requireAuth(cookies);
+      if (error) {
+        return HttpResponse.json({ message: error }, { status: 401 });
+      }
+
+      const events = db.event.findMany({}).map((event) => {
+        return {
+          id: event.id,
+          title: event.title,
+        };
+      });
+
+      return HttpResponse.json({ data: events });
+    } catch (error: any) {
+      return HttpResponse.json(
+        { message: error?.message || "Server Error" },
+        { status: 500 }
       );
     }
   }),
@@ -91,8 +116,8 @@ export const eventsHandlers = [
 
       if (!event) {
         return HttpResponse.json(
-          { message: 'Event not found' },
-          { status: 404 },
+          { message: "Event not found" },
+          { status: 404 }
         );
       }
 
@@ -101,8 +126,8 @@ export const eventsHandlers = [
       });
     } catch (error: any) {
       return HttpResponse.json(
-        { message: error?.message || 'Server Error' },
-        { status: 500 },
+        { message: error?.message || "Server Error" },
+        { status: 500 }
       );
     }
   }),
@@ -117,7 +142,7 @@ export const eventsHandlers = [
       }
       const data = (await request.json()) as EventBody;
       // requireAdmin(user);
-      
+
       const event = db.event.create({
         title: data.title,
         description: data.description,
@@ -126,23 +151,21 @@ export const eventsHandlers = [
         inscriptionDeadline: data.inscriptionDeadline ?? data.startDate,
         accessCode: `EVT${Date.now().toString().slice(-6)}`,
         isPublic: data.isPublic ?? true,
-        evaluationsStatus: data.evaluationsStatus ?? 'closed',
+        evaluationsStatus: data.evaluationsStatus ?? "closed",
       });
 
-      await persistDb('event');
+      await persistDb("event");
 
       return HttpResponse.json({ data: event });
     } catch (error: any) {
       return HttpResponse.json(
-        { message: error?.message || 'Server Error' },
-        { status: 500 },
+        { message: error?.message || "Server Error" },
+        { status: 500 }
       );
     }
   }),
 
-  http.patch(
-    `${env.API_URL}/events/:eventId`,
-    async ({ params, request, cookies }) => {
+  http.patch(`${env.API_URL}/events/:eventId`, async ({ params, request, cookies }) => {
       await networkDelay();
 
       try {
@@ -176,21 +199,21 @@ export const eventsHandlers = [
 
         if (!event) {
           return HttpResponse.json(
-            { message: 'Event not found' },
-            { status: 404 },
+            { message: "Event not found" },
+            { status: 404 }
           );
         }
 
-        await persistDb('event');
+        await persistDb("event");
 
         return HttpResponse.json({ data: event });
       } catch (error: any) {
         return HttpResponse.json(
-          { message: error?.message || 'Server Error' },
-          { status: 500 },
+          { message: error?.message || "Server Error" },
+          { status: 500 }
         );
       }
-    },
+    }
   ),
 
   http.delete(`${env.API_URL}/events/:eventId`, async ({ params, cookies }) => {
@@ -213,18 +236,18 @@ export const eventsHandlers = [
 
       if (!event) {
         return HttpResponse.json(
-          { message: 'Event not found' },
-          { status: 404 },
+          { message: "Event not found" },
+          { status: 404 }
         );
       }
 
-      await persistDb('event');
+      await persistDb("event");
 
       return HttpResponse.json({ data: event });
     } catch (error: any) {
       return HttpResponse.json(
-        { message: error?.message || 'Server Error' },
-        { status: 500 },
+        { message: error?.message || "Server Error" },
+        { status: 500 }
       );
     }
   }),

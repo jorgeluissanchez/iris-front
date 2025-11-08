@@ -7,19 +7,12 @@ import { Snippet } from "@/components/ui/snippet";
 import { Card, CardBody } from "@/components/ui/card";
 import { Spinner } from "@/components/ui/spinner";
 import { Pagination } from "@/components/ui/pagination";
-import { paths } from "@/config/paths";
-
-import { getEventQueryOptions } from "../api/get-event";
 import { useEvents } from "../api/get-events";
 
 import { DeleteEvent } from "./delete-event";
 import { UpdateEvent } from "./update-event";
 
-export type EventsListProps = {
-  onEventPrefetch?: (id: string) => void;
-};
-
-export const EventsList = ({ onEventPrefetch }: EventsListProps) => {
+export const EventsList = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const page = searchParams?.get("page") ? Number(searchParams.get("page")) : 1;
@@ -27,7 +20,6 @@ export const EventsList = ({ onEventPrefetch }: EventsListProps) => {
   const eventsQuery = useEvents({
     page: page,
   });
-  const queryClient = useQueryClient();
 
   if (eventsQuery.isLoading) {
     return (
@@ -44,12 +36,6 @@ export const EventsList = ({ onEventPrefetch }: EventsListProps) => {
 
   const handlePageChange = (newPage: number) => {
     router.push(`?page=${newPage}`);
-  };
-
-  const handleViewDetails = (eventId: string) => {
-    queryClient.prefetchQuery(getEventQueryOptions(eventId));
-    onEventPrefetch?.(eventId);
-    router.push(paths.app.event.getHref(eventId));
   };
 
   return (
