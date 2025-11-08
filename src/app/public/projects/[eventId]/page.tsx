@@ -37,7 +37,7 @@ const PublicProjectPage = async ({ params }: { params: Promise<{ eventId: string
                 <div className="container mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-8 sm:py-12 relative z-10">
                     <div className="mb-6 sm:mb-8 text-center px-2">
                         <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-3 text-balance">
-                            Registro de Proyectos
+                            Registro de <span className="prismatic-text">Proyectos</span>
                         </h1>
                         <p className="text-base sm:text-lg text-muted-foreground text-pretty">
                             Complete el formulario para registrar su proyecto académico
