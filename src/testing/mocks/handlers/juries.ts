@@ -36,15 +36,6 @@ export const juriesHandlers = [
           eventId: jury.eventId,
           invitationStatus: jury.invitationStatus,
           createdAt: jury.createdAt,
-          // Get the event title for display in the table
-          event:
-            db.event.findFirst({
-              where: {
-                id: {
-                  equals: jury.eventId,
-                },
-              },
-            })?.title || "Unknown Event",
         }));
 
       return HttpResponse.json({
@@ -124,7 +115,7 @@ export const juriesHandlers = [
   ),
 
   // Invite a new jury
-  http.post(`${env.API_URL}/juries`, async ({ params, request, cookies }) => {
+  http.post(`${env.API_URL}/juries`, async ({ request, cookies }) => {
     await networkDelay();
 
     try {
@@ -133,7 +124,6 @@ export const juriesHandlers = [
         return HttpResponse.json({ message: error }, { status: 401 });
       }
 
-      const eventId = params.eventId as string;
       const data = (await request.json()) as JuryBody;
 
       // Check if jury already exists for this event
@@ -143,7 +133,7 @@ export const juriesHandlers = [
             equals: data.email,
           },
           eventId: {
-            equals: eventId,
+            equals: data.eventId,
           },
         },
       });
@@ -157,7 +147,7 @@ export const juriesHandlers = [
 
       const jury = db.jury.create({
         email: data.email,
-        eventId: eventId,
+        eventId: data.eventId,
         invitationStatus: "pending",
       });
 

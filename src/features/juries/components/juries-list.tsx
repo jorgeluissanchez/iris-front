@@ -54,6 +54,7 @@ export const JuriesList = () => {
   const eventsQuery = useEventsDropdown();
 
   const juries = juriesQuery.data?.data ?? [];
+  const meta = juriesQuery.data?.meta;
   const events = eventsQuery.data?.data ?? [];
   const isLoading = juriesQuery.isLoading || eventsQuery.isLoading;
 
@@ -134,11 +135,14 @@ export const JuriesList = () => {
     });
   }, [juries, filterValue, statusFilter, eventsMap]);
 
-  const pages = Math.max(1, Math.ceil(filteredJuries.length / rowsPerPage));
-  const paginated = useMemo(() => {
-    const start = (page - 1) * rowsPerPage;
-    return filteredJuries.slice(start, start + rowsPerPage);
-  }, [filteredJuries, page, rowsPerPage]);
+  // Use server-side pagination metadata when available, otherwise fallback to client-side
+  const pages = meta?.totalPages ?? Math.max(1, Math.ceil(filteredJuries.length / rowsPerPage));
+  const totalItems = meta?.total ?? filteredJuries.length;
+  
+  // Only apply client-side pagination if we have filters, otherwise use server-paginated data directly
+  const displayJuries = hasSearchFilter || statusFilter !== "all" 
+    ? filteredJuries 
+    : juries;
 
   const topContent = useMemo(() => {
     function capitalize(s: string) {
@@ -190,8 +194,9 @@ export const JuriesList = () => {
 
         <div className="flex justify-between items-center">
           <span className="text-default-400 text-small">
-            {filteredJuries.length} resultados
-            {hasSearchFilter ? " (filtrados)" : ""}
+            {hasSearchFilter || statusFilter !== "all" 
+              ? `${filteredJuries.length} resultados (filtrados)` 
+              : `${totalItems} resultados`}
           </span>
         </div>
       </div>
@@ -201,8 +206,9 @@ export const JuriesList = () => {
     statusFilter,
     onSearchChange,
     onRowsPerPageChange,
-    filteredJuries.length,
     hasSearchFilter,
+    totalItems,
+    filteredJuries.length,
   ]);
 
   const bottomContent = useMemo(() => {
@@ -266,7 +272,7 @@ export const JuriesList = () => {
 
       <TableBody
         emptyContent={isLoading ? undefined : "Sin resultados"}
-        items={isLoading ? [] : paginated}
+        items={isLoading ? [] : displayJuries}
       >
         {isLoading ? (
           <TableRow key="loading">

@@ -1,7 +1,7 @@
 "use client";
 
 import { Plus } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
@@ -40,10 +40,18 @@ export const InviteModal = () => {
           queryClient.invalidateQueries({ queryKey: ["juries"] }),
           eventsQuery.refetch(),
         ]);
+        setSelectedEventKeys(new Set());
         onClose();
       },
     },
   });
+
+  // Reset form state when modal closes
+  useEffect(() => {
+    if (!isOpen) {
+      setSelectedEventKeys(new Set());
+    }
+  }, [isOpen]);
 
   const user = useUser();
   if (!canInviteJury(user?.data)) return null;
@@ -65,13 +73,28 @@ export const InviteModal = () => {
                 const formData = new FormData(form);
                 const rawData = Object.fromEntries(formData);
                 const key = Array.from(selectedEventKeys)[0] ?? "";
-                if (!key) return;
+                
+                if (!key || key === "") {
+                  addNotification({
+                    type: "error",
+                    title: "Error",
+                    message: "Por favor selecciona un evento",
+                  });
+                  return;
+                }
+                
                 const data = {
                   ...rawData,
                   eventId: key,
                 };
-                const values = await createJuryInputSchema.parseAsync(data);
-                await createJuryMutation.mutateAsync({ data: values });
+                
+                try {
+                  const values = await createJuryInputSchema.parseAsync(data);
+                  await createJuryMutation.mutateAsync({ data: values });
+                } catch (error) {
+                  // Validation errors are handled by the schema
+                  console.error("Validation error:", error);
+                }
               }}
             >
               <ModalHeader className="flex flex-col gap-1">
@@ -85,9 +108,10 @@ export const InviteModal = () => {
                   selectionMode="single"
                   isRequired
                   selectedKeys={selectedEventKeys}
-                  onSelectionChange={(keys) =>
-                    setSelectedEventKeys(keys as Set<string>)
-                  }
+                  onSelectionChange={(keys) => {
+                    const nextSet = keys instanceof Set ? keys : new Set(Array.from(keys));
+                    setSelectedEventKeys(nextSet as Set<string>);
+                  }}
                   isLoading={eventsQuery.isLoading}
                 >
                   {events.map((event) => (
@@ -101,7 +125,7 @@ export const InviteModal = () => {
                 <Button
                   type="submit"
                   isLoading={createJuryMutation.isPending}
-                  disabled={createJuryMutation.isPending}
+                  disabled={createJuryMutation.isPending || selectedEventKeys.size === 0}
                 >
                   Invitar Jurado
                 </Button>
