@@ -1,19 +1,52 @@
+import {
+  dehydrate,
+  HydrationBoundary,
+  QueryClient,
+} from '@tanstack/react-query';
 import { ProjectWizard } from "@/features/projects/components/project-wizard";
+import { PublicLayout } from "@/components/layouts/public-layout";
+// import { getEventCoursesQueryOptions } from '@/features/course-public/api/get-course';
+import '@/features/landing/index.css';
 
 const PublicProjectPage = async ({ params }: { params: Promise<{ eventId: string }> }) => {
     const { eventId } = await params;
+    
+    // Prefetch event courses data on the server
+    const queryClient = new QueryClient();
+    // TODO: Uncomment when course-public feature is implemented
+    // await queryClient.prefetchQuery(getEventCoursesQueryOptions({ eventId }));
+    const dehydratedState = dehydrate(queryClient);
 
     return (
-        <div className="container mx-auto max-w-4xl py-12">
-            <div className="mb-8 text-center">
-                <h1 className="text-4xl font-bold text-foreground mb-3 text-balance">Registro de Proyectos</h1>
-                <p className="text-muted-foreground text-lg text-pretty">
-                    Complete el formulario para registrar su proyecto académico
-                </p>
+        <PublicLayout showNavLinks={false}>
+            {/* Animated Background Gradient - Same as landing */}
+            <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
+                <div
+                    className="parallax-slow absolute top-0 left-0 w-[150%] h-[150%]"
+                    style={{
+                        background: `
+                            radial-gradient(circle at 20% 20%, oklch(0.75 0.15 195 / 0.15) 0%, transparent 50%),
+                            radial-gradient(circle at 80% 80%, oklch(0.82 0.18 330 / 0.15) 0%, transparent 50%),
+                            radial-gradient(circle at 50% 50%, oklch(0.88 0.16 85 / 0.1) 0%, transparent 50%)
+                        `,
+                    }}
+                />
             </div>
-            {/* pass eventId from route to the client wizard */}
-            <ProjectWizard eventId={eventId} />
-        </div>
+
+            <HydrationBoundary state={dehydratedState}>
+                <div className="container mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-8 sm:py-12 relative z-10">
+                    <div className="mb-6 sm:mb-8 text-center px-2">
+                        <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-3 text-balance">
+                            Registro de Proyectos
+                        </h1>
+                        <p className="text-base sm:text-lg text-muted-foreground text-pretty">
+                            Complete el formulario para registrar su proyecto académico
+                        </p>
+                    </div>
+                    <ProjectWizard eventId={eventId} />
+                </div>
+            </HydrationBoundary>
+        </PublicLayout>
     );
 };
 

@@ -1,7 +1,6 @@
 "use client"
 
 import { useState } from "react"
-import { Card, CardHeader, CardBody } from "@heroui/card"
 import { Button } from "@heroui/button"
 import { ParticipantsStep } from "./wizard-steps/participants-step"
 import { ProjectDetailsStep } from "./wizard-steps/project-details-step"
@@ -176,10 +175,10 @@ export function ProjectWizard({ eventId }: ProjectWizardProps) {
   }
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6 sm:space-y-8">
       {/* Progress Steps */}
-      <nav aria-label="Progress">
-        <ol className="flex items-center justify-between">
+      <nav aria-label="Progress" className="px-2 sm:px-4">
+        <ol className="flex items-center justify-center max-w-3xl mx-auto">
           {steps.map((step, stepIdx) => {
             const Icon = step.icon
             const isCompleted = currentStep > step.id
@@ -188,28 +187,33 @@ export function ProjectWizard({ eventId }: ProjectWizardProps) {
             return (
               <li
                 key={step.id}
-                className={cn("relative flex flex-col items-center", stepIdx !== steps.length - 1 ? "flex-1" : "")}
+                className={cn(
+                  "relative flex flex-col items-center flex-1",
+                )}
               >
                 {stepIdx !== steps.length - 1 && (
                   <div
                     className={cn(
-                      "absolute left-1/2 top-5 h-0.5 w-full -translate-y-1/2",
-                      isCompleted ? "bg-primary" : "bg-default-200",
+                      "absolute top-4 sm:top-5 h-0.5 left-[50%] right-0 translate-x-[16px] sm:translate-x-[20px] -mr-[32px] sm:-mr-[56px]",
+                      isCompleted ? "bg-primary" : "bg-border/30",
                     )}
                     aria-hidden="true"
                   />
                 )}
                 <button
                   className={cn(
-                    "relative z-10 flex h-10 w-10 items-center justify-center rounded-full border-2 transition-colors",
-                    isCompleted && "border-primary bg-primary text-white",
-                    isCurrent && "border-primary bg-white text-primary",
-                    !isCompleted && !isCurrent && "border-default-300 bg-white text-default-400",
+                    "relative z-10 flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-full border-2 transition-all duration-300 flex-shrink-0",
+                    isCompleted && "border-primary bg-primary text-primary-foreground shadow-lg shadow-primary/50",
+                    isCurrent && "border-primary bg-background text-primary ring-4 ring-primary/20",
+                    !isCompleted && !isCurrent && "border-border/50 bg-background/50 text-muted-foreground",
                   )}
                 >
-                  <Icon className="h-5 w-5" />
+                  <Icon className="h-4 w-4 sm:h-5 sm:w-5" />
                 </button>
-                <span className={cn("mt-2 text-sm font-medium", isCurrent ? "text-primary" : "text-default-500")}>
+                <span className={cn(
+                  "mt-1.5 sm:mt-2 text-xs sm:text-sm font-medium text-center max-w-[80px] sm:max-w-none",
+                  isCurrent ? "text-foreground" : "text-muted-foreground"
+                )}>
                   {step.name}
                 </span>
               </li>
@@ -218,20 +222,21 @@ export function ProjectWizard({ eventId }: ProjectWizardProps) {
         </ol>
       </nav>
 
-      {/* Step Content */}
-      <Card className="w-full">
-        <CardHeader>
+      {/* Step Content with Glass Effect */}
+      <div className="glass-card p-4 sm:p-6 md:p-8 rounded-xl sm:rounded-2xl border border-border/30">
+        <div className="mb-4 sm:mb-6">
           <div className="flex flex-col gap-1">
-            <h2 className="text-2xl font-bold">{steps[currentStep - 1].name}</h2>
-            <p className="text-default-500 text-sm">
+            <h2 className="text-xl sm:text-2xl font-bold text-foreground">{steps[currentStep - 1].name}</h2>
+            <p className="text-muted-foreground text-xs sm:text-sm">
               {currentStep === 1 && "Agregue los participantes del proyecto"}
               {currentStep === 2 && "Ingrese los detalles del proyecto"}
               {currentStep === 3 && "Suba los documentos requeridos"}
               {currentStep === 4 && "Revise la información antes de enviar"}
             </p>
           </div>
-        </CardHeader>
-        <CardBody>
+        </div>
+        
+        <div>
           {currentStep === 1 && (
             <ParticipantsStep participants={wizardData.participants} onUpdate={updateParticipants} />
           )}
@@ -241,29 +246,42 @@ export function ProjectWizard({ eventId }: ProjectWizardProps) {
 
           {/* Mostrar errores de validación */}
           {stepErrors.length > 0 && (
-            <div className="mt-4 p-4 bg-red-50 border border-red-200 rounded-lg">
-              <p className="text-red-800 font-semibold mb-2">Errores de validación:</p>
+            <div className="mt-4 p-3 sm:p-4 glass-card border-2 border-red-500/50 rounded-lg">
+              <p className="text-red-400 font-semibold mb-2 text-sm sm:text-base">Errores de validación:</p>
               <ul className="list-disc list-inside space-y-1">
                 {stepErrors.map((error, idx) => (
-                  <li key={idx} className="text-red-700 text-sm">{error}</li>
+                  <li key={idx} className="text-red-300 text-xs sm:text-sm">{error}</li>
                 ))}
               </ul>
             </div>
           )}
-        </CardBody>
-      </Card>
+        </div>
+      </div>
 
       {/* Navigation Buttons */}
-      <div className="flex justify-between">
-        <Button variant="bordered" onPress={handleBack} isDisabled={currentStep === 1}>
+      <div className="flex flex-col sm:flex-row justify-between gap-3 sm:gap-4 px-2 sm:px-0">
+        <Button 
+          variant="bordered" 
+          onPress={handleBack} 
+          isDisabled={currentStep === 1}
+          className="glass-effect border-border/50 hover:border-primary/50 transition-all w-full sm:w-auto order-2 sm:order-1"
+        >
           Anterior
         </Button>
         {currentStep < steps.length ? (
-          <Button color="primary" onPress={handleNext}>
+          <Button 
+            color="primary" 
+            onPress={handleNext}
+            className="shadow-lg shadow-primary/30 hover:shadow-xl hover:shadow-primary/40 transition-all w-full sm:w-auto order-1 sm:order-2"
+          >
             Siguiente
           </Button>
         ) : (
-          <Button color="success" onPress={handleSubmit}>
+          <Button 
+            color="success" 
+            onPress={handleSubmit}
+            className="shadow-lg shadow-success/30 hover:shadow-xl hover:shadow-success/40 transition-all w-full sm:w-auto order-1 sm:order-2"
+          >
             Enviar Proyecto
           </Button>
         )}
