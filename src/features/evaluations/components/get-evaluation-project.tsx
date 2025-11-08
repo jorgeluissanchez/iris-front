@@ -5,9 +5,9 @@ import { Card } from '@/components/ui/card';
 import { getEvaluationsByProject } from '../api/get-evalutation-project';
 import { Spinner } from '@/components/ui/spinner';
 import { cn } from '@/utils/cn';
-import { CampusEvaluationCard } from '@/app/app/student/_components/campus-evaluation-card';
-import { CriteriaEvaluationCard } from '@/app/app/student/_components/criteria-evaluation-card';
-import { JuryFeedbackCard } from '@/app/app/student/_components/jury-feedback-card';
+import { CampusEvaluationCard } from '@/features/student/components/campus-evaluation-card';
+import { CriteriaEvaluationCard } from '@/features/student/components/criteria-evaluation-card';
+import { JuryFeedbackCard } from '@/features/student/components/jury-feedback-card';
 
 interface EvaluationProjectProps {
     projectId: string;

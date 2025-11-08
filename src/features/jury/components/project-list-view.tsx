@@ -1,8 +1,7 @@
 "use client"
 
-import { Badge } from "@heroui/badge"
 import { Card, CardBody } from "@/components/ui/card"
-import { FileText, Users, CheckCircle2 } from "lucide-react"
+import { FileText, Users, ArrowLeft } from "lucide-react"
 import { Button } from "@heroui/button"
 import { paths } from "@/config/paths"
 import { useSearchParams, useRouter } from "next/navigation";
@@ -42,7 +41,18 @@ export function ProjectListView({ eventId }: ProjectListViewProps) {
     }
 
     return (
-        <div className="grid gap-6 sm:grid-cols-1 lg:grid-cols-2">
+        <div className="space-y-4">
+            <div>
+                <Button
+                    variant="light"
+                    className="gap-2"
+                    onClick={() => router.back()}
+                >
+                    <ArrowLeft className="h-4 w-4" />
+                    Back
+                </Button>
+            </div>
+            <div className="grid gap-6 sm:grid-cols-1 lg:grid-cols-2">
             {projects.map((project) => (
                 <Card
                     key={project.id}
@@ -85,6 +95,7 @@ export function ProjectListView({ eventId }: ProjectListViewProps) {
                     </CardBody>
                 </Card>
             ))}
+            </div>
         </div>
     )
 }

@@ -49,8 +49,11 @@ export function ProjectEvaluationView({ projectId }: ProjectEvaluationViewProps)
           })
           setScores(resetScores)
         }
-        // Redirect after success
-        router.push("/app")
+        if (projects?.eventId) {
+          router.push(`/app/events/${projects.eventId}`)
+        } else {
+          router.push("/app")
+        }
       },
       onError: (error: any) => {
         addNotification({
@@ -74,8 +77,15 @@ export function ProjectEvaluationView({ projectId }: ProjectEvaluationViewProps)
     }
   }, [criteriaData.length])
 
-  const totalScore = Object.values(scores).reduce((sum, score) => sum + score, 0)
-  const maxTotalScore = Array.isArray(criteriaData) 
+  // New scoring logic: every criterion is rated 0-5, contribution = (rating/5)*weight
+  const totalScore = Array.isArray(criteriaData)
+    ? criteriaData.reduce((sum: number, criterion: any) => {
+        const rating = scores[criterion.id] ?? 0
+        const weight = criterion.weight || 0
+        return sum + (rating / 5) * weight
+      }, 0)
+    : 0
+  const maxTotalScore = Array.isArray(criteriaData)
     ? criteriaData.reduce((sum: number, criterion: any) => sum + (criterion.weight || 0), 0)
     : 0
 
@@ -100,12 +110,18 @@ export function ProjectEvaluationView({ projectId }: ProjectEvaluationViewProps)
       return
     }
 
+        // Map criterion ids to names so we send the name instead of the id
+        const criterionNameMap = new Map(
+          (Array.isArray(criteriaData) ? criteriaData : []).map((c: any) => [c.id, c.name])
+        )
+
     createEvaluationMutation.mutate({
       data: {
         projectId,
         comments,
         scores: Object.entries(scores).map(([criterionId, score]) => ({
-          criterion: criterionId,
+              // Send criterion name instead of id (fallback to id if name missing)
+              criterion: criterionNameMap.get(criterionId) || criterionId,
           score,
         })),
       }
@@ -191,16 +207,16 @@ export function ProjectEvaluationView({ projectId }: ProjectEvaluationViewProps)
                 <Label htmlFor={criterion.id} className="text-sm font-medium">
                   {criterion.name}
                 </Label>
-                <span className="text-sm text-muted-foreground">/{criterion.weight}</span>
+                <span className="text-xs text-muted-foreground">/5 (weight {criterion.weight})</span>
               </div>
               <Input
                 id={criterion.id}
                 type="number"
                 step="0.1"
                 min="0"
-                max={criterion.weight}
+                max={5}
                 value={scores[criterion.id]?.toString() || "0"}
-                onChange={(e) => handleScoreChange(criterion.id, e.target.value, criterion.weight)}
+                onChange={(e) => handleScoreChange(criterion.id, e.target.value, 5)}
                 disabled={createEvaluationMutation.isPending}
               />
               {criterion.description && (
