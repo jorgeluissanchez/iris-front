@@ -112,13 +112,132 @@
 }
 
 .glass-card {
-  background: rgba(18, 18, 28, 0.4);
+  background: rgba(18, 18, 28, 0.2);
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
   border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0.75rem;
   box-shadow: 
     0 8px 32px 0 rgba(0, 0, 0, 0.37),
     inset 0 1px 0 0 rgba(255, 255, 255, 0.05);
+}
+
+/* ========================================= */
+/* Auth Pages Glass Styles (Login & Forgot Password) */
+/* ========================================= */
+
+/* Override HeroUI Input dark background - Make everything transparent */
+.auth-page .glass-card [data-slot="base"],
+.auth-page .glass-card [data-slot="input-wrapper"],
+.auth-page .glass-card [data-slot="inner-wrapper"],
+.auth-page .glass-card [data-slot="main-wrapper"],
+.auth-page .glass-card .heroui-input-wrapper,
+.auth-page .glass-card .nextui-input-wrapper {
+  background: transparent !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
+/* Glass Input Styles - Only the wrapper has the glass effect */
+.auth-page .glass-card input,
+.auth-page .glass-card textarea,
+.auth-page .glass-card select {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+/* Input wrapper - the only element with glass background */
+.auth-page .glass-card [data-slot="input-wrapper"] {
+  background: rgba(255, 255, 255, 0.2) !important;
+  background-color: rgba(255, 255, 255, 0.07) !important;
+  backdrop-filter: blur(10px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(10px) saturate(180%) !important;
+  border: 1px solid transparent !important;
+  border-radius: 0.75rem !important;
+  transition: all 0.3s ease !important;
+  box-shadow: none !important;
+}
+
+/* Placeholder color */
+.auth-page .glass-card input::placeholder,
+.auth-page .glass-card textarea::placeholder {
+  color: rgba(255, 255, 255, 0.3) !important;
+}
+
+/* Hover state */
+.auth-page .glass-card [data-slot="input-wrapper"]:hover {
+  background: rgba(255, 255, 255, 0.03) !important;
+  background-color: rgba(255, 255, 255, 0.03) !important;
+  border-color: transparent !important;
+}
+
+/* Focus state */
+.auth-page .glass-card [data-slot="input-wrapper"]:has(input:focus),
+.auth-page .glass-card [data-slot="input-wrapper"]:has(textarea:focus),
+.auth-page .glass-card [data-slot="input-wrapper"][data-focus="true"],
+.auth-page .glass-card [data-slot="input-wrapper"][data-focused="true"] {
+  background: rgba(255, 255, 255, 0.04) !important;
+  background-color: rgba(255, 255, 255, 0.04) !important;
+  border-color: transparent !important;
+  box-shadow: 
+    0 0 0 1px oklch(0.75 0.15 195 / 0.6),
+    0 0 20px oklch(0.75 0.15 195 / 0.3) !important;
+  outline: none !important;
+}
+
+/* Label color when focused */
+.auth-page .glass-card [data-slot="label"][data-focused="true"],
+.auth-page .glass-card [data-slot="label"][data-focus="true"] {
+  color: oklch(0.75 0.15 195) !important;
+}
+
+/* Glass Button Styles */
+.auth-page .glass-card button,
+.auth-page .glass-card [role="button"],
+.auth-page .glass-card [data-slot="base"] {
+  background: rgba(255, 255, 255, 0.05) !important;
+  backdrop-filter: blur(10px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(10px) saturate(180%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  border-radius: 0.75rem !important;
+  transition: all 0.3s ease !important;
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+.auth-page .glass-card button:hover,
+.auth-page .glass-card [role="button"]:hover,
+.auth-page .glass-card [data-slot="base"]:hover {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border-color: oklch(0.75 0.15 195 / 0.5) !important;
+  box-shadow: 0 4px 15px oklch(0.75 0.15 195 / 0.2) !important;
+  transform: translateY(-1px) !important;
+}
+
+.auth-page .glass-card button:active,
+.auth-page .glass-card [role="button"]:active,
+.auth-page .glass-card [data-slot="base"]:active {
+  transform: translateY(0) !important;
+}
+
+/* Primary button with cyan glow - HeroUI specific */
+.auth-page .glass-card button[type="submit"],
+.auth-page .glass-card button.primary,
+.auth-page .glass-card button[data-color="primary"],
+.auth-page .glass-card [data-slot="base"][data-color="primary"] {
+  background: linear-gradient(135deg, oklch(0.75 0.15 195 / 0.2), oklch(0.75 0.15 195 / 0.1)) !important;
+  border-color: oklch(0.75 0.15 195 / 0.4) !important;
+  color: oklch(0.75 0.15 195) !important;
+  font-weight: 600 !important;
+}
+
+.auth-page .glass-card button[type="submit"]:hover,
+.auth-page .glass-card button.primary:hover,
+.auth-page .glass-card button[data-color="primary"]:hover,
+.auth-page .glass-card [data-slot="base"][data-color="primary"]:hover {
+  background: linear-gradient(135deg, oklch(0.75 0.15 195 / 0.3), oklch(0.75 0.15 195 / 0.15)) !important;
+  border-color: oklch(0.75 0.15 195 / 0.6) !important;
+  box-shadow: 0 4px 20px oklch(0.75 0.15 195 / 0.3), 0 0 30px oklch(0.75 0.15 195 / 0.15) !important;
 }
 
 .prismatic-text {

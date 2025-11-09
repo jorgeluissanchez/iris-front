@@ -21,7 +21,7 @@ export const LoginForm = ({ onSuccess }: LoginFormProps) => {
   const searchParams = useSearchParams();
   const redirectTo = searchParams?.get('redirectTo');
   return (
-    <div>
+    <div className="space-y-4">
       <Form
         onSubmit={async (e) => {
           e.preventDefault();
@@ -35,31 +35,33 @@ export const LoginForm = ({ onSuccess }: LoginFormProps) => {
         <Input
           name="email"
           type="email"
-          label="Email Address"
+          label="Correo electrónico"
+          placeholder="tu@correo.com"
+          isRequired
         />
         <Input
           name="password"
           type="password"
-          label="Password"
+          label="Contraseña"
+          placeholder="••••••••"
+          isRequired
         />
+        <div className="flex items-center justify-end mb-2">
+          <NextLink
+            href={paths.auth.forgot_password.getHref(redirectTo)}
+            className="text-sm font-medium text-primary hover:underline"
+          >
+            ¿Olvidaste tu contraseña?
+          </NextLink>
+        </div>
         <Button
           isLoading={login.isPending}
           type="submit"
           className="w-full"
         >
-          Log in
+          Iniciar sesión
         </Button>
       </Form>
-      <div className="mt-2 flex items-center justify-end">
-        <div className="text-sm">
-          <NextLink
-            href={paths.auth.forgot_password.getHref(redirectTo)}
-            className="font-medium text-blue-600 hover:text-blue-500"
-          >
-            Forgot password?
-          </NextLink>
-        </div>
-      </div>
     </div>
   );
 };
