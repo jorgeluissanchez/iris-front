@@ -7,14 +7,21 @@ import { Meta, Course } from "@/types/api";
 export const getCourses = (
   { page, eventId }: { page?: number; eventId?: string } = { page: 1 }
 ): Promise<{ data: Course[]; meta: Meta }> => {
-  return api.get(`/courses`, { params: { page, eventId } });
+  if (eventId) {
+    if (eventId.includes(",")) {
+      return api.get(`/courses`, { params: { page, event: eventId } });
+    }
+
+    return api.get(`/courses`, { params: { page, eventId } });
+  }
+  return api.get(`/courses`, { params: { page } });
 };
 
 export const getCoursesQueryOptions = (
   { page = 1, eventId }: { page?: number; eventId?: string } = {}
 ) => {
   return queryOptions({
-    queryKey: ["courses", { page, eventId }],
+    queryKey: ["courses", { page, eventId: eventId ?? null }],
     queryFn: () => getCourses({ page, eventId }),
   });
 };

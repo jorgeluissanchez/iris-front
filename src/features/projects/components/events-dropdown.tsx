@@ -1,13 +1,14 @@
 "use client";
 
 import React, { useEffect } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { Select, SelectItem } from "@/components/ui/select";
 import { useEventsDropdown } from "@/features/events/api/get-events-dropdown";
 
 export const EventsDropdown = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const pathname = usePathname();
 
   const eventsQuery = useEventsDropdown();
   const events = eventsQuery.data?.data || [];
@@ -45,7 +46,7 @@ export const EventsDropdown = () => {
     else params.delete("event");
 
     const query = params.toString();
-    router.push(query ? `?${query}` : "/app/projects");
+    router.push(query ? `${pathname}?${query}` : pathname);
   };
 
   return (
