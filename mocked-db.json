@@ -1,202 +1,34 @@
 {
   "team": [
-    {
-      "id": "i0Kqk2y7zPEJ_F-2pzeuw",
-      "name": "FreeFire",
-      "description": "",
-      "createdAt": 1762117797260
-    },
-    {
-      "id": "LHoBxzliKumLEVuR-XReN",
-      "name": "aaaa",
-      "description": "",
-      "createdAt": 1762184235770
-    }
+    {"id": "i0Kqk2y7zPEJ_F-2pzeuw", "name": "FreeFire", "description": "", "createdAt": 1762117797260},
+    {"id": "LHoBxzliKumLEVuR-XReN", "name": "aaaa", "description": "", "createdAt": 1762184235770}
   ],
   "user": [
-    {
-      "id": "BZdtrfcHMGT44j7jV_ekP",
-      "firstName": "jorge luis",
-      "lastName": "sanchez barreneche",
-      "email": "jorgeluissanchezbarreneche@gmail.com",
-      "password": "3670747394",
-      "teamId": "i0Kqk2y7zPEJ_F-2pzeuw",
-      "role": "ADMIN",
-      "bio": "",
-      "createdAt": 1762117797318
-    },
-    {
-      "id": "PrBNl8_vdQUGrcwRI30hJ",
-      "firstName": "admin",
-      "lastName": "admin",
-      "email": "admin@admin.com",
-      "password": "2951957434",
-      "teamId": "LHoBxzliKumLEVuR-XReN",
-      "role": "ADMIN",
-      "bio": "",
-      "createdAt": 1762184235777
-    }
+    {"id": "BZdtrfcHMGT44j7jV_ekP", "firstName": "jorge luis", "lastName": "sanchez barreneche", "email": "jorgeluissanchezbarreneche@gmail.com", "password": "3670747394", "teamId": "i0Kqk2y7zPEJ_F-2pzeuw", "role": "ADMIN", "bio": "", "createdAt": 1762117797318},
+    {"id": "PrBNl8_vdQUGrcwRI30hJ", "firstName": "admin", "lastName": "admin", "email": "admin@admin.com", "password": "2951957434", "teamId": "LHoBxzliKumLEVuR-XReN", "role": "ADMIN", "bio": "", "createdAt": 1762184235777},
+    {"id": "jfmg_n3f0Yk2FspEhoSQx", "firstName": "Carlos", "lastName": "López", "email": "carlos@student.com", "password": "2170491013", "teamId": "LHoBxzliKumLEVuR-XReN", "role": "STUDENT", "bio": "", "createdAt": 1762636128064}
   ],
   "event": [
-    {
-      "id": "MAfnjuqHZqbsGhxLmoP_N",
-      "title": "holajojo",
-      "description": "mundo",
-      "startDate": "2025-11-14",
-      "endDate": "2025-11-28",
-      "inscriptionDeadline": "2025-11-01",
-      "accessCode": "EVT417885",
-      "isPublic": true,
-      "evaluationsStatus": "closed",
-      "createdAt": 1762131417888
-    },
-    {
-      "id": "ZLXM-Kz9_Iq0FgNvb2Q-i",
-      "title": "PRUEBAA",
-      "description": "esta es una prueba",
-      "startDate": "2025-11-20",
-      "endDate": "2025-11-29",
-      "inscriptionDeadline": "2025-11-29",
-      "accessCode": "EVT208469",
-      "isPublic": true,
-      "evaluationsStatus": "open",
-      "createdAt": 1762314208470
-    }
+    {"id": "MAfnjuqHZqbsGhxLmoP_N", "title": "holajojo", "description": "mundo", "startDate": "2025-11-14", "endDate": "2025-11-28", "inscriptionDeadline": "2025-11-01", "accessCode": "EVT417885", "isPublic": true, "evaluationsStatus": "closed", "createdAt": 1762131417888},
+    {"id": "B3xKm9QwRjNpVhYtLs2Dc", "title": "Feria de Proyectos Finales 2025", "description": "Evento anual de presentación de proyectos finales de las 6 ingenierías de la Universidad del Norte", "startDate": "2025-05-15", "endDate": "2025-05-17", "inscriptionDeadline": "2025-05-01", "accessCode": "EVT892341", "isPublic": true, "evaluationsStatus": "open", "createdAt": 1762050000000},
+    {"id": "F7pWn2KdTxLmQs5RvGy8H", "title": "Hackathon Innovación Tech", "description": "Competencia intensiva de 48 horas para desarrollar soluciones tecnológicas innovadoras", "startDate": "2025-06-10", "endDate": "2025-06-12", "inscriptionDeadline": "2025-05-31", "accessCode": "EVT456789", "isPublic": true, "evaluationsStatus": "pending", "createdAt": 1762100000000}
+  ],
+  "course_public": [
+    {"id": "1", "code": "ING-101", "name": "Proyecto de Grado I", "eventId": "B3xKm9QwRjNpVhYtLs2Dc", "createdAt": 1762000000000},
+    {"id": "2", "code": "ING-102", "name": "Proyecto de Grado II", "eventId": "B3xKm9QwRjNpVhYtLs2Dc", "createdAt": 1762000000000},
+    {"id": "3", "code": "SIS-301", "name": "Ingeniería de Software", "eventId": "B3xKm9QwRjNpVhYtLs2Dc", "createdAt": 1762000000000},
+    {"id": "4", "code": "IND-401", "name": "Gestión de Proyectos", "eventId": "B3xKm9QwRjNpVhYtLs2Dc", "createdAt": 1762000000000},
+    {"id": "5", "code": "ELE-201", "name": "Sistemas Embebidos", "eventId": "B3xKm9QwRjNpVhYtLs2Dc", "createdAt": 1762000000000},
+    {"id": "6", "code": "MEC-305", "name": "Diseño Mecatrónico", "eventId": "B3xKm9QwRjNpVhYtLs2Dc", "createdAt": 1762000000000},
+    {"id": "7", "code": "CIV-402", "name": "Diseño de Estructuras", "eventId": "B3xKm9QwRjNpVhYtLs2Dc", "createdAt": 1762000000000},
+    {"id": "8", "code": "ING-101", "name": "Proyecto de Grado I", "eventId": "MAfnjuqHZqbsGhxLmoP_N", "createdAt": 1762000000000},
+    {"id": "9", "code": "ING-102", "name": "Proyecto de Grado II", "eventId": "MAfnjuqHZqbsGhxLmoP_N", "createdAt": 1762000000000},
+    {"id": "10", "code": "SIS-301", "name": "Ingeniería de Software", "eventId": "MAfnjuqHZqbsGhxLmoP_N", "createdAt": 1762000000000},
+    {"id": "11", "code": "IND-401", "name": "Gestión de Proyectos", "eventId": "MAfnjuqHZqbsGhxLmoP_N", "createdAt": 1762000000000},
+    {"id": "12", "code": "HACK-101", "name": "Desarrollo de Prototipos", "eventId": "F7pWn2KdTxLmQs5RvGy8H", "createdAt": 1762000000000},
+    {"id": "13", "code": "HACK-102", "name": "Innovación Tecnológica", "eventId": "F7pWn2KdTxLmQs5RvGy8H", "createdAt": 1762000000000}
   ],
   "discussion": [
-    {
-      "id": "lPnftEG_6XTG9IbqPM_XC",
-      "title": "hola lkñlkñlkjñk",
-      "body": "mundo",
-      "authorId": "BZdtrfcHMGT44j7jV_ekP",
-      "teamId": "i0Kqk2y7zPEJ_F-2pzeuw",
-      "createdAt": 1762119032382,
-      "public": true
-    }
-  ],
-  "project": [
-    {
-      "id": "P1",
-      "title": "Smart Campus Navigation System",
-      "description": "An AI-powered mobile app for indoor navigation across campus buildings",
-      "eventId": "MAfnjuqHZqbsGhxLmoP_N",
-      "teamId": "",
-      "isPublic": false,
-      "createdAt": 1762117797260,
-      "teamMembers": [
-        {
-          "name": "Alice",
-          "photoUrl": "https://randomuser.me/api/portraits/women/68.jpg"
-        },
-        {
-          "name": "Bob",
-          "photoUrl": "https://randomuser.me/api/portraits/men/12.jpg"
-        },
-        {
-          "name": "Carol",
-          "photoUrl": "https://randomuser.me/api/portraits/women/44.jpg"
-        },
-        {
-          "name": "Dave",
-          "photoUrl": "https://randomuser.me/api/portraits/men/32.jpg"
-        },
-        {
-          "name": "Eve",
-          "photoUrl": "https://randomuser.me/api/portraits/women/24.jpg"
-        }
-      ],
-      "documentsAttached": 3,
-      "submittedAt": 1762399626542,
-      "approvedAt": 1762403558267
-    },
-    {
-      "id": "P2",
-      "title": "AI Research Assistante",
-      "description": "A tool to assist researchers in organizing and analyzing data",
-      "eventId": "ZLXM-Kz9_Iq0FgNvb2Q-i",
-      "teamId": "",
-      "isPublic": false,
-      "createdAt": 1762314208470,
-      "teamMembers": [
-        {
-          "name": "Frank",
-          "photoUrl": "https://randomuser.me/api/portraits/men/45.jpg"
-        },
-        {
-          "name": "Grace",
-          "photoUrl": "https://randomuser.me/api/portraits/women/17.jpg"
-        },
-        {
-          "name": "Heidi",
-          "photoUrl": "https://randomuser.me/api/portraits/women/55.jpg"
-        }
-      ],
-      "documentsAttached": 5,
-      "submittedAt": 1762399000000,
-      "approvedAt": 1762399626542
-    },
-    {
-      "id": "P4",
-      "title": "Community Health Monitor",
-      "description": "An IoT and analytics solution to monitor public health indicators",
-      "eventId": "ZLXM-Kz9_Iq0FgNvb2Q-i",
-      "teamId": "",
-      "isPublic": false,
-      "createdAt": 1762405000000,
-      "teamMembers": [
-        {
-          "name": "Ivan",
-          "photoUrl": "https://randomuser.me/api/portraits/men/22.jpg"
-        },
-        {
-          "name": "Judy",
-          "photoUrl": "https://randomuser.me/api/portraits/women/29.jpg"
-        }
-      ],
-      "documentsAttached": 2,
-      "submittedAt": 1762399626542,
-      "approvedAt": 1762399626542
-    },
-    {
-      "id": "7QKGSc6PR6NRVOfk9isQq",
-      "title": "hola 14 16",
-      "description": "hola mundo\n",
-      "eventId": "MAfnjuqHZqbsGhxLmoP_N",
-      "teamId": "23",
-      "isPublic": true,
-      "createdAt": 1762399626542,
-      "teamMembers": [
-        {
-          "name": "Kiko",
-          "photoUrl": "https://randomuser.me/api/portraits/men/8.jpg"
-        }
-      ],
-      "documentsAttached": 0,
-      "submittedAt": 1762314208470,
-      "approvedAt": 1762399626542
-    }
-  ],
-  "course": [
-    {
-      "id": "-JB8WCwaGE7he8uG0IOY1",
-      "code": "123121",
-      "description": "123123123",
-      "status": "inactive",
-      "createdAt": 1762403558267
-    }
-  ],
-  "courseEvent": [
-    {
-      "id": "cBCbUaNRNmyoUh8QeqbFJ",
-      "courseId": "-JB8WCwaGE7he8uG0IOY1",
-      "eventId": "MAfnjuqHZqbsGhxLmoP_N",
-      "createdAt": 1762403595509
-    },
-    {
-      "id": "v9QWmi39QjzHIgUfSMlL4",
-      "courseId": "-JB8WCwaGE7he8uG0IOY1",
-      "eventId": "ZLXM-Kz9_Iq0FgNvb2Q-i",
-      "createdAt": 1762403595510
-    }
+    {"id": "lPnftEG_6XTG9IbqPM_XC", "title": "hola lkñlkñlkjñk", "body": "mundo", "authorId": "BZdtrfcHMGT44j7jV_ekP", "teamId": "i0Kqk2y7zPEJ_F-2pzeuw", "createdAt": 1762119032382, "public": false}
   ]
 }

@@ -47,6 +47,44 @@ const models = {
     evaluationsStatus: String,
     createdAt: Date.now,
   },
+  project_public: {
+    id: primaryKey(nanoid),
+    eventId: String,
+    courseId: String,
+    name: String,
+    description: String,
+    eventNumber: String,
+    state: String,
+    logo: String,
+    createdAt: Date.now,
+  },
+  projectDocument: {
+    id: primaryKey(nanoid),
+    projectId: String,
+    url: String,
+    createdAt: Date.now,
+  },
+  projectParticipant: {
+    id: primaryKey(nanoid),
+    userId: String,
+    projectId: String,
+    studentCode: String,
+  },
+  projectAssignment: {
+    id: primaryKey(nanoid),
+    projectId: String,
+    memberUserId: String,
+    memberEventId: String,
+    memberRoleId: String,
+    assignedAt: Date.now,
+  },
+  course_public: {
+    id: primaryKey(nanoid),
+    eventId: String,
+    code: String,
+    description: String,
+    active: Boolean,
+  },
   evaluation: {
     id: primaryKey(nanoid),
     projectId: String,
@@ -61,7 +99,7 @@ const models = {
     evaluationId: String,
     criterion: String,
     score: Number,
-  }
+  },
   project: {
     id: primaryKey(nanoid),
     title: String,

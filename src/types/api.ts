@@ -63,6 +63,53 @@ export type Event = Entity<{
   createdAt: number;
 }>;
 
+export type ProjectPublic = Entity<{
+  id: string;
+  eventId: string;
+  courseId: string;
+  name: string;
+  description?: string;
+  eventNumber?: string;
+  logo: string;
+  state: "UNDER_REVIEW" | "APPROVED" | "REJECTED";
+  createdAt: number;
+  updatedAt: number;
+
+}>;
+
+export type ProjectDocument = Entity<{
+  id: string;
+  projectId: string;
+  url: string;
+  createdAt: number;
+  project: ProjectPublic;
+}>;
+
+export type ProjectParticipant = Entity<{
+  userId: string;
+  projectId: string;
+  studentCode?: string;
+  project: ProjectPublic;
+}>;
+
+export type ProjectAssignment = Entity<{
+  projectId: string;
+  memberUserId: string;
+  memberEventId: string;
+  memberRoleId: string;
+  assigneAt: Date;
+  updatedAt: Date;
+  project: ProjectPublic;
+}>;
+
+export type CoursePublic = Entity<{
+  id: string;
+  eventId: string;
+  code: string;
+  description?: string;
+  active: boolean;
+  createdAt: number;
+}>;
 export type TeamMember = {
   name: string;
   photoUrl?: string;

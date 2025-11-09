@@ -1,0 +1,131 @@
+'use client';
+
+import { useRef, useEffect, useState } from 'react';
+import { HeroSection } from './hero-section';
+import { EventsSection } from './events-section';
+import { StorySections } from './story-sections';
+import { HorizontalScrollSection } from './horizontal-scroll-section';
+import { EngineeringSection } from './engineering-section';
+import { DevelopersCarousel } from './developers-carousel';
+import { Footer } from './cta-footer';
+import { Navbar } from '@/components/layouts/navbar';
+import { useLandingAnimations } from '../utils/use-landing-animations';
+import { engineeringFields } from '../constants';
+import '../index.css';
+
+export function LandingPage() {
+  const heroRef = useRef<HTMLElement>(null);
+  const heroTextRef = useRef<HTMLDivElement>(null);
+  const horizontalSectionRef = useRef<HTMLElement>(null);
+  const horizontalContentRef = useRef<HTMLDivElement>(null);
+  const maskTextRef = useRef<HTMLHeadingElement>(null);
+  const engineeringSectionRef = useRef<HTMLElement>(null);
+  const scrollIndicatorRef = useRef<HTMLDivElement>(null);
+
+  // Story sections refs
+  const storySection1Ref = useRef<HTMLElement>(null);
+  const storySection2Ref = useRef<HTMLElement>(null);
+  const storySection3Ref = useRef<HTMLElement>(null);
+  const zoomTextRef = useRef<HTMLDivElement>(null);
+  const layeredTextRef = useRef<HTMLDivElement>(null);
+  const revealSectionRef = useRef<HTMLElement>(null);
+  const eventsSectionRef = useRef<HTMLElement>(null);
+  const developersRef = useRef<HTMLElement>(null);
+
+  const [activeEngineering, setActiveEngineering] = useState(0);
+
+  // Initialize animations
+  useLandingAnimations({
+    heroTextRef,
+    storySection1Ref,
+    storySection2Ref,
+    storySection3Ref,
+    zoomTextRef,
+    layeredTextRef,
+    revealSectionRef,
+    horizontalSectionRef,
+    horizontalContentRef,
+    maskTextRef,
+    engineeringSectionRef,
+    eventsSectionRef,
+    heroRef,
+    scrollIndicatorRef,
+  });
+
+  useEffect(() => {
+    // Cycle through engineering fields
+    const interval = setInterval(() => {
+      setActiveEngineering((prev) => (prev + 1) % engineeringFields.length);
+    }, 3000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
+
+  return (
+    <main className="landing-page min-h-screen bg-background relative overflow-hidden">
+      {/* Animated Background Gradient */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
+        <div
+          className="parallax-slow absolute top-0 left-0 w-[150%] h-[150%]"
+          style={{
+            background: `
+              radial-gradient(circle at 20% 20%, oklch(0.75 0.15 195 / 0.15) 0%, transparent 50%),
+              radial-gradient(circle at 80% 80%, oklch(0.82 0.18 330 / 0.15) 0%, transparent 50%),
+              radial-gradient(circle at 50% 50%, oklch(0.88 0.16 85 / 0.1) 0%, transparent 50%)
+            `,
+          }}
+        />
+      </div>
+
+      {/* Navigation */}
+      <Navbar />
+
+      {/* Hero Section */}
+      <HeroSection
+        heroRef={heroRef}
+        heroTextRef={heroTextRef}
+        scrollIndicatorRef={scrollIndicatorRef}
+      />
+
+
+      {/* Story Sections */}
+      <StorySections
+        storySection1Ref={storySection1Ref}
+        storySection2Ref={storySection2Ref}
+        storySection3Ref={storySection3Ref}
+        zoomTextRef={zoomTextRef}
+        layeredTextRef={layeredTextRef}
+      />
+
+      {/* Horizontal Scroll Section */}
+      <HorizontalScrollSection
+        horizontalSectionRef={horizontalSectionRef}
+        horizontalContentRef={horizontalContentRef}
+      />
+
+      {/* Engineering Section */}
+      <EngineeringSection
+        engineeringSectionRef={engineeringSectionRef}
+        maskTextRef={maskTextRef}
+        engineeringFields={engineeringFields}
+        activeEngineering={activeEngineering}
+      />
+
+      {/* Events Section */}
+      <EventsSection
+        eventsSectionRef={eventsSectionRef}
+      />
+
+      {/* Developers Carousel */}
+      <DevelopersCarousel
+        developersRef={developersRef}
+      />
+
+
+      {/* Footer */}
+      <Footer />
+    </main>
+  );
+}
