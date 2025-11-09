@@ -6,8 +6,8 @@ import { Spinner } from '@/components/ui/spinner';
 import { AuthLayout as AuthLayoutComponent } from './_components/auth-layout';
 
 export const metadata = {
-  title: 'Bulletproof React',
-  description: 'Welcome to Bulletproof React',
+  title: 'Autenticación - Iris',
+  description: 'Sistema de autenticación de Iris',
 };
 
 const AuthLayout = ({ children }: { children: ReactNode }) => {
