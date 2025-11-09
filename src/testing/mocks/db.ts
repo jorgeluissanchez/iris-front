@@ -1,5 +1,4 @@
 import { factory, primaryKey } from "@mswjs/data";
-import { Weight } from "lucide-react";
 import { nanoid } from "nanoid";
 
 const models = {
@@ -48,48 +47,6 @@ const models = {
     evaluationsStatus: String,
     createdAt: Date.now,
   },
-  project_public: {
-    id: primaryKey(nanoid),
-    eventId: String,
-    courseId: String,
-    name: String,
-    description: String,
-    eventNumber: String,
-    state: String,
-    logo: String,
-    participants: Array,
-    documents: Array,
-    jurorAssignments: Array,
-    createdAt: Date.now,
-  },
-  projectDocument: {
-    id: primaryKey(nanoid),
-    projectId: String,
-    type: String,
-    url: String,
-    createdAt: Date.now,
-  },
-  projectParticipant: {
-    id: primaryKey(nanoid),
-    firstName: String,
-    lastName: String,
-    email: String,
-    projectId: String,
-    studentCode: String,
-  },
-  projectAssignment: {
-    id: primaryKey(nanoid),
-    projectId: String,
-    memberUserId: String,
-    assignedAt: Date.now,
-  },
-  course_public: {
-    id: primaryKey(nanoid),
-    eventId: String,
-    code: String,
-    description: String,
-    active: Boolean,
-  },
   evaluation: {
     id: primaryKey(nanoid),
     projectId: String,
@@ -117,12 +74,33 @@ const models = {
     submittedAt: Number,
     approvedAt: Number,
   },
+  project_public: {
+    id: primaryKey(nanoid),
+    eventId: String,
+    courseId: String,
+    name: String,
+    logo: String,
+    description: String,
+    eventNumber: String,
+    state: String,
+    documents: Array,
+    participants: Array,
+    jurorAssignments: Array,
+    createdAt: Date.now,
+  },
   course: {
     id: primaryKey(nanoid),
     code: String,
     description: String,
     status: String,
     createdAt: Date.now,
+  },
+  course_public: {
+    id: primaryKey(nanoid),
+    eventId: String,
+    code: String,
+    description: String,
+    active: Boolean,
   },
   courseEvent: {
     id: primaryKey(nanoid),
@@ -137,11 +115,6 @@ const models = {
     description: String,
     weight: Number,
     criterionCourse: Array,
-  },
-  criterionCourse: {
-    id: primaryKey(nanoid),
-    criterionId: String,
-    courseId: String,
   },
   jury: {
     id: primaryKey(nanoid),
