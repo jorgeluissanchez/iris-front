@@ -142,7 +142,27 @@ const models = {
     id: primaryKey(nanoid),
     criterionId: String,
     courseId: String,
-  }
+  },
+  jury: {
+    id: primaryKey(nanoid),
+    email: String,
+    invitationStatus: String,
+    eventId: String,
+    createdAt: Date.now,
+  },
+  administrator: {
+    id: primaryKey(nanoid),
+    email: String,
+    invitationStatus: String,
+    createdAt: Date.now,
+  },
+  evaluationCriteria: {
+    id: primaryKey(nanoid),
+    name: String,
+    description: String,
+    weight: Number,
+    createdAt: Date.now,
+  },
 };
 
 export const db = factory(models);
