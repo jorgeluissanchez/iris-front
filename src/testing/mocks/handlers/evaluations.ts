@@ -10,7 +10,7 @@ import {
 } from '../utils';
 
 type EvaluationScore = {
-  criterion: string;
+  criterionId: string;
   score: number;
 };
 
@@ -38,21 +38,21 @@ export const evaluationsHandlers = [
 
       const memberUserId = body.memberUserId ?? user?.id ?? '';
 
-      const grade = body.scores.reduce((s, d) => s + (d.score ?? 0), 0) / body.scores.length;
+      const grade = body.scores.reduce((s, d) => s + (d.score ?? 0), 0);
 
       const evaluation = db.evaluation.create({
         memberUserId,
-        projectId: body.projectId ?? '',
+        projectId: body.projectId,
         grade,
         comments: body.comments ?? '',
-        scores: body.scores.map((d) => d.score),
+        scores: body.scores,
       });
 
       // create details
       body.scores.forEach((d) => {
         db.evaluationDetail.create({
           evaluationId: evaluation.id,
-          criterion: d.criterion,
+          criterion: d.criterionId,
           score: d.score,
         });
       });

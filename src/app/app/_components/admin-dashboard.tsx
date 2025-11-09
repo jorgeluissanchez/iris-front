@@ -3,71 +3,47 @@
 import { useUser } from '@/lib/auth';
 import { Calendar, Folder, Users, FileCheck } from 'lucide-react';
 import { Card, CardHeader, CardBody } from '@/components/ui/card';
-// import { useQuery } from '@tanstack/react-query'; // Descomentar cuando uses el fetch
+import { useDashboardStats } from '@/features/dashboard/api/get-dashboard-stats';
 
-interface DashboardStats {
-  activeEvents: number;
-  totalProjects: number;
-  juryMembers: number;
-  evaluations: number;
-}
+export const AdminDashboard = () => {
+  const user = useUser();
+  const { data: stats, isLoading } = useDashboardStats();
 
-// Fetch de estadísticas (ejemplo - comentar para usar valores iniciales)
-const fetchDashboardStats = async (): Promise<DashboardStats> => {
-  // TODO: Implementar llamada a API
-  // const response = await fetch('/api/dashboard/stats');
-  // return response.json();
-  return {
+  // Valores por defecto mientras se carga la información
+  const defaultStats = {
     activeEvents: 0,
     totalProjects: 0,
     juryMembers: 0,
     evaluations: 0,
   };
-};
 
-export const AdminDashboard = () => {
-  const user = useUser();
-
-  // Usar React Query para fetch de datos (descomentado cuando esté listo el API)
-  // const { data: stats = { activeEvents: 2, totalProjects: 24, juryMembers: 12, evaluations: 42 } } = 
-  //   useQuery<DashboardStats>({
-  //     queryKey: ['dashboard-stats'],
-  //     queryFn: fetchDashboardStats,
-  //   });
-
-  // Variables iniciales - se cambiarán con fetch más adelante
-  const stats: DashboardStats = {
-    activeEvents: 2,
-    totalProjects: 24,
-    juryMembers: 12,
-    evaluations: 42,
-  };
+  const displayStats = stats ?? defaultStats;
 
   const statsCards = [
     {
       title: 'Active events',
-      value: stats.activeEvents,
+      value: isLoading ? '...' : displayStats.activeEvents,
       description: 'Currently running',
       icon: Calendar,
       iconColor: 'text-blue-500',
     },
     {
       title: 'Total projects',
-      value: stats.totalProjects,
+      value: isLoading ? '...' : displayStats.totalProjects,
       description: 'Across all events',
       icon: Folder,
       iconColor: 'text-green-500',
     },
     {
       title: 'Jury members',
-      value: stats.juryMembers,
+      value: isLoading ? '...' : displayStats.juryMembers,
       description: 'Active evaluators',
       icon: Users,
       iconColor: 'text-purple-500',
     },
     {
       title: 'Evaluations',
-      value: stats.evaluations,
+      value: isLoading ? '...' : displayStats.evaluations,
       description: 'Completed',
       icon: FileCheck,
       iconColor: 'text-orange-500',

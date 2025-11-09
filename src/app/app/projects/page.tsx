@@ -7,6 +7,7 @@ import {
 import { Projects } from "./_components/projects";
 
 import { getProjectsQueryOptions } from "@/features/projects/api/get-projects";
+import { RoleGuard } from "@/components/auth/role-guard";
 
 export const metadata = {
   title: "Projects",
@@ -30,9 +31,11 @@ const ProjectsPage = async ({
 
   const dehydratedState = dehydrate(queryClient);
   return (
-    <HydrationBoundary state={dehydratedState}>
-      <Projects />
-    </HydrationBoundary>
+    <RoleGuard roles={['ADMIN']}>
+      <HydrationBoundary state={dehydratedState}>
+        <Projects />
+      </HydrationBoundary>
+    </RoleGuard>
   );
 };
 

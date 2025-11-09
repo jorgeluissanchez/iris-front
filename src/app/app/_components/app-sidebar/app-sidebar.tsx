@@ -9,6 +9,9 @@ import {
   Users as UsersIcon,
   type LucideIcon,
   Presentation,
+  ShieldCheck,
+  ArrowDownAZ,
+  SquareChartGantt
 } from "lucide-react";
 
 import { NavUser } from "./nav-user";
@@ -50,45 +53,29 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           {
             title: "Courses",
             url: paths.app.courses.getHref(),
-            icon: Presentation,
+            icon: ArrowDownAZ,
           },
           {
             title: "Projects",
             url: paths.app.projects.getHref(),
+            icon: SquareChartGantt,
+          },
+          {
+            title: "Criteria",
+            url: paths.app.criteria.getHref(),
             icon: Presentation,
           },
+          { title: "Juries", url: paths.app.juries.getHref(), icon: UsersIcon },
+          { title: "Administrators", url: paths.app.administrators.getHref(), icon: ShieldCheck },
           { title: "Users", url: paths.app.users.getHref(), icon: UsersIcon },
         ];
       case "STUDENT":
         return [
           { title: "Dashboard", url: paths.app.root.getHref(), icon: Home },
-          { title: "Events", url: paths.app.events.getHref(), icon: Calendar },
-          {
-            title: "Discussions",
-            url: paths.app.discussions.getHref(),
-            icon: MessageSquare,
-          },
-          // Students can view courses
-          {
-            title: "Courses",
-            url: paths.app.courses.getHref(),
-            icon: Presentation,
-          },
         ];
       case "JURY":
         return [
           { title: "Dashboard", url: paths.app.root.getHref(), icon: Home },
-          { title: "Events", url: paths.app.events.getHref(), icon: Calendar },
-          {
-            title: "Discussions",
-            url: paths.app.discussions.getHref(),
-            icon: MessageSquare,
-          },
-          {
-            title: "Courses",
-            url: paths.app.courses.getHref(),
-            icon: Presentation,
-          },
         ];
       default:
         return [

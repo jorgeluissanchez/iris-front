@@ -1,0 +1,136 @@
+"use client"
+
+import { Card, CardBody, CardHeader } from "@heroui/react"
+import { Chip } from "@heroui/react"
+import { Users, FileText, Upload, CheckCircle2 } from "lucide-react"
+import { WizardData } from "../project-wizard"
+import Image from "next/image"
+
+type ReviewStepProps = {
+  data: WizardData
+}
+
+export function ReviewStep({ data }: ReviewStepProps) {
+  return (
+    <div className="space-y-6">
+      {/* Participants Review */}
+      <Card>
+        <CardHeader>
+          <div className="flex items-center gap-2">
+            <Users className="h-5 w-5 text-primary" />
+            <h3 className="text-lg font-semibold">Participantes</h3>
+            <Chip size="sm" color="primary" variant="flat">
+              {data.participants.length}
+            </Chip>
+          </div>
+        </CardHeader>
+        <CardBody>
+          <div className="space-y-3">
+            {data.participants.map((participant) => (
+              <div key={participant.id} className="rounded-lg border border-default-200 bg-default-50 p-4">
+                <p className="font-medium">
+                  {participant.firstName} {participant.lastName}
+                </p>
+                <p className="text-sm text-default-500">{participant.email}</p>
+                {participant.studentCode && (
+                  <p className="text-sm text-default-500">Código: {participant.studentCode}</p>
+                )}
+              </div>
+            ))}
+          </div>
+        </CardBody>
+      </Card>
+
+      {/* Project Details Review */}
+      <Card>
+        <CardHeader>
+          <div className="flex items-center gap-2">
+            <FileText className="h-5 w-5 text-primary" />
+            <h3 className="text-lg font-semibold">Detalles del Proyecto</h3>
+          </div>
+        </CardHeader>
+       <CardBody>
+          <div className="space-y-4">
+            {data.project.logo && (
+              <div>
+                <p className="text-sm font-medium text-default-500">Logo</p>
+                <div className="mt-2">
+                  <Image
+                    alt="Logo del proyecto"
+                    height={100}
+                    src={data.project.logo || "/placeholder.svg"}
+                    unoptimized
+                    width={100}
+                    className="rounded-lg border-2 border-default-200"
+                  />
+                </div>
+              </div>
+            )}
+            <div>
+              <p className="text-sm font-medium text-default-500">Nombre</p>
+              <p className="mt-1">{data.project.name || "No especificado"}</p>
+            </div>
+            <div>
+              <p className="text-sm font-medium text-default-500">Descripción</p>
+              <p className="mt-1 text-pretty leading-relaxed">{data.project.description || "No especificada"}</p>
+            </div>
+            <div>
+              <p className="text-sm font-medium text-default-500">Curso</p>
+              <p className="mt-1">{data.project.courseId || "No especificado"}</p>
+            </div>
+          </div>
+        </CardBody>
+      </Card>
+
+      {/* Documents Review */}
+      <Card>
+        <CardHeader>
+          <div className="flex items-center gap-2">
+            <Upload className="h-5 w-5 text-primary" />
+            <h3 className="text-lg font-semibold">Documentos</h3>
+          </div>
+        </CardHeader>
+        <CardBody>
+          <div className="space-y-4">
+            <div>
+              <p className="text-sm font-medium text-default-500">Póster</p>
+              {data.documents.poster ? (
+                <div className="mt-2 flex items-center gap-2 rounded-lg border border-default-200 bg-default-50 p-3">
+                  <CheckCircle2 className="h-4 w-4 text-success" />
+                  <span className="text-sm">{data.documents.poster.name}</span>
+                </div>
+              ) : (
+                <p className="mt-1 text-sm text-danger">No se ha subido el póster</p>
+              )}
+            </div>
+            <div>
+              <p className="text-sm font-medium text-default-500">Documentos Adicionales</p>
+              {data.documents.additionalDocuments.length > 0 ? (
+                <div className="mt-2 space-y-2">
+                  {data.documents.additionalDocuments.map((doc, index) => (
+                    <div
+                      key={index}
+                      className="flex items-center gap-2 rounded-lg border border-default-200 bg-default-50 p-3"
+                    >
+                      <CheckCircle2 className="h-4 w-4 text-success" />
+                      <span className="text-sm">{doc.name}</span>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <p className="mt-1 text-sm text-default-500">No hay documentos adicionales</p>
+              )}
+            </div>
+          </div>
+        </CardBody>
+      </Card>
+
+      <div className="rounded-lg border border-warning-200 bg-warning-50 p-4">
+        <p className="text-sm">
+          <strong>Nota:</strong> Revise cuidadosamente toda la información antes de enviar. Una vez enviado, no podrá
+          realizar cambios.
+        </p>
+      </div>
+    </div>
+  )
+}

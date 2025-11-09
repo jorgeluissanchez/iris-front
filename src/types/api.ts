@@ -2,6 +2,9 @@
 // ideally, we want to keep these api related types in sync
 // with the backend instead of manually writing them out
 
+import { user } from "@heroui/theme";
+import { User } from "lucide-react";
+
 export type BaseEntity = {
   id: string;
   createdAt: number;
@@ -63,35 +66,62 @@ export type Event = Entity<{
   createdAt: number;
 }>;
 
+export type Project = Entity<{
+  id: string;
+  eventId: string;
+  courseId: string;
+  name: string;
+  description?: string;
+  eventNumber?: string;
+  logo: string;
+  state: "UNDER_REVIEW" | "APPROVED" | "REJECTED";
+  participants: ProjectParticipant[];
+  documents: ProjectDocument[];
+  jurorAssignments: ProjectAssignment[];
+  createdAt: number;
+  updatedAt: number;
+}>;
+
+export type ProjectDocument = Entity<{
+  id: string;
+  projectId: string;
+  type: string;
+  url: string;
+  createdAt: number;
+  project: Project;
+}>;
+
+export type ProjectParticipant = Entity<{
+  firstName: string;
+  lastName: string;
+  email: string;
+  projectId: string;
+  studentCode?: string;
+  project: Project;
+}>;
+
+export type ProjectAssignment = Entity<{
+  projectId: string;
+  memberEventId: string;
+  assigneAt: Date;
+  updatedAt: Date;
+  project: Project;
+}>;
+
+export type Course = Entity<{
+  id: string;
+  eventId: string;
+  code: string;
+  description?: string;
+  active: boolean;
+  event?: { id: string; title: string };
+  createdAt: number;
+}>;
+
 export type TeamMember = {
   name: string;
   photoUrl?: string;
 };
-
-export type Project = Entity<{
-  title: string;
-  description: string;
-  eventId: string;
-  teamId: string;
-  isPublic: boolean;
-  teamMembers: TeamMember[];
-  documentsAttached: number;
-  submittedAt: number | null;
-  approvedAt: number | null;
-}>;
-
-export type Course = Entity<{
-  code: string;
-  description: string;
-  events: { id: string; title: string }[];
-  status: "active" | "inactive";
-}>;
-
-export type EvaluationDetail = Entity<{
-  evaluationId: string;
-  criterion: string;
-  score: number;
-}>;
 
 export type EvaluationScoreInput = {
   criterion: string;
@@ -106,3 +136,27 @@ export type Evaluation = Entity<{
   scores: EvaluationScoreInput[];
 }>;
 
+export type Jury = Entity<{
+  email: string;
+  eventId: string;
+  invitationStatus: "pending" | "accepted" | "declined";
+}>;
+
+export type Administrator = Entity<{
+  email: string;
+  invitationStatus: "pending" | "accepted" | "declined";
+}>;
+
+export type Criterion = Entity<{
+  eventId: string;
+  name: string;
+  description: string;
+  weight: number;
+  criterionCourses: CriterionCourse[];
+  createdAt: number;
+}>;
+
+export type CriterionCourse = Entity<{
+  courseId: string;
+  criterionId: string;
+}>;

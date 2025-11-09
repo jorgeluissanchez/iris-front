@@ -7,6 +7,9 @@ const nextConfig = {
     '@heroui/framer-utils',
     '@heroui/react-utils',
   ],
+  turbopack: {
+    root: __dirname,
+  },
 };
 
 module.exports = nextConfig;
