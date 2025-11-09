@@ -10,7 +10,7 @@ import {
 } from '../utils';
 
 type EvaluationScore = {
-  criterion: string;
+  criterionId: string;
   score: number;
 };
 
@@ -42,7 +42,7 @@ export const evaluationsHandlers = [
 
       const evaluation = db.evaluation.create({
         memberUserId,
-        projectId: body.projectId ?? '',
+        projectId: body.projectId,
         grade,
         comments: body.comments ?? '',
         scores: body.scores,
@@ -52,7 +52,7 @@ export const evaluationsHandlers = [
       body.scores.forEach((d) => {
         db.evaluationDetail.create({
           evaluationId: evaluation.id,
-          criterion: d.criterion,
+          criterion: d.criterionId,
           score: d.score,
         });
       });

@@ -5,7 +5,7 @@ import {
 } from '@tanstack/react-query';
 import Evaluation from './_components/evaluation';
 import { getProjectPublicQueryOptions } from '@/features/projects-public/api/get-project';
-
+import { RoleGuard } from '@/components/auth/role-guard';
 
 const EvaluationJuryPage = async ({ params }: { params: Promise<{ projectId: string }> }) => {
 
@@ -18,9 +18,11 @@ const EvaluationJuryPage = async ({ params }: { params: Promise<{ projectId: str
     const dehydratedState = dehydrate(queryClient);
 
     return (
-        <HydrationBoundary state={dehydratedState}>
-            <Evaluation projectId={projectId} />
-        </HydrationBoundary>
+        <RoleGuard roles={['JURY']}>
+            <HydrationBoundary state={dehydratedState}>
+                <Evaluation projectId={projectId} />
+            </HydrationBoundary>
+        </RoleGuard>
     );
 };
 
