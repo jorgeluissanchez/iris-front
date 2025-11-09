@@ -66,7 +66,7 @@ export type Event = Entity<{
   createdAt: number;
 }>;
 
-export type ProjectPublic = Entity<{
+export type Project = Entity<{
   id: string;
   eventId: string;
   courseId: string;
@@ -88,7 +88,7 @@ export type ProjectDocument = Entity<{
   type: string;
   url: string;
   createdAt: number;
-  project: ProjectPublic;
+  project: Project;
 }>;
 
 export type ProjectParticipant = Entity<{
@@ -97,7 +97,7 @@ export type ProjectParticipant = Entity<{
   email: string;
   projectId: string;
   studentCode?: string;
-  project: ProjectPublic;
+  project: Project;
 }>;
 
 export type ProjectAssignment = Entity<{
@@ -105,46 +105,23 @@ export type ProjectAssignment = Entity<{
   memberEventId: string;
   assigneAt: Date;
   updatedAt: Date;
-  project: ProjectPublic;
+  project: Project;
 }>;
 
-export type CoursePublic = Entity<{
+export type Course = Entity<{
   id: string;
   eventId: string;
   code: string;
   description?: string;
   active: boolean;
+  event?: { id: string; title: string };
   createdAt: number;
 }>;
+
 export type TeamMember = {
   name: string;
   photoUrl?: string;
 };
-
-export type Project = Entity<{
-  title: string;
-  description: string;
-  eventId: string;
-  teamId: string;
-  isPublic: boolean;
-  teamMembers: TeamMember[];
-  documentsAttached: number;
-  submittedAt: number | null;
-  approvedAt: number | null;
-}>;
-
-export type Course = Entity<{
-  code: string;
-  description: string;
-  events: { id: string; title: string }[];
-  status: "active" | "inactive";
-}>;
-
-export type EvaluationDetail = Entity<{
-  evaluationId: string;
-  criterion: string;
-  score: number;
-}>;
 
 export type EvaluationScoreInput = {
   criterion: string;
@@ -170,12 +147,7 @@ export type Administrator = Entity<{
   invitationStatus: "pending" | "accepted" | "declined";
 }>;
 
-export type EvaluationCriteria = Entity<{
-  name: string;
-  description: string;
-  weight: number;
-}>;
-export type CriterionPublic = Entity<{
+export type Criterion = Entity<{
   eventId: string;
   name: string;
   description: string;

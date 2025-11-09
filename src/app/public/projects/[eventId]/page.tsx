@@ -5,16 +5,14 @@ import {
 } from '@tanstack/react-query';
 import { ProjectWizard } from "@/features/projects-public/components/project-wizard";
 import { PublicLayout } from "@/components/layouts/public-layout";
-// import { getEventCoursesQueryOptions } from '@/features/course-public/api/get-course';
+import { getCoursesDropdownQueryOptions } from '@/features/courses/api/get-courses-dropdown';
 import '@/features/landing/index.css';
 
 const PublicProjectPage = async ({ params }: { params: Promise<{ eventId: string }> }) => {
     const { eventId } = await params;
     
-    // Prefetch event courses data on the server
     const queryClient = new QueryClient();
-    // TODO: Uncomment when course-public feature is implemented
-    // await queryClient.prefetchQuery(getEventCoursesQueryOptions({ eventId }));
+    await queryClient.prefetchQuery(getCoursesDropdownQueryOptions(eventId));
     const dehydratedState = dehydrate(queryClient);
 
     return (

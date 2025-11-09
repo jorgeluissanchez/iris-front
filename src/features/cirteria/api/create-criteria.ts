@@ -3,14 +3,25 @@ import { z } from "zod";
 
 import { api } from "@/lib/api-client";
 import { MutationConfig } from "@/lib/react-query";
-import { EvaluationCriteria } from "@/types/api";
+import { Evaluation } from "@/types/api";
 
 import { getCriteriaQueryOptions } from "./get-criteria";
 
 export const createCriteriaInputSchema = z.object({
+  eventId: z.string().min(1, "Event is required"),
   name: z.string().min(1, "Required"),
   description: z.string().min(1, "Required"),
-  weight: z.number().min(0, "Weight must be greater than or equal to 0"),
+  weight: z
+    .number()
+    .min(0, "Weight must be greater than or equal to 0")
+    .max(1, "Weight must be less than or equal to 1"),
+  criterionCourse: z
+    .array(
+      z.object({
+        courseId: z.string().min(1, "Course is required"),
+      })
+    )
+    .optional(),
 });
 
 export type CreateCriteriaInput = z.infer<typeof createCriteriaInputSchema>;
@@ -19,8 +30,8 @@ export const createCriteria = ({
   data,
 }: {
   data: CreateCriteriaInput;
-}): Promise<{ data: EvaluationCriteria }> => {
-  return api.post("/criteria", data);
+}): Promise<{ data: Evaluation }> => {
+  return api.post("/criterion", data);
 };
 
 type UseCreateCriteriaOptions = {

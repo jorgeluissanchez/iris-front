@@ -15,6 +15,10 @@ import {
 import { useDisclosure } from "@heroui/use-disclosure";
 import { useNotifications } from "@/components/ui/notifications";
 import { useUser } from "@/lib/auth";
+import { Select, SelectItem } from "@/components/ui/select";
+import { useEventsDropdown } from "@/features/events/api/get-events-dropdown";
+import { useCoursesDropdown } from "@/features/courses/api/get-courses-dropdown";
+import { useEffect, useState } from "react";
 
 import { useCriterion } from "../api/get-criterion";
 import {
@@ -30,6 +34,8 @@ type UpdateCriteriaProps = {
 export const UpdateCriteria = ({ criterionId }: UpdateCriteriaProps) => {
   const { addNotification } = useNotifications();
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
+  const [selectedEvent, setSelectedEvent] = useState<string>("");
+  const [selectedCourses, setSelectedCourses] = useState<Set<string>>(new Set());
   
   const criterionQuery = useCriterion({ criterionId });
   const updateCriteriaMutation = useUpdateCriteria({
@@ -54,6 +60,22 @@ export const UpdateCriteria = ({ criterionId }: UpdateCriteriaProps) => {
 
   const user = useUser();
   const criterion = criterionQuery.data?.data;
+
+  // Initialize local state when opening modal or when criterion loads
+  useEffect(() => {
+    if (isOpen && criterion) {
+      setSelectedEvent(criterion.eventId || "");
+      const preselected = (criterion as any).criterionCourses
+        ? new Set(((criterion as any).criterionCourses as Array<{ courseId: string }>).map((r) => String(r.courseId)))
+        : new Set<string>();
+      setSelectedCourses(preselected);
+    }
+  }, [isOpen, criterion?.id]);
+
+  const eventsQuery = useEventsDropdown();
+  const coursesQuery = useCoursesDropdown({ eventId: selectedEvent || undefined, queryConfig: { enabled: !!selectedEvent } });
+  const events = eventsQuery.data?.data ?? [];
+  const courses = coursesQuery.data?.data ?? [];
 
   // Only admins can update criteria
   if (user?.data?.role !== "ADMIN") {
@@ -89,6 +111,10 @@ export const UpdateCriteria = ({ criterionId }: UpdateCriteriaProps) => {
                 if (rawData.name) data.name = rawData.name;
                 if (rawData.description) data.description = rawData.description;
                 if (rawData.weight) data.weight = Number(rawData.weight);
+                if (selectedEvent) data.eventId = selectedEvent;
+                if (selectedCourses && selectedCourses.size) {
+                  data.criterionCourse = Array.from(selectedCourses).map((id) => ({ courseId: id }));
+                }
 
                 try {
                   const values = await updateCriteriaInputSchema.parseAsync(data);
@@ -109,6 +135,51 @@ export const UpdateCriteria = ({ criterionId }: UpdateCriteriaProps) => {
                 </p>
               </ModalHeader>
               <ModalBody className="space-y-4 w-full">
+                <Select
+                  label="Event"
+                  placeholder="Select an event"
+                  selectedKeys={selectedEvent ? [selectedEvent] : []}
+                  onSelectionChange={(keys) => {
+                    const id = Array.from(keys)[0] as string;
+                    setSelectedEvent(id || "");
+                    setSelectedCourses(new Set());
+                  }}
+                  isLoading={eventsQuery.isLoading}
+                  isRequired
+                >
+                  {events.map((event) => (
+                    <SelectItem key={event.id}>{event.title}</SelectItem>
+                  ))}
+                </Select>
+
+                <Select
+                  label="Courses"
+                  placeholder={selectedEvent ? "Select one or more courses" : "Select event first"}
+                  selectionMode="multiple"
+                  selectedKeys={selectedCourses}
+                  onSelectionChange={(keys) => {
+                    const set = keys instanceof Set ? keys : new Set(Array.from(keys));
+                    setSelectedCourses(set as Set<string>);
+                  }}
+                  isDisabled={!selectedEvent}
+                  isLoading={!!selectedEvent && coursesQuery.isLoading}
+                >
+                  {selectedEvent ? (
+                    courses.length ? (
+                      courses.map((c) => (
+                        <SelectItem key={String(c.id)}>{c.code}</SelectItem>
+                      ))
+                    ) : (
+                      <SelectItem key="no-courses" isDisabled>
+                        No courses
+                      </SelectItem>
+                    )
+                  ) : (
+                    <SelectItem key="select-event" isDisabled>
+                      Select event first
+                    </SelectItem>
+                  )}
+                </Select>
                 <Input
                   label="Name"
                   name="name"

@@ -54,26 +54,24 @@ export const CoursesList = () => {
                   <h3 className="text-xl font-semibold">{course.code}</h3>
                   <Chip
                     size="sm"
-                    color={course.status === "active" ? "success" : "default"}
+                    color={course.active ? "success" : "default"}
                     variant="flat"
                   >
-                    {course.status === "active" ? "Active" : "Inactive"}
+                    {course.active ? "Active" : "Inactive"}
                   </Chip>
                 </div>
                 <p className="text-sm text-default-500">{course.description}</p>
               </div>
 
               <div className="space-y-2">
-                <div className="text-sm text-default-400">Events:</div>
+                <div className="text-sm text-default-400">Event:</div>
                 <div className="flex flex-wrap gap-1">
-                  {course.events && course.events.length > 0 ? (
-                    course.events.map((event) => (
-                      <Chip key={event.id} size="sm" variant="bordered">
-                        {event.title}
-                      </Chip>
-                    ))
+                  {course.event ? (
+                    <Chip size="sm" variant="bordered">
+                      {course.event.title}
+                    </Chip>
                   ) : (
-                    <span className="text-sm text-default-400">No events assigned</span>
+                    <span className="text-sm text-default-400">No event assigned</span>
                   )}
                 </div>
               </div>

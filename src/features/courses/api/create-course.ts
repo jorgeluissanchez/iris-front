@@ -10,7 +10,7 @@ import { getCoursesQueryOptions } from "./get-courses";
 export const createCourseInputSchema = z.object({
   code: z.string().min(1, "Required"),
   description: z.string().min(1, "Required"),
-  eventIds: z.array(z.string()).min(1, "At least one event is required"),
+  eventId: z.string().min(1, "Event is required"),
   status: z.enum(["active", "inactive"]).optional(),
 });
 

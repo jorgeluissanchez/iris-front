@@ -12,13 +12,10 @@ import { coursesHandlers } from "./courses";
 import { discussionsHandlers } from "./discussions";
 import { eventsHandlers } from "./events";
 import { teamsHandlers } from "./teams";
-import { criterionPublicHandlers } from "./criterion-public";
-import { projectsPublicHandlers } from "./projects-public";
-import { coursesPublicHandlers } from "./courses-public";
-import { usersHandlers } from "./users";
+import { criterionHandlers } from "./criterion";
 import { projectsHandlers } from "./projects";
+import { usersHandlers } from "./users";
 import { evaluationsHandlers } from "./evaluations";
-import { criteriaHandlers } from "./criteria";
 import { dashboardHandlers } from "./dashboard";
 
 export const handlers = [
@@ -32,11 +29,9 @@ export const handlers = [
   ...projectsHandlers,
   ...teamsHandlers,
   ...usersHandlers,
-  ...projectsPublicHandlers,
-  ...coursesPublicHandlers,
+  ...projectsHandlers,
   ...evaluationsHandlers,
-  ...criterionPublicHandlers,
-  ...criteriaHandlers,
+  ...criterionHandlers,
   ...dashboardHandlers,
   http.get(`${env.API_URL}/healthcheck`, async () => {
     await networkDelay();

@@ -218,7 +218,7 @@ export function EventsSection({ eventsSectionRef }: EventsSectionProps) {
 
                 {/* CTA Button */}
                 <Button
-                  onClick={() => router.push(paths.public.project.getHref(event.id))}
+                  onClick={() => router.push(paths.public.project.getHref(event.accessCode))}
                   className="w-full group-hover:scale-102 transition-transform event-button"
                   style={
                     {

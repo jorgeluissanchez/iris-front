@@ -2,12 +2,12 @@ import { queryOptions, useQuery } from "@tanstack/react-query";
 
 import { api } from "@/lib/api-client";
 import { QueryConfig } from "@/lib/react-query";
-import { Meta, ProjectPublic } from "@/types/api";
+import { Meta, Project } from "@/types/api";
 
 export const getJuryProjects = (
   { page, eventId }: { page?: number; eventId?: string } = { page: 1 }
-): Promise<{ data: ProjectPublic[]; meta: Meta }> => {
-  return api.get(`/events/${eventId}/projects-public`, { params: { page, eventId } });
+): Promise<{ data: Project[]; meta: Meta }> => {
+  return api.get(`/events/${eventId}/projects`, { params: { page, eventId } });
 };
 
 export const getJuryProjectsQueryOptions = ({ page = 1, eventId }: { page?: number; eventId?: string } = {}) => {

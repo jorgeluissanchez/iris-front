@@ -5,7 +5,7 @@ import { Textarea } from "@heroui/input"
 import { Select, SelectItem } from "@heroui/select"
 import { ProjectData } from "../project-wizard"
 import { LogoUpload } from "../image-crop/logo-upload"
-import { useEventCourses } from "@/features/course-public/api/get-course"
+import { useCoursesDropdown } from "@/features/courses/api/get-courses-dropdown"
 
 type ProjectDetailsStepProps = {
   eventId: string
@@ -14,17 +14,7 @@ type ProjectDetailsStepProps = {
 }
 
 export function ProjectDetailsStep({eventId, project, onUpdate }: ProjectDetailsStepProps) {
-  const { data: courses, isLoading, isError, error } = useEventCourses({ eventId })
-
-  // Debug: Ver qué datos llegan
-  console.log('Courses Query:', {
-    eventId,
-    isLoading,
-    isError,
-    error,
-    courses,
-    coursesLength: courses?.length
-  });
+  const { data: courses, isLoading, isError, error } = useCoursesDropdown({ eventId })
 
   return (
     <div className="space-y-6">
@@ -56,7 +46,7 @@ export function ProjectDetailsStep({eventId, project, onUpdate }: ProjectDetails
         isDisabled={isLoading || isError}
         isRequired
       >
-        {(courses ?? []).map((course: any) => (
+        {(courses?.data ?? []).map((course: any) => (
           <SelectItem key={String(course.id)}>
             {course.code}
           </SelectItem>
