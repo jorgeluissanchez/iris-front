@@ -2,29 +2,37 @@ import { queryOptions, useQuery } from "@tanstack/react-query";
 
 import { api } from "@/lib/api-client";
 import { QueryConfig } from "@/lib/react-query";
-import { Meta, EvaluationCriteria } from "@/types/api";
+import { Meta, Criterion } from "@/types/api";
 
 export const getCriteria = (
-  { page }: { page?: number } = { page: 1 }
-): Promise<{ data: EvaluationCriteria[]; meta: Meta }> => {
-  return api.get(`/criteria`, { params: { page } });
+  { page, eventId, courseIds }: { page?: number; eventId?: string; courseIds?: string[] } = { page: 1 }
+): Promise<{ data: Criterion[]; meta: Meta }> => {
+  return api.get(`/criterion`, {
+    params: {
+      page,
+      ...(eventId ? { eventId } : {}),
+      ...(courseIds && courseIds.length ? { courseIds: courseIds.join(",") } : {}),
+    },
+  });
 };
 
-export const getCriteriaQueryOptions = ({ page = 1 }: { page?: number } = {}) => {
+export const getCriteriaQueryOptions = ({ page = 1, eventId, courseIds }: { page?: number; eventId?: string; courseIds?: string[] } = {}) => {
   return queryOptions({
-    queryKey: ["criteria", { page }],
-    queryFn: () => getCriteria({ page }),
+    queryKey: ["criterion", { page, eventId, courseIds }],
+    queryFn: () => getCriteria({ page, eventId, courseIds }),
   });
 };
 
 type UseCriteriaOptions = {
   page?: number;
+  eventId?: string;
+  courseIds?: string[];
   queryConfig?: QueryConfig<typeof getCriteriaQueryOptions>;
 };
 
-export const useCriteria = ({ queryConfig, page }: UseCriteriaOptions = {}) => {
+export const useCriteria = ({ queryConfig, page, eventId, courseIds }: UseCriteriaOptions = {}) => {
   return useQuery({
-    ...getCriteriaQueryOptions({ page }),
+    ...getCriteriaQueryOptions({ page, eventId, courseIds }),
     ...queryConfig,
   });
 };

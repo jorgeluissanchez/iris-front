@@ -2,10 +2,10 @@ import { queryOptions, useQuery } from '@tanstack/react-query';
 
 import { api } from '@/lib/api-client';
 import { QueryConfig } from '@/lib/react-query';
-import { CriterionPublic } from '@/types/api';
+import { Criterion } from '@/types/api';
 
-export const getCourseCriteria = ({ courseId }: { courseId: string }): Promise<CriterionPublic[]> => {
-  return api.get(`/criterion-public/${courseId}` );
+export const getCourseCriteria = ({ courseId }: { courseId: string }): Promise<Criterion[]> => {
+  return api.get(`/criterion/${courseId}` );
 };
 
 export const getCourseCriterionQueryOptions = ({ courseId }: { courseId: string }) => {

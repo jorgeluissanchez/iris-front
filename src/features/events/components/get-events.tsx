@@ -75,7 +75,7 @@ export const EventsList = ({ onEventPrefetch }: EventsListProps) => {
 
               <Button
                 id={event.id}
-                onClick={() => router.push(paths.public.project.getHref(event.id))}
+                onClick={() => router.push(paths.public.project.getHref(event.accessCode))}
               >
                 Registrarse
               </Button>

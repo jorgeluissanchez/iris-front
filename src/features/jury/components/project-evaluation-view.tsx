@@ -11,7 +11,7 @@ import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter } from "@/comp
 import { FileText, Users, Download, Send, ArrowLeft, AlertCircle } from "lucide-react"
 import { useProjectPublic } from "@/features/projects-public/api/get-project"
 import { AvatarGroup } from "@/features/projects/components/avatar-icon"
-import { useCourseCriteria } from "@/features/criterion-public/api/get-criterion"
+import { useCourseCriteria } from "@/features/cirteria/api/get-course-criterion"
 import { useCreateEvaluation } from "@/features/evaluations/api/create-evaluation"
 import { useNotifications } from "@/components/ui/notifications"
 

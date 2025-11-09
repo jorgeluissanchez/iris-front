@@ -8,11 +8,25 @@ import { Project } from "@/types/api";
 import { getProjectsQueryOptions } from "./get-projects";
 
 export const createProjectInputSchema = z.object({
-  title: z.string().min(1, "Required"),
-  description: z.string().min(1, "Required"),
   eventId: z.string().min(1, "Required"),
-  teamId: z.string().optional(),
-  isPublic: z.boolean().optional(),
+  courseId: z.string().min(1, "Required"),
+  name: z.string().min(1, "Required"),
+  logo: z.string().min(1, "Required"),
+  description: z.string().optional(),
+  state: z.string().optional(),
+  documents: z.array(z.object({
+    type: z.string(),
+    url: z.string(),
+  })).optional(),
+  participants: z.array(z.object({
+    firstName: z.string(),
+    lastName: z.string(),
+    email: z.string(),
+    studentCode: z.string().optional(),
+  })).optional(),
+  jurorAssignments: z.array(z.object({
+    memberUserId: z.string(),
+  })).optional(),
 });
 
 export type CreateProjectInput = z.infer<typeof createProjectInputSchema>;

@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { api } from "@/lib/api-client";
-import { EvaluationCriteria } from "@/types/api";
+import { Criterion } from "@/types/api";
 import { MutationConfig } from "@/lib/react-query";
 
 import { getCriteriaQueryOptions } from "./get-criteria";
@@ -10,8 +10,8 @@ export const deleteCriteria = ({
   criterionId,
 }: {
   criterionId: string;
-}): Promise<{ data: EvaluationCriteria }> => {
-  return api.delete(`/criteria/${criterionId}`);
+}): Promise<{ data: Criterion }> => {
+  return api.delete(`/criterion/${criterionId}`);
 };
 
 type UseDeleteCriteriaOptions = {

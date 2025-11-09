@@ -16,6 +16,9 @@ import {
 import { useDisclosure } from "@heroui/use-disclosure";
 import { useNotifications } from "@/components/ui/notifications";
 import { useUser } from "@/lib/auth";
+import { Select, SelectItem } from "@/components/ui/select";
+import { useEventsDropdown } from "@/features/events/api/get-events-dropdown";
+import { useCoursesDropdown } from "@/features/courses/api/get-courses-dropdown";
 
 import {
   createCriteriaInputSchema,
@@ -26,6 +29,8 @@ import { Input } from "@/components/ui/input";
 export const CreateCriteria = () => {
   const { addNotification } = useNotifications();
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
+  const [selectedEvent, setSelectedEvent] = useState<string>("");
+  const [selectedCourses, setSelectedCourses] = useState<Set<string>>(new Set());
   const user = useUser();
 
   const createCriteriaMutation = useCreateCriteria({
@@ -36,6 +41,8 @@ export const CreateCriteria = () => {
           title: "Criteria Created",
           message: "The evaluation criteria has been created successfully.",
         });
+        setSelectedEvent("");
+        setSelectedCourses(new Set());
         onClose();
       },
       onError: (error: any) => {
@@ -52,6 +59,11 @@ export const CreateCriteria = () => {
   if (user?.data?.role !== "ADMIN") {
     return null;
   }
+
+  const eventsQuery = useEventsDropdown();
+  const events = eventsQuery.data?.data ?? [];
+  const coursesQuery = useCoursesDropdown({ eventId: selectedEvent, queryConfig: { enabled: !!selectedEvent } });
+  const courses = coursesQuery.data?.data ?? [];
 
   return (
     <>
@@ -72,8 +84,12 @@ export const CreateCriteria = () => {
                 const rawData = Object.fromEntries(formData);
                 
                 const data = {
-                  ...rawData,
+                  eventId: selectedEvent,
+                  name: rawData.name as string,
+                  description: rawData.description as string,
                   weight: Number(rawData.weight),
+                  criterionCourse:
+                    Array.from(selectedCourses).map((id) => ({ courseId: id })),
                 };
 
                 try {
@@ -92,6 +108,45 @@ export const CreateCriteria = () => {
                 </p>
               </ModalHeader>
               <ModalBody className="space-y-4 w-full">
+                <Select
+                  label="Event"
+                  placeholder="Select an event"
+                  selectedKeys={selectedEvent ? [selectedEvent] : []}
+                  onSelectionChange={(keys) => {
+                    const id = Array.from(keys)[0] as string;
+                    setSelectedEvent(id || "");
+                    setSelectedCourses(new Set());
+                  }}
+                  isRequired
+                  isLoading={eventsQuery.isLoading}
+                >
+                  {events.map((event) => (
+                    <SelectItem key={event.id}>{event.title}</SelectItem>
+                  ))}
+                </Select>
+
+                <Select
+                  label="Courses"
+                  placeholder={selectedEvent ? "Select one or more courses" : "Select an event first"}
+                  selectionMode="multiple"
+                  selectedKeys={selectedCourses}
+                  onSelectionChange={(keys) => {
+                    const set = keys instanceof Set ? keys : new Set(Array.from(keys));
+                    setSelectedCourses(set as Set<string>);
+                  }}
+                  isDisabled={!selectedEvent}
+                  isLoading={!!selectedEvent && coursesQuery.isLoading}
+                >
+                  {courses.length > 0 ? (
+                    courses.map((course) => (
+                      <SelectItem key={String(course.id)}>{course.code}</SelectItem>
+                    ))
+                  ) : (
+                    <SelectItem key="no-courses" isDisabled>
+                      {selectedEvent ? "No courses" : "Select an event first"}
+                    </SelectItem>
+                  )}
+                </Select>
                 <Input 
                   label="Name" 
                   name="name" 
@@ -129,7 +184,7 @@ export const CreateCriteria = () => {
                 <Button
                   type="submit"
                   isLoading={createCriteriaMutation.isPending}
-                  disabled={createCriteriaMutation.isPending}
+                  disabled={createCriteriaMutation.isPending || !selectedEvent}
                 >
                   Create Criteria
                 </Button>
