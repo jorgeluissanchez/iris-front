@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { IrisLogo } from '@/features/landing/components/iris-logo';
 import { landingContent } from '@/features/landing/content';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 
 interface NavbarProps {
   showNavLinks?: boolean;
@@ -13,6 +13,7 @@ interface NavbarProps {
 export function Navbar({ showNavLinks = true }: NavbarProps) {
   const pathname = usePathname();
   const isLandingPage = pathname === '/';
+  const router = useRouter();
 
   const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
     e.preventDefault();
@@ -58,6 +59,7 @@ export function Navbar({ showNavLinks = true }: NavbarProps) {
 
         <Button
           size="sm"
+          onClick={() => router.push('/auth/login')}
           style={{ 
             background: 'oklch(0.75 0.15 195)',
             color: 'oklch(0.12 0.01 264)'
