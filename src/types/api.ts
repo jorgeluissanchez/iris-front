@@ -138,7 +138,8 @@ export type Evaluation = Entity<{
 
 export type Jury = Entity<{
   email: string;
-  eventId: string;
+  eventIds: string[];
+  projectIds: string[];
   invitationStatus: "pending" | "accepted" | "declined";
 }>;
 

@@ -26,11 +26,20 @@ import { Input } from "@/components/ui/input";
 import { useCallback, useMemo, useState } from "react";
 import { useEventsDropdown } from "@/features/events/api/get-events-dropdown";
 import { InviteModal } from "./invite-modal";
+import { EditModal } from "./edit-modal";
+import { DeleteJury } from "./delete-jury";
+import { useAcceptJury } from "../api/accept-jury";
+import { useNotifications } from "@/components/ui/notifications";
+import { useQueryClient } from "@tanstack/react-query";
+import { useProjects } from "@/features/projects/api/get-projects";
+import { Check } from "lucide-react";
 
 export const JuriesList = () => {
   const [filterValue, setFilterValue] = useState("");
   const [statusFilter, setStatusFilter] = useState<Selection>("all");
   const rowsPerPage = 10;
+  const { addNotification } = useNotifications();
+  const queryClient = useQueryClient();
 
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -52,11 +61,15 @@ export const JuriesList = () => {
 
   const juriesQuery = useJuries({ page });
   const eventsQuery = useEventsDropdown();
+  
+  // Get all projects for display
+  const projectsQuery = useProjects({ page: 1 });
+  const allProjects = projectsQuery.data?.data || [];
 
   const juries = juriesQuery.data?.data ?? [];
   const meta = juriesQuery.data?.meta;
   const events = eventsQuery.data?.data ?? [];
-  const isLoading = juriesQuery.isLoading || eventsQuery.isLoading;
+  const isLoading = juriesQuery.isLoading || eventsQuery.isLoading || projectsQuery.isLoading;
 
   const eventsMap = useMemo(() => {
     const m = new Map<string, string>();
@@ -66,8 +79,27 @@ export const JuriesList = () => {
     return m;
   }, [events]);
 
+  const projectsMap = useMemo(() => {
+    const m = new Map<string, string>();
+    for (const p of allProjects) {
+      if (p?.id) m.set(String(p.id), p?.name ?? "Unknown Project");
+    }
+    return m;
+  }, [allProjects]);
+
   const getEventTitle = (eventId: string | number) =>
     eventsMap.get(String(eventId)) ?? "Unknown Event";
+
+  const getProjectTitle = (projectId: string | number) =>
+    projectsMap.get(String(projectId)) ?? "Unknown Project";
+
+  const getEventTitles = (eventIds: string[] = []) => {
+    return eventIds.map((id) => getEventTitle(id)).join(", ") || "—";
+  };
+
+  const getProjectTitles = (projectIds: string[] = []) => {
+    return projectIds.map((id) => getProjectTitle(id)).join(", ") || "—";
+  };
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -121,19 +153,18 @@ export const JuriesList = () => {
         ? null
         : new Set(Array.from(statusFilter) as string[]);
     return juries.filter((j) => {
-      const title = getEventTitle(j.eventId ?? "");
+      const eventTitles = getEventTitles(j.eventIds || []);
+      const projectTitles = getProjectTitles(j.projectIds || []);
       const matchSearch =
         !q ||
         j.email?.toLowerCase().includes(q) ||
-        String(j.eventId ?? "")
-          .toLowerCase()
-          .includes(q) ||
-        title.toLowerCase().includes(q);
+        eventTitles.toLowerCase().includes(q) ||
+        projectTitles.toLowerCase().includes(q);
       const st = (j.invitationStatus ?? "").toLowerCase();
       const matchStatus = !selected || selected.has(st);
       return matchSearch && matchStatus;
     });
-  }, [juries, filterValue, statusFilter, eventsMap]);
+  }, [juries, filterValue, statusFilter, eventsMap, projectsMap]);
 
   // Use server-side pagination metadata when available, otherwise fallback to client-side
   const pages = meta?.totalPages ?? Math.max(1, Math.ceil(filteredJuries.length / rowsPerPage));
@@ -245,11 +276,26 @@ export const JuriesList = () => {
     );
   }, [page, pages, setPageInUrl]);
 
+  const acceptJuryMutation = useAcceptJury({
+    mutationConfig: {
+      onSuccess: () => {
+        addNotification({ type: "success", title: "Jurado aceptado" });
+        queryClient.invalidateQueries({ queryKey: ["juries"] });
+      },
+    },
+  });
+
+  const handleAccept = (juryId: string) => {
+    acceptJuryMutation.mutate({ juryId });
+  };
+
   const columns = [
     { key: "email", label: "Correo" },
-    { key: "event", label: "Evento" },
+    { key: "events", label: "Eventos" },
+    { key: "projects", label: "Proyectos" },
     { key: "invitationStatus", label: "Estado" },
     { key: "createdAt", label: "Fecha de invitación" },
+    { key: "actions", label: "Acciones" },
   ];
 
   return (
@@ -276,7 +322,7 @@ export const JuriesList = () => {
       >
         {isLoading ? (
           <TableRow key="loading">
-            <TableCell align="center" className="py-10" colSpan={4}>
+            <TableCell align="center" className="py-10" colSpan={6}>
               <Spinner size="lg" />
             </TableCell>
           </TableRow>
@@ -285,7 +331,10 @@ export const JuriesList = () => {
             <TableRow key={item.id}>
               <TableCell align="center">{item.email}</TableCell>
               <TableCell align="center">
-                {getEventTitle(item.eventId)}
+                {getEventTitles(item.eventIds || [])}
+              </TableCell>
+              <TableCell align="center">
+                {getProjectTitles(item.projectIds || [])}
               </TableCell>
               <TableCell align="center">
                 <Chip
@@ -299,6 +348,24 @@ export const JuriesList = () => {
                 {item.createdAt
                   ? new Date(item.createdAt).toLocaleDateString()
                   : "—"}
+              </TableCell>
+              <TableCell align="center">
+                <div className="flex items-center justify-center gap-2">
+                  <EditModal jury={item} />
+                  {item.invitationStatus === "pending" && (
+                    <Button
+                      size="sm"
+                      variant="light"
+                      color="success"
+                      onPress={() => handleAccept(item.id)}
+                      isIconOnly
+                      isLoading={acceptJuryMutation.isPending}
+                    >
+                      <Check size={16} />
+                    </Button>
+                  )}
+                  <DeleteJury id={item.id} />
+                </div>
               </TableCell>
             </TableRow>
           )

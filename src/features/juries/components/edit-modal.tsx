@@ -1,7 +1,6 @@
 "use client";
 
-import { Plus } from "lucide-react";
-import { useState, useEffect, useMemo, useRef } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
@@ -14,121 +13,98 @@ import {
 } from "@/components/ui/modal";
 import { useDisclosure } from "@heroui/use-disclosure";
 import { useNotifications } from "@/components/ui/notifications";
-import { useUser } from "@/lib/auth";
-import { canInviteJury } from "@/lib/authorization";
-import { createJuryInputSchema, useCreateJury } from "../api/create-jury";
+import { updateJuryInputSchema, useUpdateJury } from "../api/update-jury";
 import { Input } from "@/components/ui/input";
 import { Select, SelectItem } from "@/components/ui/select";
 import { useEventsDropdown } from "@/features/events/api/get-events-dropdown";
 import { useProjects } from "@/features/projects/api/get-projects";
+import { Jury } from "@/types/api";
+import { Edit } from "lucide-react";
 
-export const InviteModal = () => {
+type EditModalProps = {
+  jury: Jury;
+};
+
+export const EditModal = ({ jury }: EditModalProps) => {
   const { addNotification } = useNotifications();
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
   const [selectedEventKeys, setSelectedEventKeys] = useState<Set<string>>(
-    new Set()
+    new Set(jury.eventIds || [])
   );
   const [selectedProjectKeys, setSelectedProjectKeys] = useState<Set<string>>(
-    new Set()
+    new Set(jury.projectIds || [])
   );
   const queryClient = useQueryClient();
 
   const eventsQuery = useEventsDropdown();
   const events = eventsQuery.data?.data || [];
 
-  // Track eventIds as a string to ensure React Query detects changes
-  const [eventIdsParam, setEventIdsParam] = useState<string | undefined>(undefined);
-  const prevEventKeysStrRef = useRef<string>("");
+  // Get projects for selected events
+  const selectedEventIds = useMemo(() => Array.from(selectedEventKeys), [selectedEventKeys]);
+  const eventIdsParam = selectedEventIds.length > 0 ? selectedEventIds.join(",") : undefined;
   
-  // Update eventIdsParam when selectedEventKeys changes
-  // Serialize the Set to detect content changes
-  useEffect(() => {
-    const ids = Array.from(selectedEventKeys).sort();
-    const newParam = ids.length > 0 ? ids.join(",") : undefined;
-    const newParamStr = newParam || "";
-    
-    // Only update if the value actually changed
-    if (prevEventKeysStrRef.current !== newParamStr) {
-      prevEventKeysStrRef.current = newParamStr;
-      setEventIdsParam(newParam);
-    }
-  }, [selectedEventKeys]);
-  
-  const selectedEventIds = useMemo(() => {
-    if (!eventIdsParam) return [];
-    return eventIdsParam.split(',').map(id => id.trim());
-  }, [eventIdsParam]);
-  
-  // Fetch all projects for selected events (no pagination for dropdown)
   const projectsQuery = useProjects({
     eventId: eventIdsParam,
     page: 1,
     pageSize: 1000, // Request all projects for dropdown
     queryConfig: {
-      enabled: !!eventIdsParam, // Only fetch when events are selected
+      enabled: selectedEventIds.length > 0, // Only fetch when events are selected
     },
   });
   
   const allProjects = projectsQuery.data?.data || [];
   
-  // The handler already filters projects by eventId, so we can use them directly
-  // But we'll still filter to ensure only projects from selected events are shown
+  // Filter projects to only show those from selected events
   const availableProjects = useMemo(() => {
-    if (!eventIdsParam || allProjects.length === 0) return [];
-    
-    // The handler already filtered by eventId, but we'll double-check
-    // Convert selectedEventIds to strings for comparison
-    const eventIdStrings = selectedEventIds.map(id => String(id));
-    
-    // Filter projects that belong to any of the selected events
-    return allProjects.filter((project) => {
-      const projectEventId = String(project.eventId);
-      return eventIdStrings.includes(projectEventId);
-    });
-  }, [allProjects, eventIdsParam, selectedEventIds]);
+    if (selectedEventIds.length === 0) return [];
+    return allProjects.filter((project) => 
+      selectedEventIds.includes(project.eventId)
+    );
+  }, [allProjects, selectedEventIds]);
 
-  const createJuryMutation = useCreateJury({
+  const updateJuryMutation = useUpdateJury({
     mutationConfig: {
       onSuccess: async () => {
-        addNotification({ type: "success", title: "Jurado invitado" });
+        addNotification({ type: "success", title: "Jurado actualizado" });
         await Promise.all([
           queryClient.invalidateQueries({ queryKey: ["juries"] }),
           eventsQuery.refetch(),
         ]);
-        setSelectedEventKeys(new Set());
-        setSelectedProjectKeys(new Set());
         onClose();
       },
     },
   });
 
-  // Reset form state when modal closes
+  // Reset form state when modal opens/closes
   useEffect(() => {
-    if (!isOpen) {
+    if (isOpen) {
+      setSelectedEventKeys(new Set(jury.eventIds || []));
+      setSelectedProjectKeys(new Set(jury.projectIds || []));
+    } else {
+      // Reset when modal closes
       setSelectedEventKeys(new Set());
       setSelectedProjectKeys(new Set());
     }
-  }, [isOpen]);
+  }, [isOpen, jury.id]); // Only depend on jury.id to avoid unnecessary updates
 
-  // Reset projects when events change
-  useEffect(() => {
-    setSelectedProjectKeys(new Set());
-  }, [selectedEventKeys]);
-
-  const user = useUser();
-  if (!canInviteJury(user?.data)) return null;
+  // Note: We don't automatically clean up projects when events change to avoid infinite loops
+  // The user can manually deselect invalid projects if needed
 
   return (
     <>
-      <Button size="md" onPress={onOpen} color="primary">
-        <Plus size={16} />
-        Invitar Jurado
+      <Button
+        size="sm"
+        variant="light"
+        onPress={onOpen}
+        isIconOnly
+      >
+        <Edit size={16} />
       </Button>
       <Modal isOpen={isOpen} onOpenChange={onOpenChange} size="2xl">
         <ModalContent>
           {(onClose) => (
             <Form
-              id="invite-jurors"
+              id="edit-jury"
               onSubmit={async (e) => {
                 e.preventDefault();
                 const form = e.target as HTMLFormElement;
@@ -153,8 +129,11 @@ export const InviteModal = () => {
                 };
                 
                 try {
-                  const values = await createJuryInputSchema.parseAsync(data);
-                  await createJuryMutation.mutateAsync({ data: values });
+                  const values = await updateJuryInputSchema.parseAsync(data);
+                  await updateJuryMutation.mutateAsync({ 
+                    juryId: jury.id,
+                    data: values 
+                  });
                 } catch (error) {
                   // Validation errors are handled by the schema
                   console.error("Validation error:", error);
@@ -162,10 +141,15 @@ export const InviteModal = () => {
               }}
             >
               <ModalHeader className="flex flex-col gap-1">
-                Invitar Jurado
+                Editar Jurado
               </ModalHeader>
               <ModalBody className="space-y-4 w-full">
-                <Input label="Correo" name="email" isRequired />
+                <Input 
+                  label="Correo" 
+                  name="email" 
+                  defaultValue={jury.email}
+                  isRequired 
+                />
                 <Select
                   label="Eventos"
                   placeholder="Selecciona uno o más eventos"
@@ -175,11 +159,6 @@ export const InviteModal = () => {
                   onSelectionChange={(keys) => {
                     const nextSet = keys instanceof Set ? keys : new Set(Array.from(keys));
                     setSelectedEventKeys(nextSet as Set<string>);
-                    // Update eventIdsParam immediately when events change
-                    const ids = Array.from(nextSet).sort();
-                    const newParam = ids.length > 0 ? ids.join(",") : undefined;
-                    setEventIdsParam(newParam);
-                    prevEventKeysStrRef.current = newParam || "";
                   }}
                   isLoading={eventsQuery.isLoading}
                 >
@@ -222,11 +201,18 @@ export const InviteModal = () => {
               </ModalBody>
               <ModalFooter>
                 <Button
-                  type="submit"
-                  isLoading={createJuryMutation.isPending}
-                  disabled={createJuryMutation.isPending || selectedEventKeys.size === 0}
+                  color="danger"
+                  variant="light"
+                  onPress={onClose}
                 >
-                  Invitar Jurado
+                  Cancelar
+                </Button>
+                <Button
+                  type="submit"
+                  isLoading={updateJuryMutation.isPending}
+                  disabled={updateJuryMutation.isPending || selectedEventKeys.size === 0}
+                >
+                  Guardar
                 </Button>
               </ModalFooter>
             </Form>
@@ -236,3 +222,4 @@ export const InviteModal = () => {
     </>
   );
 };
+

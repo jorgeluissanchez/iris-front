@@ -1,5 +1,4 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { z } from "zod";
 
 import { api } from "@/lib/api-client";
 import { MutationConfig } from "@/lib/react-query";
@@ -7,29 +6,23 @@ import { Jury } from "@/types/api";
 
 import { getJuriesQueryOptions } from "./get-juries";
 
-export const createJuryInputSchema = z.object({
-  email: z.string().min(1, "Required").email("Invalid email address"),
-  eventIds: z.array(z.string()).min(1, "At least one event is required"),
-  projectIds: z.array(z.string()).optional().default([]),
-});
-
-export type CreateJuryInput = z.infer<typeof createJuryInputSchema>;
-
-export const createJury = ({
-  data,
+export const acceptJury = ({
+  juryId,
 }: {
-  data: CreateJuryInput;
+  juryId: string;
 }): Promise<{ data: Jury }> => {
-  return api.post("/juries", data);
+  return api.patch(`/juries/${juryId}`, {
+    invitationStatus: "accepted",
+  });
 };
 
-type UseCreateJuryOptions = {
-  mutationConfig?: MutationConfig<typeof createJury>;
+type UseAcceptJuryOptions = {
+  mutationConfig?: MutationConfig<typeof acceptJury>;
 };
 
-export const useCreateJury = ({
+export const useAcceptJury = ({
   mutationConfig,
-}: UseCreateJuryOptions = {}) => {
+}: UseAcceptJuryOptions = {}) => {
   const queryClient = useQueryClient();
   const { onSuccess, ...restConfig } = mutationConfig || {};
 
@@ -41,6 +34,7 @@ export const useCreateJury = ({
       onSuccess?.(data, variables, ...args);
     },
     ...restConfig,
-    mutationFn: createJury,
+    mutationFn: acceptJury,
   });
 };
+

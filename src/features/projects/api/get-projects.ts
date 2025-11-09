@@ -5,31 +5,34 @@ import { QueryConfig } from "@/lib/react-query";
 import { Meta, Project } from "@/types/api";
 
 export const getProjects = (
-  { page, eventId }: { page?: number; eventId?: string } = { page: 1 }
+  { page, eventId, pageSize }: { page?: number; eventId?: string; pageSize?: number } = { page: 1 }
 ): Promise<{ data: Project[]; meta: Meta }> => {
+  const params: any = { page };
+  if (pageSize) params.pageSize = pageSize;
+  
   if (eventId) {
-    if (eventId.includes(",")) {
-      return api.get(`/projects`, { params: { page, event: eventId } });
-    }
-
-    return api.get(`/projects/by-event/${eventId}`, { params: { page } });
+    // Always use the /projects endpoint with event parameter
+    params.event = eventId;
+    return api.get(`/projects`, { params });
   }
-  return api.get(`/projects`, { params: { page } });
+  return api.get(`/projects`, { params });
 };
 
 export const getProjectsQueryOptions = ({
   page = 1,
   eventId,
-}: { page?: number; eventId?: string } = {}) => {
+  pageSize,
+}: { page?: number; eventId?: string; pageSize?: number } = {}) => {
   return queryOptions({
-    queryKey: ["projects", { page, eventId: eventId ?? null }],
-    queryFn: () => getProjects({ page, eventId }),
+    queryKey: ["projects", { page, eventId: eventId ?? null, pageSize: pageSize ?? null }],
+    queryFn: () => getProjects({ page, eventId, pageSize }),
   });
 };
 
 type UseProjectsOptions = {
   page?: number;
   eventId?: string;
+  pageSize?: number;
   queryConfig?: QueryConfig<typeof getProjectsQueryOptions>;
 };
 
@@ -37,9 +40,10 @@ export const useProjects = ({
   queryConfig,
   page,
   eventId,
+  pageSize,
 }: UseProjectsOptions) => {
   return useQuery({
-    ...getProjectsQueryOptions({ page, eventId }),
+    ...getProjectsQueryOptions({ page, eventId, pageSize }),
     ...queryConfig,
   });
 };

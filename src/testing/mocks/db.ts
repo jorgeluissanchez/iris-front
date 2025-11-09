@@ -95,7 +95,8 @@ const models = {
     id: primaryKey(nanoid),
     email: String,
     invitationStatus: String,
-    eventId: String,
+    eventIds: Array,
+    projectIds: Array,
     createdAt: Date.now,
   },
   administrator: {

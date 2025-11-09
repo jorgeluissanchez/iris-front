@@ -100,27 +100,50 @@ export const projectsHandlers = [
 
       const url = new URL(request.url);
       const page = Number(url.searchParams.get('page') || 1);
+      const eventParam = url.searchParams.get('event');
 
-      const total = db.event.count();
+      let allProjects = db.project.getAll();
+      
+      // Filter by event IDs if provided
+      if (eventParam) {
+        const eventIds = eventParam.split(',').map(id => id.trim()).filter(Boolean);
+        allProjects = allProjects.filter((project) => 
+          eventIds.includes(String(project.eventId))
+        );
+      }
+
+      const total = allProjects.length;
       const totalPages = Math.ceil(total / 10);
 
-      const projects = db.project
-        .findMany({
-          take: 10,
-          skip: 10 * (page - 1),
-        })
-        .map((project) => {
-          return {
+      // If pageSize is provided and is large (like 1000), return all projects (for dropdowns)
+      const pageSize = Number(url.searchParams.get('pageSize') || 10);
+      const shouldReturnAll = pageSize >= 1000;
+
+      const projects = shouldReturnAll
+        ? allProjects.map((project) => ({
             id: project.id,
             name: project.name,
             description: project.description,
             logo: project.logo,
             state: project.state,
+            eventId: project.eventId,
             createdAt: project.createdAt,
             documents: project.documents ?? [],
             participants: project.participants ?? [],
-          };
-        });
+          }))
+        : allProjects
+            .slice(10 * (page - 1), 10 * page)
+            .map((project) => ({
+              id: project.id,
+              name: project.name,
+              description: project.description,
+              logo: project.logo,
+              state: project.state,
+              eventId: project.eventId,
+              createdAt: project.createdAt,
+              documents: project.documents ?? [],
+              participants: project.participants ?? [],
+            }));
 
       return HttpResponse.json({
         data: projects,
