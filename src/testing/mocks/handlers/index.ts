@@ -19,6 +19,7 @@ import { usersHandlers } from "./users";
 import { projectsHandlers } from "./projects";
 import { evaluationsHandlers } from "./evaluations";
 import { criteriaHandlers } from "./criteria";
+import { dashboardHandlers } from "./dashboard";
 
 export const handlers = [
   ...juriesHandlers,
@@ -36,6 +37,7 @@ export const handlers = [
   ...evaluationsHandlers,
   ...criterionPublicHandlers,
   ...criteriaHandlers,
+  ...dashboardHandlers,
   http.get(`${env.API_URL}/healthcheck`, async () => {
     await networkDelay();
     return HttpResponse.json({ ok: true });
