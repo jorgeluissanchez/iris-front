@@ -21,10 +21,6 @@ export const ForgotPasswordForm = () => {
 
 	return (
 		<div className="space-y-4">
-			<h3 className="text-lg font-semibold text-center">Recuperar contraseña</h3>
-			<p className="text-sm text-foreground text-center">
-				Ingresa tu correo y te enviaremos un enlace para restablecer tu contraseña.
-			</p>
 			<Form
 				onSubmit={async (e) => {
 					e.preventDefault();

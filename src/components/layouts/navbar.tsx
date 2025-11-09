@@ -8,9 +8,10 @@ import { usePathname, useRouter } from 'next/navigation';
 
 interface NavbarProps {
   showNavLinks?: boolean;
+  showLoginButton?: boolean;
 }
 
-export function Navbar({ showNavLinks = true }: NavbarProps) {
+export function Navbar({ showNavLinks = true, showLoginButton = true }: NavbarProps) {
   const pathname = usePathname();
   const isLandingPage = pathname === '/';
   const router = useRouter();
@@ -57,16 +58,18 @@ export function Navbar({ showNavLinks = true }: NavbarProps) {
           </div>
         )}
 
-        <Button
-          size="sm"
-          onClick={() => router.push('/auth/login')}
-          style={{ 
-            background: 'oklch(0.75 0.15 195)',
-            color: 'oklch(0.12 0.01 264)'
-          }}
-        >
-          {landingContent.navbar.cta}
-        </Button>
+        {showLoginButton && (
+          <Button
+            size="sm"
+            onClick={() => router.push('/auth/login')}
+            style={{ 
+              background: 'oklch(0.75 0.15 195)',
+              color: 'oklch(0.12 0.01 264)'
+            }}
+          >
+            {landingContent.navbar.cta}
+          </Button>
+        )}
       </div>
     </nav>
   );

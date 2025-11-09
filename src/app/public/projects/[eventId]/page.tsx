@@ -6,7 +6,6 @@ import {
 import { ProjectWizard } from "@/features/projects-public/components/project-wizard";
 import { PublicLayout } from "@/components/layouts/public-layout";
 import { getCoursesDropdownQueryOptions } from '@/features/courses/api/get-courses-dropdown';
-import '@/features/landing/index.css';
 
 const PublicProjectPage = async ({ params }: { params: Promise<{ eventId: string }> }) => {
     const { eventId } = await params;
