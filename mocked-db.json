@@ -1,1 +1,737 @@
-{"team":[{"id":"i0Kqk2y7zPEJ_F-2pzeuw","name":"FreeFire","description":"","createdAt":1762117797260},{"id":"LHoBxzliKumLEVuR-XReN","name":"aaaa","description":"","createdAt":1762184235770}],"user":[{"id":"BZdtrfcHMGT44j7jV_ekP","firstName":"jorge luis","lastName":"sanchez barreneche","email":"jorgeluissanchezbarreneche@gmail.com","password":"3670747394","teamId":"i0Kqk2y7zPEJ_F-2pzeuw","role":"ADMIN","bio":"","createdAt":1762117797318},{"id":"PrBNl8_vdQUGrcwRI30hJ","firstName":"admin","lastName":"admin","email":"admin@admin.com","password":"2951957434","teamId":"LHoBxzliKumLEVuR-XReN","role":"ADMIN","bio":"","createdAt":1762184235777},{"id":"AEuqQbI8mh8aToNDV-2ZW","firstName":"jurado","lastName":"jurado","email":"juror@juror.com","password":"194581557","teamId":"i0Kqk2y7zPEJ_F-2pzeuw","role":"JURY","bio":"","createdAt":1762494638974},{"id":"pjOfBSgbcbyUzWO_jxMFE","firstName":"Jorge","lastName":"Sanchez","email":"student@student.com","password":"2017858060","teamId":"Lbri6LqDSxUybAACLv_dT","role":"STUDENT","bio":"","createdAt":1762566107980}],"event":[{"id":"MAfnjuqHZqbsGhxLmoP_N","title":"holajojo","description":"mundo","startDate":"2025-11-14","endDate":"2025-11-28","inscriptionDeadline":"2025-11-01","accessCode":"EVT417885","isPublic":true,"evaluationsStatus":"closed","createdAt":1762131417888},{"id":"ZLXM-Kz9_Iq0FgNvb2Q-i","title":"PRUEBAA","description":"esta es una prueba","startDate":"2025-11-20","endDate":"2025-11-29","inscriptionDeadline":"2025-11-29","accessCode":"EVT208469","isPublic":true,"evaluationsStatus":"open","createdAt":1762314208470}],"discussion":[{"id":"lPnftEG_6XTG9IbqPM_XC","title":"hola lkñlkñlkjñk","body":"mundo","authorId":"BZdtrfcHMGT44j7jV_ekP","teamId":"i0Kqk2y7zPEJ_F-2pzeuw","createdAt":1762119032382,"public":true}],"project":[{"id":"P1","title":"Smart Campus Navigation System","description":"An AI-powered mobile app for indoor navigation across campus buildings","eventId":"MAfnjuqHZqbsGhxLmoP_N","teamId":"","isPublic":false,"createdAt":1762117797260,"teamMembers":[{"name":"Alice","photoUrl":"https://randomuser.me/api/portraits/women/68.jpg"},{"name":"Bob","photoUrl":"https://randomuser.me/api/portraits/men/12.jpg"},{"name":"Carol","photoUrl":"https://randomuser.me/api/portraits/women/44.jpg"},{"name":"Dave","photoUrl":"https://randomuser.me/api/portraits/men/32.jpg"},{"name":"Eve","photoUrl":"https://randomuser.me/api/portraits/women/24.jpg"}],"documentsAttached":3,"submittedAt":1762399626542,"approvedAt":1762403558267},{"id":"P2","title":"AI Research Assistante","description":"A tool to assist researchers in organizing and analyzing data","eventId":"ZLXM-Kz9_Iq0FgNvb2Q-i","teamId":"","isPublic":false,"createdAt":1762314208470,"teamMembers":[{"name":"Frank","photoUrl":"https://randomuser.me/api/portraits/men/45.jpg"},{"name":"Grace","photoUrl":"https://randomuser.me/api/portraits/women/17.jpg"},{"name":"Heidi","photoUrl":"https://randomuser.me/api/portraits/women/55.jpg"}],"documentsAttached":5,"submittedAt":1762399000000,"approvedAt":1762399626542},{"id":"P4","title":"Community Health Monitor","description":"An IoT and analytics solution to monitor public health indicators","eventId":"ZLXM-Kz9_Iq0FgNvb2Q-i","teamId":"","isPublic":false,"createdAt":1762405000000,"teamMembers":[{"name":"Ivan","photoUrl":"https://randomuser.me/api/portraits/men/22.jpg"},{"name":"Judy","photoUrl":"https://randomuser.me/api/portraits/women/29.jpg"}],"documentsAttached":2,"submittedAt":1762399626542,"approvedAt":1762399626542},{"id":"7QKGSc6PR6NRVOfk9isQq","title":"hola 14 16","description":"hola mundo\n","eventId":"MAfnjuqHZqbsGhxLmoP_N","teamId":"23","isPublic":true,"createdAt":1762399626542,"teamMembers":[{"name":"Kiko","photoUrl":"https://randomuser.me/api/portraits/men/8.jpg"}],"documentsAttached":0,"submittedAt":1762314208470,"approvedAt":1762399626542}],"course":[{"id":"-JB8WCwaGE7he8uG0IOY1","code":"123121","description":"123123123","status":"inactive","createdAt":1762403558267}],"courseEvent":[{"id":"cBCbUaNRNmyoUh8QeqbFJ","courseId":"-JB8WCwaGE7he8uG0IOY1","eventId":"MAfnjuqHZqbsGhxLmoP_N","createdAt":1762403595509},{"id":"v9QWmi39QjzHIgUfSMlL4","courseId":"-JB8WCwaGE7he8uG0IOY1","eventId":"ZLXM-Kz9_Iq0FgNvb2Q-i","createdAt":1762403595510}],"course_public":[{"id":"qZ8PjJm_Va0Jg7JH7g1m","code":"Introducción a la Inteligencia Artificial","description":"Fundamentos y aplicaciones básicas de IA","eventId":"MAfnjuqHZqbsGhxLmoP_N","createdAt":1762190000001},{"id":"Xf3lVw9Q_Pk2sTt8Nn4y","code":"Desarrollo Web Full Stack","description":"Frontend y backend con prácticas","eventId":"MAfnjuqHZqbsGhxLmoP_N","createdAt":1762190000002},{"id":"Bv7HcD1L_Rt5yUu3Mm2k","code":"Bases de Datos","description":"Modelado, SQL y optimización","eventId":"MAfnjuqHZqbsGhxLmoP_N","createdAt":1762190000003},{"id":"Np6QwEr2_Yu8Io9As3Df","code":"Visión por Computador","description":"Procesamiento y análisis de imágenes","eventId":"MAfnjuqHZqbsGhxLmoP_N","createdAt":1762190000004}],"project_public":[{"id":"Lbri6LqDSxUybAACLv_dT","eventId":"MAfnjuqHZqbsGhxLmoP_N","courseId":"Xf3lVw9Q_Pk2sTt8Nn4y","name":"Arkad","description":"","eventNumber":"","state":"UNDER_REVIEW","logo":"https://storage.example.com/projects/logos/1762532588622.png","participants":[{"firstName":"Juan","lastName":"Povea","email":"a@a.com"}],"jurorAssignments":[{"memberUserId":"AEuqQbI8mh8aToNDV-2ZW"}],"documents":[{"type":"POSTER","url":"blob:http://localhost:3000/b2926fe4-8bc7-4f0e-ab34-96ef71859099"},{"type":"SUPPORTING_DOCUMENT","url":"blob:http://localhost:3000/13956a45-19ed-46db-ba72-3e40a0208ece"}],"createdAt":1762532590077}],"criterion_public":[{"id":"crit_001","eventId":"MAfnjuqHZqbsGhxLmoP_N","name":"Innovación y Creatividad","description":"Evaluación de la originalidad y propuesta innovadora del proyecto","weight":1.5,"criterionCourse":[{"courseId":"qZ8PjJm_Va0Jg7JH7g1m"},{"courseId":"Xf3lVw9Q_Pk2sTt8Nn4y"},{"courseId":"Np6QwEr2_Yu8Io9As3Df"}],"createdAt":1762190000010},{"id":"crit_002","eventId":"MAfnjuqHZqbsGhxLmoP_N","name":"Calidad Técnica","description":"Evaluación de la implementación técnica y arquitectura del proyecto","weight":2,"criterionCourse":[{"courseId":"qZ8PjJm_Va0Jg7JH7g1m"},{"courseId":"Xf3lVw9Q_Pk2sTt8Nn4y"},{"courseId":"Bv7HcD1L_Rt5yUu3Mm2k"}],"createdAt":1762190000011},{"id":"crit_003","eventId":"MAfnjuqHZqbsGhxLmoP_N","name":"Presentación y Documentación","description":"Calidad de la presentación oral y documentación técnica","weight":1,"criterionCourse":[{"courseId":"qZ8PjJm_Va0Jg7JH7g1m"},{"courseId":"Xf3lVw9Q_Pk2sTt8Nn4y"},{"courseId":"Bv7HcD1L_Rt5yUu3Mm2k"},{"courseId":"Np6QwEr2_Yu8Io9As3Df"}],"createdAt":1762190000012},{"id":"crit_004","eventId":"MAfnjuqHZqbsGhxLmoP_N","name":"Trabajo en Equipo","description":"Coordinación y distribución de tareas entre los miembros","weight":0.5,"criterionCourse":[{"courseId":"qZ8PjJm_Va0Jg7JH7g1m"},{"courseId":"Xf3lVw9Q_Pk2sTt8Nn4y"},{"courseId":"Bv7HcD1L_Rt5yUu3Mm2k"},{"courseId":"Np6QwEr2_Yu8Io9As3Df"}],"createdAt":1762190000013},{"id":"crit_005","eventId":"MAfnjuqHZqbsGhxLmoP_N","name":"Modelado de Datos","description":"Calidad del diseño del modelo de datos y normalización","weight":1.5,"criterionCourse":[{"courseId":"Bv7HcD1L_Rt5yUu3Mm2k"}],"createdAt":1762190000014},{"id":"crit_006","eventId":"MAfnjuqHZqbsGhxLmoP_N","name":"Precisión del Modelo","description":"Exactitud y rendimiento de los algoritmos","weight":1.5,"criterionCourse":[{"courseId":"qZ8PjJm_Va0Jg7JH7g1m"},{"courseId":"Np6QwEr2_Yu8Io9As3Df"}],"createdAt":1762190000015},{"id":"crit_008","eventId":"MAfnjuqHZqbsGhxLmoP_N","name":"Optimización","description":"Eficiencia en el uso de recursos computacionales","weight":0.5,"criterionCourse":[{"courseId":"Bv7HcD1L_Rt5yUu3Mm2k"},{"courseId":"Np6QwEr2_Yu8Io9As3Df"}],"createdAt":1762190000017}],"evaluation":[{"id":"7ahb81gvC2npcIwM13H_s","projectId":"Lbri6LqDSxUybAACLv_dT","memberUserId":"AEuqQbI8mh8aToNDV-2ZW","grade":19,"comments":"El mejor trabajo que he visto","scores":[{"criterion":"Innovación y Creatividad","score":5},{"criterion":"Calidad Técnica","score":5},{"criterion":"Presentación y Documentación","score":5},{"criterion":"Trabajo en Equipo","score":4}],"createdAt":1762566644682},{"id":"hXKi_tGDfebDy6EyqM8HH","projectId":"Lbri6LqDSxUybAACLv_dT","memberUserId":"AEuqQbI8mh8aToNDV-2ZW","grade":11.8,"comments":"Meh","scores":[{"criterion":"Innovación y Creatividad","score":3},{"criterion":"Calidad Técnica","score":3},{"criterion":"Presentación y Documentación","score":3},{"criterion":"Trabajo en Equipo","score":2.8}],"createdAt":1762567675384},{"id":"JTd60gRbCOGPT0OJ-7r6D","projectId":"Lbri6LqDSxUybAACLv_dT","memberUserId":"AEuqQbI8mh8aToNDV-2ZW","grade":16,"comments":"Bueno","scores":[{"criterion":"Innovación y Creatividad","score":4},{"criterion":"Calidad Técnica","score":4},{"criterion":"Presentación y Documentación","score":4},{"criterion":"Trabajo en Equipo","score":4}],"createdAt":1762567878776},{"id":"kcIoEJgIjViaZvFuHIAbh","projectId":"Lbri6LqDSxUybAACLv_dT","memberUserId":"AEuqQbI8mh8aToNDV-2ZW","grade":0,"comments":"","scores":[{"criterion":"crit_001","score":0},{"criterion":"crit_002","score":0},{"criterion":"crit_003","score":0},{"criterion":"crit_004","score":0}],"createdAt":1762652062510}],"evaluationDetail":[{"id":"rkEF0lwT0XOzwdgFiuiRC","evaluationId":"7ahb81gvC2npcIwM13H_s","criterion":"Innovación y Creatividad","score":5},{"id":"6kzduSsn-X_DpngSUu_sD","evaluationId":"7ahb81gvC2npcIwM13H_s","criterion":"Calidad Técnica","score":5},{"id":"szFWQ8D8I3sd6knAIeKB2","evaluationId":"7ahb81gvC2npcIwM13H_s","criterion":"Presentación y Documentación","score":5},{"id":"0hdtd8O5WxesJ4Z-HKopm","evaluationId":"7ahb81gvC2npcIwM13H_s","criterion":"Trabajo en Equipo","score":4},{"id":"4q4y5vk2rBzqDiEcuyNKk","evaluationId":"hXKi_tGDfebDy6EyqM8HH","criterion":"Innovación y Creatividad","score":3},{"id":"JAe6i_x9x1c693d1ZBFNK","evaluationId":"hXKi_tGDfebDy6EyqM8HH","criterion":"Calidad Técnica","score":3},{"id":"smX-Mpdw68XsxiprRdBkY","evaluationId":"hXKi_tGDfebDy6EyqM8HH","criterion":"Presentación y Documentación","score":3},{"id":"EV0Rv-AnUS3TbUDQfgTCe","evaluationId":"hXKi_tGDfebDy6EyqM8HH","criterion":"Trabajo en Equipo","score":2.8},{"id":"drmCbN_GFTsJ73sqdUrA7","evaluationId":"JTd60gRbCOGPT0OJ-7r6D","criterion":"Innovación y Creatividad","score":4},{"id":"DSm_gIFEm5NlGd4mIGDEu","evaluationId":"JTd60gRbCOGPT0OJ-7r6D","criterion":"Calidad Técnica","score":4},{"id":"IFOefxGZ1XSXuW58WnkNk","evaluationId":"JTd60gRbCOGPT0OJ-7r6D","criterion":"Presentación y Documentación","score":4},{"id":"ZHm5HG-8CDNSiaUKsy03z","evaluationId":"JTd60gRbCOGPT0OJ-7r6D","criterion":"Trabajo en Equipo","score":4},{"id":"t03l75vMlzY0wCsvunCrz","evaluationId":"kcIoEJgIjViaZvFuHIAbh","criterion":"crit_001","score":0},{"id":"RW6HKN4P4cZ1uGr-WZ_h5","evaluationId":"kcIoEJgIjViaZvFuHIAbh","criterion":"crit_002","score":0},{"id":"YX1EiJZagVGU3ZV99RP5g","evaluationId":"kcIoEJgIjViaZvFuHIAbh","criterion":"crit_003","score":0},{"id":"zW7v8bwRjG4yYco-hBj9F","evaluationId":"kcIoEJgIjViaZvFuHIAbh","criterion":"crit_004","score":0}]}
+{
+  "team": [
+    {
+      "id": "i0Kqk2y7zPEJ_F-2pzeuw",
+      "name": "FreeFire",
+      "description": "",
+      "createdAt": 1762117797260
+    },
+    {
+      "id": "LHoBxzliKumLEVuR-XReN",
+      "name": "aaaa",
+      "description": "",
+      "createdAt": 1762184235770
+    }
+  ],
+  "user": [
+    {
+      "id": "BZdtrfcHMGT44j7jV_ekP",
+      "firstName": "jorge luis",
+      "lastName": "sanchez barreneche",
+      "email": "jorgeluissanchezbarreneche@gmail.com",
+      "password": "3670747394",
+      "teamId": "i0Kqk2y7zPEJ_F-2pzeuw",
+      "role": "ADMIN",
+      "bio": "",
+      "createdAt": 1762117797318
+    },
+    {
+      "id": "PrBNl8_vdQUGrcwRI30hJ",
+      "firstName": "admin",
+      "lastName": "admin",
+      "email": "admin@admin.com",
+      "password": "2951957434",
+      "teamId": "LHoBxzliKumLEVuR-XReN",
+      "role": "ADMIN",
+      "bio": "",
+      "createdAt": 1762184235777
+    },
+    {
+      "id": "AEuqQbI8mh8aToNDV-2ZW",
+      "firstName": "jurado",
+      "lastName": "jurado",
+      "email": "juror@juror.com",
+      "password": "194581557",
+      "teamId": "i0Kqk2y7zPEJ_F-2pzeuw",
+      "role": "JURY",
+      "bio": "",
+      "createdAt": 1762494638974
+    },
+    {
+      "id": "pjOfBSgbcbyUzWO_jxMFE",
+      "firstName": "Jorge",
+      "lastName": "Sanchez",
+      "email": "student@student.com",
+      "password": "2017858060",
+      "teamId": "Lbri6LqDSxUybAACLv_dT",
+      "role": "STUDENT",
+      "bio": "",
+      "createdAt": 1762566107980
+    }
+  ],
+  "event": [
+    {
+      "id": "MAfnjuqHZqbsGhxLmoP_N",
+      "title": "holajojo",
+      "description": "mundo",
+      "startDate": "2025-11-14",
+      "endDate": "2025-11-28",
+      "inscriptionDeadline": "2025-11-01",
+      "accessCode": "EVT417885",
+      "isPublic": true,
+      "evaluationsStatus": "closed",
+      "createdAt": 1762131417888
+    },
+    {
+      "id": "ZLXM-Kz9_Iq0FgNvb2Q-i",
+      "title": "PRUEBAA",
+      "description": "esta es una prueba",
+      "startDate": "2025-11-20",
+      "endDate": "2025-11-29",
+      "inscriptionDeadline": "2025-11-29",
+      "accessCode": "EVT208469",
+      "isPublic": true,
+      "evaluationsStatus": "open",
+      "createdAt": 1762314208470
+    },
+    {
+      "id": "B3xKm9QwRjNpVhYtLs2Dc",
+      "title": "Feria de Proyectos Finales 2025",
+      "description": "Evento anual de presentación de proyectos finales de las 6 ingenierías de la Universidad del Norte",
+      "startDate": "2025-05-15",
+      "endDate": "2025-05-17",
+      "inscriptionDeadline": "2025-05-01",
+      "accessCode": "EVT892341",
+      "isPublic": true,
+      "evaluationsStatus": "open",
+      "createdAt": 1762050000000
+    },
+    {
+      "id": "F7pWn2KdTxLmQs5RvGy8H",
+      "title": "Hackathon Innovación Tech",
+      "description": "Competencia intensiva de 48 horas para desarrollar soluciones tecnológicas innovadoras",
+      "startDate": "2025-06-10",
+      "endDate": "2025-06-12",
+      "inscriptionDeadline": "2025-05-31",
+      "accessCode": "EVT456789",
+      "isPublic": true,
+      "evaluationsStatus": "pending",
+      "createdAt": 1762100000000
+    }
+  ],
+  "discussion": [
+    {
+      "id": "lPnftEG_6XTG9IbqPM_XC",
+      "title": "hola lkñlkñlkjñk",
+      "body": "mundo",
+      "authorId": "BZdtrfcHMGT44j7jV_ekP",
+      "teamId": "i0Kqk2y7zPEJ_F-2pzeuw",
+      "createdAt": 1762119032382,
+      "public": true
+    }
+  ],
+  "project": [
+    {
+      "id": "P1",
+      "title": "Smart Campus Navigation System",
+      "description": "An AI-powered mobile app for indoor navigation across campus buildings",
+      "eventId": "MAfnjuqHZqbsGhxLmoP_N",
+      "teamId": "",
+      "isPublic": false,
+      "createdAt": 1762117797260,
+      "teamMembers": [
+        {
+          "name": "Alice",
+          "photoUrl": "https://randomuser.me/api/portraits/women/68.jpg"
+        },
+        {
+          "name": "Bob",
+          "photoUrl": "https://randomuser.me/api/portraits/men/12.jpg"
+        },
+        {
+          "name": "Carol",
+          "photoUrl": "https://randomuser.me/api/portraits/women/44.jpg"
+        },
+        {
+          "name": "Dave",
+          "photoUrl": "https://randomuser.me/api/portraits/men/32.jpg"
+        },
+        {
+          "name": "Eve",
+          "photoUrl": "https://randomuser.me/api/portraits/women/24.jpg"
+        }
+      ],
+      "documentsAttached": 3,
+      "submittedAt": 1762399626542,
+      "approvedAt": 1762403558267
+    },
+    {
+      "id": "P2",
+      "title": "AI Research Assistante",
+      "description": "A tool to assist researchers in organizing and analyzing data",
+      "eventId": "ZLXM-Kz9_Iq0FgNvb2Q-i",
+      "teamId": "",
+      "isPublic": false,
+      "createdAt": 1762314208470,
+      "teamMembers": [
+        {
+          "name": "Frank",
+          "photoUrl": "https://randomuser.me/api/portraits/men/45.jpg"
+        },
+        {
+          "name": "Grace",
+          "photoUrl": "https://randomuser.me/api/portraits/women/17.jpg"
+        },
+        {
+          "name": "Heidi",
+          "photoUrl": "https://randomuser.me/api/portraits/women/55.jpg"
+        }
+      ],
+      "documentsAttached": 5,
+      "submittedAt": 1762399000000,
+      "approvedAt": 1762399626542
+    },
+    {
+      "id": "P4",
+      "title": "Community Health Monitor",
+      "description": "An IoT and analytics solution to monitor public health indicators",
+      "eventId": "ZLXM-Kz9_Iq0FgNvb2Q-i",
+      "teamId": "",
+      "isPublic": false,
+      "createdAt": 1762405000000,
+      "teamMembers": [
+        {
+          "name": "Ivan",
+          "photoUrl": "https://randomuser.me/api/portraits/men/22.jpg"
+        },
+        {
+          "name": "Judy",
+          "photoUrl": "https://randomuser.me/api/portraits/women/29.jpg"
+        }
+      ],
+      "documentsAttached": 2,
+      "submittedAt": 1762399626542,
+      "approvedAt": 1762399626542
+    },
+    {
+      "id": "7QKGSc6PR6NRVOfk9isQq",
+      "title": "hola 14 16",
+      "description": "hola mundo\n",
+      "eventId": "MAfnjuqHZqbsGhxLmoP_N",
+      "teamId": "23",
+      "isPublic": true,
+      "createdAt": 1762399626542,
+      "teamMembers": [
+        {
+          "name": "Kiko",
+          "photoUrl": "https://randomuser.me/api/portraits/men/8.jpg"
+        }
+      ],
+      "documentsAttached": 0,
+      "submittedAt": 1762314208470,
+      "approvedAt": 1762399626542
+    }
+  ],
+  "course": [
+    {
+      "id": "-JB8WCwaGE7he8uG0IOY1",
+      "code": "123121",
+      "description": "123123123",
+      "status": "inactive",
+      "createdAt": 1762403558267
+    }
+  ],
+  "courseEvent": [
+    {
+      "id": "cBCbUaNRNmyoUh8QeqbFJ",
+      "courseId": "-JB8WCwaGE7he8uG0IOY1",
+      "eventId": "MAfnjuqHZqbsGhxLmoP_N",
+      "createdAt": 1762403595509
+    },
+    {
+      "id": "v9QWmi39QjzHIgUfSMlL4",
+      "courseId": "-JB8WCwaGE7he8uG0IOY1",
+      "eventId": "ZLXM-Kz9_Iq0FgNvb2Q-i",
+      "createdAt": 1762403595510
+    }
+  ],
+  "course_public": [
+    {
+      "id": "qZ8PjJm_Va0Jg7JH7g1m",
+      "code": "Introducción a la Inteligencia Artificial",
+      "description": "Fundamentos y aplicaciones básicas de IA",
+      "eventId": "MAfnjuqHZqbsGhxLmoP_N",
+      "createdAt": 1762190000001
+    },
+    {
+      "id": "Xf3lVw9Q_Pk2sTt8Nn4y",
+      "code": "Desarrollo Web Full Stack",
+      "description": "Frontend y backend con prácticas",
+      "eventId": "MAfnjuqHZqbsGhxLmoP_N",
+      "createdAt": 1762190000002
+    },
+    {
+      "id": "Bv7HcD1L_Rt5yUu3Mm2k",
+      "code": "Bases de Datos",
+      "description": "Modelado, SQL y optimización",
+      "eventId": "MAfnjuqHZqbsGhxLmoP_N",
+      "createdAt": 1762190000003
+    },
+    {
+      "id": "Np6QwEr2_Yu8Io9As3Df",
+      "code": "Visión por Computador",
+      "description": "Procesamiento y análisis de imágenes",
+      "eventId": "MAfnjuqHZqbsGhxLmoP_N",
+      "createdAt": 1762190000004
+    },
+        {
+      "id": "1",
+      "code": "ING-101",
+      "name": "Proyecto de Grado I",
+      "eventId": "B3xKm9QwRjNpVhYtLs2Dc",
+      "createdAt": 1762000000000
+    },
+    {
+      "id": "2",
+      "code": "ING-102",
+      "name": "Proyecto de Grado II",
+      "eventId": "B3xKm9QwRjNpVhYtLs2Dc",
+      "createdAt": 1762000000000
+    },
+    {
+      "id": "3",
+      "code": "SIS-301",
+      "name": "Ingeniería de Software",
+      "eventId": "B3xKm9QwRjNpVhYtLs2Dc",
+      "createdAt": 1762000000000
+    },
+    {
+      "id": "4",
+      "code": "IND-401",
+      "name": "Gestión de Proyectos",
+      "eventId": "B3xKm9QwRjNpVhYtLs2Dc",
+      "createdAt": 1762000000000
+    },
+    {
+      "id": "5",
+      "code": "ELE-201",
+      "name": "Sistemas Embebidos",
+      "eventId": "B3xKm9QwRjNpVhYtLs2Dc",
+      "createdAt": 1762000000000
+    },
+    {
+      "id": "6",
+      "code": "MEC-305",
+      "name": "Diseño Mecatrónico",
+      "eventId": "B3xKm9QwRjNpVhYtLs2Dc",
+      "createdAt": 1762000000000
+    },
+    {
+      "id": "7",
+      "code": "CIV-402",
+      "name": "Diseño de Estructuras",
+      "eventId": "B3xKm9QwRjNpVhYtLs2Dc",
+      "createdAt": 1762000000000
+    },
+    {
+      "id": "8",
+      "code": "ING-101",
+      "name": "Proyecto de Grado I",
+      "eventId": "MAfnjuqHZqbsGhxLmoP_N",
+      "createdAt": 1762000000000
+    },
+    {
+      "id": "9",
+      "code": "ING-102",
+      "name": "Proyecto de Grado II",
+      "eventId": "MAfnjuqHZqbsGhxLmoP_N",
+      "createdAt": 1762000000000
+    },
+    {
+      "id": "10",
+      "code": "SIS-301",
+      "name": "Ingeniería de Software",
+      "eventId": "MAfnjuqHZqbsGhxLmoP_N",
+      "createdAt": 1762000000000
+    },
+    {
+      "id": "11",
+      "code": "IND-401",
+      "name": "Gestión de Proyectos",
+      "eventId": "MAfnjuqHZqbsGhxLmoP_N",
+      "createdAt": 1762000000000
+    },
+    {
+      "id": "12",
+      "code": "HACK-101",
+      "name": "Desarrollo de Prototipos",
+      "eventId": "F7pWn2KdTxLmQs5RvGy8H",
+      "createdAt": 1762000000000
+    },
+    {
+      "id": "13",
+      "code": "HACK-102",
+      "name": "Innovación Tecnológica",
+      "eventId": "F7pWn2KdTxLmQs5RvGy8H",
+      "createdAt": 1762000000000
+    }
+  ],
+  "project_public": [
+    {
+      "id": "Lbri6LqDSxUybAACLv_dT",
+      "eventId": "MAfnjuqHZqbsGhxLmoP_N",
+      "courseId": "Xf3lVw9Q_Pk2sTt8Nn4y",
+      "name": "Arkad",
+      "description": "",
+      "eventNumber": "",
+      "state": "UNDER_REVIEW",
+      "logo": "https://storage.example.com/projects/logos/1762532588622.png",
+      "participants": [
+        {
+          "firstName": "Juan",
+          "lastName": "Povea",
+          "email": "a@a.com"
+        }
+      ],
+      "jurorAssignments": [
+        {
+          "memberUserId": "AEuqQbI8mh8aToNDV-2ZW"
+        }
+      ],
+      "documents": [
+        {
+          "type": "POSTER",
+          "url": "blob:http://localhost:3000/b2926fe4-8bc7-4f0e-ab34-96ef71859099"
+        },
+        {
+          "type": "SUPPORTING_DOCUMENT",
+          "url": "blob:http://localhost:3000/13956a45-19ed-46db-ba72-3e40a0208ece"
+        }
+      ],
+      "createdAt": 1762532590077
+    }
+  ],
+  "criterion_public": [
+    {
+      "id": "crit_001",
+      "eventId": "MAfnjuqHZqbsGhxLmoP_N",
+      "name": "Innovación y Creatividad",
+      "description": "Evaluación de la originalidad y propuesta innovadora del proyecto",
+      "weight": 1.5,
+      "criterionCourse": [
+        {
+          "courseId": "qZ8PjJm_Va0Jg7JH7g1m"
+        },
+        {
+          "courseId": "Xf3lVw9Q_Pk2sTt8Nn4y"
+        },
+        {
+          "courseId": "Np6QwEr2_Yu8Io9As3Df"
+        }
+      ],
+      "createdAt": 1762190000010
+    },
+    {
+      "id": "crit_002",
+      "eventId": "MAfnjuqHZqbsGhxLmoP_N",
+      "name": "Calidad Técnica",
+      "description": "Evaluación de la implementación técnica y arquitectura del proyecto",
+      "weight": 2,
+      "criterionCourse": [
+        {
+          "courseId": "qZ8PjJm_Va0Jg7JH7g1m"
+        },
+        {
+          "courseId": "Xf3lVw9Q_Pk2sTt8Nn4y"
+        },
+        {
+          "courseId": "Bv7HcD1L_Rt5yUu3Mm2k"
+        }
+      ],
+      "createdAt": 1762190000011
+    },
+    {
+      "id": "crit_003",
+      "eventId": "MAfnjuqHZqbsGhxLmoP_N",
+      "name": "Presentación y Documentación",
+      "description": "Calidad de la presentación oral y documentación técnica",
+      "weight": 1,
+      "criterionCourse": [
+        {
+          "courseId": "qZ8PjJm_Va0Jg7JH7g1m"
+        },
+        {
+          "courseId": "Xf3lVw9Q_Pk2sTt8Nn4y"
+        },
+        {
+          "courseId": "Bv7HcD1L_Rt5yUu3Mm2k"
+        },
+        {
+          "courseId": "Np6QwEr2_Yu8Io9As3Df"
+        }
+      ],
+      "createdAt": 1762190000012
+    },
+    {
+      "id": "crit_004",
+      "eventId": "MAfnjuqHZqbsGhxLmoP_N",
+      "name": "Trabajo en Equipo",
+      "description": "Coordinación y distribución de tareas entre los miembros",
+      "weight": 0.5,
+      "criterionCourse": [
+        {
+          "courseId": "qZ8PjJm_Va0Jg7JH7g1m"
+        },
+        {
+          "courseId": "Xf3lVw9Q_Pk2sTt8Nn4y"
+        },
+        {
+          "courseId": "Bv7HcD1L_Rt5yUu3Mm2k"
+        },
+        {
+          "courseId": "Np6QwEr2_Yu8Io9As3Df"
+        }
+      ],
+      "createdAt": 1762190000013
+    },
+    {
+      "id": "crit_005",
+      "eventId": "MAfnjuqHZqbsGhxLmoP_N",
+      "name": "Modelado de Datos",
+      "description": "Calidad del diseño del modelo de datos y normalización",
+      "weight": 1.5,
+      "criterionCourse": [
+        {
+          "courseId": "Bv7HcD1L_Rt5yUu3Mm2k"
+        }
+      ],
+      "createdAt": 1762190000014
+    },
+    {
+      "id": "crit_006",
+      "eventId": "MAfnjuqHZqbsGhxLmoP_N",
+      "name": "Precisión del Modelo",
+      "description": "Exactitud y rendimiento de los algoritmos",
+      "weight": 1.5,
+      "criterionCourse": [
+        {
+          "courseId": "qZ8PjJm_Va0Jg7JH7g1m"
+        },
+        {
+          "courseId": "Np6QwEr2_Yu8Io9As3Df"
+        }
+      ],
+      "createdAt": 1762190000015
+    },
+    {
+      "id": "crit_008",
+      "eventId": "MAfnjuqHZqbsGhxLmoP_N",
+      "name": "Optimización",
+      "description": "Eficiencia en el uso de recursos computacionales",
+      "weight": 0.5,
+      "criterionCourse": [
+        {
+          "courseId": "Bv7HcD1L_Rt5yUu3Mm2k"
+        },
+        {
+          "courseId": "Np6QwEr2_Yu8Io9As3Df"
+        }
+      ],
+      "createdAt": 1762190000017
+    }
+  ],
+  "evaluation": [
+    {
+      "id": "7ahb81gvC2npcIwM13H_s",
+      "projectId": "Lbri6LqDSxUybAACLv_dT",
+      "memberUserId": "AEuqQbI8mh8aToNDV-2ZW",
+      "grade": 19,
+      "comments": "El mejor trabajo que he visto",
+      "scores": [
+        {
+          "criterion": "Innovación y Creatividad",
+          "score": 5
+        },
+        {
+          "criterion": "Calidad Técnica",
+          "score": 5
+        },
+        {
+          "criterion": "Presentación y Documentación",
+          "score": 5
+        },
+        {
+          "criterion": "Trabajo en Equipo",
+          "score": 4
+        }
+      ],
+      "createdAt": 1762566644682
+    },
+    {
+      "id": "hXKi_tGDfebDy6EyqM8HH",
+      "projectId": "Lbri6LqDSxUybAACLv_dT",
+      "memberUserId": "AEuqQbI8mh8aToNDV-2ZW",
+      "grade": 11.8,
+      "comments": "Meh",
+      "scores": [
+        {
+          "criterion": "Innovación y Creatividad",
+          "score": 3
+        },
+        {
+          "criterion": "Calidad Técnica",
+          "score": 3
+        },
+        {
+          "criterion": "Presentación y Documentación",
+          "score": 3
+        },
+        {
+          "criterion": "Trabajo en Equipo",
+          "score": 2.8
+        }
+      ],
+      "createdAt": 1762567675384
+    },
+    {
+      "id": "JTd60gRbCOGPT0OJ-7r6D",
+      "projectId": "Lbri6LqDSxUybAACLv_dT",
+      "memberUserId": "AEuqQbI8mh8aToNDV-2ZW",
+      "grade": 16,
+      "comments": "Bueno",
+      "scores": [
+        {
+          "criterion": "Innovación y Creatividad",
+          "score": 4
+        },
+        {
+          "criterion": "Calidad Técnica",
+          "score": 4
+        },
+        {
+          "criterion": "Presentación y Documentación",
+          "score": 4
+        },
+        {
+          "criterion": "Trabajo en Equipo",
+          "score": 4
+        }
+      ],
+      "createdAt": 1762567878776
+    },
+    {
+      "id": "kcIoEJgIjViaZvFuHIAbh",
+      "projectId": "Lbri6LqDSxUybAACLv_dT",
+      "memberUserId": "AEuqQbI8mh8aToNDV-2ZW",
+      "grade": 0,
+      "comments": "",
+      "scores": [
+        {
+          "criterion": "crit_001",
+          "score": 0
+        },
+        {
+          "criterion": "crit_002",
+          "score": 0
+        },
+        {
+          "criterion": "crit_003",
+          "score": 0
+        },
+        {
+          "criterion": "crit_004",
+          "score": 0
+        }
+      ],
+      "createdAt": 1762652062510
+    }
+  ],
+  "evaluationDetail": [
+    {
+      "id": "rkEF0lwT0XOzwdgFiuiRC",
+      "evaluationId": "7ahb81gvC2npcIwM13H_s",
+      "criterion": "Innovación y Creatividad",
+      "score": 5
+    },
+    {
+      "id": "6kzduSsn-X_DpngSUu_sD",
+      "evaluationId": "7ahb81gvC2npcIwM13H_s",
+      "criterion": "Calidad Técnica",
+      "score": 5
+    },
+    {
+      "id": "szFWQ8D8I3sd6knAIeKB2",
+      "evaluationId": "7ahb81gvC2npcIwM13H_s",
+      "criterion": "Presentación y Documentación",
+      "score": 5
+    },
+    {
+      "id": "0hdtd8O5WxesJ4Z-HKopm",
+      "evaluationId": "7ahb81gvC2npcIwM13H_s",
+      "criterion": "Trabajo en Equipo",
+      "score": 4
+    },
+    {
+      "id": "4q4y5vk2rBzqDiEcuyNKk",
+      "evaluationId": "hXKi_tGDfebDy6EyqM8HH",
+      "criterion": "Innovación y Creatividad",
+      "score": 3
+    },
+    {
+      "id": "JAe6i_x9x1c693d1ZBFNK",
+      "evaluationId": "hXKi_tGDfebDy6EyqM8HH",
+      "criterion": "Calidad Técnica",
+      "score": 3
+    },
+    {
+      "id": "smX-Mpdw68XsxiprRdBkY",
+      "evaluationId": "hXKi_tGDfebDy6EyqM8HH",
+      "criterion": "Presentación y Documentación",
+      "score": 3
+    },
+    {
+      "id": "EV0Rv-AnUS3TbUDQfgTCe",
+      "evaluationId": "hXKi_tGDfebDy6EyqM8HH",
+      "criterion": "Trabajo en Equipo",
+      "score": 2.8
+    },
+    {
+      "id": "drmCbN_GFTsJ73sqdUrA7",
+      "evaluationId": "JTd60gRbCOGPT0OJ-7r6D",
+      "criterion": "Innovación y Creatividad",
+      "score": 4
+    },
+    {
+      "id": "DSm_gIFEm5NlGd4mIGDEu",
+      "evaluationId": "JTd60gRbCOGPT0OJ-7r6D",
+      "criterion": "Calidad Técnica",
+      "score": 4
+    },
+    {
+      "id": "IFOefxGZ1XSXuW58WnkNk",
+      "evaluationId": "JTd60gRbCOGPT0OJ-7r6D",
+      "criterion": "Presentación y Documentación",
+      "score": 4
+    },
+    {
+      "id": "ZHm5HG-8CDNSiaUKsy03z",
+      "evaluationId": "JTd60gRbCOGPT0OJ-7r6D",
+      "criterion": "Trabajo en Equipo",
+      "score": 4
+    },
+    {
+      "id": "t03l75vMlzY0wCsvunCrz",
+      "evaluationId": "kcIoEJgIjViaZvFuHIAbh",
+      "criterion": "crit_001",
+      "score": 0
+    },
+    {
+      "id": "RW6HKN4P4cZ1uGr-WZ_h5",
+      "evaluationId": "kcIoEJgIjViaZvFuHIAbh",
+      "criterion": "crit_002",
+      "score": 0
+    },
+    {
+      "id": "YX1EiJZagVGU3ZV99RP5g",
+      "evaluationId": "kcIoEJgIjViaZvFuHIAbh",
+      "criterion": "crit_003",
+      "score": 0
+    },
+    {
+      "id": "zW7v8bwRjG4yYco-hBj9F",
+      "evaluationId": "kcIoEJgIjViaZvFuHIAbh",
+      "criterion": "crit_004",
+      "score": 0
+    }
+  ]
+}
