@@ -10,6 +10,8 @@ import {
   type LucideIcon,
   Presentation,
   ShieldCheck,
+  ArrowDownAZ,
+  SquareChartGantt
 } from "lucide-react";
 
 import { NavUser } from "./nav-user";
@@ -51,11 +53,16 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           {
             title: "Courses",
             url: paths.app.courses.getHref(),
-            icon: Presentation,
+            icon: ArrowDownAZ,
           },
           {
             title: "Projects",
             url: paths.app.projects.getHref(),
+            icon: SquareChartGantt,
+          },
+          {
+            title: "Criteria",
+            url: paths.app.criteria.getHref(),
             icon: Presentation,
           },
           { title: "Juries", url: paths.app.juries.getHref(), icon: UsersIcon },

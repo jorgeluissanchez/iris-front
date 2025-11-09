@@ -100,6 +100,13 @@ const models = {
     invitationStatus: String,
     createdAt: Date.now,
   },
+  evaluationCriteria: {
+    id: primaryKey(nanoid),
+    name: String,
+    description: String,
+    weight: Number,
+    createdAt: Date.now,
+  },
 };
 
 export const db = factory(models);

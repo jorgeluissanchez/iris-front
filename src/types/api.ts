@@ -119,3 +119,9 @@ export type Administrator = Entity<{
   email: string;
   invitationStatus: "pending" | "accepted" | "declined";
 }>;
+
+export type EvaluationCriteria = Entity<{
+  name: string;
+  description: string;
+  weight: number;
+}>;

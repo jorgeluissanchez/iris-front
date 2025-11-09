@@ -53,6 +53,9 @@ export const paths = {
     courses: {
       getHref: () => "/app/courses",
     },
+    criteria: {
+      getHref: () => "/app/criteria",
+    },
   },
   public: {
     discussion: {
