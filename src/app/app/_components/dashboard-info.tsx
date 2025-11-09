@@ -3,6 +3,7 @@
 import { useUser } from '@/lib/auth';
 import { AdminDashboard } from './admin-dashboard';
 import { StudentDashboard } from './student-dashboard';
+import { JuryDashboard } from './jury-dashboard';
 
 export const DashboardInfo = () => {
   const user = useUser();
@@ -11,7 +12,8 @@ export const DashboardInfo = () => {
     case 'ADMIN':
       return <AdminDashboard/>;
     case 'STUDENT':
-    default:
       return <StudentDashboard/>;
+    case 'JURY':
+      return <JuryDashboard/>;
   }
 };

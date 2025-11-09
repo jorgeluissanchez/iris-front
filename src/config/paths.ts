@@ -1,4 +1,5 @@
-import { getHash } from "next/dist/server/image-optimizer";
+// Route paths with optional role metadata for authorization-aware navigation
+// Roles are defined in src/types/api.ts as: "ADMIN" | "STUDENT" | "JURY"
 
 export const paths = {
   home: {
@@ -19,33 +20,51 @@ export const paths = {
   app: {
     root: {
       getHref: () => "/app",
+      roles: ["ADMIN", "JURY", "STUDENT"],
     },
     dashboard: {
       getHref: () => "/app",
+      roles: ["ADMIN", "JURY", "STUDENT"],
     },
     discussions: {
       getHref: () => "/app/discussions",
+      roles: ["ADMIN"],
     },
     discussion: {
       getHref: (id: string) => `/app/discussions/${id}`,
+      roles: ["ADMIN"],
     },
     users: {
       getHref: () => "/app/users",
+      roles: ["ADMIN"],
     },
     profile: {
       getHref: () => "/app/profile",
+      roles: ["ADMIN"],
     },
     events: {
       getHref: () => "/app/events",
+      roles: ["ADMIN"],
     },
     event: {
       getHref: (id: string) => `/app/events/${id}`,
+      roles: ["ADMIN"],
     },
     projects: {
       getHref: () => "/app/projects",
+      roles: ["ADMIN"],
     },
     courses: {
       getHref: () => "/app/courses",
+      roles: ["ADMIN"],
+    },
+    project_jury: {
+      getHref: (id: string) => `/app/events/${id}`,
+      roles: ["JURY"],
+    },
+    evaluations: {
+      getHref: (id: string) => `/app/evaluations/${id}`,
+      roles: ["JURY"],
     },
   },
   public: {

@@ -1,4 +1,5 @@
 import { factory, primaryKey } from "@mswjs/data";
+import { Weight } from "lucide-react";
 import { nanoid } from "nanoid";
 
 const models = {
@@ -56,17 +57,23 @@ const models = {
     eventNumber: String,
     state: String,
     logo: String,
+    participants: Array,
+    documents: Array,
+    jurorAssignments: Array,
     createdAt: Date.now,
   },
   projectDocument: {
     id: primaryKey(nanoid),
     projectId: String,
+    type: String,
     url: String,
     createdAt: Date.now,
   },
   projectParticipant: {
     id: primaryKey(nanoid),
-    userId: String,
+    firstName: String,
+    lastName: String,
+    email: String,
     projectId: String,
     studentCode: String,
   },
@@ -74,8 +81,6 @@ const models = {
     id: primaryKey(nanoid),
     projectId: String,
     memberUserId: String,
-    memberEventId: String,
-    memberRoleId: String,
     assignedAt: Date.now,
   },
   course_public: {
@@ -125,6 +130,19 @@ const models = {
     eventId: String,
     createdAt: Date.now,
   },
+  criterion_public: {
+    id: primaryKey(nanoid),
+    eventId: String,
+    name: String,
+    description: String,
+    weight: Number,
+    criterionCourse: Array,
+  },
+  criterionCourse: {
+    id: primaryKey(nanoid),
+    criterionId: String,
+    courseId: String,
+  }
 };
 
 export const db = factory(models);
