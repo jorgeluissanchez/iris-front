@@ -12,6 +12,7 @@ const PublicProjectPage = async ({ params }: { params: Promise<{ eventId: string
     
     const queryClient = new QueryClient();
     await queryClient.prefetchQuery(getCoursesDropdownQueryOptions(eventId));
+    await queryClient.prefetchQuery(getCoursesDropdownQueryOptions(eventId));
     const dehydratedState = dehydrate(queryClient);
 
     return (
