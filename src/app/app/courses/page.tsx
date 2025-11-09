@@ -6,6 +6,7 @@ import {
 
 import { Courses } from "./_components/courses";
 import { getCoursesQueryOptions } from "@/features/courses/api/get-courses";
+import { RoleGuard } from "@/components/auth/role-guard";
 
 export const metadata = {
   title: "Courses",
@@ -29,9 +30,11 @@ const CoursesPage = async ({
 
   const dehydratedState = dehydrate(queryClient);
   return (
-    <HydrationBoundary state={dehydratedState}>
-      <Courses />
-    </HydrationBoundary>
+    <RoleGuard roles={["ADMIN"]}>
+      <HydrationBoundary state={dehydratedState}>
+        <Courses />
+      </HydrationBoundary>
+    </RoleGuard>
   );
 };
 

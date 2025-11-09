@@ -2,14 +2,14 @@ import { useQuery, queryOptions } from "@tanstack/react-query";
 
 import { api } from "@/lib/api-client";
 import { QueryConfig } from "@/lib/react-query";
-import { EvaluationCriteria } from "@/types/api";
+import { Criterion } from "@/types/api";
 
 export const getCriterion = ({
   criterionId,
 }: {
   criterionId: string;
-}): Promise<{ data: EvaluationCriteria }> => {
-  return api.get(`/criteria/${criterionId}`);
+}): Promise<{ data: Criterion }> => {
+  return api.get(`/criterion/${criterionId}`);
 };
 
 export const getCriterionQueryOptions = (criterionId: string) => {

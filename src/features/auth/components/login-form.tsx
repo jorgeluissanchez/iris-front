@@ -53,10 +53,10 @@ export const LoginForm = ({ onSuccess }: LoginFormProps) => {
       <div className="mt-2 flex items-center justify-end">
         <div className="text-sm">
           <NextLink
-            href={paths.auth.register.getHref(redirectTo)}
+            href={paths.auth.forgot_password.getHref(redirectTo)}
             className="font-medium text-blue-600 hover:text-blue-500"
           >
-            Register
+            Forgot password?
           </NextLink>
         </div>
       </div>

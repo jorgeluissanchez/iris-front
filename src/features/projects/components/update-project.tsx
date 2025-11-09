@@ -96,7 +96,7 @@ export const UpdateProject = ({ projectId }: UpdateProjectProps) => {
                 <Input
                   label="Title"
                   name="title"
-                  defaultValue={project?.title ?? ""}
+                  defaultValue={project?.name ?? ""}
                   isRequired
                 />
                 <Textarea
@@ -110,18 +110,6 @@ export const UpdateProject = ({ projectId }: UpdateProjectProps) => {
                   name="eventId"
                   defaultValue={project?.eventId ?? ""}
                 />
-                <Input
-                  label="Team ID"
-                  name="teamId"
-                  defaultValue={project?.teamId ?? ""}
-                />
-                <Switch
-                  name="isPublic"
-                  defaultSelected={project?.isPublic ?? true}
-                  className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2`}
-                >
-                  Public
-                </Switch>
               </ModalBody>
               <ModalFooter>
                 <Button

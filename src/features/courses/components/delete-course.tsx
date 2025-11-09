@@ -28,7 +28,6 @@ export const DeleteCourse = ({ id }: DeleteCourseProps) => {
   const { addNotification } = useNotifications();
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
   const deleteCourseMutation = useDeleteCourse({
-    filterEventId: currentEventId,
     mutationConfig: {
       onSuccess: () => {
         addNotification({

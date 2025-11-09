@@ -33,7 +33,7 @@ type UpdateCourseProps = {
 export const UpdateCourse = ({ courseId }: UpdateCourseProps) => {
   const { addNotification } = useNotifications();
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
-  const [selectedEvents, setSelectedEvents] = useState<Set<string>>(new Set());
+  const [selectedEvent, setSelectedEvent] = useState<string>("");
   
   const courseQuery = useCourse({ courseId });
   const updateCourseMutation = useUpdateCourse({
@@ -54,11 +54,10 @@ export const UpdateCourse = ({ courseId }: UpdateCourseProps) => {
   const course = courseQuery.data?.data;
   const events = eventsQuery.data?.data || [];
 
-  // Initialize selected events when course data is loaded
+  // Initialize selected event when course data is loaded
   useEffect(() => {
-    if (course?.events && isOpen) {
-      const eventIds = course.events.map((e) => e.id);
-      setSelectedEvents(new Set(eventIds));
+    if (course?.eventId && isOpen) {
+      setSelectedEvent(course.eventId);
     }
   }, [course, isOpen]);
 
@@ -92,12 +91,10 @@ export const UpdateCourse = ({ courseId }: UpdateCourseProps) => {
 
                 const rawData = Object.fromEntries(formData);
                 
-                // Convert selected events to array
-                const eventIds = Array.from(selectedEvents);
-                
                 const data = {
                   ...rawData,
-                  eventIds,
+                  eventId: selectedEvent,
+                  active: rawData.active === "true",
                 };
 
                 const values = await updateCourseInputSchema.parseAsync(data);
@@ -113,11 +110,11 @@ export const UpdateCourse = ({ courseId }: UpdateCourseProps) => {
               <ModalBody className="space-y-4 w-full">
                 <Select
                   label="Event"
-                  placeholder="Select events"
-                  selectionMode="multiple"
-                  selectedKeys={selectedEvents}
+                  placeholder="Select an event"
+                  selectedKeys={selectedEvent ? [selectedEvent] : []}
                   onSelectionChange={(keys) => {
-                    setSelectedEvents(keys as Set<string>);
+                    const keysArray = Array.from(keys);
+                    setSelectedEvent(keysArray[0] as string || "");
                   }}
                   isLoading={eventsQuery.isLoading}
                 >
@@ -144,13 +141,13 @@ export const UpdateCourse = ({ courseId }: UpdateCourseProps) => {
 
                 <Select
                   label="Status"
-                  name="status"
-                  defaultSelectedKeys={[course?.status ?? "active"]}
+                  name="active"
+                  defaultSelectedKeys={[course?.active ? "true" : "false"]}
                 >
-                  <SelectItem key="active">
+                  <SelectItem key="true">
                     Active
                   </SelectItem>
-                  <SelectItem key="inactive">
+                  <SelectItem key="false">
                     Inactive
                   </SelectItem>
                 </Select>

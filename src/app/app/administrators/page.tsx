@@ -7,6 +7,7 @@ import {
 import { Administrators } from "./_components/Administrators";
 
 import { getAdministratorsQueryOptions } from "@/features/administrators/api/get-administrators";
+import { RoleGuard } from "@/components/auth/role-guard";
 
 export const metadata = {
   title: "Administrators",
@@ -31,9 +32,11 @@ const AdministratorsPage = async ({
   const dehydratedState = dehydrate(queryClient);
 
   return (
-    <HydrationBoundary state={dehydratedState}>
-      <Administrators />
-    </HydrationBoundary>
+    <RoleGuard roles={["ADMIN"]}>
+      <HydrationBoundary state={dehydratedState}>
+        <Administrators />
+      </HydrationBoundary>
+    </RoleGuard>
   );
 };
 

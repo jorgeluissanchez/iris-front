@@ -7,6 +7,7 @@ import {
 import { Juries } from "./_components/Juries";
 
 import { getJuriesQueryOptions } from "@/features/juries/api/get-juries";
+import { RoleGuard } from "@/components/auth/role-guard";
 
 export const metadata = {
   title: "Juries",
@@ -31,9 +32,11 @@ const JuriesPage = async ({
   const dehydratedState = dehydrate(queryClient);
 
   return (
-    <HydrationBoundary state={dehydratedState}>
-      <Juries />
-    </HydrationBoundary>
+    <RoleGuard roles={['ADMIN']}>
+      <HydrationBoundary state={dehydratedState}>
+        <Juries />
+      </HydrationBoundary>
+    </RoleGuard>
   );
 };
 

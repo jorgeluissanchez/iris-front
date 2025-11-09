@@ -28,7 +28,7 @@ import { Input } from "@/components/ui/input";
 export const CreateCourse = () => {
   const { addNotification } = useNotifications();
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
-  const [selectedEvents, setSelectedEvents] = useState<Set<string>>(new Set());
+  const [selectedEvent, setSelectedEvent] = useState<string>("");
 
   const createCourseMutation = useCreateCourse({
     mutationConfig: {
@@ -37,7 +37,7 @@ export const CreateCourse = () => {
           type: "success",
           title: "Course Created",
         });
-        setSelectedEvents(new Set());
+        setSelectedEvent("");
         onClose();
       },
     },
@@ -71,15 +71,23 @@ export const CreateCourse = () => {
 
                 const rawData = Object.fromEntries(formData);
                 
-                // Convert selected events to array
-                const eventIds = Array.from(selectedEvents);
+                // Validar que se haya seleccionado un evento
+                if (!selectedEvent) {
+                  addNotification({
+                    type: "error",
+                    title: "Event Required",
+                    message: "Please select an event",
+                  });
+                  return;
+                }
                 
                 const data = {
-                  ...rawData,
-                  eventIds,
-                  status: rawData.status || "active",
+                  code: rawData.code as string,
+                  description: rawData.description as string,
+                  eventId: selectedEvent,
+                  status: "active" as const,
                 };
-
+                
                 const values = await createCourseInputSchema.parseAsync(data);
                 await createCourseMutation.mutateAsync({ data: values });
               }}
@@ -94,10 +102,10 @@ export const CreateCourse = () => {
                 <Select
                   label="Event"
                   placeholder="Select an event"
-                  selectionMode="multiple"
-                  selectedKeys={selectedEvents}
+                  selectedKeys={selectedEvent ? [selectedEvent] : []}
                   onSelectionChange={(keys) => {
-                    setSelectedEvents(keys as Set<string>);
+                    const keysArray = Array.from(keys);
+                    setSelectedEvent(keysArray[0] as string || "");
                   }}
                   isRequired
                   isLoading={eventsQuery.isLoading}
@@ -134,7 +142,7 @@ export const CreateCourse = () => {
                 <Button
                   type="submit"
                   isLoading={createCourseMutation.isPending}
-                  disabled={createCourseMutation.isPending || selectedEvents.size === 0}
+                  disabled={createCourseMutation.isPending || !selectedEvent}
                 >
                   Create course
                 </Button>

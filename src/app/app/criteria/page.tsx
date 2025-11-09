@@ -6,6 +6,7 @@ import {
 
 import { Criteria } from "./_components/criteria";
 import { getCriteriaQueryOptions } from "@/features/cirteria/api/get-criteria";
+import { RoleGuard } from "@/components/auth/role-guard";
 
 export const metadata = {
   title: "Criteria",
@@ -28,9 +29,11 @@ const CriteriaPage = async ({
 
   const dehydratedState = dehydrate(queryClient);
   return (
-    <HydrationBoundary state={dehydratedState}>
-      <Criteria />
-    </HydrationBoundary>
+    <RoleGuard roles={["ADMIN"]}>
+      <HydrationBoundary state={dehydratedState}>
+        <Criteria />
+      </HydrationBoundary>
+    </RoleGuard>
   );
 };
 

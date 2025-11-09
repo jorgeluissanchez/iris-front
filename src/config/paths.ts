@@ -15,6 +15,13 @@ export const paths = {
       getHref: (redirectTo?: string | null | undefined) =>
         `/auth/login${redirectTo ? `?redirectTo=${encodeURIComponent(redirectTo)}` : ""}`,
     },
+    forgot_password: {
+      getHref: (redirectTo?: string | null | undefined) =>
+        `/auth/fg-password${redirectTo ? `?redirectTo=${encodeURIComponent(redirectTo)}` : ""}`,
+    },
+    change_password: {
+      getHref: (token: string) => `/auth/chg-password?token=${encodeURIComponent(token)}`,
+    },
   },
 
   app: {
@@ -81,7 +88,7 @@ export const paths = {
       getHref: (id: string) => `/public/discussions/${id}`,
     },
     project: {
-      getHref: (id: string) => `/public/projects/${id}`,
+      getHref: (accessCode: string) => `/public/projects/${accessCode}`,
     },
     event: {
       getHref: () => '/public/events',

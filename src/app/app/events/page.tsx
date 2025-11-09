@@ -7,6 +7,7 @@ import {
 import { getEventsQueryOptions } from '@/features/events/api/get-events';
 
 import { Events } from './_components/events';
+import { RoleGuard } from '@/components/auth/role-guard';
 
 export const metadata = {
   title: 'Events',
@@ -31,9 +32,11 @@ const EventsPage = async ({
   const dehydratedState = dehydrate(queryClient);
 
   return (
-    <HydrationBoundary state={dehydratedState}>
-      <Events />
-    </HydrationBoundary>
+    <RoleGuard roles={['ADMIN', 'JURY']}>
+      <HydrationBoundary state={dehydratedState}>
+        <Events />
+      </HydrationBoundary>
+    </RoleGuard>
   );
 };
 

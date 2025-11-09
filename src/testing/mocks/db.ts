@@ -64,18 +64,6 @@ const models = {
   },
   project: {
     id: primaryKey(nanoid),
-    title: String,
-    description: String,
-    eventId: String,
-    teamId: String,
-    teamMembers: Array,
-    isPublic: Boolean,
-    createdAt: Date.now,
-    submittedAt: Number,
-    approvedAt: Number,
-  },
-  project_public: {
-    id: primaryKey(nanoid),
     eventId: String,
     courseId: String,
     name: String,
@@ -90,25 +78,12 @@ const models = {
   },
   course: {
     id: primaryKey(nanoid),
-    code: String,
-    description: String,
-    status: String,
-    createdAt: Date.now,
-  },
-  course_public: {
-    id: primaryKey(nanoid),
     eventId: String,
     code: String,
     description: String,
     active: Boolean,
   },
-  courseEvent: {
-    id: primaryKey(nanoid),
-    courseId: String,
-    eventId: String,
-    createdAt: Date.now,
-  },
-  criterion_public: {
+  criterion: {
     id: primaryKey(nanoid),
     eventId: String,
     name: String,
@@ -127,13 +102,6 @@ const models = {
     id: primaryKey(nanoid),
     email: String,
     invitationStatus: String,
-    createdAt: Date.now,
-  },
-  evaluationCriteria: {
-    id: primaryKey(nanoid),
-    name: String,
-    description: String,
-    weight: Number,
     createdAt: Date.now,
   },
 };

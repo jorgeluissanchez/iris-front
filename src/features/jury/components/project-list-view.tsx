@@ -39,6 +39,7 @@ export function ProjectListView({ eventId }: ProjectListViewProps) {
             </div>
         )
     }
+    console.log(projects);
 
     return (
         <div className="space-y-4">
@@ -53,48 +54,57 @@ export function ProjectListView({ eventId }: ProjectListViewProps) {
                 </Button>
             </div>
             <div className="grid gap-6 sm:grid-cols-1 lg:grid-cols-2">
-            {projects.map((project) => (
-                <Card
-                    key={project.id}
-                    className="overflow-hidden border-border bg-card transition-colors hover:border-primary/50"
-                >
-                    <CardBody className="p-6">
-                        <div className="space-y-4">
-                            <div>
-                                <h3 className="text-lg font-semibold text-balance">{project.name}</h3>
-                                {project.description && (
-                                    <p className="mt-1 text-sm text-muted-foreground leading-relaxed">{project.description}</p>
-                                )}
-                            </div>
-
-                            <div className="flex items-center gap-4 w-full">
-                                <div className="flex items-center text-default-400 gap-2 min-w-[100px]">
-                                    <Users size={18} />
-                                    <span>Miembros:</span>
+                {projects.map((project) => (
+                    <Card
+                        key={project.id}
+                        className="w-full rounded-xl border border-default-200 hover:border-primary transition-colors duration-150"
+                    >
+                        <CardBody className="p-6">
+                            <div className="space-y-4">
+                                <div className="flex items-start justify-between gap-4">
+                                    <div className="flex-1">
+                                        <h3 className="text-lg font-semibold text-balance">{project.name}</h3>
+                                        {project.description && (
+                                            <p className="mt-1 text-sm text-muted-foreground leading-relaxed">{project.description}</p>
+                                        )}
+                                    </div>
+                                    {project.eventNumber && (
+                                        <div className="flex-shrink-0">
+                                            <span className="text-xs font-medium px-3 py-1 rounded-full bg-primary/10 text-primary">
+                                                #{project.eventNumber}
+                                            </span>
+                                        </div>
+                                    )}
                                 </div>
-                                <div className="flex-1">
-                                    <AvatarGroup 
-                                        members={project.participants.map(p => ({
-                                            ...p,
-                                            name: `${p.firstName} ${p.lastName}`
-                                        }))} 
-                                        size={28} 
-                                    />
+
+                                <div className="flex items-center gap-4 w-full">
+                                    <div className="flex items-center text-default-400 gap-2 min-w-[100px]">
+                                        <Users size={18} />
+                                        <span>Miembros:</span>
+                                    </div>
+                                    <div className="flex-1">
+                                        <AvatarGroup
+                                            members={project.participants.map(p => ({
+                                                ...p,
+                                                name: `${p.firstName} ${p.lastName}`
+                                            }))}
+                                            size={28}
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                                    <FileText className="h-4 w-4" />
+                                    <span>Documents: {project.documents?.length || 0} file(s) attached</span>
                                 </div>
                             </div>
-
-                            <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                                <FileText className="h-4 w-4" />
-                                <span>Documents: {project.documents?.length || 0} file(s) attached</span>
-                            </div>
-                        </div>
-                        <Button
-                            className="mt-6 w-full"
-                            onClick={() => router.push(paths.app.evaluations.getHref(project.id.toString()))}
-                        >Evaluate Project</Button>
-                    </CardBody>
-                </Card>
-            ))}
+                            <Button
+                                className="mt-6 w-full"
+                                onClick={() => router.push(paths.app.evaluations.getHref(project.id.toString()))}
+                            >Evaluate Project</Button>
+                        </CardBody>
+                    </Card>
+                ))}
             </div>
         </div>
     )
