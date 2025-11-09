@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     default: 'Iris',
     template: `%s - Iris`,
   },
-  description: 'Iris es un software Uninorte para la gestión y calificación de proyectos académicos de ingeniería, que optimiza la evaluación con innovación, transparencia y eficiencia.',
+  description: 'Iris',
   icons: {
     icon: "/favicon.ico",
   },
