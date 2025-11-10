@@ -57,7 +57,7 @@ export function ProjectListView({ eventId }: ProjectListViewProps) {
                 {projects.map((project) => (
                     <Card
                         key={project.id}
-                        className="w-full rounded-xl border border-default-200 hover:border-primary transition-colors duration-150"
+                        className="glass-card w-full rounded-xl border border-default-200 hover:border-primary transition-all duration-150 hover:scale-[1.01]"
                     >
                         <CardBody className="p-6">
                             <div className="space-y-4">
@@ -99,7 +99,8 @@ export function ProjectListView({ eventId }: ProjectListViewProps) {
                                 </div>
                             </div>
                             <Button
-                                className="mt-6 w-full"
+                                className="mt-6 w-full transition-transform hover:scale-[1.01]"
+                                color="primary"
                                 onClick={() => router.push(paths.app.evaluations.getHref(project.id.toString()))}
                             >Evaluate Project</Button>
                         </CardBody>

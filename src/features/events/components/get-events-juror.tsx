@@ -44,10 +44,10 @@ export const EventsList = ({ onEventPrefetch }: EventsListProps) => {
 
     return (
         <div className="space-y-4">
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            <div className="grid p-8 gap-6 md:grid-cols-2 lg:grid-cols-3">
                 {events.map((event) => (
-                    <Card shadow="sm" key={event.id}>
-                        <CardBody className="p-6 space-y-4">
+                    <Card shadow="sm" key={event.id} className="glass-card">
+                        <CardBody className="p-6 space-y-4 flex flex-col">
                             <div className="space-y-2">
                                 <h3 className="text-xl font-semibold">{event.title}</h3>
                                 <p className="text-sm text-default-500">{event.description}</p>
@@ -79,12 +79,16 @@ export const EventsList = ({ onEventPrefetch }: EventsListProps) => {
                                 </div>
                             </div>
 
-                            <Button
-                                id={event.id}
-                                onClick={() => router.push(paths.app.project_jury.getHref(event.id))}
-                            >
-                                View Projects
-                            </Button>
+                            <div className="mt-auto pt-2">
+                                <Button
+                                    id={event.id}
+                                    onClick={() => router.push(paths.app.project_jury.getHref(event.id))}
+                                    color="primary"
+                                    className="w-full transition-transform hover:scale-[1.01]"
+                                >
+                                    View Projects
+                                </Button>
+                            </div>
                         </CardBody>
                     </Card>
                 ))}

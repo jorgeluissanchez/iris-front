@@ -45,33 +45,34 @@ export const CoursesList = () => {
 
   return (
     <div className="space-y-4">
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-4 sm:gap-6 grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
         {courses.map((course) => (
-          <Card shadow="sm" key={course.id}>
-            <CardBody className="p-6 space-y-4">
+          <Card shadow="sm" key={course.id} className="glass-card">
+            <CardBody className="p-4 sm:p-6 space-y-3 sm:space-y-4">
               <div className="space-y-2">
-                <div className="flex items-start justify-between">
-                  <h3 className="text-xl font-semibold">{course.code}</h3>
+                <div className="flex items-start justify-between gap-2">
+                  <h3 className="text-base sm:text-xl font-semibold line-clamp-1">{course.code}</h3>
                   <Chip
                     size="sm"
                     color={course.active ? "success" : "default"}
                     variant="flat"
+                    className="flex-shrink-0"
                   >
                     {course.active ? "Active" : "Inactive"}
                   </Chip>
                 </div>
-                <p className="text-sm text-default-500">{course.description}</p>
+                <p className="text-xs sm:text-sm text-default-500 line-clamp-2">{course.description}</p>
               </div>
 
               <div className="space-y-2">
-                <div className="text-sm text-default-400">Event:</div>
+                <div className="text-xs sm:text-sm text-default-400">Event:</div>
                 <div className="flex flex-wrap gap-1">
                   {course.event ? (
-                    <Chip size="sm" variant="bordered">
-                      {course.event.title}
+                    <Chip size="sm" variant="bordered" className="max-w-full">
+                      <span className="truncate">{course.event.title}</span>
                     </Chip>
                   ) : (
-                    <span className="text-sm text-default-400">No event assigned</span>
+                    <span className="text-xs sm:text-sm text-default-400">No event assigned</span>
                   )}
                 </div>
               </div>

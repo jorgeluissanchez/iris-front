@@ -42,7 +42,7 @@ export const EventsList = () => {
     <div className="space-y-4">
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {events.map((event) => (
-          <Card shadow="sm" key={event.id}>
+          <Card shadow="sm" key={event.id} className="glass-card">
             <CardBody className="p-6 space-y-4">
               <div className="space-y-2">
                 <h3 className="text-xl font-semibold">{event.title}</h3>
@@ -69,7 +69,7 @@ export const EventsList = () => {
                 </div>
               </div>
 
-              <Card className="flex flex-row items-center justify-between p-2">
+              <Card className="flex flex-row items-center justify-between p-2 glass-card">
                 <div className="flex items-center gap-2">
                   <Users className="h-4 w-4 text-default-400" />
                   <span className="text-sm">

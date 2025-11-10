@@ -30,11 +30,12 @@ import {
 import { useUser } from "@/lib/auth";
 import { paths } from "@/config/paths";
 import { Link } from "@/components/ui/link";
+import '@/features/landing/index.css';
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const user = useUser();
 
-  const getMenuItems = (): {
+  const getMenuItems = React.useMemo((): {
     title: string;
     url: string;
     icon: LucideIcon;
@@ -82,11 +83,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           { title: "Dashboard", url: paths.app.root.getHref(), icon: Home },
         ];
     }
-  };
+  }, [user.data?.role]);
 
-  const menuItems = getMenuItems();
+  const menuItems = getMenuItems;
 
-  const data = {
+  const data = React.useMemo(() => ({
     user: {
       name: user.data?.firstName + " " + user.data?.lastName,
       email: user.data?.email ?? "",
@@ -96,11 +97,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       logo: GalleryVerticalEnd,
       url: "#",
     },
-  };
+  }), [user.data?.firstName, user.data?.lastName, user.data?.email]);
 
   return (
-    <Sidebar collapsible="icon" {...props}>
-      <SidebarHeader>
+    <Sidebar collapsible="icon" className="app-sidebar" {...props}>
+      <SidebarHeader suppressHydrationWarning>
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton
@@ -117,7 +118,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
-      <SidebarContent>
+      <SidebarContent suppressHydrationWarning>
         <SidebarGroup>
           <SidebarGroupLabel>Navigation</SidebarGroupLabel>
           <SidebarMenu>
@@ -134,7 +135,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           </SidebarMenu>
         </SidebarGroup>
       </SidebarContent>
-      <SidebarFooter>
+      <SidebarFooter suppressHydrationWarning>
         <NavUser user={data.user} />
       </SidebarFooter>
       <SidebarRail />

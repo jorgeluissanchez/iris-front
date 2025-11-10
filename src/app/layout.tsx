@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     default: 'Iris',
     template: `%s - Iris`,
   },
-  description: 'Iris',
+  description: 'Iris es un software Uninorte para la gestión y calificación de proyectos académicos de ingeniería, que optimiza la evaluación con innovación, transparencia y eficiencia.',
   icons: {
     icon: "/favicon.ico",
   },
@@ -45,7 +45,7 @@ const RootLayout = async ({ children }: { children: ReactNode }) => {
       <head />
       <body
         className={clsx(
-          "min-h-screen text-foreground bg-background font-sans antialiased",
+          "min-h-screen text-foreground font-sans antialiased",
           fontSans.variable,
         )}
       >

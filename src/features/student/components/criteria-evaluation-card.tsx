@@ -10,7 +10,7 @@ export function CriteriaEvaluationCard({ title, score, maxScore }: CriteriaEvalu
   const percentage = Math.round((score / maxScore) * 100)
 
   return (
-    <Card className="bg-card border-border p-6 text-card-foreground">
+    <Card className="bg-content1 border-border p-6 text-card-foreground glass-card">
       <div className="flex items-start justify-between mb-8">
         <h3 className="text-base font-medium">{title}</h3>
         <p className="text-2xl font-bold">

@@ -145,6 +145,7 @@ export const CreateProject = () => {
               <ModalFooter>
                 <Button
                   type="submit"
+                  color="primary"
                   isLoading={createProjectMutation.isPending}
                   disabled={createProjectMutation.isPending}
                 >

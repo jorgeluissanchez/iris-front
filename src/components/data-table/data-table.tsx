@@ -28,7 +28,7 @@ export function DataTable<Entry extends { id: string | number }>({
   columns,
 }: DataTableProps<Entry>) {
   return (
-      <Table>
+      <Table classNames={{ wrapper: "glass-card" }}>
         <TableHeader>
           {columns.map((column, index) => (
             <TableColumn

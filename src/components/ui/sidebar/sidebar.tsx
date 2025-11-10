@@ -140,7 +140,7 @@ function SidebarProvider({
             } as React.CSSProperties
           }
           className={cn(
-            "group/sidebar-wrapper has-data-[variant=inset]:bg-sidebar flex min-h-svh w-full",
+            "group/sidebar-wrapper has-data-[variant=inset]:bg-transparent flex min-h-svh w-full bg-transparent",
             className
           )}
           {...props}
@@ -165,13 +165,16 @@ function Sidebar({
   collapsible?: "offcanvas" | "icon" | "none";
 }) {
   const { isMobile, state, openMobile, setOpenMobile } = useSidebar();
+  
+  // Always call hooks at the top level (Rules of Hooks)
+  const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
 
   if (collapsible === "none") {
     return (
       <div
         data-slot="sidebar"
         className={cn(
-          "bg-sidebar text-sidebar-foreground flex h-full w-(--sidebar-width) flex-col",
+          "bg-black/40 backdrop-blur-xl border-r border-white/10 text-sidebar-foreground flex h-full w-(--sidebar-width) flex-col",
           className
         )}
         {...props}
@@ -182,22 +185,95 @@ function Sidebar({
   }
 
   if (isMobile) {
-    const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
+    
+    // Clone children and add onClick to close drawer on navigation
+    const childrenWithProps = React.Children.map(children, (child) => {
+      if (React.isValidElement(child)) {
+        return React.cloneElement(child as React.ReactElement<any>, {
+          onNavigate: onClose,
+        });
+      }
+      return child;
+    });
+    
     return (
       <>
-        <Button size="sm" onPress={() => onOpen()}>
-          Create Comment
+        <Button 
+          size="sm" 
+          variant="ghost"
+          onPress={() => onOpen()}
+          className="md:hidden fixed top-3 left-4 z-50 bg-black/40 backdrop-blur-md hover:bg-black/60"
+          aria-label="Open menu"
+        >
+          <PanelLeftIcon className="h-5 w-5" />
         </Button>
-        <Drawer isOpen={isOpen} onOpenChange={onOpenChange} backdrop="blur">
-          <DrawerContent>
+        <Drawer isOpen={isOpen} onOpenChange={onOpenChange} backdrop="blur" placement="left">
+          <DrawerContent 
+            className="app-sidebar mobile-sidebar !bg-transparent"
+            style={{
+              background: 'transparent',
+            }}
+          >
             {(onClose) => (
-              <>
-                <DrawerHeader>Sidebar</DrawerHeader>
-                <DrawerBody className="w-full">{children}</DrawerBody>
-                <DrawerFooter>
-                  <Button onPress={() => onClose()}>Cerrar</Button>
-                </DrawerFooter>
-              </>
+              <div 
+                className="h-full w-full flex flex-col"
+                style={{
+                  background: 'rgba(18, 18, 28, 0.3)',
+                  backdropFilter: 'blur(20px) saturate(180%)',
+                  WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+                  borderRight: '1px solid rgba(255, 255, 255, 0.1)',
+                  boxShadow: '2px 0 10px rgba(0, 0, 0, 0.3)',
+                }}
+              >
+                <DrawerHeader 
+                  className="border-b border-white/5"
+                  style={{ background: 'transparent' }}
+                >
+                  <div className="flex items-center justify-between w-full">
+                    <span className="text-lg font-semibold">Menu</span>
+                    <Button
+                      isIconOnly
+                      size="sm"
+                      variant="light"
+                      onPress={onClose}
+                      aria-label="Close menu"
+                      className="ml-auto"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="20"
+                        height="20"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                      </svg>
+                    </Button>
+                  </div>
+                </DrawerHeader>
+                <DrawerBody 
+                  className="w-full p-0 flex-1"
+                  style={{ background: 'transparent' }}
+                >
+                  <div 
+                    className="h-full w-full flex flex-col"
+                    onClick={(e) => {
+                      // Close drawer when clicking on navigation items
+                      const target = e.target as HTMLElement;
+                      if (target.closest('a')) {
+                        setTimeout(() => onClose(), 150);
+                      }
+                    }}
+                  >
+                    {children}
+                  </div>
+                </DrawerBody>
+              </div>
             )}
           </DrawerContent>
         </Drawer>
@@ -236,7 +312,7 @@ function Sidebar({
           // Adjust the padding for floating and inset variants.
           variant === "floating" || variant === "inset"
             ? "p-2 group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)+(--spacing(4))+2px)]"
-            : "group-data-[collapsible=icon]:w-(--sidebar-width-icon) group-data-[side=left]:border-r group-data-[side=right]:border-l",
+            : "group-data-[collapsible=icon]:w-(--sidebar-width-icon)",
           className
         )}
         {...props}
@@ -244,7 +320,7 @@ function Sidebar({
         <div
           data-sidebar="sidebar"
           data-slot="sidebar-inner"
-          className="bg-sidebar group-data-[variant=floating]:border-sidebar-border flex h-full w-full flex-col group-data-[variant=floating]:rounded-lg group-data-[variant=floating]:border group-data-[variant=floating]:shadow-sm"
+          className="bg-black/40 backdrop-blur-xl border-r border-white/10 flex h-full w-full flex-col group-data-[variant=floating]:rounded-lg group-data-[variant=floating]:border group-data-[variant=floating]:shadow-sm"
         >
           {children}
         </div>
@@ -308,7 +384,7 @@ function SidebarInset({ className, ...props }: React.ComponentProps<"main">) {
     <main
       data-slot="sidebar-inset"
       className={cn(
-        "bg-background relative flex w-full flex-1 flex-col",
+        "bg-transparent relative flex w-full flex-1 flex-col",
         "md:peer-data-[variant=inset]:m-2 md:peer-data-[variant=inset]:ml-0 md:peer-data-[variant=inset]:rounded-xl md:peer-data-[variant=inset]:shadow-sm md:peer-data-[variant=inset]:peer-data-[state=collapsed]:ml-2",
         className
       )}

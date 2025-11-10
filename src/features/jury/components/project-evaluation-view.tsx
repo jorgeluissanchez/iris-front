@@ -154,7 +154,7 @@ export function ProjectEvaluationView({ projectId }: ProjectEvaluationViewProps)
       </div>
       <div className="grid gap-6 lg:grid-cols-2">
         {/* Project Details Card */}
-        <Card className="border-border bg-card">
+        <Card className="glass-card border-border bg-card">
           <CardBody className="p-6">
             <div className="space-y-6">
               <div>
@@ -183,18 +183,10 @@ export function ProjectEvaluationView({ projectId }: ProjectEvaluationViewProps)
                   <FileText className="h-4 w-4 text-muted-foreground" />
                   <span className="font-medium">Project poster</span>
                 </div>
-                <div className="grid gap-3 sm:grid-cols-2">
-                  <div className="aspect-[3/4] overflow-hidden rounded-lg bg-muted flex items-center justify-center">
-                    <div className="text-center px-4">
-                      <FileText className="h-8 w-8 mx-auto mb-2 text-muted-foreground" />
-                      <p className="text-xs text-muted-foreground">Poster 1</p>
-                    </div>
-                  </div>
-                  <div className="aspect-[3/4] overflow-hidden rounded-lg bg-muted flex items-center justify-center">
-                    <div className="text-center px-4">
-                      <FileText className="h-8 w-8 mx-auto mb-2 text-muted-foreground" />
-                      <p className="text-xs text-muted-foreground">Poster 2</p>
-                    </div>
+                <div className="aspect-[3/4] overflow-hidden rounded-lg bg-muted flex items-center justify-center">
+                  <div className="text-center px-4">
+                    <FileText className="h-8 w-8 mx-auto mb-2 text-muted-foreground" />
+                    <p className="text-xs text-muted-foreground">Poster 1</p>
                   </div>
                 </div>
               </div>
@@ -204,7 +196,7 @@ export function ProjectEvaluationView({ projectId }: ProjectEvaluationViewProps)
                   <FileText className="h-4 w-4 text-muted-foreground" />
                   <span className="font-medium">Project poster</span>
                 </div>
-                <Button className="w-full justify-between bg-transparent" size="sm">
+                <Button className="w-full justify-between bg-transparent transition-transform hover:scale-[1.01]" size="sm">
                   <div className="flex items-center gap-2">
                     <FileText className="h-4 w-4" />
                     <span>Document 1</span>
@@ -217,7 +209,7 @@ export function ProjectEvaluationView({ projectId }: ProjectEvaluationViewProps)
         </Card>
 
         {/* Evaluation Form Card */}
-        <Card className="border-border bg-card">
+        <Card className="glass-card border-border bg-card">
           <CardHeader>
             <p className="text-lg font-semibold">Project Evaluation</p>
             <p className="text-sm text-muted-foreground">Rate the project based on the criteria below</p>
@@ -273,7 +265,8 @@ export function ProjectEvaluationView({ projectId }: ProjectEvaluationViewProps)
 
             {/* Submit Button */}
             <Button
-              className="w-full"
+              className="w-full transition-transform hover:scale-[1.01]"
+              color="primary"
               size="lg"
               onClick={handleSubmit}
               disabled={createEvaluationMutation.isPending}

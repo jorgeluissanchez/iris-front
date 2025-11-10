@@ -70,10 +70,12 @@ export const ProjectList = () => {
   };
 
   return (
-    <div className="space-y-8 px-4">
+    <div className="space-y-4 sm:space-y-6 md:space-y-8">
       {/* State Filter */}
       <div className="flex flex-wrap items-center gap-2">
-        <span className="text-sm font-medium text-muted-foreground">Filtrar por estado:</span>
+        <span className="text-xs sm:text-sm font-medium text-muted-foreground w-full sm:w-auto">
+          Filtrar por estado:
+        </span>
         <Button
           size="sm"
           variant={stateFilter ? "ghost" : "solid"}
@@ -103,24 +105,24 @@ export const ProjectList = () => {
           Rechazados
         </Button>
       </div>
-      <div className="grid gap-8 grid-cols-1 md:grid-cols-2">
+      <div className="grid gap-4 sm:gap-6 md:gap-8 grid-cols-1 lg:grid-cols-2">
         {projects.map((project) => (
           <Card
             key={project.id}
-            className="w-full rounded-xl border border-default-200 hover:border-primary transition-colors duration-150"
+            className="glass-card w-full rounded-xl border border-default-200 hover:border-primary transition-colors duration-150"
           >
-            <CardBody className="p-6">
-              <div className="space-y-4">
+            <CardBody className="p-4 sm:p-6">
+              <div className="space-y-3 sm:space-y-4">
                 <div>
-                  <h3 className="text-lg font-semibold text-balance">{project.name}</h3>
+                  <h3 className="text-base sm:text-lg font-semibold text-balance">{project.name}</h3>
                   {project.description && (
-                    <p className="mt-1 text-sm text-muted-foreground leading-relaxed">{project.description}</p>
+                    <p className="mt-1 text-xs sm:text-sm text-muted-foreground leading-relaxed line-clamp-2">{project.description}</p>
                   )}
                 </div>
 
-                <div className="flex items-center gap-4 w-full">
-                  <div className="flex items-center text-default-400 gap-2 min-w-[100px]">
-                    <Users size={18} />
+                <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 w-full">
+                  <div className="flex items-center text-default-400 gap-2 text-sm sm:text-base">
+                    <Users size={16} className="sm:w-[18px] sm:h-[18px]" />
                     <span>Miembros:</span>
                   </div>
                   <div className="flex-1">
@@ -134,8 +136,8 @@ export const ProjectList = () => {
                   </div>
                 </div>
 
-                <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <FileText className="h-4 w-4" />
+                <div className="flex items-center gap-2 text-xs sm:text-sm text-muted-foreground">
+                  <FileText className="h-3 w-3 sm:h-4 sm:w-4" />
                   <span>Documents: {project.documents?.length || 0} file(s) attached</span>
                 </div>
               </div>
@@ -146,7 +148,7 @@ export const ProjectList = () => {
                     <Button
                       size="sm"
                       color="success"
-                      className="w-full"
+                      className="w-full text-xs sm:text-sm"
                       isDisabled={updateProjectMutation.isPending}
                       onPress={() => handleApprove(project.id)}
                     >
@@ -155,7 +157,7 @@ export const ProjectList = () => {
                     <Button
                       size="sm"
                       color="danger"
-                      className="w-full"
+                      className="w-full text-xs sm:text-sm"
                       isDisabled={updateProjectMutation.isPending}
                       onPress={() => handleReject(project.id)}
                     >
