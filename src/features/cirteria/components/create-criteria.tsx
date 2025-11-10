@@ -176,13 +176,14 @@ export const CreateCriteria = () => {
               <ModalFooter>
                 <Button
                   color="danger"
-                  variant="light"
+                  variant="flat"
                   onPress={onClose}
                 >
                   Cancel
                 </Button>
                 <Button
                   type="submit"
+                  color="primary"
                   isLoading={createCriteriaMutation.isPending}
                   disabled={createCriteriaMutation.isPending || !selectedEvent}
                 >

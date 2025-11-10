@@ -46,7 +46,7 @@ export function NavUser({
               size="lg"
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
-              <button className="flex items-center gap-2 w-full">
+              <button className="flex items-center gap-2 w-full cursor-pointer">
                 <Avatar
                   size="sm"
                   name={user.name}

@@ -74,8 +74,16 @@ export const CreateEvent = () => {
                 Create Event
               </ModalHeader>
               <ModalBody className="space-y-4 w-full">
-                <Input label="Title" name="title" />
-                <Textarea label="Description" name="description" />
+                <Input 
+                  label="Title" 
+                  name="title" 
+                  placeholder="Enter event title"
+                />
+                <Textarea 
+                  label="Description" 
+                  name="description" 
+                  placeholder="Enter event description"
+                />
                 <DatePicker label="Start Date" name="startDate" isRequired />
                 <DatePicker label="End Date" name="endDate" isRequired />
                 <DatePicker
@@ -102,6 +110,7 @@ export const CreateEvent = () => {
               <ModalFooter>
                 <Button
                   type="submit"
+                  color="primary"
                   isLoading={createEventMutation.isPending}
                   disabled={createEventMutation.isPending}
                 >

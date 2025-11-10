@@ -240,6 +240,383 @@
   box-shadow: 0 4px 20px oklch(0.75 0.15 195 / 0.3), 0 0 30px oklch(0.75 0.15 195 / 0.15) !important;
 }
 
+/* ========================================= */
+/* Dashboard Glass Card Styles */
+/* ========================================= */
+
+.dashboard-page .glass-card {
+  background: rgba(18, 18, 28, 0.4) !important;
+  backdrop-filter: blur(20px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  transition: all 0.3s ease !important;
+}
+
+.dashboard-page .glass-card:hover {
+  background: rgba(18, 18, 28, 0.5) !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+  box-shadow: 
+    0 8px 32px 0 rgba(0, 0, 0, 0.37),
+    0 0 20px oklch(0.75 0.15 195 / 0.2),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.1) !important;
+  transform: translateY(-2px) !important;
+}
+
+/* ========================================= */
+/* Modal Glass Styles */
+/* ========================================= */
+
+/* Modal with enhanced glass effect for better contrast */
+.glass-card[role="dialog"],
+[role="dialog"] .glass-card {
+  background: rgba(18, 18, 28, 0.85) !important;
+  backdrop-filter: blur(40px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(40px) saturate(180%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  box-shadow: 
+    0 8px 32px 0 rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Glass inputs, textareas, and selects - ONLY in modals */
+[role="dialog"] .glass-card input:not([type="checkbox"]):not([type="radio"]),
+.glass-card[role="dialog"] input:not([type="checkbox"]):not([type="radio"]),
+[role="dialog"] .glass-card textarea,
+.glass-card[role="dialog"] textarea,
+[role="dialog"] .glass-card select,
+.glass-card[role="dialog"] select,
+[role="dialog"] .glass-card [data-slot="input-wrapper"],
+.glass-card[role="dialog"] [data-slot="input-wrapper"] {
+  background: rgba(255, 255, 255, 0.05) !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  color: rgba(255, 255, 255, 0.9) !important;
+  transition: all 0.3s ease !important;
+}
+
+/* FORCE remove ALL backgrounds and borders from ALL inner elements - ONLY in modals */
+[role="dialog"] .glass-card [data-slot="input-wrapper"] *,
+.glass-card[role="dialog"] [data-slot="input-wrapper"] *,
+[role="dialog"] .glass-card [data-slot="input-wrapper"] *::before,
+.glass-card[role="dialog"] [data-slot="input-wrapper"] *::before,
+[role="dialog"] .glass-card [data-slot="input-wrapper"] *::after,
+.glass-card[role="dialog"] [data-slot="input-wrapper"] *::after {
+  background: transparent !important;
+  background-color: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Re-apply border only to the main wrapper - ONLY in modals */
+[role="dialog"] .glass-card [data-slot="input-wrapper"],
+.glass-card[role="dialog"] [data-slot="input-wrapper"] {
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Ensure text color for inner elements - ONLY in modals */
+[role="dialog"] .glass-card [data-slot="input-wrapper"] input,
+.glass-card[role="dialog"] [data-slot="input-wrapper"] input,
+[role="dialog"] .glass-card [data-slot="input-wrapper"] textarea,
+.glass-card[role="dialog"] [data-slot="input-wrapper"] textarea,
+[role="dialog"] .glass-card [data-slot="input-wrapper"] label,
+.glass-card[role="dialog"] [data-slot="input-wrapper"] label {
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+[role="dialog"] .glass-card input:not([type="checkbox"]):not([type="radio"]):hover,
+.glass-card[role="dialog"] input:not([type="checkbox"]):not([type="radio"]):hover,
+[role="dialog"] .glass-card textarea:hover,
+.glass-card[role="dialog"] textarea:hover,
+[role="dialog"] .glass-card select:hover,
+.glass-card[role="dialog"] select:hover,
+[role="dialog"] .glass-card [data-slot="input-wrapper"]:hover,
+.glass-card[role="dialog"] [data-slot="input-wrapper"]:hover {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+[role="dialog"] .glass-card input:not([type="checkbox"]):not([type="radio"]):focus,
+.glass-card[role="dialog"] input:not([type="checkbox"]):not([type="radio"]):focus,
+[role="dialog"] .glass-card textarea:focus,
+.glass-card[role="dialog"] textarea:focus,
+[role="dialog"] .glass-card select:focus,
+.glass-card[role="dialog"] select:focus,
+[role="dialog"] .glass-card [data-slot="input-wrapper"]:focus-within,
+.glass-card[role="dialog"] [data-slot="input-wrapper"]:focus-within {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border-color: oklch(0.75 0.15 195 / 0.5) !important;
+  box-shadow: 0 0 0 3px oklch(0.75 0.15 195 / 0.1) !important;
+  outline: none !important;
+}
+
+/* Labels with better contrast - ONLY in modals */
+[role="dialog"] .glass-card label,
+.glass-card[role="dialog"] label {
+  color: rgba(255, 255, 255, 0.9) !important;
+  font-weight: 500 !important;
+}
+
+/* Glass buttons inside modals with glass-card */
+[role="dialog"].glass-card button:not([data-slot="close-button"]):not([color="danger"]),
+.glass-card[role="dialog"] button:not([data-slot="close-button"]):not([color="danger"]) {
+  background: rgba(255, 255, 255, 0.1) !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  color: rgba(255, 255, 255, 0.9) !important;
+  transition: all 0.3s ease !important;
+}
+
+[role="dialog"].glass-card button:not([data-slot="close-button"]):not([color="danger"]):hover,
+.glass-card[role="dialog"] button:not([data-slot="close-button"]):not([color="danger"]):hover {
+  background: rgba(255, 255, 255, 0.15) !important;
+  border-color: rgba(255, 255, 255, 0.3) !important;
+  box-shadow: 
+    0 4px 16px 0 rgba(0, 0, 0, 0.3),
+    0 0 10px oklch(0.75 0.15 195 / 0.3) !important;
+  transform: translateY(-1px) !important;
+}
+
+[role="dialog"].glass-card button:not([data-slot="close-button"]):not([color="danger"]):active,
+.glass-card[role="dialog"] button:not([data-slot="close-button"]):not([color="danger"]):active {
+  transform: translateY(0) !important;
+}
+
+/* Primary button variant with cyan glow - only in glass modals */
+[role="dialog"].glass-card button[type="submit"]:not([color="danger"]),
+.glass-card[role="dialog"] button[type="submit"]:not([color="danger"]),
+[role="dialog"].glass-card button[data-variant="solid"]:not([color="danger"]),
+.glass-card[role="dialog"] button[data-variant="solid"]:not([color="danger"]) {
+  background: oklch(0.75 0.15 195 / 0.2) !important;
+  border-color: oklch(0.75 0.15 195 / 0.5) !important;
+  color: oklch(0.75 0.15 195) !important;
+  font-weight: 600 !important;
+}
+
+[role="dialog"].glass-card button[type="submit"]:not([color="danger"]):hover,
+.glass-card[role="dialog"] button[type="submit"]:not([color="danger"]):hover,
+[role="dialog"].glass-card button[data-variant="solid"]:not([color="danger"]):hover,
+.glass-card[role="dialog"] button[data-variant="solid"]:not([color="danger"]):hover {
+  background: oklch(0.75 0.15 195 / 0.3) !important;
+  border-color: oklch(0.75 0.15 195 / 0.8) !important;
+  box-shadow: 
+    0 4px 16px 0 rgba(0, 0, 0, 0.3),
+    0 0 20px oklch(0.75 0.15 195 / 0.5) !important;
+}
+
+/* Labels with better contrast */
+.glass-card label {
+  color: rgba(255, 255, 255, 0.9) !important;
+  font-weight: 500 !important;
+}
+
+/* ========================================= */
+/* App Sidebar Glass Styles */
+/* ========================================= */
+
+/* Sidebar glass effect - override component styles */
+.app-sidebar [data-slot="sidebar-inner"] {
+  background: rgba(18, 18, 28, 0.4) !important;
+  backdrop-filter: blur(20px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+  border-right: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Navigation links - default state (unselected) */
+.app-sidebar [data-slot="sidebar-menu-button"] {
+  color: rgba(255, 255, 255, 0.6) !important;
+  transition: all 0.3s ease !important;
+}
+
+.app-sidebar [data-slot="sidebar-menu-button"]:hover {
+  color: rgba(255, 255, 255, 0.9) !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+}
+
+/* Navigation links - selected/active state */
+.app-sidebar [data-slot="sidebar-menu-button"][data-active="true"],
+.app-sidebar [data-slot="sidebar-menu-button"][aria-current="page"],
+.app-sidebar [data-slot="sidebar-menu-button"] a[data-active="true"],
+.app-sidebar [data-slot="sidebar-menu-button"] a[aria-current="page"] {
+  color: rgba(255, 255, 255, 1) !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+  font-weight: 600 !important;
+  box-shadow: 
+    0 0 10px oklch(0.75 0.15 195 / 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Apply active styles to parent button when link is active */
+.app-sidebar [data-slot="sidebar-menu-button"]:has(a[data-active="true"]),
+.app-sidebar [data-slot="sidebar-menu-button"]:has(a[aria-current="page"]) {
+  color: rgba(255, 255, 255, 1) !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+  font-weight: 600 !important;
+  box-shadow: 
+    0 0 10px oklch(0.75 0.15 195 / 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Sidebar header and footer */
+.app-sidebar [data-slot="sidebar-header"],
+.app-sidebar [data-slot="sidebar-footer"] {
+  border-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+/* Sidebar group label */
+.app-sidebar [data-slot="sidebar-group-label"] {
+  color: rgba(255, 255, 255, 0.5) !important;
+  font-size: 0.75rem !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+}
+
+/* Icons color */
+.app-sidebar [data-slot="sidebar-menu-button"] svg {
+  color: inherit !important;
+}
+
+/* ========================================= */
+/* Mobile Sidebar Glass Styles */
+/* ========================================= */
+
+/* Override HeroUI Drawer default styles - MAXIMUM SPECIFICITY */
+.app-sidebar.mobile-sidebar,
+.app-sidebar.mobile-sidebar > *,
+.app-sidebar.mobile-sidebar [role="dialog"],
+div.mobile-sidebar,
+div.mobile-sidebar > div,
+div.mobile-sidebar > div > div {
+  background: rgba(18, 18, 28, 0.95) !important;
+  backdrop-filter: blur(20px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+}
+
+/* Ensure border only on the main container */
+.app-sidebar.mobile-sidebar,
+div.mobile-sidebar {
+  border-right: 1px solid rgba(255, 255, 255, 0.1) !important;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Drawer wrapper - make completely transparent */
+.mobile-sidebar > div[class*="relative"],
+.mobile-sidebar > div > div[class*="flex"] {
+  background: transparent !important;
+}
+
+.mobile-sidebar [data-slot="drawer-header"] {
+  background: transparent !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+  padding: 1rem !important;
+}
+
+.mobile-sidebar [data-slot="drawer-body"] {
+  background: transparent !important;
+  padding: 0 !important;
+}
+
+/* Apply sidebar menu styles to mobile drawer */
+.mobile-sidebar [data-slot="sidebar-menu"],
+.mobile-sidebar [data-slot="sidebar-group"],
+.mobile-sidebar [data-slot="sidebar-content"] {
+  width: 100% !important;
+  background: transparent !important;
+}
+
+.mobile-sidebar [data-slot="sidebar-menu-button"] {
+  color: rgba(255, 255, 255, 0.6) !important;
+  transition: all 0.3s ease !important;
+  width: 100% !important;
+  background: transparent !important;
+}
+
+.mobile-sidebar [data-slot="sidebar-menu-button"]:hover {
+  color: rgba(255, 255, 255, 0.9) !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+}
+
+.mobile-sidebar [data-slot="sidebar-menu-button"][data-active="true"],
+.mobile-sidebar [data-slot="sidebar-menu-button"][aria-current="page"],
+.mobile-sidebar [data-slot="sidebar-menu-button"] a[data-active="true"],
+.mobile-sidebar [data-slot="sidebar-menu-button"] a[aria-current="page"] {
+  color: rgba(255, 255, 255, 1) !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+  font-weight: 600 !important;
+  box-shadow: 
+    0 0 10px oklch(0.75 0.15 195 / 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+}
+
+.mobile-sidebar [data-slot="sidebar-menu-button"]:has(a[data-active="true"]),
+.mobile-sidebar [data-slot="sidebar-menu-button"]:has(a[aria-current="page"]) {
+  color: rgba(255, 255, 255, 1) !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+  font-weight: 600 !important;
+  box-shadow: 
+    0 0 10px oklch(0.75 0.15 195 / 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+}
+
+.mobile-sidebar [data-slot="sidebar-group-label"] {
+  color: rgba(255, 255, 255, 0.5) !important;
+  font-size: 0.75rem !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+}
+
+.mobile-sidebar [data-slot="sidebar-header"],
+.mobile-sidebar [data-slot="sidebar-footer"] {
+  border-color: rgba(255, 255, 255, 0.05) !important;
+  background: transparent !important;
+}
+
+/* ========================================= */
+/* Responsive Utilities */
+/* ========================================= */
+
+/* Mobile optimizations */
+@media (max-width: 640px) {
+  .dashboard-page h1 {
+    font-size: 1.5rem !important;
+    line-height: 2rem !important;
+  }
+  
+  .dashboard-page .glass-card {
+    border-radius: 0.5rem !important;
+  }
+  
+  /* Ensure cards don't overflow on mobile */
+  .dashboard-page .glass-card [data-slot="card-header"],
+  .dashboard-page .glass-card [data-slot="card-body"] {
+    padding: 0.75rem !important;
+  }
+}
+
+/* Tablet optimizations */
+@media (min-width: 641px) and (max-width: 1024px) {
+  .dashboard-page h1 {
+    font-size: 1.875rem !important;
+    line-height: 2.25rem !important;
+  }
+}
+
+/* Ensure tables are scrollable on mobile */
+@media (max-width: 768px) {
+  .dashboard-page table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+
 .prismatic-text {
   background: linear-gradient(
     90deg,

@@ -240,7 +240,7 @@ export const AdministratorsList = () => {
       topContentPlacement="outside"
       bottomContent={bottomContent}
       bottomContentPlacement="outside"
-      classNames={{ wrapper: "max-h-[382px]" }}
+      classNames={{ wrapper: "max-h-[382px] glass-card" }}
       selectionMode="none"
     >
       <TableHeader columns={columns}>

@@ -20,7 +20,7 @@ export function CampusEvaluationCard({
     isEvaluated = true,
 }: CampusEvaluationCardProps) {
     return (
-        <Card className="bg-card border-border p-6 text-card-foreground">
+        <Card className="bg-content1 border-border p-6 text-card-foreground glass-card">
             <div className="flex items-start justify-between mb-8">
                 <div className="flex-1">
                     <h2 className="text-lg font-semibold mb-1">{title}</h2>

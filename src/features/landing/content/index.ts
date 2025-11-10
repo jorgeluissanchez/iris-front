@@ -136,24 +136,23 @@ export const landingContent = {
     navigation: {
       title: 'Navegación',
       links: [
-        { label: 'Acerca de', href: '#' },
-        { label: 'Características', href: '#' },
-        { label: 'Ingenierías', href: '#' },
+        { label: 'Ingenierías', href: '#ingenierias' },
+        { label: 'Eventos', href: '#eventos' },
       ],
     },
-    contact: {
-      title: 'Contacto',
-      links: [
-        { label: 'Email', href: '#' },
-        { label: 'Soporte', href: '#' },
-        { label: 'Documentación', href: '#' },
-      ],
-    },
+    // contact: {
+    //   title: 'Contacto',
+    //   links: [
+    //     { label: 'Email', href: '#' },
+    //     { label: 'Soporte', href: '#' },
+    //     { label: 'Documentación', href: '#' },
+    //   ],
+    // },
     copyright: '© 2025 Iris. Proyecto Final de Ingeniería - Universidad del Norte.',
-    legal: [
-      { label: 'Privacidad', href: '#' },
-      { label: 'Términos', href: '#' },
-    ],
+    // legal: [
+    //   { label: 'Privacidad', href: '#' },
+    //   { label: 'Términos', href: '#' },
+    // ],
   },
 };
 

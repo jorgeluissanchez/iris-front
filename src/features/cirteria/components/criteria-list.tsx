@@ -84,8 +84,8 @@ export const CriteriaList = () => {
 
   return (
     <div className="space-y-4">
-      <div className="flex flex-col gap-4 md:flex-row md:items-end">
-        <div className="md:w-60">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-end">
+        <div className="w-full sm:w-60">
           <Select
             label="Event"
             placeholder="Select an event"
@@ -99,7 +99,7 @@ export const CriteriaList = () => {
             ))}
           </Select>
         </div>
-        <div className="md:flex-1">
+        <div className="w-full sm:flex-1">
           <Select
             label="Course"
             placeholder={eventId ? "Select a course" : "Select event first"}
@@ -126,30 +126,31 @@ export const CriteriaList = () => {
           </Select>
         </div>
       </div>
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-4 sm:gap-6 grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
         {criteria.map((criterion) => (
-          <Card shadow="sm" key={criterion.id}>
-            <CardBody className="p-6 space-y-4">
+          <Card shadow="sm" key={criterion.id} className="glass-card">
+            <CardBody className="p-4 sm:p-6 space-y-3 sm:space-y-4">
               <div className="space-y-2">
-                <div className="flex items-start justify-between">
-                  <h3 className="text-xl font-semibold">{criterion.name}</h3>
+                <div className="flex items-start justify-between gap-2">
+                  <h3 className="text-base sm:text-xl font-semibold line-clamp-2">{criterion.name}</h3>
                   <Chip
                     size="sm"
                     color="primary"
                     variant="flat"
+                    className="flex-shrink-0"
                   >
                     {(criterion.weight * 100).toFixed(0)}%
                   </Chip>
                 </div>
-                <p className="text-sm text-default-500">{criterion.description}</p>
+                <p className="text-xs sm:text-sm text-default-500 line-clamp-2">{criterion.description}</p>
               </div>
 
-              <div className="space-y-2">
-                <div className="text-sm text-default-400">
+              <div className="space-y-2 text-xs sm:text-sm">
+                <div className="text-default-400">
                   Weight: <span className="font-medium text-default-700">{criterion.weight}</span>
                 </div>
                 {criterion.createdAt && (
-                  <div className="text-sm text-default-400">
+                  <div className="text-default-400">
                     Created:{" "}
                     <span className="font-medium text-default-700">
                       {new Date(criterion.createdAt).toLocaleDateString()}

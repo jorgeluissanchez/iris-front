@@ -3,6 +3,7 @@
 import { ContentLayout } from '@/components/layouts/content-layout';
 import { CreateEvent } from '@/features/events/components/create-event';
 import { EventsList } from '@/features/events/components/events-list';
+import '@/features/landing/index.css';
 
 export const Events = () => {
 
