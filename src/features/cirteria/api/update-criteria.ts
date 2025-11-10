@@ -10,7 +10,10 @@ import { getCriterionQueryOptions } from "./get-criterion";
 export const updateCriteriaInputSchema = z.object({
   name: z.string().min(1, "Required").optional(),
   description: z.string().min(1, "Required").optional(),
-  weight: z.number().min(0, "Weight must be greater than or equal to 0").optional(),
+  weight: z
+    .number()
+    .min(0, "Weight must be greater than or equal to 0")
+    .optional(),
   eventId: z.string().min(1, "Event is required").optional(),
   criterionCourse: z
     .array(
@@ -47,7 +50,7 @@ export const useUpdateCriteria = ({
   return useMutation({
     onSuccess: (data, variables, ...args) => {
       queryClient.invalidateQueries({
-        queryKey: ["criteria"],
+        queryKey: ["criterion"],
       });
       queryClient.refetchQueries({
         queryKey: getCriterionQueryOptions(data.data.id).queryKey,
@@ -58,4 +61,3 @@ export const useUpdateCriteria = ({
     mutationFn: updateCriteria,
   });
 };
-

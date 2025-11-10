@@ -28,7 +28,7 @@ export const useDeleteCriteria = ({
   return useMutation({
     onSuccess: (data, variables, ...args) => {
       queryClient.invalidateQueries({
-        queryKey: ["criteria"],
+        queryKey: ["criterion"],
       });
       onSuccess?.(data, variables, ...args);
     },
@@ -36,4 +36,3 @@ export const useDeleteCriteria = ({
     mutationFn: deleteCriteria,
   });
 };
-
