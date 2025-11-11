@@ -251,6 +251,18 @@ export function useLandingAnimations(
             scrub: 1,
             snap: 1 / (panels.length - 1),
             end: () => '+=' + refs.horizontalContentRef.current!.offsetWidth,
+            anticipatePin: 1,
+            // Cuando el scroll horizontal termina, libera el pin para permitir scroll vertical normal
+            onLeave: () => {
+              if (refs.horizontalSectionRef.current) {
+                refs.horizontalSectionRef.current.style.overflow = 'visible';
+              }
+            },
+            onEnterBack: () => {
+              if (refs.horizontalSectionRef.current) {
+                refs.horizontalSectionRef.current.style.overflow = 'hidden';
+              }
+            },
           },
         });
       }

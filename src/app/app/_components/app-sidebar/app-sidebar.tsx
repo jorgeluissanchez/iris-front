@@ -1,8 +1,8 @@
 "use client";
 
 import * as React from "react";
+import Image from "next/image";
 import {
-  GalleryVerticalEnd,
   Home,
   MessageSquare,
   Calendar,
@@ -94,7 +94,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     },
     enterprise: {
       name: "Iris",
-      logo: GalleryVerticalEnd,
+      logo: "/iris.svg",
       url: "#",
     },
   }), [user.data?.firstName, user.data?.lastName, user.data?.email]);
@@ -109,7 +109,13 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               className="data-[slot=sidebar-menu-button]:!p-1.5"
             >
               <Link href={data.enterprise.url}>
-                <data.enterprise.logo className="!size-5" />
+                <Image 
+                  src={data.enterprise.logo} 
+                  alt="Iris Logo" 
+                  width={20} 
+                  height={20}
+                  className="!size-5"
+                />
                 <span className="text-base font-semibold">
                   {data.enterprise.name}
                 </span>

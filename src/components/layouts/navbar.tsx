@@ -28,18 +28,25 @@ export function Navbar({ showNavLinks = true, showLoginButton = true }: NavbarPr
   };
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-40 px-6 py-6 md:px-12 glass-effect border-b border-border/30">
+    <nav className="fixed top-0 left-0 right-0 z-40 px-6 py-4 md:px-12 glass-effect border-b border-border/30">
       <div className="max-w-7xl mx-auto flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-3">
+        <Link href="/" className="flex items-center gap-2">
           <div className="relative">
-            <IrisLogo size={32} className="animate-pulse" />
+            <IrisLogo size={40} />
             <div className="absolute inset-0 blur-xl bg-primary/30 animate-pulse" />
           </div>
-          <span className="text-2xl font-bold prismatic-text">{landingContent.navbar.brand}</span>
         </Link>
 
         {showNavLinks && isLandingPage && (
           <div className="hidden md:flex items-center gap-8 text-sm">
+            <a
+              href="#informacion"
+              onClick={(e) => handleSmoothScroll(e, 'informacion')}
+              className="text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
+            >
+              {landingContent.navbar.links.information}
+            </a>
+            
             <a
               href="#ingenierias"
               onClick={(e) => handleSmoothScroll(e, 'ingenierias')}
