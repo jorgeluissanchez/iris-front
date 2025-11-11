@@ -1,15 +1,21 @@
 import { useQuery, queryOptions } from "@tanstack/react-query";
+import { z } from "zod";
 
 import { api } from "@/lib/api-client";
 import { QueryConfig } from "@/lib/react-query";
 import { Project } from "@/types/api";
 
+export const getProjectInputSchema = z.object({
+  projectId: z.string().min(1, "Project ID is required"),
+});
+
+export type GetProjectInput = z.infer<typeof getProjectInputSchema>;
+
 export const getProject = ({
   projectId,
-}: {
-  projectId: string;
-}): Promise<{ data: Project }> => {
-  return api.get(`/projects/${projectId}`);
+}: GetProjectInput): Promise<{ data: Project }> => {
+  const validatedInput = getProjectInputSchema.parse({ projectId });
+  return api.get(`/projects/${validatedInput.projectId}`);
 };
 
 export const getProjectQueryOptions = (projectId: string) => {

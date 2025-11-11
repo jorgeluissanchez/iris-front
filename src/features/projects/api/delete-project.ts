@@ -1,4 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { z } from "zod";
 
 import { api } from "@/lib/api-client";
 import { Project } from "@/types/api";
@@ -6,8 +7,17 @@ import { MutationConfig } from "@/lib/react-query";
 
 import { getProjectsQueryOptions } from "./get-projects";
 
-export const deleteProject = ({ projectId }: { projectId: string }): Promise<{ data: Project }> => {
-  return api.delete(`/projects/${projectId}`);
+export const deleteProjectInputSchema = z.object({
+  projectId: z.string().min(1, "Project ID is required"),
+});
+
+export type DeleteProjectInput = z.infer<typeof deleteProjectInputSchema>;
+
+export const deleteProject = ({
+  projectId,
+}: DeleteProjectInput): Promise<{ data: Project }> => {
+  const validatedInput = deleteProjectInputSchema.parse({ projectId });
+  return api.delete(`/projects/${validatedInput.projectId}`);
 };
 
 type UseDeleteProjectOptions = {
