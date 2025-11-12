@@ -150,7 +150,7 @@
       "logo": "https://storage.example.com/projects/logos/1762532588622.png",
       "description": "Proyecto innovador de realidad aumentada para educación",
       "eventNumber": "100",
-      "state": "APPROVED",
+      "state": "UNDER_REVIEW",
       "documents": [
         {
           "type": "POSTER",

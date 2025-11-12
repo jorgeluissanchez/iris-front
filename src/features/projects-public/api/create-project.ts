@@ -35,8 +35,6 @@ export const createProjectInputSchema = z.object({
 
   courseId: z.string().min(1, "El ID del curso es requerido"),
 
-  logo: z.string().url("La URL del logo debe ser válida"),
-
   participants: z
     .array(participantInputSchema)
     .min(1, "Debe agregar al menos un participante"),

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { Button } from "@heroui/button";
 import { ParticipantsStep } from "./wizard-steps/participants-step";
 import { ProjectDetailsStep } from "./wizard-steps/project-details-step";
@@ -19,6 +20,14 @@ import {
   useCreateProject,
 } from "../api/create-project";
 import { useCreateCourse } from "@/features/courses/api/create-course";
+import {
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+} from "@/components/ui/modal";
+import { paths } from "@/config/paths";
 
 export type Participant = {
   id: string;
@@ -58,8 +67,10 @@ type ProjectWizardProps = {
 };
 
 export function ProjectWizard({ eventId }: ProjectWizardProps) {
+  const router = useRouter();
   const [currentStep, setCurrentStep] = useState(1);
   const [stepErrors, setStepErrors] = useState<string[]>([]);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [wizardData, setWizardData] = useState<WizardData>({
     participants: [],
     project: {
@@ -73,7 +84,20 @@ export function ProjectWizard({ eventId }: ProjectWizardProps) {
       additionalDocuments: [],
     },
   });
-  const createProjectMutation = useCreateProject();
+  const createProjectMutation = useCreateProject({
+    mutationConfig: {
+      onSuccess: () => {
+        setShowSuccessModal(true);
+      },
+      onError: (error: any) => {
+        const errorMessage =
+          error?.response?.data?.message ||
+          error?.message ||
+          "Error al crear el proyecto. Por favor intente nuevamente.";
+        setStepErrors([errorMessage]);
+      },
+    },
+  });
 
   const updateParticipants = (participants: Participant[]) => {
     setWizardData((prev) => ({ ...prev, participants }));
@@ -185,9 +209,6 @@ export function ProjectWizard({ eventId }: ProjectWizardProps) {
         setStepErrors(e.issues.map((i) => i.message));
       }
     }
-
-    const validated = createProjectInputSchema.parse(payload);
-    createProjectMutation.mutate({ data: validated });
   };
 
   return (
@@ -328,6 +349,57 @@ export function ProjectWizard({ eventId }: ProjectWizardProps) {
           </Button>
         )}
       </div>
+
+      {/* Success Modal */}
+      <Modal
+        isOpen={showSuccessModal}
+        onOpenChange={setShowSuccessModal}
+        isDismissable={false}
+        hideCloseButton
+        size="lg"
+      >
+        <ModalContent>
+          {() => (
+            <>
+              <ModalHeader className="flex flex-col gap-1">
+                <div className="flex items-center justify-center w-full mb-4">
+                  <div className="w-16 h-16 bg-success/20 rounded-full flex items-center justify-center">
+                    <CheckCircle2 className="w-10 h-10 text-success" />
+                  </div>
+                </div>
+              </ModalHeader>
+              <ModalBody className="text-center pb-6">
+                <h3 className="text-2xl font-bold text-foreground mb-2">
+                  ¡Proyecto Enviado Exitosamente!
+                </h3>
+                <p className="text-muted-foreground">
+                  Tu proyecto{" "}
+                  <span className="font-semibold text-foreground">
+                    {wizardData.project.name}
+                  </span>{" "}
+                  ha sido registrado correctamente.
+                </p>
+                <p className="text-sm text-muted-foreground mt-4">
+                  Recibirás una notificación cuando sea revisado por el equipo
+                  administrativo.
+                </p>
+              </ModalBody>
+              <ModalFooter className="justify-center">
+                <Button
+                  color="primary"
+                  onPress={() => {
+                    setShowSuccessModal(false);
+                    router.push(paths.home.getHref());
+                  }}
+                  className="w-full sm:w-auto shadow-lg shadow-primary/30"
+                >
+                  Volver al Inicio
+                </Button>
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
     </div>
   );
 }

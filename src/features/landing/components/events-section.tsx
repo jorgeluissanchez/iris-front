@@ -47,7 +47,7 @@ const formatDateRange = (startDate: string, endDate: string) => {
   const month = start.toLocaleDateString("es", { month: "long" });
   const year = start.getFullYear();
 
-  return `${startDay} - ${endDay} ${month} ${year}`;
+  return `${endDay} de ${month} ${year}`;
 };
 
 // Función para mapear status del backend a texto en español
@@ -78,7 +78,20 @@ export function EventsSection({ eventsSectionRef }: EventsSectionProps) {
     );
   }
 
-  const events = eventsQuery.data?.data || [];
+  const events = [
+    {
+      id: "1",
+      title: "Feria Proyectos de Ingeniería",
+      description: "Feria de proyectos finales de estudiantes de ingeniería.",
+      startDate: "2025-11-28",
+      endDate: "2025-11-28",
+      inscriptionDeadline: "2025-11-22",
+      accessCode: "FERIAPFUN",
+      isPublic: true,
+      evaluationsStatus: "open",
+      createdAt: 1762131417888,
+    },
+  ];
 
   // Debug: Log para ver qué datos llegan
   console.log("Events Query:", {
@@ -214,7 +227,8 @@ export function EventsSection({ eventsSectionRef }: EventsSectionProps) {
                           ).toLocaleDateString("es", {
                             day: "numeric",
                             month: "long",
-                          })}
+                          })}{" "}
+                          - cierre de inscripciones
                         </span>
                       </div>
 
