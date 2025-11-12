@@ -24,24 +24,25 @@ export const eventsHandlers = [
     await networkDelay();
 
     try {
-      // const { /*user,*/ error } = requireAuth(cookies);
-      // if (error) {
-      //   return HttpResponse.json({ message: error }, { status: 401 });
-      // }
+      const { user, error } = requireAuth(cookies);
+      if (error || !user) {
+        return HttpResponse.json({ message: error || "Unauthorized" }, { status: 401 });
+      }
 
       const url = new URL(request.url);
       const page = Number(url.searchParams.get("page") || 1);
 
-      const total = db.event.count();
-      const totalPages = Math.ceil(total / 10);
+      // Si el usuario es ADMIN, mostrar todos los eventos
+      if (user.role === 'ADMIN') {
+        const total = db.event.count();
+        const totalPages = Math.ceil(total / 10);
 
-      const events = db.event
-        .findMany({
-          take: 10,
-          skip: 10 * (page - 1),
-        })
-        .map((event) => {
-          return {
+        const events = db.event
+          .findMany({
+            take: 10,
+            skip: 10 * (page - 1),
+          })
+          .map((event) => ({
             id: event.id,
             title: event.title,
             description: event.description,
@@ -52,11 +53,61 @@ export const eventsHandlers = [
             isPublic: event.isPublic,
             evaluationsStatus: event.evaluationsStatus,
             createdAt: event.createdAt,
+          }));
+
+        return HttpResponse.json({
+          data: events,
+          meta: {
+            page,
+            total,
+            totalPages,
+          },
+        });
+      }
+
+      // Para usuarios USER, solo mostrar eventos donde tienen membresía
+      const userMemberships = db.eventMembership?.findMany({
+        where: {
+          userId: { equals: user.id },
+        },
+      }) || [];
+
+      const eventIds = userMemberships.map(m => m.eventId);
+      
+      // Filtrar eventos por los IDs de membresía
+      const userEvents = db.event
+        .findMany({
+          where: {
+            id: { in: eventIds },
+          },
+        })
+        .map((event) => {
+          const membership = userMemberships.find(m => m.eventId === event.id);
+          
+          return {
+            id: event.id,
+            title: event.title,
+            description: event.description,
+            startDate: event.startDate,
+            endDate: event.endDate,
+            inscriptionDeadline: event.inscriptionDeadline,
+            accessCode: event.accessCode,
+            isPublic: event.isPublic,
+            evaluationsStatus: event.evaluationsStatus,
+            userEventRole: membership?.eventRole,
+            createdAt: event.createdAt,
           };
         });
 
+      // Aplicar paginación manual
+      const startIndex = 10 * (page - 1);
+      const endIndex = startIndex + 10;
+      const paginatedEvents = userEvents.slice(startIndex, endIndex);
+      const total = userEvents.length;
+      const totalPages = Math.ceil(total / 10);
+
       return HttpResponse.json({
-        data: events,
+        data: paginatedEvents,
         meta: {
           page,
           total,

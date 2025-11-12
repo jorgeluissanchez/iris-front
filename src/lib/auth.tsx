@@ -35,6 +35,8 @@ export const useLogin = ({ onSuccess }: { onSuccess?: () => void }) => {
   return useMutation({
     mutationFn: loginWithEmailAndPassword,
     onSuccess: (data) => {
+      // Limpiar todo el cache antes de establecer el nuevo usuario
+      queryClient.clear();
       queryClient.setQueryData(userQueryKey, data.user);
       onSuccess?.();
     },
@@ -46,6 +48,8 @@ export const useRegister = ({ onSuccess }: { onSuccess?: () => void }) => {
   return useMutation({
     mutationFn: registerWithEmailAndPassword,
     onSuccess: (data) => {
+      // Limpiar todo el cache antes de establecer el nuevo usuario
+      queryClient.clear();
       queryClient.setQueryData(userQueryKey, data.user);
       onSuccess?.();
     },
@@ -57,7 +61,8 @@ export const useLogout = ({ onSuccess }: { onSuccess?: () => void }) => {
   return useMutation({
     mutationFn: logout,
     onSuccess: () => {
-      queryClient.removeQueries({ queryKey: userQueryKey });
+      // Limpiar todo el cache al hacer logout
+      queryClient.clear();
       onSuccess?.();
     },
   });

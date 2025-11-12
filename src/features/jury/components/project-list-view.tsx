@@ -47,7 +47,7 @@ export function ProjectListView({ eventId }: ProjectListViewProps) {
                 <Button
                     variant="light"
                     className="gap-2"
-                    onClick={() => router.back()}
+                    onClick={() => router.push('/app')}
                 >
                     <ArrowLeft className="h-4 w-4" />
                     Back
