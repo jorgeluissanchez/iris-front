@@ -1,5 +1,6 @@
 // Route paths with optional role metadata for authorization-aware navigation
-// Roles are defined in src/types/api.ts as: "ADMIN" | "STUDENT" | "JURY"
+// Roles are defined in src/types/api.ts as: "ADMIN" | "USER"
+// Note: STUDENT and JURY are event-specific subroles, not main user roles
 
 export const paths = {
   home: {
@@ -27,11 +28,11 @@ export const paths = {
   app: {
     root: {
       getHref: () => "/app",
-      roles: ["ADMIN", "JURY", "STUDENT"],
+      roles: ["ADMIN", "USER"],
     },
     dashboard: {
       getHref: () => "/app",
-      roles: ["ADMIN", "JURY", "STUDENT"],
+      roles: ["ADMIN", "USER"],
     },
     discussions: {
       getHref: () => "/app/discussions",
@@ -73,11 +74,11 @@ export const paths = {
     },
     project_jury: {
       getHref: (id: string) => `/app/events/${id}`,
-      roles: ["JURY"],
+      roles: ["USER"], // Requiere subrol JURY en el evento específico
     },
     evaluations: {
       getHref: (id: string) => `/app/evaluations/${id}`,
-      roles: ["JURY"],
+      roles: ["USER"], // Requiere subrol JURY en el evento específico
     },
     criteria: {
       getHref: () => "/app/criteria",

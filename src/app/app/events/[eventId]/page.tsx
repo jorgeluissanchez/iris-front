@@ -18,7 +18,7 @@ const ProjectJuryPage = async ({ params }: { params: Promise<{ eventId: string }
     const dehydratedState = dehydrate(queryClient);
 
     return (
-        <RoleGuard roles={['JURY']}>
+        <RoleGuard roles={['USER']}>
             <HydrationBoundary state={dehydratedState}>
                 <Project eventId={eventId} />
             </HydrationBoundary>

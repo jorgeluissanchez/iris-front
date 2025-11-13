@@ -2,10 +2,18 @@
 
 import { useUser } from '@/lib/auth';
 import { EvaluationProject } from '@/features/evaluations/components/get-evaluation-project';
+import { Button } from '@heroui/button';
+import { ArrowLeft } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import '@/features/landing/index.css';
 
-export const StudentDashboard = () => {
+type StudentDashboardProps = {
+    eventId?: string;
+};
+
+export const StudentDashboard = ({ eventId }: StudentDashboardProps = {}) => {
     const user = useUser();
+    const router = useRouter();
 
     return (
         <div className='dashboard-page space-y-4 md:space-y-6'>
@@ -17,6 +25,18 @@ export const StudentDashboard = () => {
                     View your project evaluation results
                 </p>
             </div>
+            {eventId && (
+                <div>
+                    <Button
+                        variant="light"
+                        className="gap-2"
+                        onClick={() => router.push('/app')}
+                    >
+                        <ArrowLeft className="h-4 w-4" />
+                        Back
+                    </Button>
+                </div>
+            )}
             <div className="w-full overflow-x-auto">
                 <EvaluationProject projectId={user.data?.teamId ?? ''} />
             </div>

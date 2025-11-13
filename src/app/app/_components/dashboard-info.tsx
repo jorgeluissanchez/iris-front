@@ -2,18 +2,30 @@
 
 import { useUser } from '@/lib/auth';
 import { AdminDashboard } from './admin-dashboard';
-import { StudentDashboard } from './student-dashboard';
-import { JuryDashboard } from './jury-dashboard';
+import { UserEventsList } from '@/features/events/components/user-events-list';
 
 export const DashboardInfo = () => {
   const user = useUser();
 
-  switch (user.data?.role) {
-    case 'ADMIN':
-      return <AdminDashboard/>;
-    case 'STUDENT':
-      return <StudentDashboard/>;
-    case 'JURY':
-      return <JuryDashboard/>;
+  // Si es ADMIN, mostrar el AdminDashboard
+  if (user.data?.role === 'ADMIN') {
+    return <AdminDashboard />;
   }
+
+  // Para usuarios USER, mostrar la lista de eventos
+  return (
+    <div className="dashboard-page space-y-4 md:space-y-6">
+      <div className="space-y-1 md:space-y-2">
+        <h1 className="text-2xl md:text-3xl font-bold">
+          Welcome back, {`${user.data?.firstName} ${user.data?.lastName}`}
+        </h1>
+        <p className="text-sm md:text-base text-muted-foreground">
+          Select an event
+        </p>
+      </div>
+      <div className="w-full overflow-x-auto">
+        <UserEventsList />
+      </div>
+    </div>
+  );
 };
