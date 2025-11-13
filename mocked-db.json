@@ -1,1309 +1,439 @@
 {
   "team": [
     {
-      "id": "i0Kqk2y7zPEJ_F-2pzeuw",
-      "name": "FreeFire",
-      "description": "",
-      "createdAt": 1762117797260
+      "id": "team-001",
+      "name": "Equipo Alpha",
+      "description": "Equipo de desarrollo principal",
+      "createdAt": 1700000000000
     },
     {
-      "id": "LHoBxzliKumLEVuR-XReN",
-      "name": "aaaa",
-      "description": "",
-      "createdAt": 1762184235770
+      "id": "team-002",
+      "name": "Equipo Beta",
+      "description": "Equipo de innovación",
+      "createdAt": 1700100000000
     }
   ],
   "user": [
     {
-      "id": "BZdtrfcHMGT44j7jV_ekP",
-      "firstName": "jorge luis",
-      "lastName": "sanchez barreneche",
-      "email": "jorgeluissanchezbarreneche@gmail.com",
+      "id": "user-admin-001",
+      "firstName": "Admin",
+      "lastName": "Principal",
+      "email": "admin@iris.com",
       "password": "3670747394",
-      "teamId": "i0Kqk2y7zPEJ_F-2pzeuw",
-      "role": "ADMIN",
-      "bio": "",
-      "createdAt": 1762117797318
-    },
-    {
-      "id": "PrBNl8_vdQUGrcwRI30hJ",
-      "firstName": "admin",
-      "lastName": "admin",
-      "email": "admin@admin.com",
-      "password": "2951957434",
-      "teamId": "LHoBxzliKumLEVuR-XReN",
-      "role": "ADMIN",
-      "bio": "",
-      "createdAt": 1762184235777
-    },
-    {
-      "id": "STU001",
-      "firstName": "Carlos",
-      "lastName": "Estudiante",
-      "email": "estudiante@test.com",
-      "password": "1234567890",
-      "teamId": "i0Kqk2y7zPEJ_F-2pzeuw",
-      "role": "STUDENT",
-      "bio": "Estudiante de prueba",
-      "createdAt": 1762600000000
-    },
-    {
-      "id": "JUR001",
-      "firstName": "María",
-      "lastName": "Jurado",
-      "email": "jurado@test.com",
-      "password": "1234567890",
       "teamId": "",
-      "role": "JURY",
-      "bio": "Jurado de prueba",
-      "createdAt": 1762600100000
+      "role": "ADMIN",
+      "bio": "Administrador del sistema",
+      "createdAt": 1700000000000
     },
     {
-      "id": "mGTXAkfKT0NNp43BQZ43g",
-      "firstName": "Jurado",
-      "lastName": "Jurado",
-      "email": "juror@juror.com",
-      "password": "194581525",
-      "teamId": "i0Kqk2y7zPEJ_F-2pzeuw",
-      "role": "JURY",
-      "bio": "",
-      "createdAt": 1762671118709
+      "id": "user-002",
+      "firstName": "María",
+      "lastName": "García",
+      "email": "maria@iris.com",
+      "password": "3670747394",
+      "teamId": "team-001",
+      "role": "USER",
+      "bio": "Jurado en 2 eventos, estudiante en 1 evento",
+      "createdAt": 1700100000000
     },
     {
-      "id": "EGnToFmcT7wb2G_-ZywS4",
-      "firstName": "Juan",
-      "lastName": "Povea",
-      "email": "juan@iris.com",
-      "password": "99685819",
-      "teamId": "Lbri6LqDSxUybAACLv_dT",
-      "role": "STUDENT",
-      "bio": "",
-      "createdAt": 1762743277871
-    },
-    {
-      "id": "J0XB96c6XkGj46Nli36Ii",
+      "id": "user-003",
       "firstName": "Carlos",
       "lastName": "López",
       "email": "carlos@iris.com",
-      "password": "2170491013",
-      "teamId": "i0Kqk2y7zPEJ_F-2pzeuw",
-      "role": "JURY",
-      "bio": "",
-      "createdAt": 1762743323367
+      "password": "3670747394",
+      "teamId": "team-002",
+      "role": "USER",
+      "bio": "Participante en 2 proyectos, jurado en 1 evento",
+      "createdAt": 1700200000000
     }
   ],
   "event": [
     {
-      "id": "MAfnjuqHZqbsGhxLmoP_N",
-      "title": "holajojo",
-      "description": "mundo",
-      "startDate": "2025-11-14",
-      "endDate": "2025-11-28",
-      "inscriptionDeadline": "2025-11-01",
-      "accessCode": "EVT417885",
-      "isPublic": true,
-      "evaluationsStatus": "closed",
-      "createdAt": 1762131417888
-    },
-    {
-      "id": "ZLXM-Kz9_Iq0FgNvb2Q-i",
-      "title": "PRUEBAA",
-      "description": "esta es una prueba",
-      "startDate": "2025-11-20",
-      "endDate": "2025-11-29",
-      "inscriptionDeadline": "2025-11-29",
-      "accessCode": "EVT208469",
+      "id": "event-001",
+      "title": "Hackathon Innovación 2025",
+      "description": "Evento de innovación tecnológica",
+      "startDate": "2025-01-15",
+      "endDate": "2025-01-17",
+      "inscriptionDeadline": "2025-01-10",
+      "accessCode": "EVT001",
       "isPublic": true,
       "evaluationsStatus": "open",
-      "createdAt": 1762314208470
+      "createdAt": 1700000000000
     },
     {
-      "id": "SwrAuKVQ3dxo9eoKHZBuo",
-      "title": "Hackathon",
-      "description": "La mejor",
-      "startDate": "2025-11-19",
-      "endDate": "2025-11-21",
-      "inscriptionDeadline": "2025-11-17",
-      "accessCode": "EVT224298",
+      "id": "event-002",
+      "title": "Feria de Ciencias 2025",
+      "description": "Presentación de proyectos científicos",
+      "startDate": "2025-02-20",
+      "endDate": "2025-02-22",
+      "inscriptionDeadline": "2025-02-15",
+      "accessCode": "EVT002",
       "isPublic": true,
       "evaluationsStatus": "open",
-      "createdAt": 1762746224300
+      "createdAt": 1700100000000
+    },
+    {
+      "id": "event-003",
+      "title": "Competencia de Desarrollo Web",
+      "description": "Desarrollo de aplicaciones web innovadoras",
+      "startDate": "2025-03-10",
+      "endDate": "2025-03-12",
+      "inscriptionDeadline": "2025-03-05",
+      "accessCode": "EVT003",
+      "isPublic": true,
+      "evaluationsStatus": "open",
+      "createdAt": 1700200000000
+    }
+  ],
+  "eventMembership": [
+    {
+      "id": "membership-001",
+      "eventId": "event-001",
+      "userId": "user-002",
+      "eventRole": "JURY",
+      "createdAt": 1700000100000
+    },
+    {
+      "id": "membership-002",
+      "eventId": "event-002",
+      "userId": "user-002",
+      "eventRole": "JURY",
+      "createdAt": 1700000200000
+    },
+    {
+      "id": "membership-003",
+      "eventId": "event-003",
+      "userId": "user-002",
+      "eventRole": "STUDENT",
+      "createdAt": 1700000300000
+    },
+    {
+      "id": "membership-004",
+      "eventId": "event-001",
+      "userId": "user-003",
+      "eventRole": "JURY",
+      "createdAt": 1700000400000
+    },
+    {
+      "id": "membership-005",
+      "eventId": "event-002",
+      "userId": "user-003",
+      "eventRole": "STUDENT",
+      "createdAt": 1700000500000
+    },
+    {
+      "id": "membership-006",
+      "eventId": "event-003",
+      "userId": "user-003",
+      "eventRole": "STUDENT",
+      "createdAt": 1700000600000
     }
   ],
   "discussion": [
     {
-      "id": "lPnftEG_6XTG9IbqPM_XC",
-      "title": "hola lkñlkñlkjñk",
-      "body": "mundo",
-      "authorId": "BZdtrfcHMGT44j7jV_ekP",
-      "teamId": "i0Kqk2y7zPEJ_F-2pzeuw",
-      "createdAt": 1762119032382,
+      "id": "disc-001",
+      "title": "Discusión sobre innovación",
+      "body": "¿Cuáles son las mejores prácticas para innovar?",
+      "authorId": "user-002",
+      "teamId": "team-001",
+      "createdAt": 1700000000000,
       "public": true
+    }
+  ],
+  "comment": [
+    {
+      "id": "comment-001",
+      "body": "Excelente pregunta, considero que la colaboración es clave",
+      "authorId": "user-003",
+      "discussionId": "disc-001",
+      "createdAt": 1700100000000
     }
   ],
   "project": [
     {
-      "id": "Lbri6LqDSxUybAACLv_dT",
-      "eventId": "MAfnjuqHZqbsGhxLmoP_N",
-      "courseId": "Xf3lVw9Q_Pk2sTt8Nn4y",
-      "name": "Arkad",
-      "logo": "https://storage.example.com/projects/logos/1762532588622.png",
-      "description": "Proyecto innovador de realidad aumentada para educación",
-      "eventNumber": "100",
+      "id": "project-001",
+      "eventId": "event-001",
+      "courseId": "course-001",
+      "name": "Sistema de Gestión Inteligente",
+      "logo": "https://example.com/logo1.png",
+      "description": "Sistema innovador de gestión usando IA",
+      "eventNumber": "001",
       "state": "APPROVED",
       "documents": [
         {
           "type": "POSTER",
-          "url": "blob:http://localhost:3000/b2926fe4-8bc7-4f0e-ab34-96ef71859099"
-        },
-        {
-          "type": "SUPPORTING_DOCUMENT",
-          "url": "blob:http://localhost:3000/13956a45-19ed-46db-ba72-3e40a0208ece"
+          "url": "https://example.com/poster1.pdf"
         }
       ],
       "participants": [
         {
-          "firstName": "Juan",
-          "lastName": "Povea",
-          "email": "a@a.com"
+          "firstName": "Carlos",
+          "lastName": "López",
+          "email": "carlos@iris.com"
         }
       ],
       "jurorAssignments": [
         {
-          "memberUserId": "J0XB96c6XkGj46Nli36Ii"
+          "memberUserId": "user-002"
         }
       ],
-      "createdAt": 1762532590077
+      "createdAt": 1700000000000
+    },
+    {
+      "id": "project-002",
+      "eventId": "event-002",
+      "courseId": "course-002",
+      "name": "Aplicación de Realidad Aumentada",
+      "logo": "https://example.com/logo2.png",
+      "description": "App educativa con AR",
+      "eventNumber": "002",
+      "state": "APPROVED",
+      "documents": [
+        {
+          "type": "POSTER",
+          "url": "https://example.com/poster2.pdf"
+        }
+      ],
+      "participants": [
+        {
+          "firstName": "Carlos",
+          "lastName": "López",
+          "email": "carlos@iris.com"
+        }
+      ],
+      "jurorAssignments": [
+        {
+          "memberUserId": "user-002"
+        }
+      ],
+      "createdAt": 1700100000000
+    },
+    {
+      "id": "project-003",
+      "eventId": "event-003",
+      "courseId": "course-003",
+      "name": "Plataforma E-learning",
+      "logo": "https://example.com/logo3.png",
+      "description": "Plataforma de aprendizaje en línea",
+      "eventNumber": "003",
+      "state": "APPROVED",
+      "documents": [
+        {
+          "type": "POSTER",
+          "url": "https://example.com/poster3.pdf"
+        }
+      ],
+      "participants": [
+        {
+          "firstName": "María",
+          "lastName": "García",
+          "email": "maria@iris.com"
+        }
+      ],
+      "jurorAssignments": [
+        {
+          "memberUserId": "user-003"
+        }
+      ],
+      "createdAt": 1700200000000
+    }
+  ],
+  "course": [
+    {
+      "id": "course-001",
+      "eventId": "event-001",
+      "code": "IA101",
+      "description": "Inteligencia Artificial Aplicada",
+      "active": true
+    },
+    {
+      "id": "course-002",
+      "eventId": "event-002",
+      "code": "CS201",
+      "description": "Ciencias de la Computación Avanzada",
+      "active": true
+    },
+    {
+      "id": "course-003",
+      "eventId": "event-003",
+      "code": "WEB301",
+      "description": "Desarrollo Web Full Stack",
+      "active": true
     }
   ],
   "criterion": [
     {
-      "id": "crit_001",
-      "eventId": "MAfnjuqHZqbsGhxLmoP_N",
+      "id": "crit-001",
+      "eventId": "event-001",
       "name": "Innovación y Creatividad",
       "description": "Evaluación de la originalidad y propuesta innovadora del proyecto",
       "weight": 1.5,
       "criterionCourse": [
         {
-          "courseId": "qZ8PjJm_Va0Jg7JH7g1m"
-        },
-        {
-          "courseId": "Xf3lVw9Q_Pk2sTt8Nn4y"
-        },
-        {
-          "courseId": "Np6QwEr2_Yu8Io9As3Df"
+          "courseId": "course-001"
         }
       ],
-      "createdAt": 1762190000010
+      "createdAt": 1700000000000
     },
     {
-      "id": "crit_002",
-      "eventId": "MAfnjuqHZqbsGhxLmoP_N",
+      "id": "crit-002",
+      "eventId": "event-001",
       "name": "Calidad Técnica",
       "description": "Evaluación de la implementación técnica y arquitectura del proyecto",
       "weight": 2,
       "criterionCourse": [
         {
-          "courseId": "qZ8PjJm_Va0Jg7JH7g1m"
-        },
-        {
-          "courseId": "Xf3lVw9Q_Pk2sTt8Nn4y"
-        },
-        {
-          "courseId": "Bv7HcD1L_Rt5yUu3Mm2k"
+          "courseId": "course-001"
         }
       ],
-      "createdAt": 1762190000011
+      "createdAt": 1700000000000
     },
     {
-      "id": "crit_003",
-      "eventId": "MAfnjuqHZqbsGhxLmoP_N",
-      "name": "Presentación y Documentación",
-      "description": "Calidad de la presentación oral y documentación técnica",
+      "id": "crit-003",
+      "eventId": "event-002",
+      "name": "Presentación",
+      "description": "Calidad de la presentación oral",
       "weight": 1,
       "criterionCourse": [
         {
-          "courseId": "qZ8PjJm_Va0Jg7JH7g1m"
-        },
-        {
-          "courseId": "Xf3lVw9Q_Pk2sTt8Nn4y"
-        },
-        {
-          "courseId": "Bv7HcD1L_Rt5yUu3Mm2k"
-        },
-        {
-          "courseId": "Np6QwEr2_Yu8Io9As3Df"
+          "courseId": "course-002"
         }
       ],
-      "createdAt": 1762190000012
+      "createdAt": 1700100000000
     },
     {
-      "id": "crit_004",
-      "eventId": "MAfnjuqHZqbsGhxLmoP_N",
-      "name": "Trabajo en Equipo",
-      "description": "Coordinación y distribución de tareas entre los miembros",
-      "weight": 0.5,
-      "criterionCourse": [
-        {
-          "courseId": "qZ8PjJm_Va0Jg7JH7g1m"
-        },
-        {
-          "courseId": "Xf3lVw9Q_Pk2sTt8Nn4y"
-        },
-        {
-          "courseId": "Bv7HcD1L_Rt5yUu3Mm2k"
-        },
-        {
-          "courseId": "Np6QwEr2_Yu8Io9As3Df"
-        }
-      ],
-      "createdAt": 1762190000013
-    },
-    {
-      "id": "crit_005",
-      "eventId": "MAfnjuqHZqbsGhxLmoP_N",
-      "name": "Modelado de Datos",
-      "description": "Calidad del diseño del modelo de datos y normalización",
+      "id": "crit-004",
+      "eventId": "event-003",
+      "name": "Funcionalidad",
+      "description": "Evaluación de funcionalidades implementadas",
       "weight": 1.5,
       "criterionCourse": [
         {
-          "courseId": "Bv7HcD1L_Rt5yUu3Mm2k"
+          "courseId": "course-003"
         }
       ],
-      "createdAt": 1762190000014
-    },
-    {
-      "id": "crit_006",
-      "eventId": "MAfnjuqHZqbsGhxLmoP_N",
-      "name": "Precisión del Modelo",
-      "description": "Exactitud y rendimiento de los algoritmos",
-      "weight": 1.5,
-      "criterionCourse": [
-        {
-          "courseId": "qZ8PjJm_Va0Jg7JH7g1m"
-        },
-        {
-          "courseId": "Np6QwEr2_Yu8Io9As3Df"
-        }
-      ],
-      "createdAt": 1762190000015
-    },
-    {
-      "id": "crit_008",
-      "eventId": "MAfnjuqHZqbsGhxLmoP_N",
-      "name": "Optimización",
-      "description": "Eficiencia en el uso de recursos computacionales",
-      "weight": 0.5,
-      "criterionCourse": [
-        {
-          "courseId": "Bv7HcD1L_Rt5yUu3Mm2k"
-        },
-        {
-          "courseId": "Np6QwEr2_Yu8Io9As3Df"
-        }
-      ],
-      "createdAt": 1762190000017
-    }
-  ],
-  "course": [
-    {
-      "id": "qZ8PjJm_Va0Jg7JH7g1m",
-      "eventId": "MAfnjuqHZqbsGhxLmoP_N",
-      "code": "Introducción a la Inteligencia Artificial",
-      "description": "Fundamentos y aplicaciones básicas de IA",
-      "active": true
-    },
-    {
-      "id": "Xf3lVw9Q_Pk2sTt8Nn4y",
-      "eventId": "MAfnjuqHZqbsGhxLmoP_N",
-      "code": "Desarrollo Web Full Stack",
-      "description": "Frontend y backend con prácticas",
-      "active": true
-    },
-    {
-      "id": "Bv7HcD1L_Rt5yUu3Mm2k",
-      "eventId": "MAfnjuqHZqbsGhxLmoP_N",
-      "code": "Bases de Datos",
-      "description": "Modelado, SQL y optimización",
-      "active": true
-    },
-    {
-      "id": "mK79u_SKtoSY4FLwifoTf",
-      "eventId": "ZLXM-Kz9_Iq0FgNvb2Q-i",
-      "code": "Curso de prueba",
-      "description": "1231eadsadadasdaada",
-      "active": true
+      "createdAt": 1700200000000
     }
   ],
   "jury": [
     {
-      "id": "j1",
-      "email": "jury1@example.com",
-      "invitationStatus": "pending",
-      "eventId": "MAfnjuqHZqbsGhxLmoP_N",
-      "createdAt": 1762399626542
-    },
-    {
-      "id": "j2",
-      "email": "jury2@example.com",
+      "id": "jury-001",
+      "email": "maria@iris.com",
       "invitationStatus": "accepted",
-      "eventId": "MAfnjuqHZqbsGhxLmoP_N",
-      "createdAt": 1762399700000
+      "eventIds": [
+        "event-001",
+        "event-002"
+      ],
+      "projectIds": [
+        "project-001",
+        "project-002"
+      ],
+      "createdAt": 1700000000000
     },
     {
-      "id": "j3",
-      "email": "jury3@example.com",
-      "invitationStatus": "declined",
-      "eventId": "ZLXM-Kz9_Iq0FgNvb2Q-i",
-      "createdAt": 1762399800000
-    },
-    {
-      "id": "j4",
-      "email": "jury4@example.com",
-      "invitationStatus": "pending",
-      "eventId": "ZLXM-Kz9_Iq0FgNvb2Q-i",
-      "createdAt": 1762399900000
-    },
-    {
-      "id": "51NNzE3IfjZy-Yuc0KQrd",
-      "email": "jurado@jurado.com",
-      "invitationStatus": "pending",
-      "eventId": "",
-      "createdAt": 1762557000020
-    },
-    {
-      "id": "UA-euJQTtoGEV7IkBKdQu",
-      "email": "jurado@jurado.com",
-      "invitationStatus": "pending",
-      "eventId": "",
-      "createdAt": 1762557291414
-    },
-    {
-      "id": "5TIbnZxsNMT9Bro3hCQlH",
-      "email": "jhonatanrp2005@gmail.com",
-      "invitationStatus": "pending",
-      "eventId": "",
-      "createdAt": 1762557892780
-    },
-    {
-      "id": "RqP9M8sSChSuCCaFWQRK1",
-      "email": "scscscscs@gmail.com",
-      "invitationStatus": "pending",
-      "eventId": "",
-      "createdAt": 1762558896248
-    },
-    {
-      "id": "YmEr38kFnwWbx6TLyn8PB",
-      "email": "a@gmail.com",
-      "invitationStatus": "pending",
-      "eventId": "",
-      "createdAt": 1762559537045
-    },
-    {
-      "id": "3qPOJ0Ks0sAspKGTc3tK8",
-      "email": "b@gmail.com",
-      "invitationStatus": "pending",
-      "eventId": "",
-      "createdAt": 1762559679839
-    },
-    {
-      "id": "3nP0ZhTA1C29RQx4CpBfc",
-      "email": "qwertyhack05@gmail.com",
-      "invitationStatus": "pending",
-      "eventId": "",
-      "createdAt": 1762559743466
-    },
-    {
-      "id": "JegDMz7dWfljIuaVJRAXW",
-      "email": "c@gmail.com",
-      "invitationStatus": "pending",
-      "eventId": "",
-      "createdAt": 1762561934857
-    },
-    {
-      "id": "RnT5r5Z6kDeoN4LzJ7brW",
-      "email": "d@gmail.com",
-      "invitationStatus": "pending",
-      "eventId": "",
-      "createdAt": 1762562253951
+      "id": "jury-002",
+      "email": "carlos@iris.com",
+      "invitationStatus": "accepted",
+      "eventIds": [
+        "event-001"
+      ],
+      "projectIds": [
+        "project-003"
+      ],
+      "createdAt": 1700100000000
     }
   ],
   "administrator": [
     {
-      "id": "mnApQCvV0vAeEqs5qwFPf",
-      "email": "hshah@gmail.com",
-      "invitationStatus": "pending",
-      "createdAt": 1762574806543
-    }
-  ],
-  "evaluationCriteria": [
-    {
-      "id": "KZZGn4eO4ld_KpXsbm9yv",
-      "name": "fino",
-      "description": "si está fino",
-      "weight": 0.27,
-      "createdAt": 1762656991365
-    },
-    {
-      "id": "wUVvss9b7ebK97WUzFxj8",
-      "name": "hkjhkjhkj",
-      "description": "kjlkjñlkjlkñ",
-      "weight": 0.7,
-      "createdAt": 1762667726290
+      "id": "admin-001",
+      "email": "admin@iris.com",
+      "invitationStatus": "accepted",
+      "createdAt": 1700000000000
     }
   ],
   "evaluation": [
     {
-      "id": "Tsq9FU1mAJw4D59imNlDw",
-      "projectId": "Lbri6LqDSxUybAACLv_dT",
-      "memberUserId": "J0XB96c6XkGj46Nli36Ii",
-      "grade": 16.8,
-      "comments": "Bacano",
+      "id": "eval-001",
+      "projectId": "project-001",
+      "memberUserId": "user-002",
+      "grade": 18.5,
+      "comments": "Excelente trabajo, muy innovador",
       "scores": [
         {
-          "criterion": "crit_001",
-          "score": 4
+          "criterion": "crit-001",
+          "score": 4.5
         },
         {
-          "criterion": "crit_002",
-          "score": 4.6
-        },
-        {
-          "criterion": "crit_003",
-          "score": 3.4
-        },
-        {
-          "criterion": "crit_004",
+          "criterion": "crit-002",
           "score": 4.8
         }
       ],
-      "createdAt": 1762743671977
+      "createdAt": 1700000000000
     },
     {
-      "id": "LDiaJUWGYAbRKcvwwcVrq",
-      "projectId": "Lbri6LqDSxUybAACLv_dT",
-      "memberUserId": "J0XB96c6XkGj46Nli36Ii",
-      "grade": 16,
-      "comments": "gdhhf",
+      "id": "eval-002",
+      "projectId": "project-002",
+      "memberUserId": "user-002",
+      "grade": 17.0,
+      "comments": "Buen proyecto con potencial",
       "scores": [
         {
-          "criterion": "crit_001",
-          "score": 4
+          "criterion": "crit-001",
+          "score": 4.0
         },
         {
-          "criterion": "crit_002",
-          "score": 4
-        },
-        {
-          "criterion": "crit_003",
-          "score": 4
-        },
-        {
-          "criterion": "crit_004",
-          "score": 4
+          "criterion": "crit-002",
+          "score": 4.5
         }
       ],
-      "createdAt": 1762743768013
+      "createdAt": 1700100000000
     },
     {
-      "id": "DuEOifnE9kRfflzHmHpLy",
-      "projectId": "Lbri6LqDSxUybAACLv_dT",
-      "memberUserId": "J0XB96c6XkGj46Nli36Ii",
-      "grade": 15.5,
-      "comments": "chevere",
+      "id": "eval-003",
+      "projectId": "project-003",
+      "memberUserId": "user-003",
+      "grade": 19.0,
+      "comments": "Proyecto sobresaliente",
       "scores": [
         {
-          "criterion": "crit_001",
-          "score": 4
-        },
-        {
-          "criterion": "crit_002",
-          "score": 3.5
-        },
-        {
-          "criterion": "crit_003",
-          "score": 4
-        },
-        {
-          "criterion": "crit_004",
-          "score": 4
+          "criterion": "crit-004",
+          "score": 5.0
         }
       ],
-      "createdAt": 1762748910294
-    },
-    {
-      "id": "jUlVszn8BQFVbsXl478zs",
-      "projectId": "Lbri6LqDSxUybAACLv_dT",
-      "memberUserId": "J0XB96c6XkGj46Nli36Ii",
-      "grade": 19,
-      "comments": "Cool",
-      "scores": [
-        {
-          "criterion": "crit_001",
-          "score": 5
-        },
-        {
-          "criterion": "crit_002",
-          "score": 4
-        },
-        {
-          "criterion": "crit_003",
-          "score": 5
-        },
-        {
-          "criterion": "crit_004",
-          "score": 5
-        }
-      ],
-      "createdAt": 1762749297712
-    },
-    {
-      "id": "srvLNm_nN1q2uEB67BuIU",
-      "projectId": "Lbri6LqDSxUybAACLv_dT",
-      "memberUserId": "J0XB96c6XkGj46Nli36Ii",
-      "grade": 20,
-      "comments": "ok",
-      "scores": [
-        {
-          "criterion": "crit_001",
-          "score": 5
-        },
-        {
-          "criterion": "crit_002",
-          "score": 5
-        },
-        {
-          "criterion": "crit_003",
-          "score": 5
-        },
-        {
-          "criterion": "crit_004",
-          "score": 5
-        }
-      ],
-      "createdAt": 1762749430699
-    },
-    {
-      "id": "SETsqlGrJJy2jAquO2pVt",
-      "projectId": "Lbri6LqDSxUybAACLv_dT",
-      "memberUserId": "J0XB96c6XkGj46Nli36Ii",
-      "grade": 16,
-      "comments": "bueno",
-      "scores": [
-        {
-          "criterion": "crit_001",
-          "score": 4
-        },
-        {
-          "criterion": "crit_002",
-          "score": 4
-        },
-        {
-          "criterion": "crit_003",
-          "score": 4
-        },
-        {
-          "criterion": "crit_004",
-          "score": 4
-        }
-      ],
-      "createdAt": 1762749479482
-    },
-    {
-      "id": "SATPCxNV6CJ0V3kUiketQ",
-      "projectId": "Lbri6LqDSxUybAACLv_dT",
-      "memberUserId": "J0XB96c6XkGj46Nli36Ii",
-      "grade": 16,
-      "comments": "good",
-      "scores": [
-        {
-          "criterion": "crit_001",
-          "score": 3
-        },
-        {
-          "criterion": "crit_002",
-          "score": 3
-        },
-        {
-          "criterion": "crit_003",
-          "score": 5
-        },
-        {
-          "criterion": "crit_004",
-          "score": 5
-        }
-      ],
-      "createdAt": 1762749555967
-    },
-    {
-      "id": "3FkwDZLeu75KqvW-A6vX3",
-      "projectId": "Lbri6LqDSxUybAACLv_dT",
-      "memberUserId": "J0XB96c6XkGj46Nli36Ii",
-      "grade": 15,
-      "comments": "kul",
-      "scores": [
-        {
-          "criterion": "crit_001",
-          "score": 5
-        },
-        {
-          "criterion": "crit_002",
-          "score": 4
-        },
-        {
-          "criterion": "crit_003",
-          "score": 3
-        },
-        {
-          "criterion": "crit_004",
-          "score": 3
-        }
-      ],
-      "createdAt": 1762749587575
-    },
-    {
-      "id": "vAEi-FFHUi1eNz3htFmff",
-      "projectId": "Lbri6LqDSxUybAACLv_dT",
-      "memberUserId": "J0XB96c6XkGj46Nli36Ii",
-      "grade": 16.8,
-      "comments": "r",
-      "scores": [
-        {
-          "criterion": "crit_001",
-          "score": 5
-        },
-        {
-          "criterion": "crit_002",
-          "score": 5
-        },
-        {
-          "criterion": "crit_003",
-          "score": 3.8
-        },
-        {
-          "criterion": "crit_004",
-          "score": 3
-        }
-      ],
-      "createdAt": 1762749610883
-    },
-    {
-      "id": "0WyzJ4vcXSstKd3aFwaco",
-      "projectId": "Lbri6LqDSxUybAACLv_dT",
-      "memberUserId": "J0XB96c6XkGj46Nli36Ii",
-      "grade": 19,
-      "comments": "excel",
-      "scores": [
-        {
-          "criterion": "crit_001",
-          "score": 4
-        },
-        {
-          "criterion": "crit_002",
-          "score": 5
-        },
-        {
-          "criterion": "crit_003",
-          "score": 5
-        },
-        {
-          "criterion": "crit_004",
-          "score": 5
-        }
-      ],
-      "createdAt": 1762749655509
-    },
-    {
-      "id": "elaoxDtf7QqSQd_ZfDBn9",
-      "projectId": "Lbri6LqDSxUybAACLv_dT",
-      "memberUserId": "J0XB96c6XkGj46Nli36Ii",
-      "grade": 20,
-      "comments": "wi",
-      "scores": [
-        {
-          "criterion": "crit_001",
-          "score": 5
-        },
-        {
-          "criterion": "crit_002",
-          "score": 5
-        },
-        {
-          "criterion": "crit_003",
-          "score": 5
-        },
-        {
-          "criterion": "crit_004",
-          "score": 5
-        }
-      ],
-      "createdAt": 1762749715447
-    },
-    {
-      "id": "--65mI7vlkJ0tHAPVCh5V",
-      "projectId": "Lbri6LqDSxUybAACLv_dT",
-      "memberUserId": "J0XB96c6XkGj46Nli36Ii",
-      "grade": 20,
-      "comments": "ok",
-      "scores": [
-        {
-          "criterion": "crit_001",
-          "score": 5
-        },
-        {
-          "criterion": "crit_002",
-          "score": 5
-        },
-        {
-          "criterion": "crit_003",
-          "score": 5
-        },
-        {
-          "criterion": "crit_004",
-          "score": 5
-        }
-      ],
-      "createdAt": 1762749750535
-    },
-    {
-      "id": "yPodAhofu4h5gZLF1N1GT",
-      "projectId": "Lbri6LqDSxUybAACLv_dT",
-      "memberUserId": "J0XB96c6XkGj46Nli36Ii",
-      "grade": 17,
-      "comments": "okk",
-      "scores": [
-        {
-          "criterion": "crit_001",
-          "score": 5
-        },
-        {
-          "criterion": "crit_002",
-          "score": 5
-        },
-        {
-          "criterion": "crit_003",
-          "score": 4
-        },
-        {
-          "criterion": "crit_004",
-          "score": 3
-        }
-      ],
-      "createdAt": 1762749868779
-    },
-    {
-      "id": "xX-hewHssXUPZlE_BhQzd",
-      "projectId": "Lbri6LqDSxUybAACLv_dT",
-      "memberUserId": "J0XB96c6XkGj46Nli36Ii",
-      "grade": 20,
-      "comments": "nice",
-      "scores": [
-        {
-          "criterion": "crit_001",
-          "score": 5
-        },
-        {
-          "criterion": "crit_002",
-          "score": 5
-        },
-        {
-          "criterion": "crit_003",
-          "score": 5
-        },
-        {
-          "criterion": "crit_004",
-          "score": 5
-        }
-      ],
-      "createdAt": 1762749945553
-    },
-    {
-      "id": "SFQ4fbWd1cD3pHFoFLpmg",
-      "projectId": "Lbri6LqDSxUybAACLv_dT",
-      "memberUserId": "J0XB96c6XkGj46Nli36Ii",
-      "grade": 20,
-      "comments": "Buen trabajo",
-      "scores": [
-        {
-          "criterion": "crit_001",
-          "score": 5
-        },
-        {
-          "criterion": "crit_002",
-          "score": 5
-        },
-        {
-          "criterion": "crit_003",
-          "score": 5
-        },
-        {
-          "criterion": "crit_004",
-          "score": 5
-        }
-      ],
-      "createdAt": 1762749984496
-    },
-    {
-      "id": "GsSA4VyrTLch_GRuOdTxw",
-      "projectId": "Lbri6LqDSxUybAACLv_dT",
-      "memberUserId": "J0XB96c6XkGj46Nli36Ii",
-      "grade": 19,
-      "comments": "bien hecho",
-      "scores": [
-        {
-          "criterion": "crit_001",
-          "score": 5
-        },
-        {
-          "criterion": "crit_002",
-          "score": 5
-        },
-        {
-          "criterion": "crit_003",
-          "score": 5
-        },
-        {
-          "criterion": "crit_004",
-          "score": 4
-        }
-      ],
-      "createdAt": 1762750127728
-    },
-    {
-      "id": "prGdnO_gCTAbBs_dbeuVY",
-      "projectId": "Lbri6LqDSxUybAACLv_dT",
-      "memberUserId": "J0XB96c6XkGj46Nli36Ii",
-      "grade": 20,
-      "comments": "bn",
-      "scores": [
-        {
-          "criterion": "crit_001",
-          "score": 5
-        },
-        {
-          "criterion": "crit_002",
-          "score": 5
-        },
-        {
-          "criterion": "crit_003",
-          "score": 5
-        },
-        {
-          "criterion": "crit_004",
-          "score": 5
-        }
-      ],
-      "createdAt": 1762750264936
+      "createdAt": 1700200000000
     }
   ],
   "evaluationDetail": [
     {
-      "id": "RD3XjEpDWbs84hVWL4-Q5",
-      "evaluationId": "Tsq9FU1mAJw4D59imNlDw",
-      "criterion": "",
-      "score": 4
+      "id": "detail-001",
+      "evaluationId": "eval-001",
+      "criterion": "crit-001",
+      "score": 4.5
     },
     {
-      "id": "tP2swQwVQXqA9BEvsBxNd",
-      "evaluationId": "Tsq9FU1mAJw4D59imNlDw",
-      "criterion": "",
-      "score": 4.6
-    },
-    {
-      "id": "pN4Az6_mqMIvuix9sYf6f",
-      "evaluationId": "Tsq9FU1mAJw4D59imNlDw",
-      "criterion": "",
-      "score": 3.4
-    },
-    {
-      "id": "yh1mzywG97cRzPXv3Cr5a",
-      "evaluationId": "Tsq9FU1mAJw4D59imNlDw",
-      "criterion": "",
+      "id": "detail-002",
+      "evaluationId": "eval-001",
+      "criterion": "crit-002",
       "score": 4.8
     },
     {
-      "id": "G1qN554kjOrH0eJqnSxCP",
-      "evaluationId": "LDiaJUWGYAbRKcvwwcVrq",
-      "criterion": "",
-      "score": 4
+      "id": "detail-003",
+      "evaluationId": "eval-002",
+      "criterion": "crit-001",
+      "score": 4.0
     },
     {
-      "id": "SkAdqWkaAznDdF54ltBnc",
-      "evaluationId": "LDiaJUWGYAbRKcvwwcVrq",
-      "criterion": "",
-      "score": 4
+      "id": "detail-004",
+      "evaluationId": "eval-002",
+      "criterion": "crit-002",
+      "score": 4.5
     },
     {
-      "id": "fokddQJOudpNK1lSGFnYk",
-      "evaluationId": "LDiaJUWGYAbRKcvwwcVrq",
-      "criterion": "",
-      "score": 4
-    },
-    {
-      "id": "Khjii7JoNJ9Kt1cMVLkvW",
-      "evaluationId": "LDiaJUWGYAbRKcvwwcVrq",
-      "criterion": "",
-      "score": 4
-    },
-    {
-      "id": "Fqs3XS_keoHbAy-8HrDon",
-      "evaluationId": "DuEOifnE9kRfflzHmHpLy",
-      "criterion": "",
-      "score": 4
-    },
-    {
-      "id": "gF2lEfV89o5Hc4E5aFujO",
-      "evaluationId": "DuEOifnE9kRfflzHmHpLy",
-      "criterion": "",
-      "score": 3.5
-    },
-    {
-      "id": "55CyU4xtb9m-61GiZk1nl",
-      "evaluationId": "DuEOifnE9kRfflzHmHpLy",
-      "criterion": "",
-      "score": 4
-    },
-    {
-      "id": "j4hadXAgjqDTkfoOmjcg3",
-      "evaluationId": "DuEOifnE9kRfflzHmHpLy",
-      "criterion": "",
-      "score": 4
-    },
-    {
-      "id": "mB2v5kgDIkAT_wHU1rVuL",
-      "evaluationId": "jUlVszn8BQFVbsXl478zs",
-      "criterion": "",
-      "score": 5
-    },
-    {
-      "id": "EPPeaAC01kmAgFO9Aos-1",
-      "evaluationId": "jUlVszn8BQFVbsXl478zs",
-      "criterion": "",
-      "score": 4
-    },
-    {
-      "id": "lrz9TiYSfAa2PHPge2jwd",
-      "evaluationId": "jUlVszn8BQFVbsXl478zs",
-      "criterion": "",
-      "score": 5
-    },
-    {
-      "id": "i8MpFrZzSmpDrlG-t9Ibw",
-      "evaluationId": "jUlVszn8BQFVbsXl478zs",
-      "criterion": "",
-      "score": 5
-    },
-    {
-      "id": "0-oRq1NVDq2xgaBf-1l4-",
-      "evaluationId": "srvLNm_nN1q2uEB67BuIU",
-      "criterion": "",
-      "score": 5
-    },
-    {
-      "id": "pVmq1J7pZBPEclMtHsopG",
-      "evaluationId": "srvLNm_nN1q2uEB67BuIU",
-      "criterion": "",
-      "score": 5
-    },
-    {
-      "id": "ZssJNKG-8O-S8MY7qN7k4",
-      "evaluationId": "srvLNm_nN1q2uEB67BuIU",
-      "criterion": "",
-      "score": 5
-    },
-    {
-      "id": "eZ1grp120Ra26M55ZHzMn",
-      "evaluationId": "srvLNm_nN1q2uEB67BuIU",
-      "criterion": "",
-      "score": 5
-    },
-    {
-      "id": "VUrDz1bwu6VomtODvNOGE",
-      "evaluationId": "SETsqlGrJJy2jAquO2pVt",
-      "criterion": "",
-      "score": 4
-    },
-    {
-      "id": "S5gZSD440i0OhXGY_SW5R",
-      "evaluationId": "SETsqlGrJJy2jAquO2pVt",
-      "criterion": "",
-      "score": 4
-    },
-    {
-      "id": "F7CdZ3b8GLegLexIVTbf0",
-      "evaluationId": "SETsqlGrJJy2jAquO2pVt",
-      "criterion": "",
-      "score": 4
-    },
-    {
-      "id": "jFHb3SwRXdgeKExkuDBoY",
-      "evaluationId": "SETsqlGrJJy2jAquO2pVt",
-      "criterion": "",
-      "score": 4
-    },
-    {
-      "id": "g-WYgc4EhidJx9fa9RIcp",
-      "evaluationId": "SATPCxNV6CJ0V3kUiketQ",
-      "criterion": "",
-      "score": 3
-    },
-    {
-      "id": "cHvsmRVF7oqvfieg-md0c",
-      "evaluationId": "SATPCxNV6CJ0V3kUiketQ",
-      "criterion": "",
-      "score": 3
-    },
-    {
-      "id": "XpnCvDnrVNNl9SeYLcFIh",
-      "evaluationId": "SATPCxNV6CJ0V3kUiketQ",
-      "criterion": "",
-      "score": 5
-    },
-    {
-      "id": "7cx9KFbJc1mJfgiVIFYxN",
-      "evaluationId": "SATPCxNV6CJ0V3kUiketQ",
-      "criterion": "",
-      "score": 5
-    },
-    {
-      "id": "kKDEj8n6umIlPZIopWOtn",
-      "evaluationId": "3FkwDZLeu75KqvW-A6vX3",
-      "criterion": "",
-      "score": 5
-    },
-    {
-      "id": "Kgpy_V29qqaQV-N7dhtLu",
-      "evaluationId": "3FkwDZLeu75KqvW-A6vX3",
-      "criterion": "",
-      "score": 4
-    },
-    {
-      "id": "t8rYfPe7fxfezhIYYmpgy",
-      "evaluationId": "3FkwDZLeu75KqvW-A6vX3",
-      "criterion": "",
-      "score": 3
-    },
-    {
-      "id": "AglWCrqvBxlwnVZPgGfOa",
-      "evaluationId": "3FkwDZLeu75KqvW-A6vX3",
-      "criterion": "",
-      "score": 3
-    },
-    {
-      "id": "HhO4rr-_lFYZWuhzTAK3g",
-      "evaluationId": "vAEi-FFHUi1eNz3htFmff",
-      "criterion": "",
-      "score": 5
-    },
-    {
-      "id": "7A--K7T4GXp5huXoIMgOY",
-      "evaluationId": "vAEi-FFHUi1eNz3htFmff",
-      "criterion": "",
-      "score": 5
-    },
-    {
-      "id": "GSYpJRjsw2whMLj1Db4D2",
-      "evaluationId": "vAEi-FFHUi1eNz3htFmff",
-      "criterion": "",
-      "score": 3.8
-    },
-    {
-      "id": "wLW1xapotpE5Hoq1GbRu4",
-      "evaluationId": "vAEi-FFHUi1eNz3htFmff",
-      "criterion": "",
-      "score": 3
-    },
-    {
-      "id": "04itp8jkf-I-p678gmLla",
-      "evaluationId": "0WyzJ4vcXSstKd3aFwaco",
-      "criterion": "",
-      "score": 4
-    },
-    {
-      "id": "f7ipl0-yjGXcbEiawDBi0",
-      "evaluationId": "0WyzJ4vcXSstKd3aFwaco",
-      "criterion": "",
-      "score": 5
-    },
-    {
-      "id": "WPYyY3vodUzFj9797WIo9",
-      "evaluationId": "0WyzJ4vcXSstKd3aFwaco",
-      "criterion": "",
-      "score": 5
-    },
-    {
-      "id": "5wd0qrkYo5GJiRf61Vn8T",
-      "evaluationId": "0WyzJ4vcXSstKd3aFwaco",
-      "criterion": "",
-      "score": 5
-    },
-    {
-      "id": "XRdlMXVVCLmcUAQysnBI1",
-      "evaluationId": "elaoxDtf7QqSQd_ZfDBn9",
-      "criterion": "",
-      "score": 5
-    },
-    {
-      "id": "otbHIYIN0exHjfylLHcpc",
-      "evaluationId": "elaoxDtf7QqSQd_ZfDBn9",
-      "criterion": "",
-      "score": 5
-    },
-    {
-      "id": "XxlIrV_DslMZpH_vEsn4g",
-      "evaluationId": "elaoxDtf7QqSQd_ZfDBn9",
-      "criterion": "",
-      "score": 5
-    },
-    {
-      "id": "zHJ5eLU6Zzz5rAOcnEar5",
-      "evaluationId": "elaoxDtf7QqSQd_ZfDBn9",
-      "criterion": "",
-      "score": 5
-    },
-    {
-      "id": "1nXabp9bJdQMFwdSeaHD7",
-      "evaluationId": "--65mI7vlkJ0tHAPVCh5V",
-      "criterion": "",
-      "score": 5
-    },
-    {
-      "id": "BSc_3Vko6koIZyzwJ4nXs",
-      "evaluationId": "--65mI7vlkJ0tHAPVCh5V",
-      "criterion": "",
-      "score": 5
-    },
-    {
-      "id": "U652fUJLUWWdg3PEwUV6K",
-      "evaluationId": "--65mI7vlkJ0tHAPVCh5V",
-      "criterion": "",
-      "score": 5
-    },
-    {
-      "id": "CmvpzU0vq1AN_zkDNPyXW",
-      "evaluationId": "--65mI7vlkJ0tHAPVCh5V",
-      "criterion": "",
-      "score": 5
-    },
-    {
-      "id": "m0R3nZzfxVzn6dmDNaWsO",
-      "evaluationId": "yPodAhofu4h5gZLF1N1GT",
-      "criterion": "",
-      "score": 5
-    },
-    {
-      "id": "EnQmeH6A_p84XBvSTBhRV",
-      "evaluationId": "yPodAhofu4h5gZLF1N1GT",
-      "criterion": "",
-      "score": 5
-    },
-    {
-      "id": "8cyKUus6mu4tW-om8WNo4",
-      "evaluationId": "yPodAhofu4h5gZLF1N1GT",
-      "criterion": "",
-      "score": 4
-    },
-    {
-      "id": "ZmuWiMVjHeB8UDSW93rxV",
-      "evaluationId": "yPodAhofu4h5gZLF1N1GT",
-      "criterion": "",
-      "score": 3
-    },
-    {
-      "id": "AHMzpqsyq07nYS0-qBrJs",
-      "evaluationId": "xX-hewHssXUPZlE_BhQzd",
-      "criterion": "",
-      "score": 5
-    },
-    {
-      "id": "E460AozYkJoDSNkfoxQpL",
-      "evaluationId": "xX-hewHssXUPZlE_BhQzd",
-      "criterion": "",
-      "score": 5
-    },
-    {
-      "id": "jq_ZyncgaPiNRGBwB4W0_",
-      "evaluationId": "xX-hewHssXUPZlE_BhQzd",
-      "criterion": "",
-      "score": 5
-    },
-    {
-      "id": "DqsWVvSa-wIR6kCwqA7Ec",
-      "evaluationId": "xX-hewHssXUPZlE_BhQzd",
-      "criterion": "",
-      "score": 5
-    },
-    {
-      "id": "XaIK_owzF6qm5O8rpj3eD",
-      "evaluationId": "SFQ4fbWd1cD3pHFoFLpmg",
-      "criterion": "",
-      "score": 5
-    },
-    {
-      "id": "aW3dHHgqU33wdc5xsbUDn",
-      "evaluationId": "SFQ4fbWd1cD3pHFoFLpmg",
-      "criterion": "",
-      "score": 5
-    },
-    {
-      "id": "N27n6kff3BKi5ONZneOQb",
-      "evaluationId": "SFQ4fbWd1cD3pHFoFLpmg",
-      "criterion": "",
-      "score": 5
-    },
-    {
-      "id": "0d09ojP29rnoGlkkyboW4",
-      "evaluationId": "SFQ4fbWd1cD3pHFoFLpmg",
-      "criterion": "",
-      "score": 5
-    },
-    {
-      "id": "LRtFUag_l-McmN9soebfh",
-      "evaluationId": "GsSA4VyrTLch_GRuOdTxw",
-      "criterion": "",
-      "score": 5
-    },
-    {
-      "id": "BCG6PHLMttJJ5T5pOBZvv",
-      "evaluationId": "GsSA4VyrTLch_GRuOdTxw",
-      "criterion": "",
-      "score": 5
-    },
-    {
-      "id": "jdQw09xgY5HrRGvuPmSDJ",
-      "evaluationId": "GsSA4VyrTLch_GRuOdTxw",
-      "criterion": "",
-      "score": 5
-    },
-    {
-      "id": "Nb6HZgMPU-8TFhAXt7MNM",
-      "evaluationId": "GsSA4VyrTLch_GRuOdTxw",
-      "criterion": "",
-      "score": 4
-    },
-    {
-      "id": "laTUpnnccHmcQuAbSshJg",
-      "evaluationId": "prGdnO_gCTAbBs_dbeuVY",
-      "criterion": "",
-      "score": 5
-    },
-    {
-      "id": "qqxeT1ipIkLVJapmAFUwm",
-      "evaluationId": "prGdnO_gCTAbBs_dbeuVY",
-      "criterion": "",
-      "score": 5
-    },
-    {
-      "id": "KoFgMv4T_6sW3P_7eGVdx",
-      "evaluationId": "prGdnO_gCTAbBs_dbeuVY",
-      "criterion": "",
-      "score": 5
-    },
-    {
-      "id": "pCg1GwuKaKtWIWaektGVl",
-      "evaluationId": "prGdnO_gCTAbBs_dbeuVY",
-      "criterion": "",
-      "score": 5
+      "id": "detail-005",
+      "evaluationId": "eval-003",
+      "criterion": "crit-004",
+      "score": 5.0
     }
   ]
 }
