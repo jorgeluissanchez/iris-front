@@ -1,20 +1,35 @@
-"use client"
+"use client";
 
-import { Input } from "@heroui/react"
-import { Textarea } from "@heroui/input"
-import { Select, SelectItem } from "@heroui/select"
-import { ProjectData } from "../project-wizard"
-import { LogoUpload } from "../image-crop/logo-upload"
-import { useCoursesDropdown } from "@/features/courses/api/get-courses-dropdown"
+import { Input } from "@heroui/react";
+import { Textarea } from "@heroui/input";
+import { Select, SelectItem } from "@heroui/select";
+import { ProjectData } from "../project-wizard";
+import { LogoUpload } from "../image-crop/logo-upload";
+import { useCoursesDropdown } from "@/features/courses/api/get-courses-dropdown";
 
 type ProjectDetailsStepProps = {
-  eventId: string
-  project: ProjectData
-  onUpdate: (project: ProjectData) => void
-}
+  eventId: string;
+  project: ProjectData;
+  onUpdate: (project: ProjectData) => void;
+};
 
-export function ProjectDetailsStep({eventId, project, onUpdate }: ProjectDetailsStepProps) {
-  const { data: courses, isLoading, isError, error } = useCoursesDropdown({ eventId })
+export function ProjectDetailsStep({
+  eventId,
+  project,
+  onUpdate,
+}: ProjectDetailsStepProps) {
+  /*const {
+    data: coursesss,
+    isLoading,
+    isError,
+    error,
+  } = useCoursesDropdown({ eventId });*/
+
+  const courses = [
+    { id: "1", code: "Ingeniería de Sistemas" },
+    { id: "2", code: "Ingeniería Industrial" },
+    { id: "3", code: "Ingeniería Electrónica" },
+  ];
 
   return (
     <div className="space-y-6">
@@ -35,26 +50,26 @@ export function ProjectDetailsStep({eventId, project, onUpdate }: ProjectDetails
         description="Incluya el problema que resuelve, la metodología y los resultados esperados."
       />
 
-     <Select
+      <Select
         label="Curso al que Pertenece"
-        placeholder={isLoading ? "Cargando cursos..." : "Seleccione un curso"}
+        placeholder={"Seleccione un curso"}
         selectedKeys={project.courseId ? [project.courseId] : []}
         onSelectionChange={(keys) => {
-          const selected = Array.from(keys)[0] as string
-          onUpdate({ ...project, courseId: selected })
+          const selected = Array.from(keys)[0] as string;
+          onUpdate({ ...project, courseId: selected });
         }}
-        isDisabled={isLoading || isError}
+        //isDisabled={isLoading || isError}
         isRequired
       >
-        {(courses?.data ?? []).map((course: any) => (
-          <SelectItem key={String(course.id)}>
-            {course.code}
-          </SelectItem>
+        {courses.map((course: any) => (
+          <SelectItem key={String(course.id)}>{course.code}</SelectItem>
         ))}
       </Select>
 
-      <LogoUpload value={project.logo} onChange={(logo) => onUpdate({ ...project, logo: logo || "" })} />
-      
+      <LogoUpload
+        value={project.logo}
+        onChange={(logo) => onUpdate({ ...project, logo: logo || "" })}
+      />
     </div>
-  )
+  );
 }

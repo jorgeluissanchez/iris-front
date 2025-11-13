@@ -11,7 +11,7 @@ import {
   Presentation,
   ShieldCheck,
   ArrowDownAZ,
-  SquareChartGantt
+  SquareChartGantt,
 } from "lucide-react";
 
 import { NavUser } from "./nav-user";
@@ -30,7 +30,7 @@ import {
 import { useUser } from "@/lib/auth";
 import { paths } from "@/config/paths";
 import { Link } from "@/components/ui/link";
-import '@/features/landing/index.css';
+import "@/features/landing/index.css";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const user = useUser();
@@ -66,7 +66,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             icon: Presentation,
           },
           { title: "Juries", url: paths.app.juries.getHref(), icon: UsersIcon },
-          { title: "Administrators", url: paths.app.administrators.getHref(), icon: ShieldCheck },
+          {
+            title: "Administrators",
+            url: paths.app.administrators.getHref(),
+            icon: ShieldCheck,
+          },
           { title: "Users", url: paths.app.users.getHref(), icon: UsersIcon },
         ];
       case "USER":
@@ -82,17 +86,20 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
   const menuItems = getMenuItems;
 
-  const data = React.useMemo(() => ({
-    user: {
-      name: user.data?.firstName + " " + user.data?.lastName,
-      email: user.data?.email ?? "",
-    },
-    enterprise: {
-      name: "Iris",
-      logo: "/iris.svg",
-      url: "#",
-    },
-  }), [user.data?.firstName, user.data?.lastName, user.data?.email]);
+  const data = React.useMemo(
+    () => ({
+      user: {
+        name: user.data?.firstName + " " + user.data?.lastName,
+        email: user.data?.email ?? "",
+      },
+      enterprise: {
+        name: "Iris",
+        logo: "/iris.svg",
+        url: "#",
+      },
+    }),
+    [user.data?.firstName, user.data?.lastName, user.data?.email]
+  );
 
   return (
     <Sidebar collapsible="icon" className="app-sidebar" {...props}>
@@ -104,10 +111,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               className="data-[slot=sidebar-menu-button]:!p-1.5"
             >
               <Link href={data.enterprise.url}>
-                <Image 
-                  src={data.enterprise.logo} 
-                  alt="Iris Logo" 
-                  width={20} 
+                <Image
+                  src={data.enterprise.logo}
+                  alt="Iris Logo"
+                  width={20}
                   height={20}
                   className="!size-5"
                 />

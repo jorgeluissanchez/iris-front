@@ -9,7 +9,8 @@ import { getJuriesQueryOptions } from "./get-juries";
 
 export const createJuryInputSchema = z.object({
   email: z.string().min(1, "Required").email("Invalid email address"),
-  eventId: z.string().min(1, "Required"),
+  eventIds: z.array(z.string()).min(1, "At least one event is required"),
+  projectIds: z.array(z.string()).optional().default([]),
 });
 
 export type CreateJuryInput = z.infer<typeof createJuryInputSchema>;

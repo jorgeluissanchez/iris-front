@@ -26,7 +26,7 @@ export const dashboardHandlers = [
       }).length;
 
       // Calcular total de proyectos
-      const totalProjects = db.project_public.count();
+      const totalProjects = db.project.count();
 
       // Calcular miembros del jurado activos (con invitationStatus "accepted")
       const juryMembers = db.jury.findMany({
@@ -54,4 +54,3 @@ export const dashboardHandlers = [
     }
   }),
 ];
-

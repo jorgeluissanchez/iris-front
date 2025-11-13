@@ -1,38 +1,40 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { api } from "@/lib/api-client";
-import { Criterion } from "@/types/api";
 import { MutationConfig } from "@/lib/react-query";
+import { Jury } from "@/types/api";
 
-import { getCriteriaQueryOptions } from "./get-criteria";
+import { getJuriesQueryOptions } from "./get-juries";
 
-export const deleteCriteria = ({
-  criterionId,
+export const acceptJury = ({
+  juryId,
 }: {
-  criterionId: string;
-}): Promise<{ data: Criterion }> => {
-  return api.delete(`/criterion/${criterionId}`);
+  juryId: string;
+}): Promise<{ data: Jury }> => {
+  return api.patch(`/juries/${juryId}`, {
+    invitationStatus: "accepted",
+  });
 };
 
-type UseDeleteCriteriaOptions = {
-  mutationConfig?: MutationConfig<typeof deleteCriteria>;
+type UseAcceptJuryOptions = {
+  mutationConfig?: MutationConfig<typeof acceptJury>;
 };
 
-export const useDeleteCriteria = ({
+export const useAcceptJury = ({
   mutationConfig,
-}: UseDeleteCriteriaOptions = {}) => {
+}: UseAcceptJuryOptions = {}) => {
   const queryClient = useQueryClient();
-
   const { onSuccess, ...restConfig } = mutationConfig || {};
 
   return useMutation({
     onSuccess: (data, variables, ...args) => {
       queryClient.invalidateQueries({
-        queryKey: ["criterion"],
+        queryKey: ["juries"],
       });
       onSuccess?.(data, variables, ...args);
     },
     ...restConfig,
-    mutationFn: deleteCriteria,
+    mutationFn: acceptJury,
   });
 };
+

@@ -1,57 +1,76 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Button } from "@heroui/button"
-import { ParticipantsStep } from "./wizard-steps/participants-step"
-import { ProjectDetailsStep } from "./wizard-steps/project-details-step"
-import { DocumentsStep } from "./wizard-steps/documents-step"
-import { ReviewStep } from "./wizard-steps/review-step"
-import { CheckCircle2, FileText, Users, Upload } from "lucide-react"
-import { cn } from "@/utils/cn"
-import { set, z } from "zod"
-import { participantSchema, projectSchema, documentsSchema } from "../schemas/wizard-schema"
-import { createProjectInputSchema , useCreateProject } from "../api/create-project"
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { Button } from "@heroui/button";
+import { ParticipantsStep } from "./wizard-steps/participants-step";
+import { ProjectDetailsStep } from "./wizard-steps/project-details-step";
+import { DocumentsStep } from "./wizard-steps/documents-step";
+import { ReviewStep } from "./wizard-steps/review-step";
+import { CheckCircle2, FileText, Users, Upload } from "lucide-react";
+import { cn } from "@/utils/cn";
+import { set, z } from "zod";
+import {
+  participantSchema,
+  projectSchema,
+  documentsSchema,
+} from "../schemas/wizard-schema";
+import {
+  createProjectInputSchema,
+  useCreateProject,
+} from "../api/create-project";
+import { useCreateCourse } from "@/features/courses/api/create-course";
+import {
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+} from "@/components/ui/modal";
+import { paths } from "@/config/paths";
 
 export type Participant = {
-  id: string
-  firstName: string
-  lastName: string
-  email: string
-  studentCode?: string
-}
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  studentCode?: string;
+};
 
 export type ProjectData = {
-  name: string
-  description: string
-  courseId: string
-  logo: string
-}
+  name: string;
+  description: string;
+  courseId: string;
+  logo: string;
+};
 
 export type DocumentsData = {
-  poster: File | null
-  additionalDocuments: File[]
-}
+  poster: File | null;
+  additionalDocuments: File[];
+};
 
 export type WizardData = {
-  participants: Participant[]
-  project: ProjectData
-  documents: DocumentsData
-}
+  participants: Participant[];
+  project: ProjectData;
+  documents: DocumentsData;
+};
 
 const steps = [
   { id: 1, name: "Participantes", icon: Users },
   { id: 2, name: "Proyecto", icon: FileText },
   { id: 3, name: "Documentos", icon: Upload },
   { id: 4, name: "Revisión", icon: CheckCircle2 },
-]
+];
 
 type ProjectWizardProps = {
-  eventId: string
-}
+  eventId: string;
+};
 
 export function ProjectWizard({ eventId }: ProjectWizardProps) {
-  const [currentStep, setCurrentStep] = useState(1)
-  const [stepErrors, setStepErrors] = useState<string[]>([])
+  const router = useRouter();
+  const [currentStep, setCurrentStep] = useState(1);
+  const [stepErrors, setStepErrors] = useState<string[]>([]);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [wizardData, setWizardData] = useState<WizardData>({
     participants: [],
     project: {
@@ -64,86 +83,104 @@ export function ProjectWizard({ eventId }: ProjectWizardProps) {
       poster: null,
       additionalDocuments: [],
     },
-  })
-  const createProjectMutation = useCreateProject()
+  });
+  const createProjectMutation = useCreateProject({
+    mutationConfig: {
+      onSuccess: () => {
+        setShowSuccessModal(true);
+      },
+      onError: (error: any) => {
+        const errorMessage =
+          error?.response?.data?.message ||
+          error?.message ||
+          "Error al crear el proyecto. Por favor intente nuevamente.";
+        setStepErrors([errorMessage]);
+      },
+    },
+  });
 
   const updateParticipants = (participants: Participant[]) => {
-    setWizardData((prev) => ({ ...prev, participants }))
-  }
+    setWizardData((prev) => ({ ...prev, participants }));
+  };
 
   const updateProject = (project: ProjectData) => {
-    setWizardData((prev) => ({ ...prev, project }))
-  }
+    setWizardData((prev) => ({ ...prev, project }));
+  };
 
   const updateDocuments = (documents: DocumentsData) => {
-    setWizardData((prev) => ({ ...prev, documents }))
-  }
+    setWizardData((prev) => ({ ...prev, documents }));
+  };
 
   const validateStep = (step: number): boolean => {
-    setStepErrors([])
+    setStepErrors([]);
 
     try {
       switch (step) {
         case 1: // Participantes
           z.array(participantSchema)
-            .min(1, 'Debe agregar al menos un participante')
-            .parse(wizardData.participants)
-          return true
+            .min(1, "Debe agregar al menos un participante")
+            .parse(wizardData.participants);
+          return true;
 
         case 2: // Proyecto
-          projectSchema.parse(wizardData.project)
-          return true
+          projectSchema.parse(wizardData.project);
+          return true;
 
         case 3: // Documentos
-          documentsSchema.parse(wizardData.documents)
-          return true
+          documentsSchema.parse(wizardData.documents);
+          return true;
 
         default:
-          return true
+          return true;
       }
     } catch (error) {
       if (error instanceof z.ZodError) {
-        const messages = error.issues.map((e) => e.message)
-        setStepErrors(messages)
+        const messages = error.issues.map((e) => e.message);
+        setStepErrors(messages);
       }
-      return false
+      return false;
     }
-  }
+  };
 
   const handleNext = () => {
     if (validateStep(currentStep)) {
       if (currentStep < steps.length) {
-        setCurrentStep(currentStep + 1)
+        setCurrentStep(currentStep + 1);
       }
     }
-  }
+  };
 
   const handleBack = () => {
     if (currentStep > 1) {
-      setStepErrors([])
-      setCurrentStep(currentStep - 1)
+      setStepErrors([]);
+      setCurrentStep(currentStep - 1);
     }
-  }
+  };
 
-  const mapFileToDocument = (file: File | null, kind: 'POSTER' | 'SUPPORTING_DOCUMENT') => {
-    if (!file) return null
+  const mapFileToDocument = (
+    file: File | null,
+    kind: "POSTER" | "SUPPORTING_DOCUMENT"
+  ) => {
+    if (!file) return null;
     return {
       type: kind,
       url: URL.createObjectURL(file),
-    }
-  }
+    };
+  };
 
   const handleSubmit = () => {
-    setStepErrors([])
+    setStepErrors([]);
     const payload: any = {
       eventId: eventId,
       courseId: wizardData.project.courseId,
       name: wizardData.project.name,
       logo: `https://storage.example.com/projects/logos/${Date.now()}.png`,
       documents: [
-        ...(mapFileToDocument(wizardData.documents.poster, 'POSTER') ? [mapFileToDocument(wizardData.documents.poster, 'POSTER')] : []),
+        ...(mapFileToDocument(wizardData.documents.poster, "POSTER")
+          ? [mapFileToDocument(wizardData.documents.poster, "POSTER")]
+          : []),
         ...wizardData.documents.additionalDocuments.map((f) => ({
-          type: 'SUPPORTING_DOCUMENT',
+          type: "SUPPORTING_DOCUMENT",
           url: URL.createObjectURL(f),
         })),
       ],
@@ -152,30 +189,27 @@ export function ProjectWizard({ eventId }: ProjectWizardProps) {
           firstName: p.firstName,
           lastName: p.lastName,
           email: p.email,
-        }
+        };
         if (p.studentCode) {
-          participant.studentCode = p.studentCode
+          participant.studentCode = p.studentCode;
         }
-        return participant
+        return participant;
       }),
-    }
+    };
 
     if (wizardData.project.description) {
-      payload.description = wizardData.project.description
+      payload.description = wizardData.project.description;
     }
 
     try {
-      const validated = createProjectInputSchema.parse(payload)
-      createProjectMutation.mutate({ data: validated })
-      console.log("Creating project:", validated)
+      const validated = createProjectInputSchema.parse(payload);
+      createProjectMutation.mutate({ data: validated });
     } catch (e) {
       if (e instanceof z.ZodError) {
-        setStepErrors(e.issues.map(i => i.message))
+        setStepErrors(e.issues.map((i) => i.message));
       }
     }
-
-    console.log("Submitting project with payload:", payload)
-  }
+  };
 
   return (
     <div className="space-y-6 sm:space-y-8">
@@ -183,22 +217,20 @@ export function ProjectWizard({ eventId }: ProjectWizardProps) {
       <nav aria-label="Progress" className="px-2 sm:px-4">
         <ol className="flex items-center justify-center max-w-3xl mx-auto">
           {steps.map((step, stepIdx) => {
-            const Icon = step.icon
-            const isCompleted = currentStep > step.id
-            const isCurrent = currentStep === step.id
+            const Icon = step.icon;
+            const isCompleted = currentStep > step.id;
+            const isCurrent = currentStep === step.id;
 
             return (
               <li
                 key={step.id}
-                className={cn(
-                  "relative flex flex-col items-center flex-1",
-                )}
+                className={cn("relative flex flex-col items-center flex-1")}
               >
                 {stepIdx !== steps.length - 1 && (
                   <div
                     className={cn(
                       "absolute top-4 sm:top-5 h-0.5 left-[50%] right-0 translate-x-[16px] sm:translate-x-[20px] -mr-[32px] sm:-mr-[56px]",
-                      isCompleted ? "bg-primary" : "bg-border/30",
+                      isCompleted ? "bg-primary" : "bg-border/30"
                     )}
                     aria-hidden="true"
                   />
@@ -206,21 +238,27 @@ export function ProjectWizard({ eventId }: ProjectWizardProps) {
                 <button
                   className={cn(
                     "relative z-10 flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-full border-2 transition-all duration-300 flex-shrink-0",
-                    isCompleted && "border-primary bg-primary text-primary-foreground shadow-lg shadow-primary/50",
-                    isCurrent && "border-primary bg-background text-primary ring-4 ring-primary/20",
-                    !isCompleted && !isCurrent && "border-border/50 bg-background/50 text-muted-foreground",
+                    isCompleted &&
+                      "border-primary bg-primary text-primary-foreground shadow-lg shadow-primary/50",
+                    isCurrent &&
+                      "border-primary bg-background text-primary ring-4 ring-primary/20",
+                    !isCompleted &&
+                      !isCurrent &&
+                      "border-border/50 bg-background/50 text-muted-foreground"
                   )}
                 >
                   <Icon className="h-4 w-4 sm:h-5 sm:w-5" />
                 </button>
-                <span className={cn(
-                  "mt-1.5 sm:mt-2 text-xs sm:text-sm font-medium text-center max-w-[80px] sm:max-w-none",
-                  isCurrent ? "text-foreground" : "text-muted-foreground"
-                )}>
+                <span
+                  className={cn(
+                    "mt-1.5 sm:mt-2 text-xs sm:text-sm font-medium text-center max-w-[80px] sm:max-w-none",
+                    isCurrent ? "text-foreground" : "text-muted-foreground"
+                  )}
+                >
                   {step.name}
                 </span>
               </li>
-            )
+            );
           })}
         </ol>
       </nav>
@@ -229,7 +267,9 @@ export function ProjectWizard({ eventId }: ProjectWizardProps) {
       <div className="glass-card p-4 sm:p-6 md:p-8 rounded-xl sm:rounded-2xl border border-border/30">
         <div className="mb-4 sm:mb-6">
           <div className="flex flex-col gap-1">
-            <h2 className="text-xl sm:text-2xl font-bold text-foreground">{steps[currentStep - 1].name}</h2>
+            <h2 className="text-xl sm:text-2xl font-bold text-foreground">
+              {steps[currentStep - 1].name}
+            </h2>
             <p className="text-muted-foreground text-xs sm:text-sm">
               {currentStep === 1 && "Agregue los participantes del proyecto"}
               {currentStep === 2 && "Ingrese los detalles del proyecto"}
@@ -238,22 +278,40 @@ export function ProjectWizard({ eventId }: ProjectWizardProps) {
             </p>
           </div>
         </div>
-        
+
         <div>
           {currentStep === 1 && (
-            <ParticipantsStep participants={wizardData.participants} onUpdate={updateParticipants} />
+            <ParticipantsStep
+              participants={wizardData.participants}
+              onUpdate={updateParticipants}
+            />
           )}
-          {currentStep === 2 && <ProjectDetailsStep eventId={eventId} project={wizardData.project} onUpdate={updateProject} />}
-          {currentStep === 3 && <DocumentsStep documents={wizardData.documents} onUpdate={updateDocuments} />}
+          {currentStep === 2 && (
+            <ProjectDetailsStep
+              eventId={eventId}
+              project={wizardData.project}
+              onUpdate={updateProject}
+            />
+          )}
+          {currentStep === 3 && (
+            <DocumentsStep
+              documents={wizardData.documents}
+              onUpdate={updateDocuments}
+            />
+          )}
           {currentStep === 4 && <ReviewStep data={wizardData} />}
 
           {/* Mostrar errores de validación */}
           {stepErrors.length > 0 && (
             <div className="mt-4 p-3 sm:p-4 glass-card border-2 border-red-500/50 rounded-lg">
-              <p className="text-red-400 font-semibold mb-2 text-sm sm:text-base">Errores de validación:</p>
+              <p className="text-red-400 font-semibold mb-2 text-sm sm:text-base">
+                Errores de validación:
+              </p>
               <ul className="list-disc list-inside space-y-1">
                 {stepErrors.map((error, idx) => (
-                  <li key={idx} className="text-red-300 text-xs sm:text-sm">{error}</li>
+                  <li key={idx} className="text-red-300 text-xs sm:text-sm">
+                    {error}
+                  </li>
                 ))}
               </ul>
             </div>
@@ -263,34 +321,85 @@ export function ProjectWizard({ eventId }: ProjectWizardProps) {
 
       {/* Navigation Buttons */}
       <div className="flex flex-col sm:flex-row justify-between gap-3 sm:gap-4 px-2 sm:px-0">
-        <Button 
-          variant="bordered" 
-          onPress={handleBack} 
+        <Button
+          variant="bordered"
+          onPress={handleBack}
           isDisabled={currentStep === 1}
           className="glass-effect border-border/50 hover:border-primary/50 transition-all w-full sm:w-auto order-2 sm:order-1"
         >
           Anterior
         </Button>
         {currentStep < steps.length ? (
-          <Button 
-            color="primary" 
+          <Button
+            color="primary"
             onPress={handleNext}
             className="shadow-lg shadow-primary/30 hover:shadow-xl hover:shadow-primary/40 transition-all w-full sm:w-auto order-1 sm:order-2"
           >
             Siguiente
           </Button>
         ) : (
-          <Button 
-            color="success" 
+          <Button
+            color="success"
             onPress={handleSubmit}
             isLoading={createProjectMutation.isPending}
             isDisabled={createProjectMutation.isPending}
             className="shadow-lg shadow-success/30 hover:shadow-xl hover:shadow-success/40 transition-all w-full sm:w-auto order-1 sm:order-2"
-            >
-              {createProjectMutation.isPending ? "Creando..." : "Enviar Proyecto"}
+          >
+            {createProjectMutation.isPending ? "Creando..." : "Enviar Proyecto"}
           </Button>
         )}
       </div>
+
+      {/* Success Modal */}
+      <Modal
+        isOpen={showSuccessModal}
+        onOpenChange={setShowSuccessModal}
+        isDismissable={false}
+        hideCloseButton
+        size="lg"
+      >
+        <ModalContent>
+          {() => (
+            <>
+              <ModalHeader className="flex flex-col gap-1">
+                <div className="flex items-center justify-center w-full mb-4">
+                  <div className="w-16 h-16 bg-success/20 rounded-full flex items-center justify-center">
+                    <CheckCircle2 className="w-10 h-10 text-success" />
+                  </div>
+                </div>
+              </ModalHeader>
+              <ModalBody className="text-center pb-6">
+                <h3 className="text-2xl font-bold text-foreground mb-2">
+                  ¡Proyecto Enviado Exitosamente!
+                </h3>
+                <p className="text-muted-foreground">
+                  Tu proyecto{" "}
+                  <span className="font-semibold text-foreground">
+                    {wizardData.project.name}
+                  </span>{" "}
+                  ha sido registrado correctamente.
+                </p>
+                <p className="text-sm text-muted-foreground mt-4">
+                  Recibirás una notificación cuando sea revisado por el equipo
+                  administrativo.
+                </p>
+              </ModalBody>
+              <ModalFooter className="justify-center">
+                <Button
+                  color="primary"
+                  onPress={() => {
+                    setShowSuccessModal(false);
+                    router.push(paths.home.getHref());
+                  }}
+                  className="w-full sm:w-auto shadow-lg shadow-primary/30"
+                >
+                  Volver al Inicio
+                </Button>
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
     </div>
-  )
+  );
 }
