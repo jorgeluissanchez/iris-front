@@ -136,7 +136,7 @@ export function ProjectEvaluationView({ projectId }: ProjectEvaluationViewProps)
     if (projects?.eventId) {
       router.push(`/app/events/${projects.eventId}`)
     } else {
-      router.back()
+      router.push('/app')
     }
   }
 
@@ -146,7 +146,7 @@ export function ProjectEvaluationView({ projectId }: ProjectEvaluationViewProps)
         <Button
           variant="light"
           className="gap-2"
-          onClick={() => router.back()}
+          onClick={handleGoBack}
         >
           <ArrowLeft className="h-4 w-4" />
           Back

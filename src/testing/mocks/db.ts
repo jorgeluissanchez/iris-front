@@ -47,6 +47,13 @@ const models = {
     evaluationsStatus: String,
     createdAt: Date.now,
   },
+  eventMembership: {
+    id: primaryKey(nanoid),
+    eventId: String,
+    userId: String,
+    eventRole: String,
+    createdAt: Date.now,
+  },
   evaluation: {
     id: primaryKey(nanoid),
     projectId: String,

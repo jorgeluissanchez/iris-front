@@ -75,7 +75,7 @@ export const authHandlers = [
           );
         }
         teamId = userObject.teamId;
-        role = 'STUDENT';
+        role = 'USER';
       }
 
       db.user.create({

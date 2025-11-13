@@ -11,7 +11,8 @@ import '@/features/landing/index.css';
 const LoginPage = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const redirectTo = searchParams?.get('redirectTo');
+  // Comentamos redirectTo para siempre ir a /app después del login
+  // const redirectTo = searchParams?.get('redirectTo');
 
   return (
     <PublicLayout showNavLinks={false} showLoginButton={false}>
@@ -43,9 +44,7 @@ const LoginPage = () => {
           <div className="glass-card p-6 sm:p-8 w-full">
             <LoginForm
               onSuccess={() =>
-                router.replace(
-                  `${redirectTo ? `${decodeURIComponent(redirectTo)}` : paths.app.dashboard.getHref()}`,
-                )
+                router.replace(paths.app.dashboard.getHref())
               }
             />
           </div>

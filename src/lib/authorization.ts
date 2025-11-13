@@ -72,11 +72,8 @@ export const canDeleteComment = (
     return true;
   }
 
-  // STUDENT y JURY pueden eliminar sus propios comentarios
-  if (
-    (user?.role === "STUDENT" || user?.role === "JURY") &&
-    comment.author?.id === user.id
-  ) {
+  // Los USER pueden eliminar sus propios comentarios
+  if (user?.role === "USER" && comment.author?.id === user.id) {
     return true;
   }
 

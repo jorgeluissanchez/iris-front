@@ -24,7 +24,7 @@ export type User = Entity<{
   firstName: string;
   lastName: string;
   email: string;
-  role: "ADMIN" | "STUDENT" | "JURY";
+  role: "ADMIN" | "USER";
   teamId: string;
   bio: string;
 }>;
@@ -53,6 +53,13 @@ export type Comment = Entity<{
   author: User;
 }>;
 
+export type EventMembership = Entity<{
+  eventId: string;
+  userId: string;
+  eventRole: "STUDENT" | "JURY";
+  event: Event;
+}>;
+
 export type Event = Entity<{
   id: string;
   title: string;
@@ -63,6 +70,7 @@ export type Event = Entity<{
   accessCode: string;
   isPublic: boolean;
   evaluationsStatus: "open" | "closed";
+  userEventRole?: "STUDENT" | "JURY"; // El rol del usuario actual en este evento
   createdAt: number;
 }>;
 

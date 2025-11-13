@@ -69,10 +69,10 @@ export const EvaluationProject = ({ projectId, className }: EvaluationProjectPro
                 <div className="flex-1 border-b border-border" />
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                {evaluations[0]?.scores?.map((score: { criterion: string; score: number }) => (
+                {evaluations[0]?.scores?.map((score: { criterion: string; score: number }, index: number) => (
                     <CriteriaEvaluationCard
-                        key={score.criterion}
-                        title={score.criterion}
+                        key={score.criterion || `criterion-${index}`}
+                        title={score.criterion || `Criterion ${index + 1}`}
                         score={Number((evaluations.reduce((sum: number, evaluation: any) => {
                             const criterionScore = evaluation.scores.find((s: any) => s.criterion === score.criterion)?.score || 0;
                             return sum + criterionScore;

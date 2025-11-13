@@ -150,7 +150,7 @@
       "logo": "https://storage.example.com/projects/logos/1762532588622.png",
       "description": "Proyecto innovador de realidad aumentada para educación",
       "eventNumber": "100",
-      "state": "UNDER_REVIEW",
+      "state": "APPROVED",
       "documents": [
         {
           "type": "POSTER",
@@ -162,9 +162,17 @@
         }
       ],
       "participants": [
-        { "firstName": "Juan", "lastName": "Povea", "email": "a@a.com" }
+        {
+          "firstName": "Juan",
+          "lastName": "Povea",
+          "email": "a@a.com"
+        }
       ],
-      "jurorAssignments": [{ "memberUserId": "mGTXAkfKT0NNp43BQZ43g" }],
+      "jurorAssignments": [
+        {
+          "memberUserId": "J0XB96c6XkGj46Nli36Ii"
+        }
+      ],
       "createdAt": 1762532590077
     }
   ],
@@ -176,9 +184,15 @@
       "description": "Evaluación de la originalidad y propuesta innovadora del proyecto",
       "weight": 1.5,
       "criterionCourse": [
-        { "courseId": "qZ8PjJm_Va0Jg7JH7g1m" },
-        { "courseId": "Xf3lVw9Q_Pk2sTt8Nn4y" },
-        { "courseId": "Np6QwEr2_Yu8Io9As3Df" }
+        {
+          "courseId": "qZ8PjJm_Va0Jg7JH7g1m"
+        },
+        {
+          "courseId": "Xf3lVw9Q_Pk2sTt8Nn4y"
+        },
+        {
+          "courseId": "Np6QwEr2_Yu8Io9As3Df"
+        }
       ],
       "createdAt": 1762190000010
     },
@@ -189,9 +203,15 @@
       "description": "Evaluación de la implementación técnica y arquitectura del proyecto",
       "weight": 2,
       "criterionCourse": [
-        { "courseId": "qZ8PjJm_Va0Jg7JH7g1m" },
-        { "courseId": "Xf3lVw9Q_Pk2sTt8Nn4y" },
-        { "courseId": "Bv7HcD1L_Rt5yUu3Mm2k" }
+        {
+          "courseId": "qZ8PjJm_Va0Jg7JH7g1m"
+        },
+        {
+          "courseId": "Xf3lVw9Q_Pk2sTt8Nn4y"
+        },
+        {
+          "courseId": "Bv7HcD1L_Rt5yUu3Mm2k"
+        }
       ],
       "createdAt": 1762190000011
     },
@@ -202,10 +222,18 @@
       "description": "Calidad de la presentación oral y documentación técnica",
       "weight": 1,
       "criterionCourse": [
-        { "courseId": "qZ8PjJm_Va0Jg7JH7g1m" },
-        { "courseId": "Xf3lVw9Q_Pk2sTt8Nn4y" },
-        { "courseId": "Bv7HcD1L_Rt5yUu3Mm2k" },
-        { "courseId": "Np6QwEr2_Yu8Io9As3Df" }
+        {
+          "courseId": "qZ8PjJm_Va0Jg7JH7g1m"
+        },
+        {
+          "courseId": "Xf3lVw9Q_Pk2sTt8Nn4y"
+        },
+        {
+          "courseId": "Bv7HcD1L_Rt5yUu3Mm2k"
+        },
+        {
+          "courseId": "Np6QwEr2_Yu8Io9As3Df"
+        }
       ],
       "createdAt": 1762190000012
     },
@@ -216,10 +244,18 @@
       "description": "Coordinación y distribución de tareas entre los miembros",
       "weight": 0.5,
       "criterionCourse": [
-        { "courseId": "qZ8PjJm_Va0Jg7JH7g1m" },
-        { "courseId": "Xf3lVw9Q_Pk2sTt8Nn4y" },
-        { "courseId": "Bv7HcD1L_Rt5yUu3Mm2k" },
-        { "courseId": "Np6QwEr2_Yu8Io9As3Df" }
+        {
+          "courseId": "qZ8PjJm_Va0Jg7JH7g1m"
+        },
+        {
+          "courseId": "Xf3lVw9Q_Pk2sTt8Nn4y"
+        },
+        {
+          "courseId": "Bv7HcD1L_Rt5yUu3Mm2k"
+        },
+        {
+          "courseId": "Np6QwEr2_Yu8Io9As3Df"
+        }
       ],
       "createdAt": 1762190000013
     },
@@ -229,7 +265,11 @@
       "name": "Modelado de Datos",
       "description": "Calidad del diseño del modelo de datos y normalización",
       "weight": 1.5,
-      "criterionCourse": [{ "courseId": "Bv7HcD1L_Rt5yUu3Mm2k" }],
+      "criterionCourse": [
+        {
+          "courseId": "Bv7HcD1L_Rt5yUu3Mm2k"
+        }
+      ],
       "createdAt": 1762190000014
     },
     {
@@ -239,8 +279,12 @@
       "description": "Exactitud y rendimiento de los algoritmos",
       "weight": 1.5,
       "criterionCourse": [
-        { "courseId": "qZ8PjJm_Va0Jg7JH7g1m" },
-        { "courseId": "Np6QwEr2_Yu8Io9As3Df" }
+        {
+          "courseId": "qZ8PjJm_Va0Jg7JH7g1m"
+        },
+        {
+          "courseId": "Np6QwEr2_Yu8Io9As3Df"
+        }
       ],
       "createdAt": 1762190000015
     },
@@ -251,8 +295,12 @@
       "description": "Eficiencia en el uso de recursos computacionales",
       "weight": 0.5,
       "criterionCourse": [
-        { "courseId": "Bv7HcD1L_Rt5yUu3Mm2k" },
-        { "courseId": "Np6QwEr2_Yu8Io9As3Df" }
+        {
+          "courseId": "Bv7HcD1L_Rt5yUu3Mm2k"
+        },
+        {
+          "courseId": "Np6QwEr2_Yu8Io9As3Df"
+        }
       ],
       "createdAt": 1762190000017
     }
@@ -412,10 +460,22 @@
       "grade": 16.8,
       "comments": "Bacano",
       "scores": [
-        { "criterion": "crit_001", "score": 4 },
-        { "criterion": "crit_002", "score": 4.6 },
-        { "criterion": "crit_003", "score": 3.4 },
-        { "criterion": "crit_004", "score": 4.8 }
+        {
+          "criterion": "crit_001",
+          "score": 4
+        },
+        {
+          "criterion": "crit_002",
+          "score": 4.6
+        },
+        {
+          "criterion": "crit_003",
+          "score": 3.4
+        },
+        {
+          "criterion": "crit_004",
+          "score": 4.8
+        }
       ],
       "createdAt": 1762743671977
     },
@@ -426,10 +486,22 @@
       "grade": 16,
       "comments": "gdhhf",
       "scores": [
-        { "criterion": "crit_001", "score": 4 },
-        { "criterion": "crit_002", "score": 4 },
-        { "criterion": "crit_003", "score": 4 },
-        { "criterion": "crit_004", "score": 4 }
+        {
+          "criterion": "crit_001",
+          "score": 4
+        },
+        {
+          "criterion": "crit_002",
+          "score": 4
+        },
+        {
+          "criterion": "crit_003",
+          "score": 4
+        },
+        {
+          "criterion": "crit_004",
+          "score": 4
+        }
       ],
       "createdAt": 1762743768013
     },
@@ -440,10 +512,22 @@
       "grade": 15.5,
       "comments": "chevere",
       "scores": [
-        { "criterion": "crit_001", "score": 4 },
-        { "criterion": "crit_002", "score": 3.5 },
-        { "criterion": "crit_003", "score": 4 },
-        { "criterion": "crit_004", "score": 4 }
+        {
+          "criterion": "crit_001",
+          "score": 4
+        },
+        {
+          "criterion": "crit_002",
+          "score": 3.5
+        },
+        {
+          "criterion": "crit_003",
+          "score": 4
+        },
+        {
+          "criterion": "crit_004",
+          "score": 4
+        }
       ],
       "createdAt": 1762748910294
     },
@@ -454,10 +538,22 @@
       "grade": 19,
       "comments": "Cool",
       "scores": [
-        { "criterion": "crit_001", "score": 5 },
-        { "criterion": "crit_002", "score": 4 },
-        { "criterion": "crit_003", "score": 5 },
-        { "criterion": "crit_004", "score": 5 }
+        {
+          "criterion": "crit_001",
+          "score": 5
+        },
+        {
+          "criterion": "crit_002",
+          "score": 4
+        },
+        {
+          "criterion": "crit_003",
+          "score": 5
+        },
+        {
+          "criterion": "crit_004",
+          "score": 5
+        }
       ],
       "createdAt": 1762749297712
     },
@@ -468,10 +564,22 @@
       "grade": 20,
       "comments": "ok",
       "scores": [
-        { "criterion": "crit_001", "score": 5 },
-        { "criterion": "crit_002", "score": 5 },
-        { "criterion": "crit_003", "score": 5 },
-        { "criterion": "crit_004", "score": 5 }
+        {
+          "criterion": "crit_001",
+          "score": 5
+        },
+        {
+          "criterion": "crit_002",
+          "score": 5
+        },
+        {
+          "criterion": "crit_003",
+          "score": 5
+        },
+        {
+          "criterion": "crit_004",
+          "score": 5
+        }
       ],
       "createdAt": 1762749430699
     },
@@ -482,10 +590,22 @@
       "grade": 16,
       "comments": "bueno",
       "scores": [
-        { "criterion": "crit_001", "score": 4 },
-        { "criterion": "crit_002", "score": 4 },
-        { "criterion": "crit_003", "score": 4 },
-        { "criterion": "crit_004", "score": 4 }
+        {
+          "criterion": "crit_001",
+          "score": 4
+        },
+        {
+          "criterion": "crit_002",
+          "score": 4
+        },
+        {
+          "criterion": "crit_003",
+          "score": 4
+        },
+        {
+          "criterion": "crit_004",
+          "score": 4
+        }
       ],
       "createdAt": 1762749479482
     },
@@ -496,10 +616,22 @@
       "grade": 16,
       "comments": "good",
       "scores": [
-        { "criterion": "crit_001", "score": 3 },
-        { "criterion": "crit_002", "score": 3 },
-        { "criterion": "crit_003", "score": 5 },
-        { "criterion": "crit_004", "score": 5 }
+        {
+          "criterion": "crit_001",
+          "score": 3
+        },
+        {
+          "criterion": "crit_002",
+          "score": 3
+        },
+        {
+          "criterion": "crit_003",
+          "score": 5
+        },
+        {
+          "criterion": "crit_004",
+          "score": 5
+        }
       ],
       "createdAt": 1762749555967
     },
@@ -510,10 +642,22 @@
       "grade": 15,
       "comments": "kul",
       "scores": [
-        { "criterion": "crit_001", "score": 5 },
-        { "criterion": "crit_002", "score": 4 },
-        { "criterion": "crit_003", "score": 3 },
-        { "criterion": "crit_004", "score": 3 }
+        {
+          "criterion": "crit_001",
+          "score": 5
+        },
+        {
+          "criterion": "crit_002",
+          "score": 4
+        },
+        {
+          "criterion": "crit_003",
+          "score": 3
+        },
+        {
+          "criterion": "crit_004",
+          "score": 3
+        }
       ],
       "createdAt": 1762749587575
     },
@@ -524,10 +668,22 @@
       "grade": 16.8,
       "comments": "r",
       "scores": [
-        { "criterion": "crit_001", "score": 5 },
-        { "criterion": "crit_002", "score": 5 },
-        { "criterion": "crit_003", "score": 3.8 },
-        { "criterion": "crit_004", "score": 3 }
+        {
+          "criterion": "crit_001",
+          "score": 5
+        },
+        {
+          "criterion": "crit_002",
+          "score": 5
+        },
+        {
+          "criterion": "crit_003",
+          "score": 3.8
+        },
+        {
+          "criterion": "crit_004",
+          "score": 3
+        }
       ],
       "createdAt": 1762749610883
     },
@@ -538,10 +694,22 @@
       "grade": 19,
       "comments": "excel",
       "scores": [
-        { "criterion": "crit_001", "score": 4 },
-        { "criterion": "crit_002", "score": 5 },
-        { "criterion": "crit_003", "score": 5 },
-        { "criterion": "crit_004", "score": 5 }
+        {
+          "criterion": "crit_001",
+          "score": 4
+        },
+        {
+          "criterion": "crit_002",
+          "score": 5
+        },
+        {
+          "criterion": "crit_003",
+          "score": 5
+        },
+        {
+          "criterion": "crit_004",
+          "score": 5
+        }
       ],
       "createdAt": 1762749655509
     },
@@ -552,10 +720,22 @@
       "grade": 20,
       "comments": "wi",
       "scores": [
-        { "criterion": "crit_001", "score": 5 },
-        { "criterion": "crit_002", "score": 5 },
-        { "criterion": "crit_003", "score": 5 },
-        { "criterion": "crit_004", "score": 5 }
+        {
+          "criterion": "crit_001",
+          "score": 5
+        },
+        {
+          "criterion": "crit_002",
+          "score": 5
+        },
+        {
+          "criterion": "crit_003",
+          "score": 5
+        },
+        {
+          "criterion": "crit_004",
+          "score": 5
+        }
       ],
       "createdAt": 1762749715447
     },
@@ -566,10 +746,22 @@
       "grade": 20,
       "comments": "ok",
       "scores": [
-        { "criterion": "crit_001", "score": 5 },
-        { "criterion": "crit_002", "score": 5 },
-        { "criterion": "crit_003", "score": 5 },
-        { "criterion": "crit_004", "score": 5 }
+        {
+          "criterion": "crit_001",
+          "score": 5
+        },
+        {
+          "criterion": "crit_002",
+          "score": 5
+        },
+        {
+          "criterion": "crit_003",
+          "score": 5
+        },
+        {
+          "criterion": "crit_004",
+          "score": 5
+        }
       ],
       "createdAt": 1762749750535
     },
@@ -580,10 +772,22 @@
       "grade": 17,
       "comments": "okk",
       "scores": [
-        { "criterion": "crit_001", "score": 5 },
-        { "criterion": "crit_002", "score": 5 },
-        { "criterion": "crit_003", "score": 4 },
-        { "criterion": "crit_004", "score": 3 }
+        {
+          "criterion": "crit_001",
+          "score": 5
+        },
+        {
+          "criterion": "crit_002",
+          "score": 5
+        },
+        {
+          "criterion": "crit_003",
+          "score": 4
+        },
+        {
+          "criterion": "crit_004",
+          "score": 3
+        }
       ],
       "createdAt": 1762749868779
     },
@@ -594,10 +798,22 @@
       "grade": 20,
       "comments": "nice",
       "scores": [
-        { "criterion": "crit_001", "score": 5 },
-        { "criterion": "crit_002", "score": 5 },
-        { "criterion": "crit_003", "score": 5 },
-        { "criterion": "crit_004", "score": 5 }
+        {
+          "criterion": "crit_001",
+          "score": 5
+        },
+        {
+          "criterion": "crit_002",
+          "score": 5
+        },
+        {
+          "criterion": "crit_003",
+          "score": 5
+        },
+        {
+          "criterion": "crit_004",
+          "score": 5
+        }
       ],
       "createdAt": 1762749945553
     },
@@ -608,10 +824,22 @@
       "grade": 20,
       "comments": "Buen trabajo",
       "scores": [
-        { "criterion": "crit_001", "score": 5 },
-        { "criterion": "crit_002", "score": 5 },
-        { "criterion": "crit_003", "score": 5 },
-        { "criterion": "crit_004", "score": 5 }
+        {
+          "criterion": "crit_001",
+          "score": 5
+        },
+        {
+          "criterion": "crit_002",
+          "score": 5
+        },
+        {
+          "criterion": "crit_003",
+          "score": 5
+        },
+        {
+          "criterion": "crit_004",
+          "score": 5
+        }
       ],
       "createdAt": 1762749984496
     },
@@ -622,10 +850,22 @@
       "grade": 19,
       "comments": "bien hecho",
       "scores": [
-        { "criterion": "crit_001", "score": 5 },
-        { "criterion": "crit_002", "score": 5 },
-        { "criterion": "crit_003", "score": 5 },
-        { "criterion": "crit_004", "score": 4 }
+        {
+          "criterion": "crit_001",
+          "score": 5
+        },
+        {
+          "criterion": "crit_002",
+          "score": 5
+        },
+        {
+          "criterion": "crit_003",
+          "score": 5
+        },
+        {
+          "criterion": "crit_004",
+          "score": 4
+        }
       ],
       "createdAt": 1762750127728
     },
@@ -636,10 +876,22 @@
       "grade": 20,
       "comments": "bn",
       "scores": [
-        { "criterion": "crit_001", "score": 5 },
-        { "criterion": "crit_002", "score": 5 },
-        { "criterion": "crit_003", "score": 5 },
-        { "criterion": "crit_004", "score": 5 }
+        {
+          "criterion": "crit_001",
+          "score": 5
+        },
+        {
+          "criterion": "crit_002",
+          "score": 5
+        },
+        {
+          "criterion": "crit_003",
+          "score": 5
+        },
+        {
+          "criterion": "crit_004",
+          "score": 5
+        }
       ],
       "createdAt": 1762750264936
     }

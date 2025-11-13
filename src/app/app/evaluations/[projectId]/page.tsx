@@ -18,7 +18,7 @@ const EvaluationJuryPage = async ({ params }: { params: Promise<{ projectId: str
     const dehydratedState = dehydrate(queryClient);
 
     return (
-        <RoleGuard roles={['JURY']}>
+        <RoleGuard roles={['USER']}>
             <HydrationBoundary state={dehydratedState}>
                 <Evaluation projectId={projectId} />
             </HydrationBoundary>
