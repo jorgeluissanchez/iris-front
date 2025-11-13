@@ -50,7 +50,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             url: paths.app.discussions.getHref(),
             icon: MessageSquare,
           },
-
           {
             title: "Courses",
             url: paths.app.courses.getHref(),
@@ -70,11 +69,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           { title: "Administrators", url: paths.app.administrators.getHref(), icon: ShieldCheck },
           { title: "Users", url: paths.app.users.getHref(), icon: UsersIcon },
         ];
-      case "STUDENT":
-        return [
-          { title: "Dashboard", url: paths.app.root.getHref(), icon: Home },
-        ];
-      case "JURY":
+      case "USER":
         return [
           { title: "Dashboard", url: paths.app.root.getHref(), icon: Home },
         ];
