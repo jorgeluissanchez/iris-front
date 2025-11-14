@@ -4,10 +4,10 @@ import { Card, CardBody } from "@/components/ui/card"
 import { FileText, Users, ArrowLeft } from "lucide-react"
 import { Button } from "@heroui/button"
 import { paths } from "@/config/paths"
-import { useSearchParams, useRouter } from "next/navigation";
 import { useJuryProjects } from "@/features/projects-public/api/get-jury-project"
 import { Spinner } from "@/components/ui/spinner"
 import { AvatarGroup } from "@/features/projects/components/avatar-icon"
+import { useRouter } from "next/navigation"
 
 type ProjectListViewProps = {
     eventId: string;
@@ -15,7 +15,6 @@ type ProjectListViewProps = {
 
 export function ProjectListView({ eventId }: ProjectListViewProps) {
     const router = useRouter();
-    const searchParams = useSearchParams();
 
     const { data, isLoading } = useJuryProjects({
         page: 1,
@@ -39,7 +38,6 @@ export function ProjectListView({ eventId }: ProjectListViewProps) {
             </div>
         )
     }
-    console.log(projects);
 
     return (
         <div className="space-y-4">
@@ -101,7 +99,7 @@ export function ProjectListView({ eventId }: ProjectListViewProps) {
                             <Button
                                 className="mt-6 w-full transition-transform hover:scale-[1.01]"
                                 color="primary"
-                                onClick={() => router.push(paths.app.evaluations.getHref(project.id.toString()))}
+                                onPress={() => router.push(paths.app.evaluations.getHref(project.id.toString()))}
                             >Evaluate Project</Button>
                         </CardBody>
                     </Card>

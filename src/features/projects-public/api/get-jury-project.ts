@@ -7,7 +7,7 @@ import { Meta, Project } from "@/types/api";
 export const getJuryProjects = (
   { page, eventId }: { page?: number; eventId?: string } = { page: 1 }
 ): Promise<{ data: Project[]; meta: Meta }> => {
-  return api.get(`/events/${eventId}/projects`, { params: { page, eventId } });
+  return api.get(`/events/${eventId}/projects`, { params: { page } });
 };
 
 export const getJuryProjectsQueryOptions = ({ page = 1, eventId }: { page?: number; eventId?: string } = {}) => {

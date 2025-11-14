@@ -1,7 +1,5 @@
 import { HttpResponse, http } from "msw";
-
 import { env } from "@/config/env";
-
 import { db, persistDb } from "../db";
 import {
   requireAuth,
@@ -19,6 +17,51 @@ type EventBody = {
   isPublic?: boolean;
 };
 
+const PAGE_SIZE = 10;
+
+type EventDTO = {
+  id: string;
+  title: string;
+  description: string;
+  startDate: string;
+  endDate: string;
+  inscriptionDeadline: string;
+  accessCode: string;
+  isPublic: boolean;
+  evaluationsStatus: "open" | "closed";
+  createdAt: string;
+  userEventRole?: "STUDENT" | "JURY";
+};
+
+const mapEventToDTO = (event: any, membership?: any): EventDTO => {
+  return {
+    id: event.id,
+    title: event.title,
+    description: event.description,
+    startDate: event.startDate,
+    endDate: event.endDate,
+    inscriptionDeadline: event.inscriptionDeadline,
+    accessCode: event.accessCode,
+    isPublic: event.isPublic,
+    evaluationsStatus: event.evaluationsStatus,
+    createdAt: event.createdAt,
+    ...(membership && { userEventRole: membership.eventRole }),
+  };
+};
+
+const validatePage = (page: number): number => {
+  return Math.max(1, Math.floor(page)) || 1;
+};
+
+const calculatePagination = (total: number, page: number) => {
+  const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
+  return {
+    page: Math.min(page, totalPages),
+    total,
+    totalPages,
+  };
+};
+
 export const eventsHandlers = [
   http.get(`${env.API_URL}/events`, async ({ cookies, request }) => {
     await networkDelay();
@@ -31,37 +74,23 @@ export const eventsHandlers = [
 
       const url = new URL(request.url);
       const page = Number(url.searchParams.get("page") || 1);
+      const validPage = validatePage(page);
 
       // Si el usuario es ADMIN, mostrar todos los eventos
-      if (user.role === 'ADMIN') {
+      if (user.role === "ADMIN") {
         const total = db.event.count();
-        const totalPages = Math.ceil(total / 10);
+        const pagination = calculatePagination(total, validPage);
 
         const events = db.event
           .findMany({
-            take: 10,
-            skip: 10 * (page - 1),
+            take: PAGE_SIZE,
+            skip: PAGE_SIZE * (pagination.page - 1),
           })
-          .map((event) => ({
-            id: event.id,
-            title: event.title,
-            description: event.description,
-            startDate: event.startDate,
-            endDate: event.endDate,
-            inscriptionDeadline: event.inscriptionDeadline,
-            accessCode: event.accessCode,
-            isPublic: event.isPublic,
-            evaluationsStatus: event.evaluationsStatus,
-            createdAt: event.createdAt,
-          }));
+          .map((event) => mapEventToDTO(event));
 
         return HttpResponse.json({
           data: events,
-          meta: {
-            page,
-            total,
-            totalPages,
-          },
+          meta: pagination,
         });
       }
 
@@ -72,9 +101,17 @@ export const eventsHandlers = [
         },
       }) || [];
 
-      const eventIds = userMemberships.map(m => m.eventId);
-      
-      // Filtrar eventos por los IDs de membresía
+      // Si no tiene membresías, retornar lista vacía
+      if (userMemberships.length === 0) {
+        return HttpResponse.json({
+          data: [],
+          meta: calculatePagination(0, validPage),
+        });
+      }
+
+      const eventIds = userMemberships.map((m) => m.eventId);
+
+      // Obtener eventos del usuario con sus membresías
       const userEvents = db.event
         .findMany({
           where: {
@@ -82,37 +119,20 @@ export const eventsHandlers = [
           },
         })
         .map((event) => {
-          const membership = userMemberships.find(m => m.eventId === event.id);
-          
-          return {
-            id: event.id,
-            title: event.title,
-            description: event.description,
-            startDate: event.startDate,
-            endDate: event.endDate,
-            inscriptionDeadline: event.inscriptionDeadline,
-            accessCode: event.accessCode,
-            isPublic: event.isPublic,
-            evaluationsStatus: event.evaluationsStatus,
-            userEventRole: membership?.eventRole,
-            createdAt: event.createdAt,
-          };
+          const membership = userMemberships.find((m) => m.eventId === event.id);
+          return mapEventToDTO(event, membership);
         });
 
-      // Aplicar paginación manual
-      const startIndex = 10 * (page - 1);
-      const endIndex = startIndex + 10;
-      const paginatedEvents = userEvents.slice(startIndex, endIndex);
+      // Aplicar paginación manual (ya que necesitamos todos los eventos para mapear membresías)
       const total = userEvents.length;
-      const totalPages = Math.ceil(total / 10);
+      const pagination = calculatePagination(total, validPage);
+      const startIndex = PAGE_SIZE * (pagination.page - 1);
+      const endIndex = startIndex + PAGE_SIZE;
+      const paginatedEvents = userEvents.slice(startIndex, endIndex);
 
       return HttpResponse.json({
         data: paginatedEvents,
-        meta: {
-          page,
-          total,
-          totalPages,
-        },
+        meta: pagination,
       });
     } catch (error: any) {
       return HttpResponse.json(

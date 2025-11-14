@@ -1,7 +1,5 @@
 import { HttpResponse, http } from "msw";
-
 import { env } from "@/config/env";
-
 import { db, persistDb } from "../db";
 import { requireAuth, requireAdmin, networkDelay } from "../utils";
 
@@ -23,6 +21,75 @@ type ProjectBody = {
   jurorAssignments?: Array<{
     memberUserId: string;
   }>;
+};
+
+const PAGE_SIZE = 10;
+
+type ProjectDTO = {
+  id: string;
+  name: string;
+  description?: string;
+  logo: string;
+  state: string;
+  eventId: string;
+  eventNumber?: string;
+  createdAt: number;
+  documents: Array<{ type: string; url: string }>;
+  participants: Array<{
+    firstName: string;
+    lastName: string;
+    email: string;
+    studentCode?: string;
+  }>;
+};
+
+const mapProjectToDTO = (project: any): ProjectDTO => {
+  return {
+    id: project.id,
+    name: project.name,
+    description: project.description,
+    logo: project.logo,
+    state: project.state,
+    eventId: project.eventId,
+    eventNumber: project.eventNumber || "",
+    createdAt: project.createdAt,
+    documents: project.documents ?? [],
+    participants: project.participants ?? [],
+  };
+};
+
+const validatePage = (page: number): number => {
+  return Math.max(1, Math.floor(page)) || 1;
+};
+
+const calculatePagination = (total: number, page: number, pageSize: number = PAGE_SIZE) => {
+  const totalPages = Math.max(1, Math.ceil(total / pageSize));
+  return {
+    page: Math.min(page, totalPages),
+    total,
+    totalPages,
+  };
+};
+
+const isUserAssignedToProject = (project: any, userId: string): boolean => {
+  const assignments = project.jurorAssignments ?? [];
+  return assignments.some((assignment: any) => {
+    if (typeof assignment === "string") {
+      return assignment === userId;
+    }
+    return assignment?.memberUserId === userId;
+  });
+};
+
+const isUserJuryOfEvent = (userId: string, eventId: string): boolean => {
+  const membership = db.eventMembership?.findFirst({
+    where: {
+      userId: { equals: userId },
+      eventId: { equals: eventId },
+      eventRole: { equals: "JURY" },
+    },
+  });
+  return !!membership;
 };
 
 export const projectsHandlers = [
@@ -55,7 +122,7 @@ export const projectsHandlers = [
     }
   }),
 
-  http.get(`${env.API_URL}/projects/:id`, async ({ cookies, request }) => {
+  http.get(`${env.API_URL}/projects/:projectId`, async ({ cookies, request, params }) => {
     await networkDelay();
     try {
       const { error } = requireAuth(cookies);
@@ -63,7 +130,7 @@ export const projectsHandlers = [
         return HttpResponse.json({ message: error }, { status: 401 });
       }
       const url = new URL(request.url);
-      const projectId = url.pathname.split("/")[3];
+      const projectId = params.projectId as string;
 
       if (!projectId) {
         return HttpResponse.json(
@@ -95,14 +162,11 @@ export const projectsHandlers = [
     await networkDelay();
 
     try {
-      // const { /*user,*/ error } = requireAuth(cookies);
-      // if (error) {
-      //   return HttpResponse.json({ message: error }, { status: 401 });
-      // }
-
       const url = new URL(request.url);
       const page = Number(url.searchParams.get("page") || 1);
       const eventParam = url.searchParams.get("event");
+      const pageSize = Number(url.searchParams.get("pageSize") || PAGE_SIZE);
+      const shouldReturnAll = pageSize >= 1000;
 
       let allProjects = db.project.getAll();
 
@@ -118,43 +182,18 @@ export const projectsHandlers = [
       }
 
       const total = allProjects.length;
-      const totalPages = Math.ceil(total / 10);
-
-      // If pageSize is provided and is large (like 1000), return all projects (for dropdowns)
-      const pageSize = Number(url.searchParams.get("pageSize") || 10);
-      const shouldReturnAll = pageSize >= 1000;
+      const validPage = validatePage(page);
+      const pagination = calculatePagination(total, validPage, pageSize);
 
       const projects = shouldReturnAll
-        ? allProjects.map((project) => ({
-            id: project.id,
-            name: project.name,
-            description: project.description,
-            logo: project.logo,
-            state: project.state,
-            eventId: project.eventId,
-            createdAt: project.createdAt,
-            documents: project.documents ?? [],
-            participants: project.participants ?? [],
-          }))
-        : allProjects.slice(10 * (page - 1), 10 * page).map((project) => ({
-            id: project.id,
-            name: project.name,
-            description: project.description,
-            logo: project.logo,
-            state: project.state,
-            eventId: project.eventId,
-            createdAt: project.createdAt,
-            documents: project.documents ?? [],
-            participants: project.participants ?? [],
-          }));
+        ? allProjects.map((project) => mapProjectToDTO(project))
+        : allProjects
+          .slice(pageSize * (pagination.page - 1), pageSize * pagination.page)
+          .map((project) => mapProjectToDTO(project));
 
       return HttpResponse.json({
         data: projects,
-        meta: {
-          page,
-          total,
-          totalPages,
-        },
+        meta: pagination,
       });
     } catch (error: any) {
       return HttpResponse.json(
@@ -165,17 +204,16 @@ export const projectsHandlers = [
   }),
 
   http.get(
-    `${env.API_URL}/events/:id/projects`,
-    async ({ cookies, request }) => {
+    `${env.API_URL}/events/:eventId/projects`,
+    async ({ cookies, request, params }) => {
       await networkDelay();
       try {
         const { user, error } = requireAuth(cookies);
-        if (error) {
-          return HttpResponse.json({ message: error }, { status: 401 });
+        if (error || !user) {
+          return HttpResponse.json({ message: error || "Unauthorized" }, { status: 401 });
         }
         const url = new URL(request.url);
-        const eventId = url.pathname.split("/")[3];
-
+        const eventId = params.eventId as string;
         if (!eventId) {
           return HttpResponse.json(
             { message: "eventId is required" },
@@ -183,50 +221,63 @@ export const projectsHandlers = [
           );
         }
 
-        const jurorId = (user as any)?.id ?? (user as any)?.userId;
-        if (!jurorId) {
+        const page = Number(url.searchParams.get("page") || 1);
+        const pageSize = Number(url.searchParams.get("pageSize") || PAGE_SIZE);
+        const validPage = validatePage(page);
+
+        // Si el usuario es ADMIN, mostrar todos los proyectos del evento
+        if (user.role === "ADMIN") {
+          const allProjects = db.project.getAll().filter((p) => String(p.eventId) === String(eventId));
+          const total = allProjects.length;
+          const pagination = calculatePagination(total, validPage, pageSize);
+          const start = pageSize * (pagination.page - 1);
+          const end = start + pageSize;
+          const paginatedProjects = allProjects.slice(start, end);
+
+          const projects = paginatedProjects.map((project) => mapProjectToDTO(project));
+
+          return HttpResponse.json({
+            data: projects,
+            meta: pagination,
+          });
+        }
+
+        // Para usuarios USER, verificar si es jurado del evento
+        const userId = (user as any)?.id ?? (user as any)?.userId;
+        if (!userId) {
           return HttpResponse.json(
-            { message: "jurorId not found on user" },
+            { message: "userId not found on user" },
             { status: 400 }
           );
         }
 
-        const page = Number(url.searchParams.get("page") || 1);
-        const pageSize = Number(url.searchParams.get("pageSize") || 10);
+        console.log("Checking jury membership for userId:", userId, "and eventId:", eventId);
+        // Verificar si el usuario es jurado del evento
+        if (!isUserJuryOfEvent(userId, eventId)) {
+          // Si no es jurado, retornar lista vacía
+          return HttpResponse.json({
+            message: "User is not a jury member of this event",
+          },
+            { status: 403 });
+        }
 
-        const filtered = db.project
+        // Si es jurado, mostrar solo los proyectos asignados a ese jurado
+        const allProjects = db.project
           .getAll()
           .filter((p) => String(p.eventId) === String(eventId))
-          .filter((p: any) => {
-            const list = p.jurorAssignments ?? [];
-            return list.some((it: any) =>
-              typeof it === "string"
-                ? it === jurorId
-                : it?.memberUserId === jurorId
-            );
-          });
+          .filter((p) => isUserAssignedToProject(p, userId));
 
-        const total = filtered.length;
-        const totalPages = Math.max(1, Math.ceil(total / pageSize));
-        const start = (page - 1) * pageSize;
+        const total = allProjects.length;
+        const pagination = calculatePagination(total, validPage, pageSize);
+        const start = pageSize * (pagination.page - 1);
         const end = start + pageSize;
-        const pageItems = filtered.slice(start, end);
+        const paginatedProjects = allProjects.slice(start, end);
 
-        const projects = pageItems.map((project) => ({
-          id: project.id,
-          name: project.name,
-          description: project.description,
-          logo: project.logo,
-          state: project.state,
-          eventNumber: project.eventNumber || "",
-          createdAt: project.createdAt,
-          documents: project.documents ?? [],
-          participants: project.participants ?? [],
-        }));
+        const projects = paginatedProjects.map((project) => mapProjectToDTO(project));
 
         return HttpResponse.json({
           data: projects,
-          meta: { page, total, totalPages },
+          meta: pagination,
         });
       } catch (error: any) {
         return HttpResponse.json(
@@ -238,7 +289,7 @@ export const projectsHandlers = [
   ),
 
   http.patch(
-    `${env.API_URL}/projects/:id`,
+    `${env.API_URL}/projects/:projectId`,
     async ({ cookies, request, params }) => {
       await networkDelay();
       try {
@@ -247,7 +298,7 @@ export const projectsHandlers = [
           return HttpResponse.json({ message: error }, { status: 401 });
         }
 
-        const projectId = params.id as string;
+        const projectId = params.projectId as string;
         const data = (await request.json()) as Partial<ProjectBody>;
 
         if (!data || typeof data !== "object") {
