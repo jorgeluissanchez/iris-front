@@ -6,8 +6,6 @@ import {
   CardBody as HeroUICardBody,
   CardFooter as HeroUICardFooter,
   CardProps as HeroUICardProps,
-  CardHeaderProps as HeroUICardHeaderProps,
-  CardBodyProps as HeroUICardBodyProps,
   CardFooterProps as HeroUICardFooterProps,
 } from '@heroui/card';
 
@@ -17,7 +15,5 @@ export const CardBody = HeroUICardBody;
 export const CardFooter = HeroUICardFooter;
 
 export type CardProps = HeroUICardProps;
-export type CardHeaderProps = HeroUICardHeaderProps;
-export type CardBodyProps = HeroUICardBodyProps;
 export type CardFooterProps = HeroUICardFooterProps;
 

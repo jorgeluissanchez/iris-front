@@ -1,6 +1,6 @@
 'use client';
 
-import { Button } from '@heroui/button';
+import { Button } from '@/components/ui/button';
 import { CropIcon, RotateCcwIcon } from 'lucide-react';
 import { Slot } from 'radix-ui';
 import {
@@ -27,6 +27,7 @@ import ReactCrop, {
 import { cn } from '@/lib/utils';
 
 import 'react-image-crop/dist/ReactCrop.css';
+import { o } from 'node_modules/msw/lib/core/HttpResponse-DGUjNQHG.mjs';
 
 const centerAspectCrop = (
   mediaWidth: number,
@@ -285,21 +286,24 @@ export const ImageCropApply = ({
 }: ImageCropApplyProps) => {
   const { applyCrop } = useImageCrop();
 
-  const handleClick = async (e: MouseEvent<HTMLButtonElement>) => {
-    await applyCrop();
-    onClick?.(e);
+  
+  const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    applyCrop();
   };
+
+  const { ref: _ref, ...restProps } = props as any;
 
   if (asChild) {
     return (
-      <Slot.Root onClick={handleClick} {...props}>
+      <Slot.Root onClick={handleClick} {...restProps}>
         {children}
       </Slot.Root>
     );
   }
 
   return (
-    <Button onClick={handleClick}  variant="ghost" {...props}>
+    <Button onPress={handleClick} variant="ghost" {...restProps}>
       {children ?? <CropIcon className="size-4" />}
     </Button>
   );
@@ -318,20 +322,22 @@ export const ImageCropReset = ({
   const { resetCrop } = useImageCrop();
 
   const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
     resetCrop();
-    onClick?.(e);
   };
+  
+  const { ref: _ref, ...restProps } = props as any;
 
   if (asChild) {
     return (
-      <Slot.Root onClick={handleClick} {...props}>
+      <Slot.Root onClick={handleClick} {...restProps}>
         {children}
       </Slot.Root>
     );
   }
 
   return (
-    <Button onClick={handleClick} variant="ghost" {...props}>
+    <Button onPress={handleClick} variant="ghost" {...restProps}>
       {children ?? <RotateCcwIcon className="size-4" />}
     </Button>
   );
