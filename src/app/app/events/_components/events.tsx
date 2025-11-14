@@ -2,7 +2,7 @@
 
 import { ContentLayout } from '@/components/layouts/content-layout';
 import { CreateEvent } from '@/features/events/components/create-event';
-import { EventsList } from '@/features/events/components/events-list';
+import { GetEventsAdmin } from '@/features/events/components/get-events-admin';
 import '@/features/landing/index.css';
 
 export const Events = () => {
@@ -13,7 +13,7 @@ export const Events = () => {
         <CreateEvent />
       </div>
       <div className="mt-4">
-        <EventsList />
+        <GetEventsAdmin />
       </div>
     </ContentLayout>
   );

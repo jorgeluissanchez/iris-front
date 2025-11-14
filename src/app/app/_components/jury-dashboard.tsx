@@ -1,7 +1,6 @@
 'use client';
 
 import { useUser } from '@/lib/auth';
-import { EventsList } from '@/features/events/components/get-events-juror';
 import { ProjectListView } from '@/features/jury/components/project-list-view';
 import '@/features/landing/index.css';
 

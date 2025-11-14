@@ -2,7 +2,7 @@
 
 import { useUser } from '@/lib/auth';
 import { AdminDashboard } from './admin-dashboard';
-import { UserEventsList } from '@/features/events/components/user-events-list';
+import { GetEventsUser } from '@/features/events/components/get-events-user';
 
 export const DashboardInfo = () => {
   const user = useUser();
@@ -24,7 +24,7 @@ export const DashboardInfo = () => {
         </p>
       </div>
       <div className="w-full overflow-x-auto">
-        <UserEventsList />
+        <GetEventsUser />
       </div>
     </div>
   );

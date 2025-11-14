@@ -2,17 +2,16 @@
 
 import { useQueryClient } from "@tanstack/react-query";
 import { useSearchParams, useRouter } from "next/navigation";
-import { Calendar, Users, Check, Eye } from "lucide-react";
-import { Snippet } from "@/components/ui/snippet";
+import { Calendar } from "lucide-react";
 import { Card, CardBody } from "@/components/ui/card";
 import { Spinner } from "@/components/ui/spinner";
 import { Pagination } from "@/components/ui/pagination";
+
 import { useEvents } from "../api/get-events";
+import { Button } from "@heroui/button";
+import { paths } from '@/config/paths';
 
-import { DeleteEvent } from "./delete-event";
-import { UpdateEvent } from "./update-event";
-
-export const EventsList = () => {
+export const GetEventsLanding = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const page = searchParams?.get("page") ? Number(searchParams.get("page")) : 1;
@@ -42,7 +41,7 @@ export const EventsList = () => {
     <div className="space-y-4">
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {events.map((event) => (
-          <Card shadow="sm" key={event.id} className="glass-card">
+          <Card shadow="sm" key={event.id}>
             <CardBody className="p-6 space-y-4">
               <div className="space-y-2">
                 <h3 className="text-xl font-semibold">{event.title}</h3>
@@ -69,41 +68,12 @@ export const EventsList = () => {
                 </div>
               </div>
 
-              <Card className="flex flex-row items-center justify-between p-2 glass-card">
-                <div className="flex items-center gap-2">
-                  <Users className="h-4 w-4 text-default-400" />
-                  <span className="text-sm">
-                    Access code:{" "}
-                    <Snippet size="sm" symbol="">
-                      {event.accessCode}
-                    </Snippet>
-                  </span>
-                </div>
-                {event.isPublic && (
-                  <div className="flex items-center gap-1 text-green-600 ">
-                    <Check className="h-4 w-4" />
-                    <span className="text-sm font-medium">Public</span>
-                  </div>
-                )}
-              </Card>
-
-              <div className="flex items-center justify-between p-1">
-                <span className="text-sm text-default-400">Evaluations:</span>
-                <span
-                  className={`text-sm font-medium ${
-                    event.evaluationsStatus === "open"
-                      ? "text-green-600"
-                      : "text-gray-400"
-                  }`}
-                >
-                  {event.evaluationsStatus === "open" ? "Open" : "Closed"}
-                </span>
-              </div>
-
-              <div className="flex gap-2 pt-2">
-                <UpdateEvent eventId={event.id} />
-                <DeleteEvent id={event.id} />
-              </div>
+              <Button
+                id={event.id}
+                onPress={() => router.push(paths.public.project.getHref(event.accessCode))}
+              >
+                Registrarse
+              </Button>
             </CardBody>
           </Card>
         ))}
