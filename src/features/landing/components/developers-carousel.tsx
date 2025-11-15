@@ -47,8 +47,8 @@ export function DevelopersCarousel({ developersRef }: DevelopersCarouselProps) {
     >
       <div className="max-w-7xl mx-auto px-6 md:px-12 mb-8">
         <div className="text-center">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs text-muted-foreground border border-border/50 mb-3">
-            <div className="w-1.5 h-1.5 rounded-full bg-primary/60 animate-pulse" />
+          <div className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full text-xs text-muted-foreground border border-border/50 mb-3">
+            <div className="w-0 h-1.5 rounded-full bg-primary/60 animate-pulse" />
             <span>{landingContent.developers.badge}</span>
           </div>
           <h2 className="text-2xl md:text-4xl font-bold mb-2">

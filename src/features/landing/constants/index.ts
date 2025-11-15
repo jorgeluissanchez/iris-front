@@ -57,6 +57,7 @@ export const engineeringFields: EngineeringField[] = [
     color: 'oklch(0.75 0.15 195)',
     description: 'Innovación en software, IA y sistemas computacionales',
     gradient: 'from-cyan-500/20 to-blue-500/20',
+    url: 'https://www.uninorte.edu.co/web/ingenieria-de-sistemas-y-computacion',
   },
   {
     id: 2,
@@ -65,6 +66,7 @@ export const engineeringFields: EngineeringField[] = [
     color: 'oklch(0.82 0.18 330)',
     description: 'Construcción sostenible e infraestructura inteligente',
     gradient: 'from-pink-500/20 to-rose-500/20',
+    url: 'https://www.uninorte.edu.co/web/ingenieria-civil',
   },
   {
     id: 3,
@@ -73,6 +75,7 @@ export const engineeringFields: EngineeringField[] = [
     color: 'oklch(0.88 0.16 85)',
     description: 'Diseño mecánico avanzado y automatización',
     gradient: 'from-yellow-500/20 to-orange-500/20',
+    url: 'https://www.uninorte.edu.co/web/ingenieria-mecanica',
   },
   {
     id: 4,
@@ -81,6 +84,7 @@ export const engineeringFields: EngineeringField[] = [
     color: 'oklch(0.7 0.2 280)',
     description: 'Sistemas de potencia y energías renovables',
     gradient: 'from-purple-500/20 to-violet-500/20',
+    url: 'https://www.uninorte.edu.co/web/ingenieria-electrica',
   },
   {
     id: 5,
@@ -89,6 +93,7 @@ export const engineeringFields: EngineeringField[] = [
     color: 'oklch(0.78 0.17 160)',
     description: 'Circuitos avanzados y sistemas embebidos',
     gradient: 'from-green-500/20 to-emerald-500/20',
+    url: 'https://www.uninorte.edu.co/web/ingenieria-electronica',
   },
   {
     id: 6,
@@ -97,6 +102,7 @@ export const engineeringFields: EngineeringField[] = [
     color: 'oklch(0.85 0.15 50)',
     description: 'Optimización de procesos y gestión de operaciones',
     gradient: 'from-amber-500/20 to-yellow-500/20',
+    url: 'https://www.uninorte.edu.co/web/ingenieria-industrial',
   },
   {
     id: 7,
@@ -105,6 +111,7 @@ export const engineeringFields: EngineeringField[] = [
     color: 'oklch(0.72 0.19 15)',
     description: 'Tecnología médica y dispositivos para el cuidado de la salud',
     gradient: 'from-red-500/20 to-pink-500/20',
+    url: 'https://www.uninorte.edu.co/web/ingenieria-biomedica',
   },
 ];
 
