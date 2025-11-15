@@ -167,7 +167,14 @@ export const ProjectList = () => {
                 )}
                 {project.state !== "UNDER_REVIEW" && (
                   <div className="w-full space-y-2">
-                    <span className="block w-full text-center text-xs font-medium px-2 py-1 rounded bg-secondary/40">
+                    <span 
+                      className="block w-full text-center text-xs font-medium px-2 py-1 rounded"
+                      style={{
+                        backgroundColor: project.state === "APPROVED" 
+                          ? "oklch(0.75 0.15 195 / 0.8)" 
+                          : "oklch(0.82 0.18 330 / 0.4)",
+                      }}
+                    >
                       {project.state === "APPROVED" && "Aprobado"}
                       {project.state === "REJECTED" && "Rechazado"}
                     </span>
