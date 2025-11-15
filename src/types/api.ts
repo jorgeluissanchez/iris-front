@@ -20,13 +20,21 @@ export type Meta = {
   totalPages: number;
 };
 
+export type PlatformRole = {
+  id: number;
+  name: string;
+  scope: string;
+};
+
 export type User = Entity<{
   firstName: string;
   lastName: string;
   email: string;
-  role: "ADMIN" | "USER";
-  teamId: string;
-  bio: string;
+  phone?: string;
+  active: boolean;
+  status: string;
+  platformRoles: PlatformRole[];
+  platformPermissions: string[];
 }>;
 
 export type AuthResponse = {
@@ -34,10 +42,6 @@ export type AuthResponse = {
   user: User;
 };
 
-export type Team = Entity<{
-  name: string;
-  description: string;
-}>;
 
 export type Discussion = Entity<{
   title: string;
@@ -54,34 +58,37 @@ export type Comment = Entity<{
 }>;
 
 export type EventMembership = Entity<{
-  eventId: string;
-  userId: string;
+  eventId: number;
+  userId: number;
   eventRole: "STUDENT" | "JURY";
   event: Event;
 }>;
 
 export type Event = Entity<{
-  id: string;
-  title: string;
+  id: number;
+  name: string;
   description: string;
   startDate: string;
   endDate: string;
   inscriptionDeadline: string;
   accessCode: string;
-  isPublic: boolean;
-  evaluationsStatus: "open" | "closed";
-  userEventRole?: "STUDENT" | "JURY"; // El rol del usuario actual en este evento
+  isPubliclyJoinable: boolean;
+  evaluationsOpened: boolean;
+  location?: string;
+  status?: number;
+  active: boolean;
+  userEventRole?: "STUDENT" | "JURY";
   createdAt: number;
+  updatedAt: number;
 }>;
 
 export type Project = Entity<{
-  id: string;
-  eventId: string;
-  courseId: string;
+  id: number;
+  eventId: number;
+  courseId: number;
   name: string;
   description?: string;
   eventNumber?: string;
-  logo: string;
   state: "UNDER_REVIEW" | "APPROVED" | "REJECTED";
   participants: ProjectParticipant[];
   documents: ProjectDocument[];
@@ -117,19 +124,14 @@ export type ProjectAssignment = Entity<{
 }>;
 
 export type Course = Entity<{
-  id: string;
-  eventId: string;
+  id: number;
+  eventId: number;
   code: string;
   description?: string;
   active: boolean;
-  event?: { id: string; title: string };
+  event?: { id: number; title: string };
   createdAt: number;
 }>;
-
-export type TeamMember = {
-  name: string;
-  photoUrl?: string;
-};
 
 export type EvaluationScoreInput = {
   criterion: string;
@@ -146,8 +148,8 @@ export type Evaluation = Entity<{
 
 export type Jury = Entity<{
   email: string;
-  eventIds: string[];
-  projectIds: string[];
+  eventIds: number[];
+  projectIds: number[];
   invitationStatus: "pending" | "accepted" | "declined";
 }>;
 
@@ -157,7 +159,7 @@ export type Administrator = Entity<{
 }>;
 
 export type Criterion = Entity<{
-  eventId: string;
+  eventId: number;
   name: string;
   description: string;
   weight: number;
@@ -166,6 +168,6 @@ export type Criterion = Entity<{
 }>;
 
 export type CriterionCourse = Entity<{
-  courseId: string;
-  criterionId: string;
+  courseId: number;
+  criterionId: number;
 }>;

@@ -32,7 +32,7 @@ const EventsPage = async ({
   const dehydratedState = dehydrate(queryClient);
 
   return (
-    <RoleGuard roles={['ADMIN', 'USER']}>
+    <RoleGuard roles={['Admin', 'User']}>
       <HydrationBoundary state={dehydratedState}>
         <Events />
       </HydrationBoundary>

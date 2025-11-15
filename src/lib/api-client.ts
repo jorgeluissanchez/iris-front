@@ -69,15 +69,25 @@ async function fetchApi<T>(
 
   const fullUrl = buildUrlWithParams(`${env.API_URL}${url}`, params);
 
+  // Detectar si el body es FormData
+  const isFormData = body instanceof FormData;
+  
+  // Preparar headers
+  const requestHeaders: Record<string, string> = {
+    Accept: 'application/json',
+    ...headers,
+    ...(cookieHeader ? { Cookie: cookieHeader } : {}),
+  };
+  
+  // No establecer Content-Type si es FormData (el browser lo hace automáticamente con el boundary)
+  if (!isFormData) {
+    requestHeaders['Content-Type'] = 'application/json';
+  }
+
   const response = await fetch(fullUrl, {
     method,
-    headers: {
-      'Content-Type': 'application/json',
-      Accept: 'application/json',
-      ...headers,
-      ...(cookieHeader ? { Cookie: cookieHeader } : {}),
-    },
-    body: body ? JSON.stringify(body) : undefined,
+    headers: requestHeaders,
+    body: body ? (isFormData ? body : JSON.stringify(body)) : undefined,
     credentials: 'include',
     cache,
     next,
