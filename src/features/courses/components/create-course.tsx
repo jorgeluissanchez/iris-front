@@ -17,7 +17,7 @@ import { useDisclosure } from "@heroui/use-disclosure";
 import { useNotifications } from "@/components/ui/notifications";
 import { useUser } from "@/lib/auth";
 import { Select, SelectItem } from "@/components/ui/select";
-import { useEventsDropdown } from "@/features/events/api/get-events-dropdown";
+import { useEvents } from "@/features/events/api/get-events";
 
 import {
   createCourseInputSchema,
@@ -43,13 +43,7 @@ export const CreateCourse = () => {
     },
   });
 
-  const eventsQuery = useEventsDropdown();
-  const user = useUser();
-
-  // Only admins can create courses (similar to projects)
-  if (user?.data?.role !== "ADMIN") {
-    return null;
-  }
+  const eventsQuery = useEvents({ page: 1 });
 
   const events = eventsQuery.data?.data || [];
 
@@ -83,8 +77,9 @@ export const CreateCourse = () => {
                 
                 const data = {
                   code: rawData.code as string,
+                  name: rawData.name as string,
                   description: rawData.description as string,
-                  eventId: selectedEvent,
+                  eventId: Number(selectedEvent),
                   status: "active" as const,
                 };
                 
@@ -112,7 +107,7 @@ export const CreateCourse = () => {
                 >
                   {events.map((event) => (
                     <SelectItem key={event.id}>
-                      {event.title}
+                      {event.name}
                     </SelectItem>
                   ))}
                 </Select>
@@ -121,6 +116,13 @@ export const CreateCourse = () => {
                   label="Course code" 
                   name="code" 
                   placeholder="2354"
+                  isRequired 
+                />
+
+                <Input 
+                  label="Course name" 
+                  name="name" 
+                  placeholder="Introduction to Programming"
                   isRequired 
                 />
                 

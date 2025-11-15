@@ -129,7 +129,7 @@ export type Course = Entity<{
   code: string;
   description?: string;
   active: boolean;
-  event?: { id: number; title: string };
+  event?: { id: number; name: string };
   createdAt: number;
 }>;
 
