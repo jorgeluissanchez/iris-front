@@ -4,12 +4,15 @@ import { api } from "@/lib/api-client";
 import { QueryConfig } from "@/lib/react-query";
 import { Event } from "@/types/api";
 
-export const getEvent = ({
+export const getEvent = async ({
   eventId,
 }: {
   eventId: string;
 }): Promise<{ data: Event }> => {
-  return api.get(`/events/${eventId}`);
+  const response = await api.get<Event>(`/events/${eventId}`);
+  return {
+    data: response,
+  };
 };
 
 export const getEventQueryOptions = (eventId: string) => {

@@ -121,7 +121,7 @@ export const api = {
   patch<T>(url: string, body?: any, options?: RequestOptions): Promise<T> {
     return fetchApi<T>(url, { ...options, method: 'PATCH', body });
   },
-  delete<T>(url: string, options?: RequestOptions): Promise<T> {
-    return fetchApi<T>(url, { ...options, method: 'DELETE' });
+  delete<T>(url: string, body?: any, options?: RequestOptions): Promise<T> {
+    return fetchApi<T>(url, { ...options, method: 'DELETE', body });
   },
 };

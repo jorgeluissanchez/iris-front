@@ -4,10 +4,25 @@ import { api } from "@/lib/api-client";
 import { QueryConfig } from "@/lib/react-query";
 import { Meta, Event } from "@/types/api";
 
-export const getEvents = (
+export const getEvents = async (
   { page }: { page?: number } = { page: 1 }
 ): Promise<{ data: Event[]; meta: Meta }> => {
-  return api.get(`/events`, { params: { page } });
+  const response = await api.get<{
+    items: Event[];
+    page: number;
+    limit: number;
+    total: number;
+    totalPages: number;
+  }>(`/events/page`, { params: { page } });
+  
+  return {
+    data: response.items,
+    meta: {
+      page: response.page,
+      total: response.total,
+      totalPages: response.totalPages,
+    },
+  };
 };
 
 export const getEventsQueryOptions = ({ page = 1 }: { page?: number } = {}) => {

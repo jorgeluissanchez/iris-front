@@ -10,7 +10,7 @@ export const deleteEvent = ({
 }: {
   eventId: string;
 }) => {
-  return api.delete(`/events/${eventId}`);
+  return api.delete(`/events/delete`, { id: eventId });
 };
 
 type UseDeleteEventOptions = {
