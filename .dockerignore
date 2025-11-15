@@ -80,10 +80,8 @@ e2e/
 generators/
 plopfile.cjs
 
-# Mock server
-mock-server.ts
+# Mock server (mocked-db.json is auto-generated at runtime)
 mocked-db.json
-__mocks__/
 
 # CI/CD
 .husky

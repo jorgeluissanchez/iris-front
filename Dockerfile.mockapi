@@ -1,0 +1,33 @@
+FROM node:20-alpine AS deps
+
+RUN corepack enable && corepack prepare pnpm@latest --activate
+
+WORKDIR /app
+
+COPY package.json pnpm-lock.yaml ./
+
+RUN --mount=type=cache,id=pnpm,target=/root/.local/share/pnpm/store \
+    pnpm install --frozen-lockfile
+
+FROM node:20-alpine AS runner
+
+RUN corepack enable && corepack prepare pnpm@latest --activate
+
+WORKDIR /app
+
+ARG MOCK_API_PORT
+ENV NODE_ENV=development
+ENV NEXT_PUBLIC_MOCK_API_PORT=${MOCK_API_PORT}
+
+COPY --from=deps /app/node_modules ./node_modules
+COPY package.json ./
+COPY mock-server.ts ./
+COPY tsconfig.json ./
+COPY src/testing ./src/testing
+
+EXPOSE ${MOCK_API_PORT}
+
+HEALTHCHECK --interval=30s --timeout=10s --start-period=20s --retries=3 \
+    CMD node -e "require('http').get('http://localhost:' + process.env.NEXT_PUBLIC_MOCK_API_PORT, (r) => {process.exit(r.statusCode === 200 || r.statusCode === 404 ? 0 : 1)})" || exit 1
+
+CMD ["npx", "tsx", "mock-server.ts"]
