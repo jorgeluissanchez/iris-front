@@ -7,6 +7,7 @@ import { SquarePen } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
+import { Spinner } from "@/components/ui/spinner";
 import {
   Modal,
   ModalContent,
@@ -27,12 +28,12 @@ import { DatePicker } from "@/components/ui/date-picker";
 import { cn } from "@/utils/cn";
 
 type UpdateEventProps = {
-  eventId: string;
+  eventId: number;
 };
 
 export const UpdateEvent = ({ eventId }: UpdateEventProps) => {
   const { addNotification } = useNotifications();
-  const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
+  const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();  
   const eventQuery = useEvent({ eventId });
   const updateEventMutation = useUpdateEvent({
     mutationConfig: {
@@ -54,23 +55,52 @@ export const UpdateEvent = ({ eventId }: UpdateEventProps) => {
 
   const event = eventQuery.data?.data;
 
+
   return (
     <>
       <Button
         variant="shadow"
         className="w-full"
         size="sm"
-        onMouseEnter={()=>eventQuery.refetch()}
-        onPress={()=>onOpen()}
+        onPress={() => {
+          eventQuery.refetch();
+          onOpen();
+        }}
       >
         <SquarePen size={16} />
         Update Event
       </Button>
       <Modal isOpen={isOpen} onOpenChange={onOpenChange} size="2xl">
         <ModalContent>
-          {(onClose) => (
+          {(onClose) => {
+            if (eventQuery.isLoading) {
+              return (
+                <>
+                  <ModalHeader>Update Event</ModalHeader>
+                  <ModalBody className="flex items-center justify-center py-12">
+                    <Spinner size="lg" />
+                  </ModalBody>
+                </>
+              );
+            }
+
+            if (!event) {
+              return (
+                <>
+                  <ModalHeader>Update Event</ModalHeader>
+                  <ModalBody>
+                    <p>Event not found</p>
+                  </ModalBody>
+                  <ModalFooter>
+                    <Button onPress={onClose}>Close</Button>
+                  </ModalFooter>
+                </>
+              );
+            }
+
+            return (
             <Form
-              key={`update-event-${eventId}-${isOpen}`}
+              key={`update-event-${eventId}-${event?.updatedAt}`}
               id="update-event"
               onSubmit={async (e) => {
                 e.preventDefault();
@@ -245,7 +275,8 @@ export const UpdateEvent = ({ eventId }: UpdateEventProps) => {
                 </Button>
               </ModalFooter>
             </Form>
-          )}
+            );
+          }}
         </ModalContent>
       </Modal>
     </>

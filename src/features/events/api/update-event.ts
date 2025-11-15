@@ -29,7 +29,7 @@ export const updateEvent = ({
 }: {
   data: UpdateEventInput;
 }): Promise<Event> => {
-  return api.patch(`/events/update`, data);
+  return api.patch(`/events/${data.id}`, data);
 };
 
 type UseUpdateEventOptions = {

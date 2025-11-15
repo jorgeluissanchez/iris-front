@@ -17,7 +17,7 @@ import { useDeleteEvent } from "../api/delete-event";
 import { useDisclosure } from "@heroui/use-disclosure";
 
 type DeleteEventProps = {
-  id: string;
+  id: number;
 };
 
 export const DeleteEvent = ({ id }: DeleteEventProps) => {
