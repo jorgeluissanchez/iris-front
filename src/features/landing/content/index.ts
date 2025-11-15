@@ -122,6 +122,7 @@ export const landingContent = {
       { name: 'Juan Carrasquilla E', role: 'Backend Developer' },
       { name: 'Samuel Robles B', role: 'Backend Developer' },
       { name: 'Gabriel Palencia C', role: 'Backend Developer' },
+      { name: 'Camilo De la Rosa', role: 'DevOps' },
       { name: 'Daniel Romero', role: 'Software Architect' },
     ],
   },
