@@ -133,7 +133,7 @@ export function EventsSection({ eventsSectionRef }: EventsSectionProps) {
             </p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="flex flex-wrap justify-center gap-8">
             {events.map((event, index) => {
               const eventTheme = getEventColor(event.id, index);
               const dateRange = formatDateRange(event.startDate, event.endDate);
@@ -142,7 +142,7 @@ export function EventsSection({ eventsSectionRef }: EventsSectionProps) {
               return (
                 <GlassCard
                   key={event.id}
-                  className="event-card group cursor-pointer transition-all duration-500 relative overflow-hidden"
+                  className="event-card group cursor-pointer transition-all duration-500 relative overflow-hidden w-full lg:w-[calc(33.333%-1.5rem)] max-w-md"
                 >
                   {/* Animated gradient background */}
                   <div
