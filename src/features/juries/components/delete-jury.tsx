@@ -9,7 +9,7 @@ import {
   ModalBody,
   ModalFooter,
 } from "@/components/ui/modal";
-import { useDisclosure } from "@heroui/use-disclosure";
+import { useDisclosure } from '@/hooks/use-disclosure';
 import { useNotifications } from "@/components/ui/notifications";
 import { useDeleteJury } from "../api/delete-jury";
 

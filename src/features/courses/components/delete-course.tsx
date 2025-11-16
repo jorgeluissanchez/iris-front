@@ -15,7 +15,7 @@ import { useNotifications } from "@/components/ui/notifications";
 import { useUser } from "@/lib/auth";
 
 import { useDeleteCourse } from "../api/delete-course";
-import { useDisclosure } from "@heroui/use-disclosure";
+import { useDisclosure } from '@/hooks/use-disclosure';
 
 type DeleteCourseProps = {
   id: string;

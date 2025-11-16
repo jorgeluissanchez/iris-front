@@ -14,7 +14,7 @@ import { useUser } from "@/lib/auth";
 import { canDeleteEvent } from "@/lib/authorization";
 
 import { useDeleteEvent } from "../api/delete-event";
-import { useDisclosure } from "@heroui/use-disclosure";
+import { useDisclosure } from '@/hooks/use-disclosure';
 
 type DeleteEventProps = {
   id: string;

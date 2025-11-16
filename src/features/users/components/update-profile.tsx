@@ -9,7 +9,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Drawer, DrawerBody, DrawerContent, DrawerFooter, DrawerHeader } from '@/components/ui/drawer';
 import { useNotifications } from '@/components/ui/notifications';
 import { useUser } from '@/lib/auth';
-import { useDisclosure } from '@heroui/use-disclosure';
+import { useDisclosure } from '@/hooks/use-disclosure';
 
 import {
   updateProfileInputSchema,

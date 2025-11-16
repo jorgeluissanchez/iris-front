@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Form } from '@/components/ui/form';
 import { Textarea } from '@/components/ui/textarea';
 import { Drawer, DrawerBody, DrawerContent, DrawerFooter, DrawerHeader } from '@/components/ui/drawer';
-import { useDisclosure } from '@heroui/use-disclosure';
+import { useDisclosure } from '@/hooks/use-disclosure';
 import { useNotifications } from '@/components/ui/notifications';
 import { useUser } from '@/lib/auth';
 import { canCreateDiscussion } from '@/lib/authorization';

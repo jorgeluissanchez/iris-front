@@ -7,7 +7,7 @@ import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter } from '@/comp
 import { useNotifications } from '@/components/ui/notifications';
 
 import { useDeleteComment } from '../api/delete-comment';
-import { useDisclosure } from '@heroui/use-disclosure';
+import { useDisclosure } from '@/hooks/use-disclosure';
 
 type DeleteCommentProps = {
   id: string;

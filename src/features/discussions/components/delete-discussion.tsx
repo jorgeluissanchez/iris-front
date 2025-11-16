@@ -9,7 +9,7 @@ import { useUser } from '@/lib/auth';
 import { canDeleteDiscussion } from '@/lib/authorization';
 
 import { useDeleteDiscussion } from '../api/delete-discussion';
-import { useDisclosure } from '@heroui/use-disclosure';
+import { useDisclosure } from '@/hooks/use-disclosure';
 
 type DeleteDiscussionProps = {
   id: string;
