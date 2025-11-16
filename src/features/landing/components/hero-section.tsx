@@ -156,11 +156,11 @@ export function HeroSection({
       className="relative z-10 min-h-screen flex items-center justify-center px-6 py-32 overflow-hidden"
     >
       {/* Floating 3D Elements Background */}
-      <div className="absolute inset-0">
+      <div className="absolute inset-0 hidden md:block">
         {/* Large floating cube */}
         <div 
           ref={cubeRef}
-          className="absolute top-20 right-[10%] w-64 h-64 opacity-20 cursor-pointer transition-all duration-500 hover:opacity-40 hover:scale-110"
+          className="absolute top-20 right-[10%] w-32 h-32 md:w-48 md:h-48 lg:w-64 lg:h-64 opacity-20 cursor-pointer transition-all duration-500 hover:opacity-40 hover:scale-110"
           style={{
             background: 'linear-gradient(135deg, oklch(0.75 0.15 195 / 0.3), oklch(0.82 0.18 330 / 0.3))',
             transform: 'rotateX(45deg) rotateY(45deg)',
@@ -179,7 +179,7 @@ export function HeroSection({
         {/* Medium floating sphere */}
         <div 
           ref={sphereRef}
-          className="absolute top-40 left-[15%] w-48 h-48 rounded-full opacity-25 cursor-pointer transition-all duration-500 hover:opacity-45 hover:scale-110"
+          className="absolute top-40 left-[15%] w-28 h-28 md:w-36 md:h-36 lg:w-48 lg:h-48 rounded-full opacity-25 cursor-pointer transition-all duration-500 hover:opacity-45 hover:scale-110"
           style={{
             background: 'radial-gradient(circle at 30% 30%, oklch(0.82 0.18 330 / 0.4), oklch(0.88 0.16 85 / 0.2))',
             animation: 'float-medium 10s ease-in-out infinite',
@@ -199,7 +199,7 @@ export function HeroSection({
         {/* Small floating pyramid */}
         <div 
           ref={pyramidRef}
-          className="absolute bottom-32 right-[20%] w-32 h-32 opacity-30 cursor-pointer transition-all duration-500 hover:opacity-50 hover:scale-110"
+          className="absolute bottom-32 right-[20%] w-20 h-20 md:w-24 md:h-24 lg:w-32 lg:h-32 opacity-30 cursor-pointer transition-all duration-500 hover:opacity-50 hover:scale-110"
           style={{
             background: 'linear-gradient(to bottom right, oklch(0.88 0.16 85 / 0.4), transparent)',
             clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)',
@@ -217,7 +217,7 @@ export function HeroSection({
         {/* Wireframe cube */}
         <div 
           ref={wireframeRef}
-          className="absolute bottom-40 left-[8%] w-40 h-40 opacity-15 cursor-pointer transition-all duration-500 hover:opacity-35 hover:scale-110"
+          className="absolute bottom-40 left-[8%] w-24 h-24 md:w-32 md:h-32 lg:w-40 lg:h-40 opacity-15 cursor-pointer transition-all duration-500 hover:opacity-35 hover:scale-110"
           style={{
             border: '2px solid oklch(0.75 0.15 195)',
             transform: 'rotateX(30deg) rotateZ(45deg)',
@@ -237,7 +237,7 @@ export function HeroSection({
         {/* Floating hexagon with gradient */}
         <div 
           ref={diamondRef}
-          className="absolute top-[25%] right-[35%] w-24 h-28 opacity-25 cursor-pointer transition-all duration-500 hover:opacity-45 hover:scale-110"
+          className="absolute top-[25%] right-[35%] w-16 h-20 md:w-20 md:h-24 lg:w-24 lg:h-28 opacity-25 cursor-pointer transition-all duration-500 hover:opacity-45 hover:scale-110"
           style={{
             background: 'linear-gradient(120deg, oklch(0.75 0.15 195 / 0.5), oklch(0.82 0.18 330 / 0.3), oklch(0.88 0.16 85 / 0.2))',
             clipPath: 'polygon(30% 0%, 70% 0%, 100% 50%, 70% 100%, 30% 100%, 0% 50%)',

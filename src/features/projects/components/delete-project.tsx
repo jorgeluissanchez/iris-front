@@ -15,7 +15,7 @@ import { useUser } from "@/lib/auth";
 import { canDeleteProject } from "@/lib/authorization";
 
 import { useDeleteProject } from "../api/delete-project";
-import { useDisclosure } from "@heroui/use-disclosure";
+import { useDisclosure } from '@/hooks/use-disclosure';
 
 type DeleteProjectProps = {
   id: string;

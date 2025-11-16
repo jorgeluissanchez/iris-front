@@ -4,11 +4,20 @@ import { useUser } from '@/lib/auth';
 import { Calendar, Folder, Users, FileCheck } from 'lucide-react';
 import { Card, CardHeader, CardBody } from '@/components/ui/card';
 import { useDashboardStats } from '@/features/dashboard/api/get-dashboard-stats';
+import { Spinner } from '@/components/ui/spinner';
 import '@/features/landing/index.css';
 
 export const AdminDashboard = () => {
   const user = useUser();
   const { data: stats, isLoading } = useDashboardStats();
+
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center min-h-[400px]">
+        <Spinner size="lg" />
+      </div>
+    );
+  }
 
   // Valores por defecto mientras se carga la información
   const defaultStats = {
@@ -23,28 +32,28 @@ export const AdminDashboard = () => {
   const statsCards = [
     {
       title: 'Active events',
-      value: isLoading ? '...' : displayStats.activeEvents,
+      value: displayStats.activeEvents,
       description: 'Currently running',
       icon: Calendar,
       iconColor: 'text-blue-500',
     },
     {
       title: 'Total projects',
-      value: isLoading ? '...' : displayStats.totalProjects,
+      value: displayStats.totalProjects,
       description: 'Across all events',
       icon: Folder,
       iconColor: 'text-green-500',
     },
     {
       title: 'Jury members',
-      value: isLoading ? '...' : displayStats.juryMembers,
+      value: displayStats.juryMembers,
       description: 'Active evaluators',
       icon: Users,
       iconColor: 'text-purple-500',
     },
     {
       title: 'Evaluations',
-      value: isLoading ? '...' : displayStats.evaluations,
+      value: displayStats.evaluations,
       description: 'Completed',
       icon: FileCheck,
       iconColor: 'text-orange-500',

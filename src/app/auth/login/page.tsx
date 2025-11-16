@@ -33,7 +33,7 @@ const LoginPage = () => {
       <div className="auth-page relative z-10 flex flex-col items-center justify-center min-h-[calc(100vh-6rem)]">
         <div className="w-full max-w-2xl mb-6 sm:mb-8 text-center px-4">
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-3">
-            Inicia sesión
+            Inicia <span className="prismatic-text">sesión</span>
           </h1>
           <p className="text-base sm:text-lg text-muted-foreground">
             Accede a tu cuenta para continuar

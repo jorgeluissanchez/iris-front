@@ -14,7 +14,7 @@ import { useNotifications } from "@/components/ui/notifications";
 import { useUser } from "@/lib/auth";
 
 import { useDeleteCriteria } from "../api/delete-criteria";
-import { useDisclosure } from "@heroui/use-disclosure";
+import { useDisclosure } from '@/hooks/use-disclosure';
 
 type DeleteCriteriaProps = {
   criterionId: string;

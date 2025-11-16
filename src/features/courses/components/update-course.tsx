@@ -12,7 +12,7 @@ import {
   ModalBody,
   ModalFooter,
 } from "@/components/ui/modal";
-import { useDisclosure } from "@heroui/use-disclosure";
+import { useDisclosure } from '@/hooks/use-disclosure';
 import { useNotifications } from "@/components/ui/notifications";
 import { Select, SelectItem } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";

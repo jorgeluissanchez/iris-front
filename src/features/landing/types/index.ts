@@ -20,4 +20,5 @@ export interface EngineeringField {
   color: string;
   description: string;
   gradient: string;
+  url: string;
 }

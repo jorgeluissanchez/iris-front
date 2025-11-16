@@ -1,0 +1,89 @@
+# ============================================
+# .dockerignore
+# Archivos y carpetas que NO deben copiarse al contenedor
+# ============================================
+
+# Dependencies
+node_modules
+pnpm-lock.yaml
+npm-debug.log
+pnpm-debug.log
+yarn-error.log
+
+# Testing
+coverage
+.nyc_output
+playwright-report
+test-results
+
+# Next.js
+.next/
+out/
+build
+dist
+
+# Production
+*.log
+
+# Misc
+.DS_Store
+*.pem
+.idea
+.vscode
+*.swp
+*.swo
+*~
+
+# Debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Local env files
+.env
+.env*.local
+.env.development
+.env.test
+.env.production
+
+# Vercel
+.vercel
+
+# Typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# Git
+.git
+.gitignore
+.github
+
+# Documentation
+README.md
+CONTRIBUTING.md
+LICENSE
+*.md
+
+# Config files
+.eslintrc.json
+.prettierrc
+.editorconfig
+
+# Storybook
+.storybook
+storybook-static
+
+# Playwright
+playwright.config.ts
+e2e/
+
+# Generators
+generators/
+plopfile.cjs
+
+# Mock server (mocked-db.json is auto-generated at runtime)
+mocked-db.json
+
+# CI/CD
+.husky
+.github

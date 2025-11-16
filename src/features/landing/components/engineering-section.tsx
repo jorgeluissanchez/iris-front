@@ -5,6 +5,7 @@ import { Users } from 'lucide-react';
 import type { EngineeringField } from '../types';
 import { landingContent } from '../content';
 import { GlassCard } from './glass-card';
+import Link from 'next/link';
 
 interface EngineeringSectionProps {
   engineeringSectionRef: RefObject<HTMLElement>;
@@ -57,35 +58,41 @@ export function EngineeringSection({
             {engineeringFields.map((field, index) => {
               const Icon = field.icon;
               return (
-                <GlassCard
+                <Link
                   key={field.id}
-                  className={`engineering-card group cursor-pointer hover:scale-105 transition-all duration-500 ${
-                    activeEngineering === index ? 'ring-2 ring-primary' : ''
-                  }`}
+                  href={field.url}
+                  className="block" // asegura que todo el card sea clickeable
                 >
-                  <div
-                    className={`absolute inset-0 bg-gradient-to-br ${field.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-xl`}
-                  />
-                  <div className="relative z-10">
+                  <GlassCard
+                    key={field.id}
+                    className={`engineering-card group cursor-pointer hover:scale-105 transition-all duration-500 ${
+                      activeEngineering === index ? 'ring-2 ring-primary' : ''
+                    }`}
+                  >
                     <div
-                      className="w-14 h-14 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300"
-                      style={{
-                        background: `color-mix(in oklch, ${field.color}, transparent 80%)`,
-                        boxShadow: `0 0 30px color-mix(in oklch, ${field.color}, transparent 50%)`,
-                      }}
-                    >
-                      <Icon className="w-7 h-7" style={{ color: field.color }} />
+                      className={`absolute inset-0 bg-gradient-to-br ${field.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-xl`}
+                    />
+                    <div className="relative z-10">
+                      <div
+                        className="w-14 h-14 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300"
+                        style={{
+                          background: `color-mix(in oklch, ${field.color}, transparent 80%)`,
+                          boxShadow: `0 0 30px color-mix(in oklch, ${field.color}, transparent 50%)`,
+                        }}
+                      >
+                        <Icon className="w-7 h-7" style={{ color: field.color }} />
+                      </div>
+                      <h3 className="text-xl font-bold mb-2 group-hover:text-primary transition-colors">
+                        {field.name}
+                      </h3>
+                      <p className="text-sm text-muted-foreground leading-relaxed">
+                        {field.description}
+                      </p>
                     </div>
-                    <h3 className="text-xl font-bold mb-2 group-hover:text-primary transition-colors">
-                      {field.name}
-                    </h3>
-                    <p className="text-sm text-muted-foreground leading-relaxed">
-                      {field.description}
-                    </p>
-                  </div>
-                </GlassCard>
-              );
-            })}
+                  </GlassCard>
+                </Link>
+                );
+              })}
           </div>
         </div>
       </section>

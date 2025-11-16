@@ -25,7 +25,12 @@ yarn-debug.log*
 yarn-error.log*
 
 # local env files
+.env
 .env*.local
+.env.docker
+.env.development
+.env.test
+.env.production
 .history
 
 # vercel
@@ -34,6 +39,33 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# docker
+.docker/
+docker-compose.override.yml
+
+# test results
+playwright-report/
+test-results/
+.nyc_output/
+
+# storybook
+storybook-static/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# logs
+*.log
+logs/
+pm2.log
+
+# mocked database
+mocked-db.json
 
 pnpm-lock.yaml
 yarn.lock

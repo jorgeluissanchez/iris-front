@@ -8,7 +8,7 @@ import { useNotifications } from '@/components/ui/notifications';
 import { useUser } from '@/lib/auth';
 
 import { useDeleteUser } from '../api/delete-user';
-import { useDisclosure } from '@heroui/use-disclosure';
+import { useDisclosure } from '@/hooks/use-disclosure';
 
 type DeleteUserProps = {
   id: string;
