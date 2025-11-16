@@ -4,7 +4,7 @@ import { api } from "@/lib/api-client";
 import { QueryConfig } from "@/lib/react-query";
 import { Meta, Event } from "@/types/api";
 
-export const getEvents = async (
+export const getMyEvents = async (
   { page }: { page?: number } = { page: 1 }
 ): Promise<{ data: Event[]; meta: Meta }> => {
   const response = await api.get<{
@@ -13,7 +13,9 @@ export const getEvents = async (
     limit: number;
     total: number;
     totalPages: number;
-  }>(`/events`, { params: { page } });
+  }>(`/events/my-events`, { params: { page } });
+
+  console.log("🔍 RAW EVENTS RESPONSE:", response);
   
   return {
     data: response.events || [],
@@ -25,21 +27,21 @@ export const getEvents = async (
   };
 };
 
-export const getEventsQueryOptions = ({ page = 1 }: { page?: number } = {}) => {
+export const getMyEventsQueryOptions = ({ page = 1 }: { page?: number } = {}) => {
   return queryOptions({
     queryKey: ["events", { page }],
-    queryFn: () => getEvents({ page }),
+    queryFn: () => getMyEvents({ page }),
   });
 };
 
-type UseEventsOptions = {
+type UseMyEventsOptions = {
   page?: number;
-  queryConfig?: QueryConfig<typeof getEventsQueryOptions>;
+  queryConfig?: QueryConfig<typeof getMyEventsQueryOptions>;
 };
 
-export const useEvents = ({ queryConfig, page }: UseEventsOptions) => {
+export const useMyEvents = ({ queryConfig, page }: UseMyEventsOptions) => {
   return useQuery({
-    ...getEventsQueryOptions({ page }),
+    ...getMyEventsQueryOptions({ page }),
     ...queryConfig,
   });
 };

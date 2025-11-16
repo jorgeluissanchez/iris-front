@@ -20,7 +20,7 @@ export const CoursesList = () => {
 
   const coursesQuery = useCourses({
     page: page,
-    eventId,
+    eventId: eventId ? Number(eventId) : undefined,
   });
 
   if (coursesQuery.isLoading) {
@@ -67,9 +67,11 @@ export const CoursesList = () => {
               <div className="space-y-2">
                 <div className="text-xs sm:text-sm text-default-400">Event:</div>
                 <div className="flex flex-wrap gap-1">
-                  {course.event ? (
+                  {course.eventId ? (
                     <Chip size="sm" variant="bordered" className="max-w-full">
-                      <span className="truncate">{course.event.title}</span>
+                      <div className="flex flex-col min-w-0">
+                      <span className="truncate">Event #{course.eventId}</span>
+                    </div>
                     </Chip>
                   ) : (
                     <span className="text-xs sm:text-sm text-default-400">No event assigned</span>

@@ -4,23 +4,26 @@ import { api } from "@/lib/api-client";
 import { QueryConfig } from "@/lib/react-query";
 import { Meta, Event } from "@/types/api";
 
-export const getEvents = async (
+export const getEventsPublic = async (
   { page }: { page?: number } = { page: 1 }
 ): Promise<{ data: Event[]; meta: Meta }> => {
   const response = await api.get<{
     events: Event[];
-    page: number;
-    limit: number;
-    total: number;
-    totalPages: number;
-  }>(`/events`, { params: { page } });
-  
+    meta: {
+      total: number;
+      itemsOnCurrentPage: number;
+      itemsPerPage: number;
+      currentPage: number;
+      totalPages: number;
+    };
+  }>(`/events/public`, { params: { page } });
+    
   return {
     data: response.events || [],
     meta: {
-      page: response.page,
-      total: response.total,
-      totalPages: response.totalPages,
+      page: response.meta.currentPage,
+      total: response.meta.total,
+      totalPages: response.meta.totalPages,
     },
   };
 };
@@ -28,7 +31,7 @@ export const getEvents = async (
 export const getEventsQueryOptions = ({ page = 1 }: { page?: number } = {}) => {
   return queryOptions({
     queryKey: ["events", { page }],
-    queryFn: () => getEvents({ page }),
+    queryFn: () => getEventsPublic({ page }),
   });
 };
 
@@ -37,7 +40,7 @@ type UseEventsOptions = {
   queryConfig?: QueryConfig<typeof getEventsQueryOptions>;
 };
 
-export const useEvents = ({ queryConfig, page }: UseEventsOptions) => {
+export const useEventsPublic = ({ queryConfig, page }: UseEventsOptions) => {
   return useQuery({
     ...getEventsQueryOptions({ page }),
     ...queryConfig,

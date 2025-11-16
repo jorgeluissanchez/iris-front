@@ -7,20 +7,20 @@ import { Criterion } from "@/types/api";
 export const getCriterion = ({
   criterionId,
 }: {
-  criterionId: string;
+  criterionId: number;
 }): Promise<{ data: Criterion }> => {
-  return api.get(`/criterion/${criterionId}`);
+  return api.get(`/criterions/${criterionId}`);
 };
 
-export const getCriterionQueryOptions = (criterionId: string) => {
+export const getCriterionQueryOptions = (criterionId: number) => {
   return queryOptions({
-    queryKey: ["criteria", criterionId],
+    queryKey: ["criterions", criterionId],
     queryFn: () => getCriterion({ criterionId }),
   });
 };
 
 type UseCriterionOptions = {
-  criterionId: string;
+  criterionId: number;
   queryConfig?: QueryConfig<typeof getCriterionQueryOptions>;
 };
 

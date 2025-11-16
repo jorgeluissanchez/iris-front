@@ -6,7 +6,7 @@ import { useUser } from '@/lib/auth'
 import { User } from '@/types/api'
 
 export type RoleGuardProps = {
-  roles: Array<User['role']>
+  roles: Array<User['platformRoles'][number]['name']>
   children: ReactNode
   fallback?: ReactNode
   redirectTo?: string
@@ -26,7 +26,7 @@ export function RoleGuard({
 
   useEffect(() => {
     if (!isLoading) {
-      const hasPermission = user && roles.includes(user.role)
+      const hasPermission = user && roles.some(role => user.platformRoles.some(userRole => userRole.name === role))
       
       // Si no tiene permiso, redirigir a /app siempre
       if (!hasPermission) {
@@ -52,7 +52,7 @@ export function RoleGuard({
     )
   }
 
-  const hasPermission = user && roles.includes(user.role)
+  const hasPermission = user && roles.some(role => user.platformRoles.some(userRole => userRole.name === role))
 
   if (!hasPermission) {
     return (

@@ -6,7 +6,6 @@ import { MutationConfig } from "@/lib/react-query";
 import { Course } from "@/types/api";
 
 import { getCourseQueryOptions } from "./get-course";
-import { getCoursesQueryOptions } from "./get-courses";
 
 export const updateCourseInputSchema = z.object({
   code: z.string().min(1, "Required").optional(),
@@ -22,9 +21,9 @@ export const updateCourse = ({
   courseId,
 }: {
   data: UpdateCourseInput;
-  courseId: string;
+  courseId: number;
 }): Promise<{ data: Course }> => {
-  return api.patch(`/courses/${courseId}`, data);
+  return api.patch(`events/courses/update`, data);
 };
 
 type UseUpdateCourseOptions = {

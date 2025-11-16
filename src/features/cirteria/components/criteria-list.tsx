@@ -7,11 +7,11 @@ import { Card, CardBody } from "@/components/ui/card";
 import { Pagination } from "@/components/ui/pagination";
 import { useCriteria } from "../api/get-criteria";
 import { Select, SelectItem } from "@/components/ui/select";
-import { useEventsDropdown } from "@/features/events/api/get-events-dropdown";
-import { useCoursesDropdown } from "@/features/courses/api/get-courses-dropdown";
 import { Chip } from "@heroui/chip";
 import { UpdateCriteria } from "./update-criteria";
 import { DeleteCriteria } from "./delete-criteria";
+import { useEvents } from "@/features/events/api/get-events";
+import { useCourses } from "@/features/courses/api/get-courses";
 
 export const CriteriaList = () => {
   const searchParams = useSearchParams();
@@ -19,15 +19,15 @@ export const CriteriaList = () => {
   const page = searchParams?.get("page") ? Number(searchParams.get("page")) : 1;
 
   // Local filter state (synced with URL)
-  const [eventId, setEventId] = useState<string>("");
-  const [courseId, setCourseId] = useState<string>("");
+  const [eventId, setEventId] = useState<number | undefined>(undefined);
+  const [courseId, setCourseId] = useState<number | undefined>(undefined);
 
   // Initialize from URL
   useEffect(() => {
     const ev = searchParams?.get("eventId") || "";
-    setEventId(ev);
+    setEventId(ev ? Number(ev) : undefined);
     const cid = searchParams?.get("courseId") || "";
-    setCourseId(cid);
+    setCourseId(cid ? Number(cid) : undefined);
   }, [searchParams]);
 
   const criteriaQuery = useCriteria({
@@ -36,8 +36,8 @@ export const CriteriaList = () => {
     courseIds: courseId ? [courseId] : undefined,
   });
 
-  const eventsQuery = useEventsDropdown();
-  const coursesQuery = useCoursesDropdown({ eventId: eventId || undefined, queryConfig: { enabled: !!eventId } });
+  const eventsQuery = useEvents({ page: 1 });
+  const coursesQuery = useCourses({ eventId: eventId || undefined, queryConfig: { enabled: !!eventId } });
   const events = eventsQuery.data?.data ?? [];
   const courses = coursesQuery.data?.data ?? [];
 
@@ -54,11 +54,11 @@ export const CriteriaList = () => {
 
   if (!criteria) return null;
 
-  const buildUrl = (newPage: number, nextEventId: string, nextCourseId: string) => {
+  const buildUrl = (newPage: number, nextEventId?: number, nextCourseId?: number) => {
     const params = new URLSearchParams();
     params.set("page", String(newPage));
-    if (nextEventId) params.set("eventId", nextEventId);
-    if (nextCourseId) params.set("courseId", nextCourseId);
+    if (nextEventId) params.set("eventId", String(nextEventId));
+    if (nextCourseId) params.set("courseId", String(nextCourseId));
     return `?${params.toString()}`;
   };
 
@@ -68,16 +68,16 @@ export const CriteriaList = () => {
 
   const handleEventChange = (keys: any) => {
     const id = Array.from(keys)[0] as string;
-    const nextEvent = id || "";
+    const nextEvent = id ? Number(id) : undefined;
     // Reset course when event changes
     setEventId(nextEvent);
-    setCourseId("");
-    router.push(buildUrl(1, nextEvent, ""));
+    setCourseId(undefined);
+    router.push(buildUrl(1, nextEvent, undefined));
   };
 
   const handleCourseChange = (keys: any) => {
     const id = Array.from(keys)[0] as string;
-    const nextCourseId = id || "";
+    const nextCourseId = id ? Number(id) : undefined;
     setCourseId(nextCourseId);
     router.push(buildUrl(1, eventId, nextCourseId));
   };
@@ -95,7 +95,7 @@ export const CriteriaList = () => {
             isClearable
           >
             {events.map((ev) => (
-              <SelectItem key={ev.id}>{ev.title}</SelectItem>
+              <SelectItem key={ev.id}>{ev.name}</SelectItem>
             ))}
           </Select>
         </div>
