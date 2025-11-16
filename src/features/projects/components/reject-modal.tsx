@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter } from "@/components/ui/modal";
 import { Textarea } from "@/components/ui/textarea";
-import { useDisclosure } from "@heroui/use-disclosure";
+import { useDisclosure } from "@/hooks/use-disclosure";
 import { useNotifications } from "@/components/ui/notifications";
 import { useState } from "react";
 import { useRejectProject } from "../api/reject-project";

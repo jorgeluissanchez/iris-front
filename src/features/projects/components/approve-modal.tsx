@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter } from "@/components/ui/modal";
-import { useDisclosure } from "@heroui/use-disclosure";
+import { useDisclosure } from "@/hooks/use-disclosure";
 import { useNotifications } from "@/components/ui/notifications";
 import { useApproveProject } from "../api/approve-project";
 
