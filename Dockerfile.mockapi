@@ -8,7 +8,7 @@ ARG MOCK_API_PORT
 ENV NODE_ENV=development
 ENV NEXT_PUBLIC_MOCK_API_PORT=${MOCK_API_PORT}
 
-COPY package.json pnpm-lock.yaml ./
+COPY package.json ./
 COPY mock-server.ts ./
 COPY tsconfig.json ./
 COPY src/config ./src/config
