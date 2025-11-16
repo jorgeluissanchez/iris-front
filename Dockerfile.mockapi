@@ -23,6 +23,7 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY package.json ./
 COPY mock-server.ts ./
 COPY tsconfig.json ./
+COPY src/config ./src/config
 COPY src/testing ./src/testing
 
 EXPOSE ${MOCK_API_PORT}
