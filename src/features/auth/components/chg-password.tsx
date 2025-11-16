@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { z } from "zod";
+import { Eye, EyeOff } from 'lucide-react';
 import { Form } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -16,6 +17,7 @@ const changePasswordSchema = z.object({
 export const ChangePasswordForm = () => {
 	const { addNotification } = useNotifications();
 	const [isSubmitting, setIsSubmitting] = useState(false);
+	const [showPassword, setShowPassword] = useState(false);
 	const searchParams = useSearchParams();
 	const token = searchParams?.get("token");
 
@@ -52,10 +54,23 @@ export const ChangePasswordForm = () => {
 			>
 				<Input
 					name="password"
-					type="password"
+					type={showPassword ? "text" : "password"}
 					label="Nueva contraseña"
 					placeholder="••••••••"
 					isRequired
+					endContent={
+						<a
+							type="button"
+							onClick={() => setShowPassword(!showPassword)}
+							className="focus:outline-none cursor-pointer"
+						>
+							{showPassword ? (
+								<EyeOff className="h-4 w-4 text-default-400 hover:text-default-600" />
+							) : (
+								<Eye className="h-4 w-4 text-default-400 hover:text-default-600" />
+							)}
+						</a>
+					}
 				/>
 				<Button
 					type="submit"

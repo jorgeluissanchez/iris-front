@@ -1,7 +1,9 @@
 'use client';
 
+import { useState } from 'react';
 import NextLink from 'next/link';
 import { useSearchParams } from 'next/navigation';
+import { Eye, EyeOff } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { Form } from '@/components/ui/form';
@@ -14,6 +16,7 @@ type LoginFormProps = {
 };
 
 export const LoginForm = ({ onSuccess }: LoginFormProps) => {
+  const [showPassword, setShowPassword] = useState(false);
   const login = useLogin({
     onSuccess,
   });
@@ -41,10 +44,23 @@ export const LoginForm = ({ onSuccess }: LoginFormProps) => {
         />
         <Input
           name="password"
-          type="password"
+          type={showPassword ? "text" : "password"}
           label="Contraseña"
           placeholder="••••••••"
           isRequired
+          endContent={
+            <a
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="focus:outline-none cursor-pointer"
+            >
+              {showPassword ? (
+                <EyeOff className="h-4 w-4 text-default-400 hover:text-default-600" />
+              ) : (
+                <Eye className="h-4 w-4 text-default-400 hover:text-default-600" />
+              )}
+            </a>
+          }
         />
         <div className="flex items-center justify-end mb-2">
           <NextLink
