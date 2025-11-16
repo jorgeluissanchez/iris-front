@@ -5,7 +5,7 @@ const createEnv = () => {
   const EnvSchema = z.object({
     API_URL: z.string(),
     ENABLE_API_MOCKING: z.preprocess(
-      (val) => val ?? "false",
+      (val) => (val === "" || val === null || val === undefined) ? "false" : val,
       z.enum(["true", "false"]).transform((s) => s === "true")
     ),
     APP_URL: z.string().optional().default("http://localhost:3000"),
