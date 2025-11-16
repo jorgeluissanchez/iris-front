@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { TeamMember } from "@/types/api";
 import {
   Tooltip,
   TooltipContent,
@@ -13,9 +12,12 @@ export type AvatarIconProps = {
   alt?: string;
   className?: string;
 };
+export type Participant = {
+  name: string;
+};
 
 export type AvatarGroupProps = {
-  members: TeamMember[];
+  members: Participant[];
   size?: number;
   gap?: number;
   className?: string;
@@ -91,8 +93,7 @@ export const AvatarGroup = ({
       {firstThree.map((m, idx) => (
         <AvatarCircle
           key={`${m.name}-${idx}`}
-          src={m.photoUrl}
-          text={m.photoUrl ? undefined : getInitials(m.name)}
+          text={getInitials(m.name)}
           size={size}
           alt={m.name}
         />

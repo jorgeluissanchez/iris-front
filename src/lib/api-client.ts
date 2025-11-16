@@ -93,6 +93,53 @@ async function fetchApi<T>(
     next,
   });
 
+  // Interceptor para 401: Refrescar token y reintentar
+  // Solo intentar refresh si:
+  // 1. No es un endpoint de auth
+  // 2. No estamos en una página de auth (evita loops)
+  const isAuthEndpoint = url.includes('/auth/refresh') || url.includes('/auth/login') || url.includes('/auth/logout') || url.includes('/auth/register');
+  const isAuthPage = typeof window !== 'undefined' && window.location.pathname.startsWith('/auth');
+
+  if (response.status === 401 && !isAuthEndpoint && !isAuthPage) {
+    try {
+      // Importación dinámica para evitar dependencia circular
+      const { refreshToken } = await import('./auth');
+
+      // Intentar refrescar el token
+      await refreshToken();
+
+      // Reintentar la petición original con el nuevo token
+      const retryResponse = await fetch(fullUrl, {
+        method,
+        headers: requestHeaders,
+        body: body ? (isFormData ? body : JSON.stringify(body)) : undefined,
+        credentials: 'include',
+        cache,
+        next,
+      });
+
+      if (!retryResponse.ok) {
+        const message = (await retryResponse.json()).message || retryResponse.statusText;
+        if (typeof window !== 'undefined') {
+          useNotifications.getState().addNotification({
+            type: 'error',
+            title: 'Error',
+            message,
+          });
+        }
+        throw new Error(message);
+      }
+
+      return retryResponse.json();
+    } catch (refreshError) {
+      // Si el refresh falla, redirigir al login solo si no estamos ya ahí
+      if (typeof window !== 'undefined' && !window.location.pathname.startsWith('/auth')) {
+        window.location.href = '/auth/login';
+      }
+      throw refreshError;
+    }
+  }
+
   if (!response.ok) {
     const message = (await response.json()).message || response.statusText;
     if (typeof window !== 'undefined') {

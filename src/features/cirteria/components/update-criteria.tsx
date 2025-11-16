@@ -16,10 +16,9 @@ import { useDisclosure } from '@/hooks/use-disclosure';
 import { useNotifications } from "@/components/ui/notifications";
 import { useUser } from "@/lib/auth";
 import { Select, SelectItem } from "@/components/ui/select";
-import { useEventsDropdown } from "@/features/events/api/get-events-dropdown";
-import { useCoursesDropdown } from "@/features/courses/api/get-courses-dropdown";
 import { useEffect, useState } from "react";
-
+import { useEvents } from "@/features/events/api/get-events";
+import { useCourses } from "@/features/courses/api/get-courses";
 import { useCriterion } from "../api/get-criterion";
 import {
   updateCriteriaInputSchema,
@@ -28,7 +27,7 @@ import {
 import { Input } from "@/components/ui/input";
 
 type UpdateCriteriaProps = {
-  criterionId: string;
+  criterionId: number;
 };
 
 export const UpdateCriteria = ({ criterionId }: UpdateCriteriaProps) => {
@@ -64,7 +63,7 @@ export const UpdateCriteria = ({ criterionId }: UpdateCriteriaProps) => {
   // Initialize local state when opening modal or when criterion loads
   useEffect(() => {
     if (isOpen && criterion) {
-      setSelectedEvent(criterion.eventId || "");
+      setSelectedEvent(criterion.eventId ? String(criterion.eventId) : "");
       const preselected = (criterion as any).criterionCourses
         ? new Set(((criterion as any).criterionCourses as Array<{ courseId: string }>).map((r) => String(r.courseId)))
         : new Set<string>();
@@ -72,15 +71,11 @@ export const UpdateCriteria = ({ criterionId }: UpdateCriteriaProps) => {
     }
   }, [isOpen, criterion?.id]);
 
-  const eventsQuery = useEventsDropdown();
-  const coursesQuery = useCoursesDropdown({ eventId: selectedEvent || undefined, queryConfig: { enabled: !!selectedEvent } });
+  const eventsQuery = useEvents({ page: 1});
+  const coursesQuery = useCourses({ eventId: selectedEvent ? Number(selectedEvent) : undefined, page: 1 });
   const events = eventsQuery.data?.data ?? [];
   const courses = coursesQuery.data?.data ?? [];
 
-  // Only admins can update criteria
-  if (user?.data?.role !== "ADMIN") {
-    return null;
-  }
 
   return (
     <>
@@ -148,7 +143,7 @@ export const UpdateCriteria = ({ criterionId }: UpdateCriteriaProps) => {
                   isRequired
                 >
                   {events.map((event) => (
-                    <SelectItem key={event.id}>{event.title}</SelectItem>
+                    <SelectItem key={event.id}>{event.name}</SelectItem>
                   ))}
                 </Select>
 

@@ -99,7 +99,7 @@ export function ProjectListView({ eventId }: ProjectListViewProps) {
                             <Button
                                 className="mt-6 w-full transition-transform hover:scale-[1.01]"
                                 color="primary"
-                                onPress={() => router.push(paths.app.evaluations.getHref(project.id.toString()))}
+                                onPress={() => router.push(paths.app.evaluations.getHref(project.id))}
                             >Evaluate Project</Button>
                         </CardBody>
                     </Card>

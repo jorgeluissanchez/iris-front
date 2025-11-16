@@ -14,21 +14,13 @@ import { api } from './api-client';
 // these are not part of features as this is a module shared across features
 
 export const getUser = async (): Promise<User> => {
-  
-  try {
-    const response = await api.get<any>('/auth/me');
- 
-    const user = response.data || response;
-    
-    
-    if (!user || !user.id) {
-      throw new Error('Invalid user data received from server');
-    }
-    
-    return user;
-  } catch (error) {
-    throw error;
+  const user = await api.get<User>('/auth/me');
+
+  if (!user || !user.id) {
+    throw new Error('Invalid user data received from server');
   }
+
+  return user;
 };
 
 const userQueryKey = ['user'];
@@ -48,10 +40,10 @@ export const useLogin = ({ onSuccess }: { onSuccess?: () => void }) => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: loginWithEmailAndPassword,
-    onSuccess: (data) => {
+    onSuccess: (user) => {
       // Limpiar todo el cache antes de establecer el nuevo usuario
       queryClient.clear();
-      queryClient.setQueryData(userQueryKey, data.user);
+      queryClient.setQueryData(userQueryKey, user);
       onSuccess?.();
     },
   });
@@ -61,10 +53,10 @@ export const useRegister = ({ onSuccess }: { onSuccess?: () => void }) => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: registerWithEmailAndPassword,
-    onSuccess: (data) => {
+    onSuccess: (user) => {
       // Limpiar todo el cache antes de establecer el nuevo usuario
       queryClient.clear();
-      queryClient.setQueryData(userQueryKey, data.user);
+      queryClient.setQueryData(userQueryKey, user);
       onSuccess?.();
     },
   });
@@ -82,7 +74,7 @@ export const useLogout = ({ onSuccess }: { onSuccess?: () => void }) => {
   });
 };
 
-const logout = (): Promise<void> => {
+const logout = (): Promise<AuthResponse> => {
   return api.post('/auth/logout');
 };
 
@@ -92,8 +84,14 @@ export const loginInputSchema = z.object({
 });
 
 export type LoginInput = z.infer<typeof loginInputSchema>;
-const loginWithEmailAndPassword = (data: LoginInput): Promise<AuthResponse> => {
-  return api.post('/auth/login', data);
+const loginWithEmailAndPassword = async (data: LoginInput): Promise<User> => {
+  // 1. Login - setea la cookie en el backend
+  await api.post<AuthResponse>('/auth/login', data);
+
+  // 2. Obtener el usuario autenticado con la cookie
+  const user = await getUser();
+
+  return user;
 };
 
 export const registerInputSchema = z
@@ -119,8 +117,18 @@ export const registerInputSchema = z
 
 export type RegisterInput = z.infer<typeof registerInputSchema>;
 
-const registerWithEmailAndPassword = (
+const registerWithEmailAndPassword = async (
   data: RegisterInput,
-): Promise<AuthResponse> => {
-  return api.post('/auth/register', data);
+): Promise<User> => {
+  // 1. Register - setea la cookie en el backend
+  await api.post<AuthResponse>('/auth/register', data);
+
+  // 2. Obtener el usuario autenticado con la cookie
+  const user = await getUser();
+
+  return user;
+};
+
+export const refreshToken = (): Promise<AuthResponse> => {
+  return api.post('/auth/refresh');
 };

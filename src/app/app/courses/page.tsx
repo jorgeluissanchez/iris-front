@@ -25,7 +25,7 @@ const CoursesPage = async ({
   const eventId = resolvedSearchParams.event;
 
   await queryClient.prefetchQuery(
-    getCoursesQueryOptions({ page, eventId: eventId || undefined })
+    getCoursesQueryOptions({ page, eventId: Number(eventId) })
   );
 
   const dehydratedState = dehydrate(queryClient);

@@ -39,8 +39,6 @@ export const Profile = () => {
           <Entry label="First Name" value={user.data?.firstName ?? ''} />
           <Entry label="Last Name" value={user.data?.lastName ?? ''} />
           <Entry label="Email Address" value={user.data?.email ?? ''} />
-          <Entry label="Role" value={user.data?.role ?? ''} />
-          <Entry label="Bio" value={user.data?.bio ?? ''} />
         </dl>
       </div>
     </div>

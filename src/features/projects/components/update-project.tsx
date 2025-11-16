@@ -108,7 +108,7 @@ export const UpdateProject = ({ projectId }: UpdateProjectProps) => {
                 <Input
                   label="Event ID"
                   name="eventId"
-                  defaultValue={project?.eventId ?? ""}
+                  defaultValue={String(project?.eventId ?? "")}
                 />
               </ModalBody>
               <ModalFooter>

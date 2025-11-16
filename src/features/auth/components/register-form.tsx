@@ -12,20 +12,17 @@ import { Select, SelectItem } from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
 import { paths } from '@/config/paths';
 import { useRegister, registerInputSchema } from '@/lib/auth';
-import { Team } from '@/types/api';
 
 type RegisterFormProps = {
   onSuccess: () => void;
   chooseTeam: boolean;
   setChooseTeam: () => void;
-  teams?: Team[];
 };
 
 export const RegisterForm = ({
   onSuccess,
   chooseTeam,
   setChooseTeam,
-  teams,
 }: RegisterFormProps) => {
   const [showPassword, setShowPassword] = useState(false);
   const registering = useRegister({ onSuccess });
@@ -89,20 +86,6 @@ export const RegisterForm = ({
               />
               <label htmlFor="choose-team">Join Existing Team</label>
             </div>
-
-            {chooseTeam && teams ? (
-              <Select name="teamId" label="Team">
-                {teams?.map((team) => (
-                  <SelectItem key={team.id}>{team.name}</SelectItem>
-                ))}
-              </Select>
-            ) : (
-              <Input
-                name="teamName"
-                type="text"
-                label="Team Name"
-              />
-            )}
             <div>
               <Button
                 isLoading={registering.isPending}

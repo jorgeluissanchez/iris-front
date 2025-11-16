@@ -31,7 +31,7 @@ export function ProjectEvaluationView({ projectId }: ProjectEvaluationViewProps)
   const projects = project?.data
 
   const { data: criteria, isLoading: isLoadingCriteria } = useCourseCriteria({
-    courseId: projects?.courseId ?? ""
+    courseId: String(projects?.courseId || ""),
   })
 
   const createEvaluationMutation = useCreateEvaluation({

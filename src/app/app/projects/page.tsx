@@ -23,7 +23,7 @@ const ProjectsPage = async ({
 
   const resolvedSearchParams = await searchParams;
   const page = resolvedSearchParams.page ? Number(resolvedSearchParams.page) : 1;
-  const eventId = resolvedSearchParams.event;
+  const eventId = Number(resolvedSearchParams.event);
 
   await queryClient.prefetchQuery(
     getProjectsQueryOptions({ page, eventId: eventId || undefined })

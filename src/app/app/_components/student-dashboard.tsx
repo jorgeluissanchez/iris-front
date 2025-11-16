@@ -2,9 +2,11 @@
 
 import { useUser } from '@/lib/auth';
 import { EvaluationProject } from '@/features/evaluations/components/get-evaluation-project';
+import { useUserProjects } from '@/features/projects/api/get-user-projects';
 import { Button } from '@heroui/button';
 import { ArrowLeft } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import { Spinner } from '@/components/ui/spinner';
 import '@/features/landing/index.css';
 
 type StudentDashboardProps = {
@@ -14,6 +16,13 @@ type StudentDashboardProps = {
 export const StudentDashboard = ({ eventId }: StudentDashboardProps = {}) => {
     const user = useUser();
     const router = useRouter();
+    
+    const { data: projectsData, isLoading } = useUserProjects({
+        userId: user.data?.id ?? '',
+        eventId,
+    });
+
+    const userProject = projectsData?.data?.[0];
 
     return (
         <div className='dashboard-page space-y-4 md:space-y-6'>
@@ -38,7 +47,17 @@ export const StudentDashboard = ({ eventId }: StudentDashboardProps = {}) => {
                 </div>
             )}
             <div className="w-full overflow-x-auto">
-                <EvaluationProject projectId={user.data?.teamId ?? ''} />
+                {isLoading ? (
+                    <div className="flex justify-center items-center min-h-[200px]">
+                        <Spinner size="lg" />
+                    </div>
+                ) : userProject ? (
+                    <EvaluationProject projectId={userProject.id} />
+                ) : (
+                    <div className="text-center py-12 text-muted-foreground">
+                        No projects found for this event
+                    </div>
+                )}
             </div>
         </div>
     );

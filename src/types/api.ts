@@ -38,8 +38,7 @@ export type User = Entity<{
 }>;
 
 export type AuthResponse = {
-  jwt: string;
-  user: User;
+  message: string;
 };
 
 
@@ -159,6 +158,7 @@ export type Administrator = Entity<{
 }>;
 
 export type Criterion = Entity<{
+  id: number;
   eventId: number;
   name: string;
   description: string;

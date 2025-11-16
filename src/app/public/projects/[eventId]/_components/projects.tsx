@@ -1,6 +1,6 @@
 import { ProjectWizard } from "@/features/projects-public/components/project-wizard";
 
-const Project = ({ eventId }: { eventId: string }) => {
+const Project = ({ eventId }: { eventId: number }) => {
 
     return (
         <div className="container mx-auto max-w-4xl py-12">

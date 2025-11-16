@@ -70,12 +70,6 @@ export const UpdateProfile = () => {
                   type="email"
                   defaultValue={user.data?.email ?? ''}
                 />
-
-                <Textarea
-                  name="bio"
-                  label="Bio"
-                  defaultValue={user.data?.bio ?? ''}
-                />
               </DrawerBody>
               <DrawerFooter>
                 <Button color="danger" variant="flat" onPress={onClose}>

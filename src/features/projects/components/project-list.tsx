@@ -75,47 +75,6 @@ export const ProjectList = () => {
                    <RejectProjectModal projectId={project.id} />
                 </div>
               </div>
-
-              <div className="w-full pt-3 space-y-2">
-                {project.state === "UNDER_REVIEW" && (
-                  <div className="grid grid-cols-2 gap-2 w-full">
-                    <Button
-                      size="sm"
-                      color="success"
-                      className="w-full text-xs sm:text-sm"
-                      isDisabled={updateProjectMutation.isPending}
-                      onPress={() => handleApprove(project.id)}
-                    >
-                      Aprobar
-                    </Button>
-                    <Button
-                      size="sm"
-                      color="danger"
-                      className="w-full text-xs sm:text-sm"
-                      isDisabled={updateProjectMutation.isPending}
-                      onPress={() => handleReject(project.id)}
-                    >
-                      Rechazar
-                    </Button>
-                  </div>
-                )}
-                {project.state !== "UNDER_REVIEW" && (
-                  <div className="w-full space-y-2">
-                    <span 
-                      className="block w-full text-center text-xs font-medium px-2 py-1 rounded"
-                      style={{
-                        backgroundColor: project.state === "APPROVED" 
-                          ? "oklch(0.75 0.15 195 / 0.8)" 
-                          : "oklch(0.82 0.18 330 / 0.4)",
-                      }}
-                    >
-                      {project.state === "APPROVED" && "Aprobado"}
-                      {project.state === "REJECTED" && "Rechazado"}
-                    </span>
-                    <UpdateProject projectId={project.id} />
-                  </div>
-                )}
-              </div>
             </CardBody>
           </Card>
         ))}

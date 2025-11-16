@@ -14,11 +14,11 @@ export const updateCriteriaInputSchema = z.object({
     .number()
     .min(0, "Weight must be greater than or equal to 0")
     .optional(),
-  eventId: z.string().min(1, "Event is required").optional(),
+  eventId: z.number().min(1, "Event is required").optional(),
   criterionCourse: z
     .array(
       z.object({
-        courseId: z.string().min(1, "Course is required"),
+        courseId: z.number().min(1, "Course is required"),
       })
     )
     .optional(),
@@ -31,7 +31,7 @@ export const updateCriteria = ({
   criterionId,
 }: {
   data: UpdateCriteriaInput;
-  criterionId: string;
+  criterionId: number;
 }): Promise<{ data: Criterion }> => {
   return api.patch(`/criterion/${criterionId}`, data);
 };

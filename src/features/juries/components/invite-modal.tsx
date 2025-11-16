@@ -61,9 +61,8 @@ export const InviteModal = () => {
   
   // Fetch all projects for selected events (no pagination for dropdown)
   const projectsQuery = useProjects({
-    eventId: eventIdsParam,
+    eventId: Number(eventIdsParam),
     page: 1,
-    pageSize: 1000, // Request all projects for dropdown
     queryConfig: {
       enabled: !!eventIdsParam, // Only fetch when events are selected
     },
@@ -185,7 +184,7 @@ export const InviteModal = () => {
                 >
                   {events.map((event) => (
                     <SelectItem key={String(event.id)}>
-                      {event.title}
+                      {event.name}
                     </SelectItem>
                   ))}
                 </Select>

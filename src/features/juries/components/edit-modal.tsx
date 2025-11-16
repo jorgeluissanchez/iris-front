@@ -16,7 +16,7 @@ import { useNotifications } from "@/components/ui/notifications";
 import { updateJuryInputSchema, useUpdateJury } from "../api/update-jury";
 import { Input } from "@/components/ui/input";
 import { Select, SelectItem } from "@/components/ui/select";
-import { useEventsDropdown } from "@/features/events/api/get-events-dropdown";
+import { useEvents } from "@/features/events/api/get-events";
 import { useProjects } from "@/features/projects/api/get-projects";
 import { Jury } from "@/types/api";
 import { Edit } from "lucide-react";
@@ -28,15 +28,15 @@ type EditModalProps = {
 export const EditModal = ({ jury }: EditModalProps) => {
   const { addNotification } = useNotifications();
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
-  const [selectedEventKeys, setSelectedEventKeys] = useState<Set<string>>(
+  const [selectedEventKeys, setSelectedEventKeys] = useState<Set<number>>(
     new Set(jury.eventIds || [])
   );
-  const [selectedProjectKeys, setSelectedProjectKeys] = useState<Set<string>>(
+  const [selectedProjectKeys, setSelectedProjectKeys] = useState<Set<number>>(
     new Set(jury.projectIds || [])
   );
   const queryClient = useQueryClient();
 
-  const eventsQuery = useEventsDropdown();
+  const eventsQuery = useEvents({ page: 1 });
   const events = eventsQuery.data?.data || [];
 
   // Get projects for selected events
@@ -44,9 +44,8 @@ export const EditModal = ({ jury }: EditModalProps) => {
   const eventIdsParam = selectedEventIds.length > 0 ? selectedEventIds.join(",") : undefined;
   
   const projectsQuery = useProjects({
-    eventId: eventIdsParam,
+    eventId: Number(eventIdsParam),
     page: 1,
-    pageSize: 1000, // Request all projects for dropdown
     queryConfig: {
       enabled: selectedEventIds.length > 0, // Only fetch when events are selected
     },
@@ -158,13 +157,13 @@ export const EditModal = ({ jury }: EditModalProps) => {
                   selectedKeys={selectedEventKeys}
                   onSelectionChange={(keys) => {
                     const nextSet = keys instanceof Set ? keys : new Set(Array.from(keys));
-                    setSelectedEventKeys(nextSet as Set<string>);
+                    setSelectedEventKeys(nextSet as Set<number>);
                   }}
                   isLoading={eventsQuery.isLoading}
                 >
                   {events.map((event) => (
                     <SelectItem key={String(event.id)}>
-                      {event.title}
+                      {event.name}
                     </SelectItem>
                   ))}
                 </Select>
@@ -179,7 +178,7 @@ export const EditModal = ({ jury }: EditModalProps) => {
                   selectedKeys={selectedProjectKeys}
                   onSelectionChange={(keys) => {
                     const nextSet = keys instanceof Set ? keys : new Set(Array.from(keys));
-                    setSelectedProjectKeys(nextSet as Set<string>);
+                    setSelectedProjectKeys(nextSet as Set<number>);
                   }}
                   isDisabled={selectedEventKeys.size === 0}
                   isLoading={selectedEventKeys.size > 0 && projectsQuery.isLoading}

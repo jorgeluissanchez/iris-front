@@ -44,11 +44,6 @@ export const DeleteCriteria = ({ criterionId }: DeleteCriteriaProps) => {
     },
   });
 
-  // Only admins can delete criteria
-  if (user?.data?.role !== "ADMIN") {
-    return null;
-  }
-
   return (
     <>
       <Button
