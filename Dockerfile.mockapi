@@ -1,14 +1,3 @@
-FROM node:20-alpine AS deps
-
-RUN corepack enable && corepack prepare pnpm@latest --activate
-
-WORKDIR /app
-
-COPY package.json pnpm-lock.yaml ./
-
-RUN --mount=type=cache,id=pnpm,target=/root/.local/share/pnpm/store \
-    pnpm install --frozen-lockfile
-
 FROM node:20-alpine AS runner
 
 RUN corepack enable && corepack prepare pnpm@latest --activate
@@ -19,12 +8,14 @@ ARG MOCK_API_PORT
 ENV NODE_ENV=development
 ENV NEXT_PUBLIC_MOCK_API_PORT=${MOCK_API_PORT}
 
-COPY --from=deps /app/node_modules ./node_modules
-COPY package.json ./
+COPY package.json pnpm-lock.yaml ./
 COPY mock-server.ts ./
 COPY tsconfig.json ./
 COPY src/config ./src/config
 COPY src/testing ./src/testing
+
+RUN --mount=type=cache,id=pnpm,target=/root/.local/share/pnpm/store \
+    pnpm install --frozen-lockfile --prod=false
 
 EXPOSE ${MOCK_API_PORT}
 
