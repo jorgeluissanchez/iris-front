@@ -4,31 +4,47 @@ import { api } from "@/lib/api-client";
 import { QueryConfig } from "@/lib/react-query";
 import { Meta, Course } from "@/types/api";
 
-export const getCourses = (
-  { page, eventId }: { page?: number; eventId?: string } = { page: 1 }
-): Promise<{ data: Course[]; meta: Meta }> => {
-  if (eventId) {
-    if (eventId.includes(",")) {
-      return api.get(`/courses`, { params: { page, event: eventId } });
-    }
+type GetCoursesResponse = {
+  courses: Course[];
+  nextPageToken?: string;
+};
 
-    return api.get(`/courses`, { params: { page, eventId } });
-  }
-  return api.get(`/courses`, { params: { page } });
+export const getCourses = async (
+  { page, eventId }: { page?: number; eventId?: number } = { page: 1 }
+): Promise<{ data: Course[]; meta: Meta }> => {
+  
+  const response = await api.get<GetCoursesResponse>(`/events/courses/all`, {
+    params: {
+      page,
+      ...(eventId ? { eventId } : {})
+    }
+  });
+
+  return {
+    data: response.courses ?? [],
+    meta: {
+      page: page ?? 1,
+      total: response.courses?.length ?? 0,
+      totalPages: 1,
+    }
+  };
 };
 
 export const getCoursesQueryOptions = (
-  { page = 1, eventId }: { page?: number; eventId?: string } = {}
+  { page = 1, eventId }: { page?: number; eventId?: number } = {}
 ) => {
   return queryOptions({
     queryKey: ["courses", { page, eventId: eventId ?? null }],
-    queryFn: () => getCourses({ page, eventId }),
-  });
+    queryFn: async () => {
+      const result = await getCourses({ page, eventId });
+      return result;
+    },
+    });
 };
 
 type UseCoursesOptions = {
   page?: number;
-  eventId?: string;
+  eventId?: number;
   queryConfig?: QueryConfig<typeof getCoursesQueryOptions>;
 };
 

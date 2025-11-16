@@ -3,14 +3,14 @@
 import React, { useEffect } from "react";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { Select, SelectItem } from "@/components/ui/select";
-import { useEventsDropdown } from "@/features/events/api/get-events-dropdown";
+import { useEvents } from "@/features/events/api/get-events";
 
 export const EventsDropdown = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const pathname = usePathname();
 
-  const eventsQuery = useEventsDropdown();
+  const eventsQuery = useEvents({ page: 1 });
   const events = eventsQuery.data?.data || [];
 
   const [selectedKeys, setSelectedKeys] = React.useState<Set<string>>(
@@ -61,7 +61,7 @@ export const EventsDropdown = () => {
       >
         {events.length > 0 ? (
           events.map((event) => (
-            <SelectItem key={event.id}>{event.title}</SelectItem>
+            <SelectItem key={event.id}>{event.name}</SelectItem>
           ))
         ) : (
           <SelectItem key="no-events" isDisabled>
