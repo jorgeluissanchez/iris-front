@@ -15,7 +15,7 @@ COPY src/config ./src/config
 COPY src/testing ./src/testing
 
 RUN --mount=type=cache,id=pnpm,target=/root/.local/share/pnpm/store \
-    pnpm install --frozen-lockfile --prod=false
+    pnpm install --no-frozen-lockfile --prod=false
 
 EXPOSE ${MOCK_API_PORT}
 

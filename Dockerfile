@@ -7,7 +7,7 @@ WORKDIR /app
 COPY package.json ./
 
 RUN --mount=type=cache,id=pnpm,target=/root/.local/share/pnpm/store \
-    pnpm install --frozen-lockfile
+    pnpm install --no-frozen-lockfile
 
 COPY . .
 
