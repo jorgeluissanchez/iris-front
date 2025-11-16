@@ -86,10 +86,6 @@ export const CreateCriteria = () => {
                   courseIds: Array.from(selectedCourses),
                 };
 
-                console.log("📋 Selected Event:", selectedEvent);
-                console.log("📋 Selected Courses:", Array.from(selectedCourses));
-                console.log("📋 Data to send:", data);
-
                 if (selectedCourses.size === 0) {
                   addNotification({
                     type: "error",

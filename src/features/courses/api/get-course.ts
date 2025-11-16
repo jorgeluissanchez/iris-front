@@ -9,10 +9,10 @@ export const getCourse = async ({
 }: {
   courseId: number;
 }): Promise<{ data: Course }> => {
-  const response = await api.get<Course>(`/events/courses/${courseId}`);
-
+  const response = await api.get<{ course: Course }>(`/events/courses/${courseId}`);
+  
   return {
-    data: response,
+    data: response.course,
   };};
 
 export const getCourseQueryOptions = (courseId: number) => {
@@ -20,7 +20,6 @@ export const getCourseQueryOptions = (courseId: number) => {
     queryKey: ["courses", courseId],
     queryFn: async () => {
       const result = await getCourse({ courseId });
-      console.log("✅ Resultado getCourse", result);
       return result;
     },  });
 };

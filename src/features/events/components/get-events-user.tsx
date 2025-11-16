@@ -7,15 +7,19 @@ import { Spinner } from "@/components/ui/spinner";
 import { Pagination } from "@/components/ui/pagination";
 import { Button } from "@heroui/button";
 import { Chip } from "@/components/ui/chip";
+import { useMyEvents } from "../api/get-my-events";
+import dayjs from "dayjs";
 
-import { useEvents } from "../api/get-events";
+export const formatDateShort = (date: string | number) => {
+  return dayjs(date).format('MMM D, YYYY');
+};
 
 export const GetEventsUser = () => {
     const searchParams = useSearchParams();
     const router = useRouter();
     const page = searchParams?.get("page") ? Number(searchParams.get("page")) : 1;
 
-    const eventsQuery = useEvents({
+    const eventsQuery = useMyEvents({
         page: page,
     });
 
@@ -71,7 +75,7 @@ export const GetEventsUser = () => {
                         <CardBody className="p-6 space-y-4 flex flex-col">
                             <div className="space-y-2">
                                 <div className="flex items-start justify-between gap-2">
-                                    <h3 className="text-xl font-semibold flex-1">{event.title}</h3>
+                                    <h3 className="text-xl font-semibold flex-1">{event.name}</h3>
                                     {event.userEventRole && (
                                         <Chip
                                             color={getRoleColor(event.userEventRole)}
@@ -91,24 +95,24 @@ export const GetEventsUser = () => {
                                     <div className="flex items-center gap-2">
                                         <Calendar className="h-4 w-4 text-default-400" />
                                         <span className="text-default-400">Start:</span>
-                                        <span>{event.startDate}</span>
+                                        <span>{formatDateShort(event.startDate)}</span>
                                     </div>
                                     <div className="flex items-center gap-2">
                                         <Calendar className="h-4 w-4 text-default-400" />
                                         <span className="text-default-400">End:</span>
-                                        <span>{event.endDate}</span>
+                                        <span>{formatDateShort(event.endDate)}</span>
                                     </div>
                                 </div>
                                 <div className="flex items-center justify-between p-1">
                                     <span className="text-sm text-default-400">Evaluations:</span>
                                     <span
                                         className={`text-sm font-medium ${
-                                            event.evaluationsStatus === "open"
+                                            event.evaluationsOpened === true
                                                 ? "text-green-600"
                                                 : "text-red-600"
                                         }`}
                                     >
-                                        {event.evaluationsStatus === "open" ? "Open" : "Closed"}
+                                        {event.evaluationsOpened === true ? "Open" : "Closed"}
                                     </span>
                                 </div>
                             </div>

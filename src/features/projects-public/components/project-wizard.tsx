@@ -40,8 +40,7 @@ export type Participant = {
 export type ProjectData = {
   name: string;
   description: string;
-  courseId: string;
-  logo: string;
+  courseId: number;
 };
 
 export type DocumentsData = {
@@ -63,7 +62,7 @@ const steps = [
 ];
 
 type ProjectWizardProps = {
-  eventId: string;
+  eventId: number;
 };
 
 export function ProjectWizard({ eventId }: ProjectWizardProps) {
@@ -76,8 +75,7 @@ export function ProjectWizard({ eventId }: ProjectWizardProps) {
     project: {
       name: "",
       description: "",
-      courseId: "",
-      logo: "",
+      courseId: 0,
     },
     documents: {
       poster: null,
@@ -111,36 +109,37 @@ export function ProjectWizard({ eventId }: ProjectWizardProps) {
     setWizardData((prev) => ({ ...prev, documents }));
   };
 
-  const validateStep = (step: number): boolean => {
-    setStepErrors([]);
+const validateStep = (step: number): boolean => {
+  setStepErrors([]);
 
-    try {
-      switch (step) {
-        case 1: // Participantes
-          z.array(participantSchema)
-            .min(1, "Debe agregar al menos un participante")
-            .parse(wizardData.participants);
-          return true;
+  try {
+    switch (step) {
+      case 1: // Participantes
+        z.array(participantSchema)
+          .min(1, "Debe agregar al menos un participante")
+          .parse(wizardData.participants);
+        return true;
 
-        case 2: // Proyecto
-          projectSchema.parse(wizardData.project);
-          return true;
+      case 2: // Proyecto
+        projectSchema.parse(wizardData.project);
+        return true;
 
-        case 3: // Documentos
-          documentsSchema.parse(wizardData.documents);
-          return true;
+      case 3: // Documentos
+        documentsSchema.parse(wizardData.documents);
+        return true;
 
-        default:
-          return true;
-      }
-    } catch (error) {
-      if (error instanceof z.ZodError) {
-        const messages = error.issues.map((e) => e.message);
-        setStepErrors(messages);
-      }
-      return false;
+      default:
+        return true;
     }
-  };
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      const messages = error.issues.map((e) => e.message);
+      setStepErrors(messages);
+    }
+    return false;
+  }
+};
+
 
   const handleNext = () => {
     if (validateStep(currentStep)) {
@@ -157,59 +156,62 @@ export function ProjectWizard({ eventId }: ProjectWizardProps) {
     }
   };
 
-  const mapFileToDocument = (
-    file: File | null,
-    kind: "POSTER" | "SUPPORTING_DOCUMENT"
-  ) => {
-    if (!file) return null;
-    return {
-      type: kind,
-      url: URL.createObjectURL(file),
-    };
-  };
+ // Dentro del ProjectWizard (handleSubmit)
+const handleSubmit = () => {
+  setStepErrors([]);
 
-  const handleSubmit = () => {
-    setStepErrors([]);
-    const payload: any = {
-      eventId: eventId,
-      courseId: wizardData.project.courseId,
+  try {
+    // Preparamos el payload para validación
+    const payloadData = {
       name: wizardData.project.name,
-      logo: `https://storage.example.com/projects/logos/${Date.now()}.png`,
-      documents: [
-        ...(mapFileToDocument(wizardData.documents.poster, "POSTER")
-          ? [mapFileToDocument(wizardData.documents.poster, "POSTER")]
-          : []),
-        ...wizardData.documents.additionalDocuments.map((f) => ({
-          type: "SUPPORTING_DOCUMENT",
-          url: URL.createObjectURL(f),
-        })),
-      ],
-      participants: wizardData.participants.map((p) => {
-        const participant: any = {
+      description: wizardData.project.description,
+      eventId: String(eventId),
+      courseId: String(wizardData.project.courseId),
+      participants: JSON.stringify(
+        wizardData.participants.map(p => ({
           firstName: p.firstName,
           lastName: p.lastName,
           email: p.email,
-        };
-        if (p.studentCode) {
-          participant.studentCode = p.studentCode;
-        }
-        return participant;
-      }),
+          studentCode: p.studentCode || undefined,
+        }))
+      ),
+      documents: JSON.stringify([
+        ...(wizardData.documents.poster ? [{ type: "POSTER", url: "" }] : []),
+        ...wizardData.documents.additionalDocuments.map(() => ({ type: "SUPPORTING_DOCUMENT", url: "" })),
+      ]),
+      files: [
+        ...(wizardData.documents.poster ? [wizardData.documents.poster] : []),
+        ...wizardData.documents.additionalDocuments,
+      ],
     };
 
-    if (wizardData.project.description) {
-      payload.description = wizardData.project.description;
-    }
+    console.log(eventId)
 
-    try {
-      const validated = createProjectInputSchema.parse(payload);
-      createProjectMutation.mutate({ data: validated });
-    } catch (e) {
-      if (e instanceof z.ZodError) {
-        setStepErrors(e.issues.map((i) => i.message));
-      }
+    // Validamos
+    createProjectInputSchema.parse(payloadData);
+
+    // Creamos FormData
+    const formData = new FormData();
+    formData.append("name", payloadData.name);
+    if (payloadData.description) formData.append("description", payloadData.description);
+    formData.append("eventId", payloadData.eventId);
+    formData.append("courseId", payloadData.courseId);
+    formData.append("participants", payloadData.participants);
+    formData.append("documents", payloadData.documents);
+
+    payloadData.files.forEach(file => formData.append("files", file));
+
+    // Enviamos
+    createProjectMutation.mutate({ data: formData });
+
+  } catch (e) {
+    if (e instanceof z.ZodError) {
+      setStepErrors(e.issues.map(i => i.message));
     }
-  };
+  }
+};
+
+
 
   return (
     <div className="space-y-6 sm:space-y-8">

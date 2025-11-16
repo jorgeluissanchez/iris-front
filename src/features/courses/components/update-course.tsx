@@ -70,9 +70,35 @@ export const UpdateCourse = ({ courseId }: UpdateCourseProps) => {
 
       <Modal isOpen={isOpen} onOpenChange={onOpenChange} size="2xl">
         <ModalContent>
-          {(onClose) => (
+          {(onClose) => {
+            if (courseQuery.isLoading) {
+              return (
+                <>
+                  <ModalHeader>Update Course</ModalHeader>
+                  <ModalBody className="flex items-center justify-center py-12">
+                    <div>Loading...</div>
+                  </ModalBody>
+                </>
+              );
+            }
+
+            if (!course) {
+              return (
+                <>
+                  <ModalHeader>Update Course</ModalHeader>
+                  <ModalBody>
+                    <p>Course not found</p>
+                  </ModalBody>
+                  <ModalFooter>
+                    <Button onPress={onClose}>Close</Button>
+                  </ModalFooter>
+                </>
+              );
+            }
+
+            return (
             <Form
-              key={`update-course-${courseId}-${isOpen}`}
+              key={`update-course-${courseId}-${course?.id}`}
               id="update-course"
               onSubmit={async (e) => {
                 e.preventDefault();
@@ -171,7 +197,8 @@ export const UpdateCourse = ({ courseId }: UpdateCourseProps) => {
                 </Button>
               </ModalFooter>
             </Form>
-          )}
+            );
+          }}
         </ModalContent>
       </Modal>
     </>

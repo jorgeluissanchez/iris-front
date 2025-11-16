@@ -3,7 +3,7 @@
 import { useUser } from '@/lib/auth';
 import { StudentDashboard } from '@/app/app/_components/student-dashboard';
 import { JuryDashboard } from '@/app/app/_components/jury-dashboard';
-import { useEvents } from '@/features/events/api/get-events';
+import { useMyEvents } from '@/features/events/api/get-my-events';
 import { Spinner } from '@/components/ui/spinner';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
@@ -14,15 +14,15 @@ type EventDashboardProps = {
 
 export const EventDashboard = ({ eventId }: EventDashboardProps) => {
   const user = useUser();
-  const eventsQuery = useEvents({ page: 1 });
+  const eventsQuery = useMyEvents({ page: 1 });
   const router = useRouter();
 
   useEffect(() => {
     // Si es ADMIN, redirigir al dashboard principal
-    if (user.data?.role === 'ADMIN') {
+    if (user.data?.platformRoles.some(userRole => userRole.name === 'Admin')) {
       router.replace('/app');
     }
-  }, [user.data?.role, router]);
+  }, [user.data?.platformRoles, router]);
 
   if (eventsQuery.isLoading || user.isLoading) {
     return (
