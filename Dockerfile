@@ -1,10 +1,3 @@
-
-FROM node:20-alpine AS deps
-
-RUN corepack enable && corepack prepare pnpm@latest --activate
-
-WORKDIR /app
-
 FROM node:20-alpine AS builder
 
 RUN corepack enable && corepack prepare pnpm@latest --activate
