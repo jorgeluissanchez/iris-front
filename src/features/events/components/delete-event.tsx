@@ -17,7 +17,7 @@ import { useDeleteEvent } from "../api/delete-event";
 import { useDisclosure } from '@/hooks/use-disclosure';
 
 type DeleteEventProps = {
-  id: number;
+  id: string;
 };
 
 export const DeleteEvent = ({ id }: DeleteEventProps) => {

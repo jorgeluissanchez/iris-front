@@ -4,28 +4,23 @@ import { api } from "@/lib/api-client";
 import { QueryConfig } from "@/lib/react-query";
 import { Course } from "@/types/api";
 
-export const getCourse = async ({
+export const getCourse = ({
   courseId,
 }: {
-  courseId: number;
+  courseId: string;
 }): Promise<{ data: Course }> => {
-  const response = await api.get<{ course: Course }>(`/events/courses/${courseId}`);
-  
-  return {
-    data: response.course,
-  };};
+  return api.get(`/courses/${courseId}`);
+};
 
-export const getCourseQueryOptions = (courseId: number) => {
+export const getCourseQueryOptions = (courseId: string) => {
   return queryOptions({
     queryKey: ["courses", courseId],
-    queryFn: async () => {
-      const result = await getCourse({ courseId });
-      return result;
-    },  });
+    queryFn: () => getCourse({ courseId }),
+  });
 };
 
 type UseCourseOptions = {
-  courseId: number;
+  courseId: string;
   queryConfig?: QueryConfig<typeof getCourseQueryOptions>;
 };
 

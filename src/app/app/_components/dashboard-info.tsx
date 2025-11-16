@@ -8,7 +8,7 @@ export const DashboardInfo = () => {
   const user = useUser();
 
   // Si es ADMIN, mostrar el AdminDashboard
-  if (user.data?.platformRoles[0].name === 'Admin') {
+  if (user.data?.role === 'ADMIN') {
     return <AdminDashboard />;
   }
 

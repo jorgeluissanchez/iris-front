@@ -17,8 +17,8 @@ import { useDisclosure } from '@/hooks/use-disclosure';
 import { useNotifications } from "@/components/ui/notifications";
 import { useUser } from "@/lib/auth";
 import { Select, SelectItem } from "@/components/ui/select";
-import { useEvents } from "@/features/events/api/get-events";
-import { useCourses } from "@/features/courses/api/get-courses";
+import { useEventsDropdown } from "@/features/events/api/get-events-dropdown";
+import { useCoursesDropdown } from "@/features/courses/api/get-courses-dropdown";
 
 import {
   createCriteriaInputSchema,
@@ -29,8 +29,8 @@ import { Input } from "@/components/ui/input";
 export const CreateCriteria = () => {
   const { addNotification } = useNotifications();
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
-  const [selectedEvent, setSelectedEvent] = useState<number | undefined>(undefined);
-  const [selectedCourses, setSelectedCourses] = useState<Set<number>>(new Set());
+  const [selectedEvent, setSelectedEvent] = useState<string>("");
+  const [selectedCourses, setSelectedCourses] = useState<Set<string>>(new Set());
   const user = useUser();
 
   const createCriteriaMutation = useCreateCriteria({
@@ -41,7 +41,7 @@ export const CreateCriteria = () => {
           title: "Criteria Created",
           message: "The evaluation criteria has been created successfully.",
         });
-        setSelectedEvent(undefined);
+        setSelectedEvent("");
         setSelectedCourses(new Set());
         onClose();
       },
@@ -55,9 +55,14 @@ export const CreateCriteria = () => {
     },
   });
 
-  const eventsQuery = useEvents({ page: 1 });
+  // Only admins can create criteria
+  if (user?.data?.role !== "ADMIN") {
+    return null;
+  }
+
+  const eventsQuery = useEventsDropdown();
   const events = eventsQuery.data?.data ?? [];
-  const coursesQuery = useCourses({ eventId: selectedEvent, queryConfig: { enabled: !!selectedEvent } });
+  const coursesQuery = useCoursesDropdown({ eventId: selectedEvent, queryConfig: { enabled: !!selectedEvent } });
   const courses = coursesQuery.data?.data ?? [];
 
   return (
@@ -83,25 +88,16 @@ export const CreateCriteria = () => {
                   name: rawData.name as string,
                   description: rawData.description as string,
                   weight: Number(rawData.weight),
-                  courseIds: Array.from(selectedCourses),
+                  criterionCourse:
+                    Array.from(selectedCourses).map((id) => ({ courseId: id })),
                 };
-
-                if (selectedCourses.size === 0) {
-                  addNotification({
-                    type: "error",
-                    title: "Validation Error",
-                    message: "Please select at least one course",
-                  });
-                  return;
-                }
 
                 try {
                   const values = await createCriteriaInputSchema.parseAsync(data);
-                  console.log("✅ Validated data:", values);
                   await createCriteriaMutation.mutateAsync({ data: values });
                 } catch (error) {
                   // Validation errors are handled by the schema
-                  console.error("❌ Validation error:", error);
+                  console.error("Validation error:", error);
                 }
               }}
             >
@@ -115,17 +111,17 @@ export const CreateCriteria = () => {
                 <Select
                   label="Event"
                   placeholder="Select an event"
-                  selectedKeys={selectedEvent ? [String(selectedEvent)] : []}
+                  selectedKeys={selectedEvent ? [selectedEvent] : []}
                   onSelectionChange={(keys) => {
                     const id = Array.from(keys)[0] as string;
-                    setSelectedEvent(id ? Number(id) : undefined);
+                    setSelectedEvent(id || "");
                     setSelectedCourses(new Set());
                   }}
                   isRequired
                   isLoading={eventsQuery.isLoading}
                 >
                   {events.map((event) => (
-                    <SelectItem key={event.id}>{event.name}</SelectItem>
+                    <SelectItem key={event.id}>{event.title}</SelectItem>
                   ))}
                 </Select>
 
@@ -133,12 +129,10 @@ export const CreateCriteria = () => {
                   label="Courses"
                   placeholder={selectedEvent ? "Select one or more courses" : "Select an event first"}
                   selectionMode="multiple"
-                  selectedKeys={selectedCourses.size > 0 ? Array.from(selectedCourses).map(String) : []}
+                  selectedKeys={selectedCourses}
                   onSelectionChange={(keys) => {
-                    const numberSet = new Set(
-                      Array.from(keys).map((key) => Number(key))
-                    );
-                    setSelectedCourses(numberSet);
+                    const set = keys instanceof Set ? keys : new Set(Array.from(keys));
+                    setSelectedCourses(set as Set<string>);
                   }}
                   isDisabled={!selectedEvent}
                   isLoading={!!selectedEvent && coursesQuery.isLoading}
@@ -191,7 +185,7 @@ export const CreateCriteria = () => {
                   type="submit"
                   color="primary"
                   isLoading={createCriteriaMutation.isPending}
-                  disabled={createCriteriaMutation.isPending || !selectedEvent || selectedCourses.size === 0}
+                  disabled={createCriteriaMutation.isPending || !selectedEvent}
                 >
                   Create Criteria
                 </Button>

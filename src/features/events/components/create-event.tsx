@@ -61,8 +61,9 @@ export const CreateEvent = () => {
                 const rawData = Object.fromEntries(formData);
                 const data = {
                   ...rawData,
-                  evaluationsOpened: rawData.evaluationsOpened === "",
-                  isPubliclyJoinable: rawData.isPubliclyJoinable === "",
+                  evaluationsStatus:
+                    rawData.evaluationsStatus === "" ? "open" : "closed",
+                  isPublic: rawData.isPublic === "",
                 };
 
                 const values = await createEventInputSchema.parseAsync(data);
@@ -74,24 +75,14 @@ export const CreateEvent = () => {
               </ModalHeader>
               <ModalBody className="space-y-4 w-full">
                 <Input 
-                  label="Name" 
-                  name="name" 
-                  placeholder="Enter event name"
+                  label="Title" 
+                  name="title" 
+                  placeholder="Enter event title"
                 />
                 <Textarea 
                   label="Description" 
                   name="description" 
                   placeholder="Enter event description"
-                />
-                <Input 
-                  label="Location" 
-                  name="location" 
-                  placeholder="Enter event location"
-                />
-                <Input 
-                  label="Access Code" 
-                  name="accessCode" 
-                  placeholder="Enter access code for the event"
                 />
                 <DatePicker label="Start Date" name="startDate" isRequired />
                 <DatePicker label="End Date" name="endDate" isRequired />
@@ -102,14 +93,14 @@ export const CreateEvent = () => {
                 />
                 <div className="flex flex-row gap-50">
                   <Switch
-                    name="evaluationsOpened"
+                    name="evaluationsStatus"
                     defaultSelected={false}
                     className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2`}
                   >
                     Evaluations Open
                   </Switch>
                   <Switch
-                    name="isPubliclyJoinable"
+                    name="isPublic"
                     className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2`}
                   >
                     Public

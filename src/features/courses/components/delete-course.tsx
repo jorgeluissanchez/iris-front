@@ -1,6 +1,7 @@
 "use client";
 
 import { Trash } from "lucide-react";
+import { useSearchParams } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -11,15 +12,19 @@ import {
   ModalFooter,
 } from "@/components/ui/modal";
 import { useNotifications } from "@/components/ui/notifications";
+import { useUser } from "@/lib/auth";
 
 import { useDeleteCourse } from "../api/delete-course";
 import { useDisclosure } from '@/hooks/use-disclosure';
 
 type DeleteCourseProps = {
-  id: number;
+  id: string;
 };
 
 export const DeleteCourse = ({ id }: DeleteCourseProps) => {
+  const searchParams = useSearchParams();
+  const currentEventId = searchParams?.get("event") || undefined;
+  const user = useUser();
   const { addNotification } = useNotifications();
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
   const deleteCourseMutation = useDeleteCourse({
@@ -34,6 +39,10 @@ export const DeleteCourse = ({ id }: DeleteCourseProps) => {
     },
   });
 
+  // Only admins can delete courses
+  if (user?.data?.role !== "ADMIN") {
+    return null;
+  }
 
   return (
     <>

@@ -4,18 +4,15 @@ import { api } from "@/lib/api-client";
 import { QueryConfig } from "@/lib/react-query";
 import { Event } from "@/types/api";
 
-export const getEvent = async ({
+export const getEvent = ({
   eventId,
 }: {
-  eventId: number;
+  eventId: string;
 }): Promise<{ data: Event }> => {
-  const response = await api.get<{ event: Event }>(`/events/${eventId}`);
-  return {
-    data: response.event,
-  };
+  return api.get(`/events/${eventId}`);
 };
 
-export const getEventQueryOptions = (eventId: number) => {
+export const getEventQueryOptions = (eventId: string) => {
   return queryOptions({
     queryKey: ["events", eventId],
     queryFn: () => getEvent({ eventId }),
@@ -23,7 +20,7 @@ export const getEventQueryOptions = (eventId: number) => {
 };
 
 type UseEventOptions = {
-  eventId: number;
+  eventId: string;
   queryConfig?: QueryConfig<typeof getEventQueryOptions>;
 };
 

@@ -40,8 +40,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     url: string;
     icon: LucideIcon;
   }[] => {
-    switch (user.data?.platformRoles[0].name) {
-      case "Admin":
+    switch (user.data?.role) {
+      case "ADMIN":
         return [
           { title: "Dashboard", url: paths.app.root.getHref(), icon: Home },
           { title: "Events", url: paths.app.events.getHref(), icon: Calendar },
@@ -82,7 +82,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           { title: "Dashboard", url: paths.app.root.getHref(), icon: Home },
         ];
     }
-  }, [user.data?.platformRoles[0].name]);
+  }, [user.data?.role]);
 
   const menuItems = getMenuItems;
 

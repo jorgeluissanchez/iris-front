@@ -8,15 +8,13 @@ import { Event } from '@/types/api';
 import { getEventsQueryOptions } from './get-events';
 
 export const createEventInputSchema = z.object({
-  name: z.string().min(1, 'Required'),
+  title: z.string().min(1, 'Required'),
   description: z.string().min(1, 'Required'),
-  accessCode: z.string().min(1, 'Required'),
   startDate: z.string().min(10).max(10), 
   endDate: z.string().min(10).max(10), 
   inscriptionDeadline: z.string().min(10).max(10),
-  evaluationsOpened: z.boolean(),
-  isPubliclyJoinable: z.boolean().optional(),
-  location: z.string().optional(),
+  evaluationsStatus: z.enum(["open", "closed"]),
+  isPublic: z.boolean().optional(),
 });
 
 export type CreateEventInput = z.infer<typeof createEventInputSchema>;

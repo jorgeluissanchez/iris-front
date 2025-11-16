@@ -17,7 +17,7 @@ import { useDisclosure } from '@/hooks/use-disclosure';
 import { useNotifications } from "@/components/ui/notifications";
 import { useUser } from "@/lib/auth";
 import { Select, SelectItem } from "@/components/ui/select";
-import { useEvents } from "@/features/events/api/get-events";
+import { useEventsDropdown } from "@/features/events/api/get-events-dropdown";
 
 import {
   createCourseInputSchema,
@@ -43,7 +43,13 @@ export const CreateCourse = () => {
     },
   });
 
-  const eventsQuery = useEvents({ page: 1 });
+  const eventsQuery = useEventsDropdown();
+  const user = useUser();
+
+  // Only admins can create courses (similar to projects)
+  if (user?.data?.role !== "ADMIN") {
+    return null;
+  }
 
   const events = eventsQuery.data?.data || [];
 
@@ -77,9 +83,8 @@ export const CreateCourse = () => {
                 
                 const data = {
                   code: rawData.code as string,
-                  name: rawData.name as string,
                   description: rawData.description as string,
-                  eventId: Number(selectedEvent),
+                  eventId: selectedEvent,
                   status: "active" as const,
                 };
                 
@@ -107,7 +112,7 @@ export const CreateCourse = () => {
                 >
                   {events.map((event) => (
                     <SelectItem key={event.id}>
-                      {event.name}
+                      {event.title}
                     </SelectItem>
                   ))}
                 </Select>
@@ -116,13 +121,6 @@ export const CreateCourse = () => {
                   label="Course code" 
                   name="code" 
                   placeholder="2354"
-                  isRequired 
-                />
-
-                <Input 
-                  label="Course name" 
-                  name="name" 
-                  placeholder="Introduction to Programming"
                   isRequired 
                 />
                 

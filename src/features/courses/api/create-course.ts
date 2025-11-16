@@ -9,9 +9,8 @@ import { getCoursesQueryOptions } from "./get-courses";
 
 export const createCourseInputSchema = z.object({
   code: z.string().min(1, "Required"),
-  name: z.string().min(1, "Required"),
   description: z.string().min(1, "Required"),
-  eventId: z.number().min(1, "Event is required"),
+  eventId: z.string().min(1, "Event is required"),
   status: z.enum(["active", "inactive"]).optional(),
 });
 
@@ -22,7 +21,7 @@ export const createCourse = ({
 }: {
   data: CreateCourseInput;
 }): Promise<{ data: Course }> => {
-  return api.post("/events/courses", data);
+  return api.post("/courses", data);
 };
 
 type UseCreateCourseOptions = {

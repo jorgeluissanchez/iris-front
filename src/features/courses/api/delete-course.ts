@@ -6,8 +6,8 @@ import { MutationConfig } from "@/lib/react-query";
 
 import { getCoursesQueryOptions } from "./get-courses";
 
-export const deleteCourse = ({ courseId }: { courseId: number }): Promise<{ data: Course }> => {
-  return api.delete(`/events/courses/delete`, { id: courseId });
+export const deleteCourse = ({ courseId }: { courseId: string }): Promise<{ data: Course }> => {
+  return api.delete(`/courses/${courseId}`);
 };
 
 type UseDeleteCourseOptions = {
