@@ -5,9 +5,9 @@ import { QueryConfig } from "@/lib/react-query";
 import { Meta, Criterion } from "@/types/api";
 
 export const getCriteria = (
-  { page, eventId, courseIds }: { page?: number; eventId?: number; courseIds?: number[] } = { page: 1 }
+  { page, eventId, courseIds }: { page?: number; eventId?: string; courseIds?: string[] } = { page: 1 }
 ): Promise<{ data: Criterion[]; meta: Meta }> => {
-  return api.get(`/criterions`, {
+  return api.get(`/criterion`, {
     params: {
       page,
       ...(eventId ? { eventId } : {}),
@@ -16,7 +16,7 @@ export const getCriteria = (
   });
 };
 
-export const getCriteriaQueryOptions = ({ page = 1, eventId, courseIds }: { page?: number; eventId?: number; courseIds?: number[] } = {}) => {
+export const getCriteriaQueryOptions = ({ page = 1, eventId, courseIds }: { page?: number; eventId?: string; courseIds?: string[] } = {}) => {
   return queryOptions({
     queryKey: ["criterion", { page, eventId, courseIds }],
     queryFn: () => getCriteria({ page, eventId, courseIds }),
@@ -25,8 +25,8 @@ export const getCriteriaQueryOptions = ({ page = 1, eventId, courseIds }: { page
 
 type UseCriteriaOptions = {
   page?: number;
-  eventId?: number;
-  courseIds?: number[];
+  eventId?: string;
+  courseIds?: string[];
   queryConfig?: QueryConfig<typeof getCriteriaQueryOptions>;
 };
 

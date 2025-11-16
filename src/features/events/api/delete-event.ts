@@ -8,7 +8,7 @@ import { getEventsQueryOptions } from './get-events';
 export const deleteEvent = ({
   eventId,
 }: {
-  eventId: number;
+  eventId: string;
 }) => {
   return api.delete(`/events/${eventId}`);
 };

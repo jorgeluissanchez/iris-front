@@ -11,11 +11,6 @@ import { useEvents } from "../api/get-events";
 
 import { DeleteEvent } from "./delete-event";
 import { UpdateEvent } from "./update-event";
-import dayjs from "dayjs";
-
-export const formatDateShort = (date: string | number) => {
-  return dayjs(date).format('MMM D, YYYY');
-};
 
 export const GetEventsAdmin = () => {
   const searchParams = useSearchParams();
@@ -50,7 +45,7 @@ export const GetEventsAdmin = () => {
           <Card shadow="sm" key={event.id} className="glass-card">
             <CardBody className="p-6 space-y-4">
               <div className="space-y-2">
-                <h3 className="text-xl font-semibold">{event.name}</h3>
+                <h3 className="text-xl font-semibold">{event.title}</h3>
                 <p className="text-sm text-default-500">{event.description}</p>
               </div>
 
@@ -59,18 +54,18 @@ export const GetEventsAdmin = () => {
                   <div className="flex items-center gap-2">
                     <Calendar className="h-4 w-4 text-default-400" />
                     <span className="text-default-400">Start:</span>
-                    <span>{formatDateShort(event.startDate)}</span>
+                    <span>{event.startDate}</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <Calendar className="h-4 w-4 text-default-400" />
                     <span className="text-default-400">End:</span>
-                    <span>{formatDateShort(event.endDate)}</span>
+                    <span>{event.endDate}</span>
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
                   <Calendar className="h-4 w-4 text-default-400" />
                   <span className="text-default-400">Deadline:</span>
-                  <span>{formatDateShort(event.inscriptionDeadline)}</span>
+                  <span>{event.inscriptionDeadline}</span>
                 </div>
               </div>
 
@@ -84,7 +79,7 @@ export const GetEventsAdmin = () => {
                     </Snippet>
                   </span>
                 </div>
-                {event.isPubliclyJoinable && (
+                {event.isPublic && (
                   <div className="flex items-center gap-1 text-green-600 ">
                     <Check className="h-4 w-4" />
                     <span className="text-sm font-medium">Public</span>
@@ -96,12 +91,12 @@ export const GetEventsAdmin = () => {
                 <span className="text-sm text-default-400">Evaluations:</span>
                 <span
                   className={`text-sm font-medium ${
-                    event.evaluationsOpened
+                    event.evaluationsStatus === "open"
                       ? "text-green-600"
                       : "text-gray-400"
                   }`}
                 >
-                  {event.evaluationsOpened ? "Open" : "Closed"}
+                  {event.evaluationsStatus === "open" ? "Open" : "Closed"}
                 </span>
               </div>
 

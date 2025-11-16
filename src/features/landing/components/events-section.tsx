@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { Calendar, Clock, MapPin, ArrowRight } from "lucide-react";
 import { GlassCard } from "./glass-card";
 import { Button } from "@/components/ui/button";
-import { useEventsPublic } from "@/features/events/api/get-event-public";
+import { useEvents } from "@/features/events/api/get-events";
 import { Spinner } from "@/components/ui/spinner";
 import { paths } from "@/config/paths";
 import { landingContent } from "../content";
@@ -31,7 +31,7 @@ const EVENT_COLORS = [
 ];
 
 // Función para obtener color basado en el ID del evento
-const getEventColor = (eventId: number, index: number) => {
+const getEventColor = (eventId: string, index: number) => {
   // Usar el índice como fallback si no hay ID
   const colorIndex = index % EVENT_COLORS.length;
   return EVENT_COLORS[colorIndex];
@@ -51,15 +51,18 @@ const formatDateRange = (startDate: string, endDate: string) => {
 };
 
 // Función para mapear status del backend a texto en español
-const getStatusText = (evaluationsOpened: boolean) => {
-  return evaluationsOpened 
-    ? landingContent.events.status.open 
-    : landingContent.events.status.closed;
+const getStatusText = (evaluationsStatus: string) => {
+  const statusMap: Record<string, string> = {
+    open: landingContent.events.status.open,
+    pending: landingContent.events.status.pending,
+    closed: landingContent.events.status.closed,
+  };
+  return statusMap[evaluationsStatus] || "Estado Desconocido";
 };
 
 export function EventsSection({ eventsSectionRef }: EventsSectionProps) {
   const router = useRouter();
-  const eventsQuery = useEventsPublic({ page: 1 });
+  const eventsQuery = useEvents({ page: 1 });
 
   if (eventsQuery.isLoading) {
     return (
@@ -75,15 +78,29 @@ export function EventsSection({ eventsSectionRef }: EventsSectionProps) {
     );
   }
 
-  const events = eventsQuery.data?.data || [];
+  const events = [
+    {
+      id: "1",
+      title: "Feria Proyectos de Ingeniería",
+      description: "Feria de proyectos finales de estudiantes de ingeniería.",
+      startDate: "2025-11-28",
+      endDate: "2025-11-28",
+      inscriptionDeadline: "2025-11-22",
+      accessCode: "FERIAPFUN",
+      isPublic: true,
+      evaluationsStatus: "open",
+      createdAt: 1762131417888,
+    },
+  ];
 
-  console.log("📊 Events Query Data:", {
+  // Debug: Log para ver qué datos llegan
+  console.log("Events Query:", {
     isLoading: eventsQuery.isLoading,
     isError: eventsQuery.isError,
     error: eventsQuery.error,
-    fullData: eventsQuery.data,
+    data: eventsQuery.data,
     events: events,
-    eventsCount: events.length,
+    eventsLength: events.length,
   });
 
   return (
@@ -120,7 +137,7 @@ export function EventsSection({ eventsSectionRef }: EventsSectionProps) {
             {events.map((event, index) => {
               const eventTheme = getEventColor(event.id, index);
               const dateRange = formatDateRange(event.startDate, event.endDate);
-              const status = getStatusText(event.evaluationsOpened);
+              const status = getStatusText(event.evaluationsStatus);
 
               return (
                 <GlassCard
@@ -163,7 +180,7 @@ export function EventsSection({ eventsSectionRef }: EventsSectionProps) {
 
                     {/* Event title */}
                     <h3 className="text-2xl font-bold mb-3 group-hover:text-primary transition-colors leading-tight">
-                      {event.name}
+                      {event.title}
                     </h3>
 
                     {/* Event description */}
@@ -237,7 +254,7 @@ export function EventsSection({ eventsSectionRef }: EventsSectionProps) {
                     {/* CTA Button */}
                     <Button
                       onClick={() =>
-                        router.push(paths.public.project.getHref(String(event.id)))
+                        router.push(paths.public.project.getHref(event.id))
                       }
                       className="w-full group-hover:scale-102 transition-transform event-button"
                       style={

@@ -1,6 +1,7 @@
 "use client";
 
 import { SquarePen } from "lucide-react";
+import { useState, useEffect } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
@@ -14,27 +15,26 @@ import {
 } from "@/components/ui/modal";
 import { useDisclosure } from '@/hooks/use-disclosure';
 import { useNotifications } from "@/components/ui/notifications";
+import { useUser } from "@/lib/auth";
 import { Select, SelectItem } from "@/components/ui/select";
-import { Input } from "@/components/ui/input";
-import { Switch } from "@/components/ui/switch";
-import { cn } from "@/utils/cn";
+import { useEventsDropdown } from "@/features/events/api/get-events-dropdown";
 
 import { useCourse } from "../api/get-course";
 import {
   updateCourseInputSchema,
   useUpdateCourse,
 } from "../api/update-course";
-
-import { useEvents } from "@/features/events/api/get-events";
+import { Input } from "@/components/ui/input";
 
 type UpdateCourseProps = {
-  courseId: number;
+  courseId: string;
 };
 
 export const UpdateCourse = ({ courseId }: UpdateCourseProps) => {
   const { addNotification } = useNotifications();
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
-
+  const [selectedEvent, setSelectedEvent] = useState<string>("");
+  
   const courseQuery = useCourse({ courseId });
   const updateCourseMutation = useUpdateCourse({
     mutationConfig: {
@@ -48,10 +48,23 @@ export const UpdateCourse = ({ courseId }: UpdateCourseProps) => {
     },
   });
 
-  const eventsQuery = useEvents({ page: 1 });
+  const eventsQuery = useEventsDropdown();
+  const user = useUser();
 
   const course = courseQuery.data?.data;
   const events = eventsQuery.data?.data || [];
+
+  // Initialize selected event when course data is loaded
+  useEffect(() => {
+    if (course?.eventId && isOpen) {
+      setSelectedEvent(course.eventId);
+    }
+  }, [course, isOpen]);
+
+  // Only admins can update courses
+  if (user?.data?.role !== "ADMIN") {
+    return null;
+  }
 
   return (
     <>
@@ -59,46 +72,17 @@ export const UpdateCourse = ({ courseId }: UpdateCourseProps) => {
         variant="shadow"
         className="w-full"
         size="sm"
-        onPress={() => {
-          courseQuery.refetch();
-          onOpen();
-        }}
+        onMouseEnter={() => courseQuery.refetch()}
+        onPress={() => onOpen()}
         startContent={<SquarePen size={16} />}
       >
         Edit course
       </Button>
-
       <Modal isOpen={isOpen} onOpenChange={onOpenChange} size="2xl">
         <ModalContent>
-          {(onClose) => {
-            if (courseQuery.isLoading) {
-              return (
-                <>
-                  <ModalHeader>Update Course</ModalHeader>
-                  <ModalBody className="flex items-center justify-center py-12">
-                    <div>Loading...</div>
-                  </ModalBody>
-                </>
-              );
-            }
-
-            if (!course) {
-              return (
-                <>
-                  <ModalHeader>Update Course</ModalHeader>
-                  <ModalBody>
-                    <p>Course not found</p>
-                  </ModalBody>
-                  <ModalFooter>
-                    <Button onPress={onClose}>Close</Button>
-                  </ModalFooter>
-                </>
-              );
-            }
-
-            return (
+          {(onClose) => (
             <Form
-              key={`update-course-${courseId}-${course?.id}`}
+              key={`update-course-${courseId}-${isOpen}`}
               id="update-course"
               onSubmit={async (e) => {
                 e.preventDefault();
@@ -106,15 +90,14 @@ export const UpdateCourse = ({ courseId }: UpdateCourseProps) => {
                 const formData = new FormData(form);
 
                 const rawData = Object.fromEntries(formData);
-
+                
                 const data = {
                   ...rawData,
-                  eventId: Number(rawData.eventId),
+                  eventId: selectedEvent,
                   active: rawData.active === "true",
                 };
 
                 const values = await updateCourseInputSchema.parseAsync(data);
-
                 await updateCourseMutation.mutateAsync({
                   data: values,
                   courseId,
@@ -124,30 +107,31 @@ export const UpdateCourse = ({ courseId }: UpdateCourseProps) => {
               <ModalHeader className="flex flex-col gap-1">
                 Update Course
               </ModalHeader>
-
               <ModalBody className="space-y-4 w-full">
-                {/* Event Select */}
                 <Select
                   label="Event"
-                  name="eventId"
                   placeholder="Select an event"
-                  defaultSelectedKeys={
-                    course?.eventId ? [String(course.eventId)] : []
-                  }
+                  selectedKeys={selectedEvent ? [selectedEvent] : []}
+                  onSelectionChange={(keys) => {
+                    const keysArray = Array.from(keys);
+                    setSelectedEvent(keysArray[0] as string || "");
+                  }}
                   isLoading={eventsQuery.isLoading}
                 >
                   {events.map((event) => (
-                    <SelectItem key={event.id}>{event.name}</SelectItem>
+                    <SelectItem key={event.id}>
+                      {event.title}
+                    </SelectItem>
                   ))}
                 </Select>
-
+                
                 <Input
                   label="Course code"
                   name="code"
                   defaultValue={course?.code ?? ""}
                   isRequired
                 />
-
+                
                 <Textarea
                   label="Description"
                   name="description"
@@ -155,37 +139,25 @@ export const UpdateCourse = ({ courseId }: UpdateCourseProps) => {
                   isRequired
                 />
 
-                <Switch
+                <Select
+                  label="Status"
                   name="active"
-                  value="true"
-                  defaultSelected={course?.active}
-                  classNames={{
-                    base: cn(
-                      "inline-flex flex-row-reverse w-full max-w-md bg-gray-200 hover:bg-gray-300 items-center",
-                      "justify-between cursor-pointer rounded-lg gap-2 p-4 border-2 border-transparent",
-                      "data-[selected=true]:border-gray-400"
-                    ),
-                    wrapper: "p-0 h-4 overflow-visible",
-                    thumb: cn(
-                      "w-6 h-6 border-2 shadow-lg",
-                      "group-data-[hover=true]:border-gray-400",
-                      "group-data-[selected=true]:ms-6",
-                      "group-data-[pressed=true]:w-7",
-                      "group-data-pressed:group-data-selected:ms-4"
-                    ),
-                  }}
+                  defaultSelectedKeys={[course?.active ? "true" : "false"]}
                 >
-                  <div className="flex flex-col gap-1">
-                    <p className="text-medium">Active</p>
-                    <p className="text-tiny text-default-400">
-                      Activate or deactivate this course.
-                    </p>
-                  </div>
-                </Switch>
+                  <SelectItem key="true">
+                    Active
+                  </SelectItem>
+                  <SelectItem key="false">
+                    Inactive
+                  </SelectItem>
+                </Select>
               </ModalBody>
-
               <ModalFooter>
-                <Button color="danger" variant="light" onPress={onClose}>
+                <Button
+                  color="danger"
+                  variant="light"
+                  onPress={onClose}
+                >
                   Cancel
                 </Button>
                 <Button
@@ -197,8 +169,7 @@ export const UpdateCourse = ({ courseId }: UpdateCourseProps) => {
                 </Button>
               </ModalFooter>
             </Form>
-            );
-          }}
+          )}
         </ModalContent>
       </Modal>
     </>

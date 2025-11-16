@@ -14,21 +14,9 @@ import { api } from './api-client';
 // these are not part of features as this is a module shared across features
 
 export const getUser = async (): Promise<User> => {
-  
-  try {
-    const response = await api.get<any>('/auth/me');
- 
-    const user = response.data || response;
-    
-    
-    if (!user || !user.id) {
-      throw new Error('Invalid user data received from server');
-    }
-    
-    return user;
-  } catch (error) {
-    throw error;
-  }
+  const response = (await api.get('/auth/me')) as { data: User };
+
+  return response.data;
 };
 
 const userQueryKey = ['user'];
@@ -40,10 +28,8 @@ export const getUserQueryOptions = () => {
   });
 };
 
-export const useUser = () => {
-  const result = useQuery(getUserQueryOptions());
-  return result;
-};
+export const useUser = () => useQuery(getUserQueryOptions());
+
 export const useLogin = ({ onSuccess }: { onSuccess?: () => void }) => {
   const queryClient = useQueryClient();
   return useMutation({

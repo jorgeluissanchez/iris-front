@@ -28,39 +28,39 @@ export const paths = {
   app: {
     root: {
       getHref: () => "/app",
-      roles: ["Admin", "User"],
+      roles: ["ADMIN", "USER"],
     },
     dashboard: {
       getHref: () => "/app",
-      roles: ["Admin", "User"],
+      roles: ["ADMIN", "USER"],
     },
     discussions: {
       getHref: () => "/app/discussions",
-      roles: ["Admin"],
+      roles: ["ADMIN"],
     },
     discussion: {
       getHref: (id: string) => `/app/discussions/${id}`,
-      roles: ["Admin"],
+      roles: ["ADMIN"],
     },
     users: {
       getHref: () => "/app/users",
-      roles: ["Admin"],
+      roles: ["ADMIN"],
     },
     profile: {
       getHref: () => "/app/profile",
-      roles: ["Admin", "User"],
+      roles: ["ADMIN"],
     },
     events: {
       getHref: () => "/app/events",
-      roles: ["Admin"],
+      roles: ["ADMIN"],
     },
     event: {
       getHref: (id: string) => `/app/events/${id}`,
-      roles: ["Admin"],
+      roles: ["ADMIN"],
     },
     projects: {
       getHref: () => "/app/projects",
-      roles: ["Admin"],
+      roles: ["ADMIN"],
     },
     juries: {
       getHref: () => "/app/juries",
@@ -70,15 +70,15 @@ export const paths = {
     },
     courses: {
       getHref: () => "/app/courses",
-      roles: ["Admin"],
+      roles: ["ADMIN"],
     },
     project_jury: {
       getHref: (id: string) => `/app/events/${id}`,
-      roles: ["User"], // Requiere subrol JURY en el evento específico
+      roles: ["USER"], // Requiere subrol JURY en el evento específico
     },
     evaluations: {
       getHref: (id: string) => `/app/evaluations/${id}`,
-      roles: ["User"], // Requiere subrol JURY en el evento específico
+      roles: ["USER"], // Requiere subrol JURY en el evento específico
     },
     criteria: {
       getHref: () => "/app/criteria",

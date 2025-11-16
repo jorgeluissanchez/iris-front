@@ -4,10 +4,11 @@ import { Input } from "@heroui/react";
 import { Textarea } from "@heroui/input";
 import { Select, SelectItem } from "@heroui/select";
 import { ProjectData } from "../project-wizard";
+import { LogoUpload } from "../image-crop/logo-upload";
 import { useCoursesDropdown } from "@/features/courses/api/get-courses-dropdown";
 
 type ProjectDetailsStepProps = {
-  eventId: number;
+  eventId: string;
   project: ProjectData;
   onUpdate: (project: ProjectData) => void;
 };
@@ -17,8 +18,18 @@ export function ProjectDetailsStep({
   project,
   onUpdate,
 }: ProjectDetailsStepProps) {
-  const coursesQuery = useCoursesDropdown({ eventId, queryConfig: { enabled: !!eventId } });
-  const courses = coursesQuery.data?.data ?? [];
+  /*const {
+    data: coursesss,
+    isLoading,
+    isError,
+    error,
+  } = useCoursesDropdown({ eventId });*/
+
+  const courses = [
+    { id: "1", code: "Ingeniería de Sistemas" },
+    { id: "2", code: "Ingeniería Industrial" },
+    { id: "3", code: "Ingeniería Electrónica" },
+  ];
 
   return (
     <div className="space-y-6">
@@ -42,25 +53,23 @@ export function ProjectDetailsStep({
       <Select
         label="Curso al que Pertenece"
         placeholder={"Seleccione un curso"}
-        selectedKeys={project.courseId ? [String(project.courseId)] : []}
+        selectedKeys={project.courseId ? [project.courseId] : []}
         onSelectionChange={(keys) => {
           const selected = Array.from(keys)[0] as string;
-          onUpdate({ ...project, courseId: Number(selected) });
+          onUpdate({ ...project, courseId: selected });
         }}
-        isDisabled={!eventId || coursesQuery.isLoading}
-        isLoading={!!eventId && coursesQuery.isLoading}
+        //isDisabled={isLoading || isError}
         isRequired
       >
-        {courses.length > 0 ? (
-          courses.map((course: any) => (
-            <SelectItem key={(course.id)}>{course.code}</SelectItem>
-          ))
-        ) : (
-          <SelectItem key="no-courses" isDisabled>
-            {eventId ? "No courses available" : "Event required"}
-          </SelectItem>
-        )}
+        {courses.map((course: any) => (
+          <SelectItem key={String(course.id)}>{course.code}</SelectItem>
+        ))}
       </Select>
+
+      <LogoUpload
+        value={project.logo}
+        onChange={(logo) => onUpdate({ ...project, logo: logo || "" })}
+      />
     </div>
   );
 }

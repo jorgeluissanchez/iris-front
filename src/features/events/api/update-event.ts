@@ -9,27 +9,24 @@ import { getEventQueryOptions } from "./get-event";
 import { getEventsQueryOptions } from "./get-events";
 
 export const updateEventInputSchema = z.object({
-  id: z.number().positive(),
-  name: z.string().min(2).max(100),
+  title: z.string().min(2).max(100),
   description: z.string().max(500),
-  accessCode: z.string().optional(),
-  isPubliclyJoinable: z.boolean().optional(),
   startDate: z.string().min(10).max(10), 
   endDate: z.string().min(10).max(10),
   inscriptionDeadline: z.string().min(10).max(10),
-  evaluationsOpened: z.boolean(),
-  active: z.boolean().optional(),
-  location: z.string().optional(),
+  evaluationsStatus: z.enum(["open", "closed"]),
 });
 
 export type UpdateEventInput = z.infer<typeof updateEventInputSchema>;
 
 export const updateEvent = ({
   data,
+  eventId,
 }: {
   data: UpdateEventInput;
+  eventId: string;
 }): Promise<Event> => {
-  return api.patch(`/events/${data.id}`, data);
+  return api.patch(`/events/${eventId}`, data);
 };
 
 type UseUpdateEventOptions = {
