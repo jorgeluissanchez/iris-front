@@ -14,8 +14,6 @@ export const getEvents = async (
     total: number;
     totalPages: number;
   }>(`/events`, { params: { page } });
-
-  console.log("🔍 RAW EVENTS RESPONSE:", response);
   
   return {
     data: response.events || [],

@@ -12,8 +12,7 @@ type GetCoursesResponse = {
 export const getCourses = async (
   { page, eventId }: { page?: number; eventId?: number } = { page: 1 }
 ): Promise<{ data: Course[]; meta: Meta }> => {
-  console.log("Fetching courses with eventId:", eventId, "and page:", typeof(eventId)) ;
-
+  
   const response = await api.get<GetCoursesResponse>(`/events/courses/all`, {
     params: {
       page,
