@@ -251,7 +251,6 @@ export const projectsHandlers = [
           );
         }
 
-        console.log("Checking jury membership for userId:", userId, "and eventId:", eventId);
         // Verificar si el usuario es jurado del evento
         if (!isUserJuryOfEvent(userId, eventId)) {
           // Si no es jurado, retornar lista vacía

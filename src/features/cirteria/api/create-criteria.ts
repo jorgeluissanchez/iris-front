@@ -27,7 +27,6 @@ export const createCriteria = ({
 }: {
   data: CreateCriteriaInput;
 }): Promise<{ data: Evaluation }> => {
-  console.log("🚀 Sending to backend:", data);
   return api.post("/criterions", data);
 };
 

@@ -48,6 +48,10 @@ export function ParticipantsStep({
       }
     }
 
+    if (!currentParticipant.studentCode.trim()) {
+      newErrors.studentCode = "El código estudiantil es requerido";
+    }
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -129,6 +133,9 @@ export function ParticipantsStep({
                 studentCode: value,
               })
             }
+            isRequired
+            isInvalid={!!errors.studentCode}
+            errorMessage={errors.studentCode}
           />
         </div>
         <Button

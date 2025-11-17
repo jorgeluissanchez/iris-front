@@ -19,7 +19,6 @@ import {
   createProjectInputSchema,
   useCreateProject,
 } from "../api/create-project";
-import { useCreateCourse } from "@/features/courses/api/create-course";
 import {
   Modal,
   ModalContent,
@@ -34,7 +33,7 @@ export type Participant = {
   firstName: string;
   lastName: string;
   email: string;
-  studentCode?: string;
+  studentCode: string;
 };
 
 export type ProjectData = {
@@ -156,12 +155,10 @@ const validateStep = (step: number): boolean => {
     }
   };
 
- // Dentro del ProjectWizard (handleSubmit)
 const handleSubmit = () => {
   setStepErrors([]);
 
   try {
-    // Preparamos el payload para validación
     const payloadData = {
       name: wizardData.project.name,
       description: wizardData.project.description,
@@ -172,7 +169,7 @@ const handleSubmit = () => {
           firstName: p.firstName,
           lastName: p.lastName,
           email: p.email,
-          studentCode: p.studentCode || undefined,
+          studentCode: p.studentCode,
         }))
       ),
       documents: JSON.stringify([
@@ -185,12 +182,8 @@ const handleSubmit = () => {
       ],
     };
 
-    console.log(eventId)
-
-    // Validamos
     createProjectInputSchema.parse(payloadData);
 
-    // Creamos FormData
     const formData = new FormData();
     formData.append("name", payloadData.name);
     if (payloadData.description) formData.append("description", payloadData.description);
@@ -201,7 +194,6 @@ const handleSubmit = () => {
 
     payloadData.files.forEach(file => formData.append("files", file));
 
-    // Enviamos
     createProjectMutation.mutate({ data: formData });
 
   } catch (e) {

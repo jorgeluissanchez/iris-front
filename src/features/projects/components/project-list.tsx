@@ -9,7 +9,7 @@ import { ApproveProjectModal } from "./approve-modal";
 import { RejectProjectModal } from "./reject-modal";
 import { Button } from "@/components/ui/button";
 import { AvatarGroup } from "./avatar-icon";
-import { FileText, Users } from "lucide-react";
+import { FileText } from "lucide-react";
 
 export const ProjectList = () => {
   const searchParams = useSearchParams();

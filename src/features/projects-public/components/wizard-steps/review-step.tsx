@@ -4,13 +4,18 @@ import { Card, CardBody, CardHeader } from "@heroui/react"
 import { Chip } from "@heroui/react"
 import { Users, FileText, Upload, CheckCircle2 } from "lucide-react"
 import { WizardData } from "../project-wizard"
-import Image from "next/image"
+import { useCourse } from "@/features/courses/api/get-course"
 
 type ReviewStepProps = {
   data: WizardData
 }
 
 export function ReviewStep({ data }: ReviewStepProps) {
+
+  const courseQuery = useCourse({ courseId: data.project.courseId })
+
+  const course = courseQuery.data?.data
+
   return (
     <div className="space-y-6">
       {/* Participants Review */}
@@ -61,7 +66,7 @@ export function ReviewStep({ data }: ReviewStepProps) {
             </div>
             <div>
               <p className="text-sm font-medium text-default-500">Curso</p>
-              <p className="mt-1">{data.project.courseId || "No especificado"}</p>
+              <p className="mt-1">{course?.code || "No especificado"}</p>
             </div>
           </div>
         </CardBody>

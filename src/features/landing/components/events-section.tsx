@@ -77,15 +77,6 @@ export function EventsSection({ eventsSectionRef }: EventsSectionProps) {
 
   const events = eventsQuery.data?.data || [];
 
-  console.log("📊 Events Query Data:", {
-    isLoading: eventsQuery.isLoading,
-    isError: eventsQuery.isError,
-    error: eventsQuery.error,
-    fullData: eventsQuery.data,
-    events: events,
-    eventsCount: events.length,
-  });
-
   return (
     <section
       id="eventos"
