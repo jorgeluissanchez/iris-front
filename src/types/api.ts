@@ -92,6 +92,7 @@ export type Project = Entity<{
   participants: ProjectParticipant[];
   documents: ProjectDocument[];
   jurorAssignments: ProjectAssignment[];
+  pendingParticipants: ProjectParticipant[];
   createdAt: number;
   updatedAt: number;
 }>;

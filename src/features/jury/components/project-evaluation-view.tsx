@@ -169,13 +169,6 @@ export function ProjectEvaluationView({ projectId }: ProjectEvaluationViewProps)
                   <Users className="h-4 w-4 text-muted-foreground" />
                   <span className="font-medium">Team members</span>
                 </div>
-                <AvatarGroup
-                  members={projects?.participants?.map(p => ({
-                    ...p,
-                    name: `${p.firstName} ${p.lastName}`
-                  })) || []}
-                  size={28}
-                />
               </div>
 
               <div className="space-y-4">

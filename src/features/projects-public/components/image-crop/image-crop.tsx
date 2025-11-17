@@ -39,8 +39,6 @@ const ImageCropComponent = () => {
         aspect={1}
         file={selectedFile}
         maxImageSize={1024 * 1024} // 1MB
-        onChange={console.log}
-        onComplete={console.log}
         onCrop={setCroppedImage}
       >
         <ImageCropContent className="max-w-md" />

@@ -97,11 +97,9 @@ export const CreateCriteria = () => {
 
                 try {
                   const values = await createCriteriaInputSchema.parseAsync(data);
-                  console.log("✅ Validated data:", values);
                   await createCriteriaMutation.mutateAsync({ data: values });
                 } catch (error) {
                   // Validation errors are handled by the schema
-                  console.error("❌ Validation error:", error);
                 }
               }}
             >

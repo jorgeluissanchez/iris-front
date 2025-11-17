@@ -5,7 +5,7 @@ import { QueryConfig } from "@/lib/react-query";
 import { Meta, Project } from "@/types/api";
 
 export const getProjects = async (
-  { page, eventId }: { page?: number; eventId?: number } = { page: 1 }
+  { page, eventId, state }: { page?: number; eventId?: number, state?: string } = { page: 1 }
 ): Promise<{ data: Project[]; meta: Meta }> => {
   console.log("Fetching projects for eventId:", eventId, "page:", page);
   const response = await api.get<{
@@ -14,9 +14,7 @@ export const getProjects = async (
     limit: number;
     total: number;
     totalPages: number;
-  }>(`/projects/review`, { params: { page, eventId } });
-
-  console.log("Received response:", response);
+  }>(`/projects/by-event/${eventId}`, { params: { page, state } });
   
   return {
     data: response.items || [],
@@ -32,19 +30,21 @@ export const getProjects = async (
 export const getProjectsQueryOptions = ({
   page = 1,
   eventId,
-}: { page?: number; eventId?: number } = {}) => {
+  state,
+}: { page?: number; eventId?: number; state?: string } = {}) => {
   return queryOptions({
     queryKey: [
       "projects",
-      { page, eventId},
+      { page, eventId, state },
     ],
-    queryFn: () => getProjects({ page, eventId }),
+    queryFn: () => getProjects({ page, eventId, state }),
   });
 };
 
 type UseProjectsOptions = {
   page?: number;
   eventId?: number;
+  state?: string;
   queryConfig?: QueryConfig<typeof getProjectsQueryOptions>;
 };
 
@@ -52,9 +52,10 @@ export const useProjects = ({
   queryConfig,
   page,
   eventId,
+  state,
 }: UseProjectsOptions) => {
   return useQuery({
-    ...getProjectsQueryOptions({ page, eventId }),
+    ...getProjectsQueryOptions({ page, eventId, state }),
     ...queryConfig,
   });
 };

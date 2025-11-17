@@ -12,16 +12,20 @@ export type AvatarIconProps = {
   alt?: string;
   className?: string;
 };
+
 export type Participant = {
   name: string;
 };
 
 export type AvatarGroupProps = {
-  members: Participant[];
+  pendingParticipants?: Participant[];
+  participants: Participant[];
   size?: number;
   gap?: number;
   className?: string;
 };
+
+/* ----------------------------- AvatarCircle ----------------------------- */
 
 export const AvatarCircle = ({
   src,
@@ -66,8 +70,11 @@ export const AvatarCircle = ({
   );
 };
 
+/* ------------------------------- AvatarGroup ------------------------------ */
+
 export const AvatarGroup = ({
-  members,
+  pendingParticipants = [],
+  participants,
   size = 40,
   gap = 10,
   className = "",
@@ -82,10 +89,14 @@ export const AvatarGroup = ({
         .join("") || "?"
     );
   };
-  console.log(members);
-  const total = members.length;
+
+  // 👉 Esta es la lógica clave:
+  const activeMembers =
+    pendingParticipants.length > 0 ? pendingParticipants : participants;
+
+  const total = activeMembers.length;
   const showAll = total <= 3;
-  const firstThree = members.slice(0, 3);
+  const firstThree = activeMembers.slice(0, 3);
   const rest = Math.max(0, total - 3);
 
   return (
@@ -98,6 +109,7 @@ export const AvatarGroup = ({
           alt={m.name}
         />
       ))}
+
       {!showAll && (
         <AvatarCircle text={`+${rest}`} size={size} alt={`+${rest}`} />
       )}

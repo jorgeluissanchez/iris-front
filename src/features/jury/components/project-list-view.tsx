@@ -81,13 +81,6 @@ export function ProjectListView({ eventId }: ProjectListViewProps) {
                                         <span>Miembros:</span>
                                     </div>
                                     <div className="flex-1">
-                                        <AvatarGroup
-                                            members={project.participants.map(p => ({
-                                                ...p,
-                                                name: `${p.firstName} ${p.lastName}`
-                                            }))}
-                                            size={28}
-                                        />
                                     </div>
                                 </div>
 
