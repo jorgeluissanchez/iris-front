@@ -17,7 +17,7 @@ export const ProjectList = () => {
 
   const page = searchParams?.get("page") ? Number(searchParams.get("page")) : 1;
   const eventId = searchParams?.get("event") ? Number(searchParams.get("event")) : undefined;
-  const state = searchParams?.get("state") || undefined;
+  const state = searchParams?.get("state") || "UNDER_REVIEW";
 
   const projectsQuery = useProjects({ page, eventId, state });
   const projects = projectsQuery.data?.data;

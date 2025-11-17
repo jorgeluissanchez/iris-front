@@ -178,34 +178,15 @@ export const UpdateEvent = ({ eventId }: UpdateEventProps) => {
                   }
                   isRequired
                 />
-
+                <div className="flex flex-row gap-50">
                 <Switch
                   name="evaluationsOpened"
                   value="true"
                   defaultSelected={event?.evaluationsOpened}
-                  classNames={{
-                    base: cn(
-                      "inline-flex flex-row-reverse w-full max-w-md bg-gray-200 hover:bg-gray-300 items-center",
-                      "justify-between cursor-pointer rounded-lg gap-2 p-4 border-2 border-transparent",
-                      "data-[selected=true]:border-gray-400"
-                    ),
-                    wrapper: "p-0 h-4 overflow-visible",
-                    thumb: cn(
-                      "w-6 h-6 border-2 shadow-lg",
-                      "group-data-[hover=true]:border-gray-400",
-                      //selected
-                      "group-data-[selected=true]:ms-6",
-                      // pressed
-                      "group-data-[pressed=true]:w-7",
-                      "group-data-pressed:group-data-selected:ms-4"
-                    ),
-                  }}
+                  className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2`}
                 >
                   <div className="flex flex-col gap-1">
                     <p className="text-medium">Evaluations Open</p>
-                    <p className="text-tiny text-default-400">
-                      Allow students to submit evaluations for the event.
-                    </p>
                   </div>
                 </Switch>
 
@@ -213,27 +194,10 @@ export const UpdateEvent = ({ eventId }: UpdateEventProps) => {
                   name="isPubliclyJoinable"
                   value="true"
                   defaultSelected={event?.isPubliclyJoinable}
-                  classNames={{
-                    base: cn(
-                      "inline-flex flex-row-reverse w-full max-w-md bg-gray-200 hover:bg-gray-300 items-center",
-                      "justify-between cursor-pointer rounded-lg gap-2 p-4 border-2 border-transparent",
-                      "data-[selected=true]:border-gray-400"
-                    ),
-                    wrapper: "p-0 h-4 overflow-visible",
-                    thumb: cn(
-                      "w-6 h-6 border-2 shadow-lg",
-                      "group-data-[hover=true]:border-gray-400",
-                      "group-data-[selected=true]:ms-6",
-                      "group-data-[pressed=true]:w-7",
-                      "group-data-pressed:group-data-selected:ms-4"
-                    ),
-                  }}
+                  className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2`}
                 >
-                  <div className="flex flex-col gap-1">
+                    <div className="flex flex-col gap-1">
                     <p className="text-medium">Publicly Joinable</p>
-                    <p className="text-tiny text-default-400">
-                      Allow anyone to join this event.
-                    </p>
                   </div>
                 </Switch>
 
@@ -241,29 +205,13 @@ export const UpdateEvent = ({ eventId }: UpdateEventProps) => {
                   name="active"
                   value="true"
                   defaultSelected={event?.active}
-                  classNames={{
-                    base: cn(
-                      "inline-flex flex-row-reverse w-full max-w-md bg-gray-200 hover:bg-gray-300 items-center",
-                      "justify-between cursor-pointer rounded-lg gap-2 p-4 border-2 border-transparent",
-                      "data-[selected=true]:border-gray-400"
-                    ),
-                    wrapper: "p-0 h-4 overflow-visible",
-                    thumb: cn(
-                      "w-6 h-6 border-2 shadow-lg",
-                      "group-data-[hover=true]:border-gray-400",
-                      "group-data-[selected=true]:ms-6",
-                      "group-data-[pressed=true]:w-7",
-                      "group-data-pressed:group-data-selected:ms-4"
-                    ),
-                  }}
+                  className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2`}
                 >
                   <div className="flex flex-col gap-1">
                     <p className="text-medium">Active</p>
-                    <p className="text-tiny text-default-400">
-                      Activate or deactivate this event.
-                    </p>
                   </div>
                 </Switch>
+                </div>
               </ModalBody>
               <ModalFooter>
                 <Button
