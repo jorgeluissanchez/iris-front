@@ -51,9 +51,9 @@ const formatDateRange = (startDate: string, endDate: string) => {
 };
 
 // Función para mapear status del backend a texto en español
-const getStatusText = (evaluationsOpened: boolean) => {
-  return evaluationsOpened 
-    ? landingContent.events.status.open 
+const getStatusText = (statusName: string) => {
+  return statusName
+    ? landingContent.events.status.upcoming
     : landingContent.events.status.closed;
 };
 
@@ -111,7 +111,7 @@ export function EventsSection({ eventsSectionRef }: EventsSectionProps) {
             {events.map((event, index) => {
               const eventTheme = getEventColor(event.id, index);
               const dateRange = formatDateRange(event.startDate, event.endDate);
-              const status = getStatusText(event.evaluationsOpened);
+              const status = getStatusText(event.statusName);
 
               return (
                 <GlassCard
@@ -239,7 +239,7 @@ export function EventsSection({ eventsSectionRef }: EventsSectionProps) {
                         } as React.CSSProperties
                       }
                     >
-                      {status === landingContent.events.status.open
+                      {status === landingContent.events.status.upcoming
                         ? landingContent.events.cta.open
                         : landingContent.events.cta.default}
                       <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />

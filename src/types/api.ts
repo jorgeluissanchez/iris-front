@@ -73,6 +73,7 @@ export type Event = Entity<{
   accessCode: string;
   isPubliclyJoinable: boolean;
   evaluationsOpened: boolean;
+  statusName: string;
   location?: string;
   status?: number;
   active: boolean;

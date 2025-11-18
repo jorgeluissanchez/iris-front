@@ -95,12 +95,11 @@ export const landingContent = {
     titleHighlight: 'Eventos',
     subtitle: 'Regístrate en los eventos y participa en las ferias de proyectos finales',
     cta: {
-      open: 'Registrarse',
+      open: 'Inscribirse',
       default: 'Más información',
     },
     status: {
-      open: 'Inscripciones Abiertas',
-      pending: 'Próximamente',
+      upcoming: 'Inscripciones Abiertas',
       closed: 'Finalizado',
     },
     location: 'Coliseo Los Fundadores, Universidad del Norte',
