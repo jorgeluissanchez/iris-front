@@ -1,3 +1,4 @@
+import { env } from './src/config/env';
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'standalone',
@@ -15,7 +16,7 @@ const nextConfig = {
     return [
       {
         source: '/api/:path*',
-        destination: `${process.env.API_URL}/:path*`,
+        destination: `${env.API_URL}/:path*`,
       },
     ];
   },
