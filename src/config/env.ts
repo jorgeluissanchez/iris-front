@@ -3,7 +3,7 @@ import "dotenv/config";
 
 const createEnv = () => {
   const EnvSchema = z.object({
-    API_URL: z.string(),
+    API_URL: z.string().optional(),
     ENABLE_API_MOCKING: z.preprocess(
       (val) => (val === "" || val === null || val === undefined) ? "false" : val,
       z.enum(["true", "false"]).transform((s) => s === "true")
@@ -13,7 +13,7 @@ const createEnv = () => {
   });
 
   const envVars = {
-    API_URL: process.env.NEXT_PUBLIC_API_URL,
+    API_URL: process.env.API_URL,
     ENABLE_API_MOCKING: process.env.NEXT_PUBLIC_ENABLE_API_MOCKING,
     APP_URL: process.env.NEXT_PUBLIC_URL,
     APP_MOCK_API_PORT: process.env.NEXT_PUBLIC_MOCK_API_PORT,

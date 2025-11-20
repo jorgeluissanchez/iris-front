@@ -67,7 +67,8 @@ async function fetchApi<T>(
     cookieHeader = await getServerCookies();
   }
 
-  const fullUrl = buildUrlWithParams(`${env.API_URL}${url}`, params);
+  // Usar rutas relativas /api/* que serán proxeadas al backend
+  const fullUrl = buildUrlWithParams(`/api${url}`, params);
 
   // Detectar si el body es FormData
   const isFormData = body instanceof FormData;
