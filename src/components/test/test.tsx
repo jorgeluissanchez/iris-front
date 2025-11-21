@@ -415,7 +415,6 @@ export function ProjectEvaluationView({ projectId = "1" }: ProjectEvaluationView
             </CardBody>
           </Card>
         </div>
-      </div>
 
       {/* Confirmation Modal */}
       <Modal isOpen={isConfirmModalOpen} onOpenChange={setIsConfirmModalOpen} placement="center">
