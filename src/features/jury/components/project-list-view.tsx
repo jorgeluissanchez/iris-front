@@ -101,7 +101,7 @@ export function ProjectListView({ eventId }: ProjectListViewProps) {
                     Back
                 </Button>
             </div>
-            <div className="grid gap-6 p-8 sm:grid-cols-1 lg:grid-cols-2">
+            <div className="grid gap-6 p-4 sm:grid-cols-1 lg:grid-cols-2">
                 {projects.map((project) => (
                     <Card
                         key={project.id}

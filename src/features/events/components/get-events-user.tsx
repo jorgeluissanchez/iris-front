@@ -69,7 +69,7 @@ export const GetEventsUser = () => {
 
     return (
         <div className="space-y-4">
-            <div className="grid p-8 gap-6 md:grid-cols-2 lg:grid-cols-3">
+            <div className="grid p-4 gap-6 md:grid-cols-2 lg:grid-cols-3">
                 {events.map((event) => (
                     <Card shadow="sm" key={event.id} className="glass-card">
                         <CardBody className="p-6 space-y-4 flex flex-col">
