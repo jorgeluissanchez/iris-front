@@ -59,8 +59,15 @@ export type Comment = Entity<{
 export type EventMembership = Entity<{
   eventId: number;
   userId: number;
-  eventRole: "STUDENT" | "JURY";
+  eventRole: "STUDENT" | "Juror";
   event: Event;
+}>;
+
+export type role = Entity<{
+  description?: string;
+  id: number;
+  name: "Juror" | "Student";
+  scope: string;
 }>;
 
 export type Event = Entity<{
@@ -77,7 +84,7 @@ export type Event = Entity<{
   location?: string;
   status?: number;
   active: boolean;
-  userEventRole?: "STUDENT" | "JURY";
+  role: role;
   createdAt: number;
   updatedAt: number;
 }>;

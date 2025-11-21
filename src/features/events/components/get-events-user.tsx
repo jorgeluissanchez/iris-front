@@ -49,23 +49,25 @@ export const GetEventsUser = () => {
         router.push(`?page=${newPage}`);
     };
 
-    const getRoleIcon = (role?: "STUDENT" | "JURY") => {
-        if (role === "JURY") return <Scale className="h-4 w-4" />;
-        if (role === "STUDENT") return <GraduationCap className="h-4 w-4" />;
+    const getRoleIcon = (role?: "Student" | "Juror") => {
+        if (role === "Juror") return <Scale className="h-4 w-4" />;
+        if (role === "Student") return <GraduationCap className="h-4 w-4" />;
         return null;
     };
 
-    const getRoleColor = (role?: "STUDENT" | "JURY") => {
-        if (role === "JURY") return "warning";
-        if (role === "STUDENT") return "primary";
+    const getRoleColor = (role?: "Student" | "Juror") => {
+        if (role === "Juror") return "warning";
+        if (role === "Student") return "primary";
         return "default";
     };
 
-    const getRoleLabel = (role?: "STUDENT" | "JURY") => {
-        if (role === "JURY") return "Juror";
-        if (role === "STUDENT") return "Student";
+    const getRoleLabel = (role?: "Student" | "Juror") => {
+        if (role === "Juror") return "Juror";
+        if (role === "Student") return "Student";
         return "Unknown";
     };
+
+    console.log(events[0].role.name);
 
     return (
         <div className="space-y-4">
@@ -76,14 +78,14 @@ export const GetEventsUser = () => {
                             <div className="space-y-2">
                                 <div className="flex items-start justify-between gap-2">
                                     <h3 className="text-xl font-semibold flex-1">{event.name}</h3>
-                                    {event.userEventRole && (
+                                    {event.role && (
                                         <Chip
-                                            color={getRoleColor(event.userEventRole)}
+                                            color={getRoleColor(event.role.name)}
                                             variant="flat"
                                             size="sm"
-                                            startContent={getRoleIcon(event.userEventRole)}
+                                            startContent={getRoleIcon(event.role.name)}
                                         >
-                                            {getRoleLabel(event.userEventRole)}
+                                            {getRoleLabel(event.role.name)}
                                         </Chip>
                                     )}
                                 </div>
@@ -123,7 +125,7 @@ export const GetEventsUser = () => {
                                     color="primary"
                                     className="w-full transition-transform hover:scale-[1.01]"
                                 >
-                                    {event.userEventRole === "JURY" ? "View Projects" : "View My Project"}
+                                    {event.role.name === "Juror" ? "View Projects" : "View My Project"}
                                 </Button>
                             </div>
                         </CardBody>

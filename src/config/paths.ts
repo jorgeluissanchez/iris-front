@@ -23,6 +23,9 @@ export const paths = {
     change_password: {
       getHref: (token: string) => `/auth/chg-password?token=${encodeURIComponent(token)}`,
     },
+    test: {
+      getHref: () => "/auth/test",
+    },
   },
 
   app: {
