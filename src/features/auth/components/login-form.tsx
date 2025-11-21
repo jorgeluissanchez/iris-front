@@ -62,7 +62,33 @@ export const LoginForm = ({ onSuccess }: LoginFormProps) => {
             </a>
           }
         />
-        <div className="flex items-center justify-end mb-2">
+        
+        <Button
+          isLoading={login.isPending}
+          type="submit"
+          className="w-full mt-2"
+        >
+          Iniciar sesión
+        </Button>
+        <div className="w-full flex items-center justify-center mb-2 mt-2">
+          <a
+            className="text-sm font-medium text-gray-400 text-center"
+          >
+            Si eres usuario Uninorte, puedes:
+          </a>
+        </div>
+        <Button
+          className="w-full mb-4"
+          isLoading={login.isPending}
+        >
+          <img
+            src="/microsoft.webp"
+            alt="Microsoft Logo"
+            className="inline-block w-7 h-7"
+          />
+          Iniciar sesión con Outlook
+        </Button>
+        <div className="w-full flex items-center justify-center">
           <NextLink
             href={paths.auth.forgot_password.getHref(redirectTo)}
             className="text-sm font-medium text-primary hover:underline"
@@ -70,13 +96,6 @@ export const LoginForm = ({ onSuccess }: LoginFormProps) => {
             ¿Olvidaste tu contraseña?
           </NextLink>
         </div>
-        <Button
-          isLoading={login.isPending}
-          type="submit"
-          className="w-full"
-        >
-          Iniciar sesión
-        </Button>
       </Form>
     </div>
   );
