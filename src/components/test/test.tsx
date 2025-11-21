@@ -162,16 +162,15 @@ export function ProjectEvaluationView({ projectId = "1" }: ProjectEvaluationView
   const canGoPrevious = currentPage > 0
 
   return (
-    <div className="min-h-screen bg-background p-4 md:p-6 lg:p-8">
-      <div className="max-w-7xl mx-auto space-y-4 md:space-y-6">
-        <div className="flex items-center gap-2">
-          <Button variant="light" className="gap-2" onClick={handleGoBack} size="sm">
-            <ArrowLeft className="h-4 w-4" />
-            <span className="hidden sm:inline">Volver</span>
-          </Button>
-        </div>
+    <div className="space-y-4 md:space-y-6">
+      <div className="flex items-center gap-2">
+        <Button variant="light" className="gap-2" onClick={handleGoBack} size="sm">
+          <ArrowLeft className="h-4 w-4" />
+          <span className="hidden sm:inline">Volver</span>
+        </Button>
+      </div>
 
-        <div className="grid gap-4 md:gap-6 lg:grid-cols-[minmax(300px,400px)_1fr]">
+      <div className="grid gap-4 md:gap-6 lg:grid-cols-[minmax(300px,400px)_1fr]">
           {/* Project Details Card */}
           <Card className="glass-card border-border bg-card h-fit">
             <CardBody className="p-4 md:p-6">
