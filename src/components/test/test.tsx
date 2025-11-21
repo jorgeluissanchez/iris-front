@@ -162,19 +162,22 @@ export function ProjectEvaluationView({ projectId = "1" }: ProjectEvaluationView
   const canGoPrevious = currentPage > 0
 
   return (
-    <div className="space-y-4 md:space-y-6">
-      <div className="flex items-center gap-2">
-        <Button variant="light" className="gap-2" onClick={handleGoBack} size="sm">
+    <div className="space-y-4">
+      <div>
+        <Button
+          variant="light"
+          className="gap-2"
+          onClick={handleGoBack}
+        >
           <ArrowLeft className="h-4 w-4" />
-          <span className="hidden sm:inline">Volver</span>
+          Volver
         </Button>
       </div>
-
-      <div className="grid gap-4 md:gap-6 lg:grid-cols-[minmax(300px,400px)_1fr]">
-          {/* Project Details Card */}
-          <Card className="glass-card border-border bg-card h-fit">
-            <CardBody className="p-4 md:p-6">
-              <div className="space-y-4 md:space-y-6">
+      <div className="grid gap-6 lg:grid-cols-2">
+        {/* Project Details Card */}
+        <Card className="glass-card border-border bg-card h-fit">
+          <CardBody className="p-4 md:p-6">
+            <div className="space-y-4 md:space-y-6">
                 <div>
                   <h2 className="text-lg md:text-xl font-semibold text-balance">{project?.name}</h2>
                   <p className="mt-2 text-xs md:text-sm text-muted-foreground leading-relaxed">
