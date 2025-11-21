@@ -11,7 +11,7 @@ import { useMyEvents } from "../api/get-my-events";
 import dayjs from "dayjs";
 
 export const formatDateShort = (date: string | number) => {
-  return dayjs(date).format('MMM D, YYYY');
+  return dayjs(date).format("MMM D, YYYY • h:mm A");
 };
 
 export const GetEventsUser = () => {
@@ -67,8 +67,6 @@ export const GetEventsUser = () => {
         return "Unknown";
     };
 
-    console.log(events[0].role.name);
-
     return (
         <div className="space-y-4">
             <div className="grid p-8 gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -93,7 +91,7 @@ export const GetEventsUser = () => {
                             </div>
 
                             <div className="flex flex-col gap-2 text-sm">
-                                <div className="flex items-center justify-between">
+                                <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-2">
                                     <div className="flex items-center gap-2">
                                         <Calendar className="h-4 w-4 text-default-400" />
                                         <span className="text-default-400">Start:</span>

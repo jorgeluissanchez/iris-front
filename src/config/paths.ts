@@ -23,9 +23,6 @@ export const paths = {
     change_password: {
       getHref: (token: string) => `/auth/chg-password?token=${encodeURIComponent(token)}`,
     },
-    test: {
-      getHref: () => "/auth/test",
-    },
   },
 
   app: {
@@ -85,6 +82,9 @@ export const paths = {
     },
     criteria: {
       getHref: () => "/app/criteria",
+    },
+    test : {
+      getHref: () => "/app/test",
     },
   },
   public: {

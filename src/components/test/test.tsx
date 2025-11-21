@@ -330,40 +330,51 @@ export function ProjectEvaluationView({ projectId = "1" }: ProjectEvaluationView
               </div>
 
               {/* Navegación entre secciones */}
-              <div className="flex items-center justify-between pt-4 md:pt-6 border-t border-border gap-2">
-                <Button
-                  onClick={() => setCurrentPage((p) => p - 1)}
-                  disabled={!canGoPrevious}
-                  className="gap-1 md:gap-2"
-                  size="sm"
-                >
-                  <ChevronLeft className="h-4 w-4" />
-                  <span className="hidden sm:inline">Anterior</span>
-                </Button>
+<div className="flex items-center justify-between pt-4 md:pt-6 border-t border-border gap-2">
+  
+  {/* Flecha Anterior (solo si NO es la primera página) */}
+  {canGoPrevious ? (
+    <Button
+      onClick={() => setCurrentPage((p) => p - 1)}
+      className="gap-1 md:gap-2"
+      size="sm"
+    >
+      <ChevronLeft className="h-4 w-4" />
+      <span className="hidden sm:inline">Anterior</span>
+    </Button>
+  ) : (
+    <div className="w-[90px]" /> // mantiene el layout estable
+  )}
 
-                <div className="flex gap-1.5 md:gap-2">
-                  {allSections.map((_, idx) => (
-                    <button
-                      key={idx}
-                      onClick={() => setCurrentPage(idx)}
-                      className={`h-2 w-2 rounded-full transition-colors ${
-                        idx === currentPage ? "bg-primary" : "bg-muted-foreground/30"
-                      }`}
-                      aria-label={`Ir a sección ${idx + 1}`}
-                    />
-                  ))}
-                </div>
+  <div className="flex gap-1.5 md:gap-2">
+    {allSections.map((_, idx) => (
+      <button
+        key={idx}
+        onClick={() => setCurrentPage(idx)}
+        className={`h-2 w-2 rounded-full transition-colors ${
+          idx === currentPage ? "bg-primary" : "bg-muted-foreground/30"
+        }`}
+        aria-label={`Ir a sección ${idx + 1}`}
+      />
+    ))}
+  </div>
 
-                <Button
-                  onClick={() => setCurrentPage((p) => p + 1)}
-                  disabled={!canGoNext}
-                  className="gap-1 md:gap-2"
-                  size="sm"
-                >
-                  <span className="hidden sm:inline">Siguiente</span>
-                  <ChevronRight className="h-4 w-4" />
-                </Button>
-              </div>
+  {/* Flecha Siguiente (solo si NO es la última página) */}
+  {canGoNext ? (
+    <Button
+      onClick={() => setCurrentPage((p) => p + 1)}
+      className="gap-1 md:gap-2"
+      size="sm"
+    >
+      <span className="hidden sm:inline">Siguiente</span>
+      <ChevronRight className="h-4 w-4" />
+    </Button>
+  ) : (
+    <div className="w-[90px]" /> // mantiene el layout estable
+  )}
+
+</div>
+
 
               {/* Comments y botón de envío - solo en la última sección */}
               {currentPage === allSections.length - 1 && (
